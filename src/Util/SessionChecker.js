@@ -12,7 +12,7 @@ export default function SessionChecker({ children }) {
 
     React.useEffect(() => {
         axios.get(ServiceRoutes.checkAuthentication)
-            .then((result) => {
+            .then(() => {
                 AuthHandler.setIsAuthenticated(true);
 
                 if(pathname === PAGE_ROUTES.authScreen) {
