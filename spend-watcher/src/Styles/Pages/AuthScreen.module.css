@@ -1,0 +1,55 @@
+.authContainer {
+    background-color: #FAFAFA;
+    width: var(--min-supported-width);
+    border-radius: 6px;
+    margin: 80px auto auto;
+    box-shadow: 0 0 8px 2px #F3F3F3;
+    border: 1px solid #F3F3F3;
+}
+
+.authHeader {
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    color: #333333;
+    font-size: 1.3rem;
+    padding: 15px 15px 0;
+}
+
+.formContainer {
+    padding: 25px 8px;
+    min-height: 126px;
+}
+
+.inputFields {
+    width: 86%;
+    margin: 12px 7%;
+}
+
+.labels {
+    width: 86%;
+    margin: 0 7%;
+}
+
+.submitButton {
+    width: 40%;
+    margin: 15px 5%;
+    color: #FFFFFF;
+    padding: 15px 0;
+    background-color: var(--theme-money-gain);
+    transition-duration: 0.3s;
+}
+
+.submitButton:hover {
+    filter: brightness(0.9);
+}
+
+.errorMessage {
+    color: var(--theme-failure);
+    text-align: center;
+    width: 100%;
+    font-size: 1.1rem;
+}
+
+.registerButton {
+    background-color: #777;
+}

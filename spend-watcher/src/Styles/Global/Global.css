@@ -1,0 +1,4 @@
+/*The purpose of this file is to pull in all global variables so other css modules can simply import this file */
+@import './Layout.css';
+@import './Typography.css';
+@import './ColorScheme.css';

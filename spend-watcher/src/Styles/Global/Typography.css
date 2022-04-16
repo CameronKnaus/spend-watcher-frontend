@@ -1,0 +1,83 @@
+/* FONT SIZING */
+.reduced-body-text {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.body-text {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.enlarged-body-text {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.small-header-text {
+    font-size: 18px;
+    line-height: 28px;
+}
+
+.header-text {
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.large-header-text {
+    font-size: 28px;
+    line-height: 36px;
+}
+
+.extra-large-header-text {
+    font-size: 36px;
+    line-height: 48px;
+}
+
+.small-title-text {
+    font-size: 40px;
+    line-height: 52px;
+}
+
+.title-text {
+    font-size: 48px;
+    line-height: 72px;
+}
+
+.large-title-text {
+    font-size: 64px;
+    line-height: 88px;
+}
+
+/* FONT SIZING AS VARIABLES */
+:root {
+    --reduced-body-text-font-size: 12px;
+    --reduced-body-text-line-height: 16px;
+
+    --body-text-font-size: 14px;
+    --body-text-line-height: 20px;
+
+    --enlarged-body-text-font-size: 16px;
+    --enlarged-body-text-line-height: 24px;
+
+    --small-header-text-font-size: 18px;
+    --small-header-text-line-height: 28px;
+
+    --header-text-font-size: 24px;
+    --header-text-line-height: 28px;
+
+    --large-header-text-font-size: 28px;
+    --large-header-text-line-height: 36px;
+
+    --extra-large-header-text-font-size: 36px;
+    --extra-large-header-text-line-height: 48px;
+
+    --small-title-text-font-size: 40px;
+    --small-title-text-line-height: 52px;
+
+    --title-text-font-size: 48px;
+    --title-text-line-height: 72px;
+
+    --large-title-text-font-size: 64px;
+    --large-title-text-line-height: 88px;
+}

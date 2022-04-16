@@ -1,0 +1,33 @@
+@import './Styles/Global/Global.css';
+
+body {
+  margin: 0;
+  font-family: Intra, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+a {
+  color: var(--link-blue);
+}
+
+/* Overwrite default button styling */
+button, input[type="submit"], input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+/* Outline for accessibility */
+button:focus, input[type="submit"]:focus, input[type="reset"]:focus {
+  outline: 2px dotted #333333;
+}

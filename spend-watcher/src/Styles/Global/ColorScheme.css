@@ -1,0 +1,13 @@
+:root {
+    --theme-purple-primary: #53599A;
+
+    --theme-money-gain: #76B041;
+    --theme-money-loss: #DF2935;
+
+    --theme-success: #76B041;
+    --theme-failure: #DF2935;
+
+    --site-background: #FFFFFF;
+
+    --link-blue: #0694db;
+}
