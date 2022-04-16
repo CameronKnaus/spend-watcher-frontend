@@ -1,6 +1,7 @@
 // Utility for managing user's authentication state
 function authHandler() {
     let authenticated = false;
+    let username = '';
 
     function setIsAuthenticated(newValue) {
         authenticated = newValue;
@@ -10,9 +11,19 @@ function authHandler() {
         return authenticated;
     }
 
+    function setUsername(newName) {
+        username = newName;
+    }
+
+    function getUsername() {
+        return username;
+    }
+
     return {
         isAuthenticated,
-        setIsAuthenticated
+        setIsAuthenticated,
+        getUsername,
+        setUsername
     }
 }
 

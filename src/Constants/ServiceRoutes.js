@@ -2,12 +2,12 @@ import EnvironmentSettings from '../Constants/EnvironmentSettings.json';
 const {devMode, prodAPI, localAPI} = EnvironmentSettings;
 
 const domainName = devMode ? localAPI : prodAPI;
-const api = (routeName) => domainName + routeName;
+const authApi = (routeName) => domainName + '/auth' + routeName;
 
 const SERVICE_ROUTES = {
-    login: api('/processLogin'),
-    register: api('/processRegistration'),
-    checkAuthentication: api('/checkAuthentication')
+    login: authApi('/processLogin'), // POST
+    register: authApi('/processRegistration'), // POST
+    checkAuthentication: authApi('/verifyLogin') // GET
 }
 
 export default SERVICE_ROUTES;

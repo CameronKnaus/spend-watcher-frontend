@@ -39,14 +39,15 @@ export default function AuthScreen() {
             username: username.toLowerCase(),
             email: email.toLowerCase(),
             password
-
         })
-            .then(() => {
+            .then((response) => {
                 AuthHandler.setIsAuthenticated(true);
+                AuthHandler.setUsername(response.data.username);
                 navigate(PAGE_ROUTES.dashboard);
             })
             .catch((error) => {
-                setErrorMessage(error.message || 'Some error occurred')
+                const customMessage = error?.response?.data?.message;
+                setErrorMessage(customMessage || error.message || 'Some unknown error occurred')
             })
             .finally(() => {
                 setLoading(false);
