@@ -1,0 +1,88 @@
+.container {
+    background-color: var(--theme-content-background);
+    border-radius: var(--tile-border-radius);
+    padding: 1rem;
+    width: 100%;
+    text-align: inherit;
+}
+
+.subtitleValue {
+    font-size: var(--large-header-text-font-size);
+    font-weight: var(--fw-light);
+    width: 100%;
+    text-align: center;
+}
+
+.centeredValue {
+    font-size: var(--extra-large-header-text-font-size);
+    font-weight: var(--fw-light);
+    padding-bottom: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.title {
+    width: 100%;
+    font-size: var(--small-header-text-font-size);
+    font-weight: var(--fw-semi-bold);
+    color: #333333;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: var(--body-text-font-size);
+    font-weight: var(--fw-regular);
+    color: #333333;
+    padding-bottom: 0.375rem;
+}
+
+.pb6 {
+    padding-bottom: 0.375rem;
+}
+
+.pb8 {
+    padding-bottom: 0.5rem;
+}
+
+.pb12 {
+    padding-bottom: 0.75rem;
+}
+
+.actionPrompt {
+    font-size: var(--reduced-body-text-font-size);
+    font-weight: var(--fw-light);
+    color: #555555;
+    user-select: text;
+}
+
+.flexContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.descriptionContainer {
+    flex-basis: 50%;
+    flex-grow: 1;
+}
+
+.valueContainer {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    text-align: right;
+    flex-basis: 50%;
+}
+
+.fallbackActionPrompt {
+    font-size: var(--body-text-font-size);
+    font-weight: var(--fw-light);
+    color: #555555;
+    user-select: text;
+}
+
+.chevron {
+    font-size: 2rem;
+    text-align: right;
+}

@@ -1,0 +1,13 @@
+{
+  "ACCESSIBLE_LABELS": {
+    "SPENT_MONTHLY": "<<arg0:amount>> spent monthly."
+  },
+  "ACCESSIBLE_PAGE_TITLES": {
+    "DASHBOARD": "Spend Watcher Dashboard"
+  },
+  "SPENDING": {
+    "MY_SPENDING": "My Spending",
+    "MONTHLY_DISCRETIONARY": "Monthly Discretionary",
+    "MONTH_TOTAL": "<<arg0:month_name>> Total <<arg1:month_name>>"
+  }
+}

@@ -1,56 +1,24 @@
-/* FONT SIZING */
-.reduced-body-text {
-    font-size: 12px;
-    line-height: 16px;
-}
-
-.body-text {
-    font-size: 14px;
-    line-height: 20px;
-}
-
-.enlarged-body-text {
-    font-size: 16px;
-    line-height: 24px;
-}
-
-.small-header-text {
-    font-size: 18px;
-    line-height: 28px;
-}
-
-.header-text {
-    font-size: 24px;
-    line-height: 28px;
-}
-
-.large-header-text {
-    font-size: 28px;
-    line-height: 36px;
-}
-
-.extra-large-header-text {
-    font-size: 36px;
-    line-height: 48px;
-}
-
-.small-title-text {
-    font-size: 40px;
-    line-height: 52px;
-}
-
-.title-text {
-    font-size: 48px;
-    line-height: 72px;
-}
-
-.large-title-text {
-    font-size: 64px;
-    line-height: 88px;
+@font-face {
+    font-family: 'Inter';
+    font-display: swap;
+    src: local('Inter'), url(../Fonts/Inter.ttf) format('truetype');
+    /* font weight allows for the variable weight provided by Inter font */
+    font-weight: 1 999;
 }
 
 /* FONT SIZING AS VARIABLES */
 :root {
+    /* Font Weights */
+    --fw-thin: 100;
+    --fw-extra-light: 200;
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semi-bold: 600;
+    --fw-bold: 700;
+    --fw-extra-bold: 800;
+    --fw-black: 900;
+
     --reduced-body-text-font-size: 12px;
     --reduced-body-text-line-height: 16px;
 
@@ -69,8 +37,8 @@
     --large-header-text-font-size: 28px;
     --large-header-text-line-height: 36px;
 
-    --extra-large-header-text-font-size: 36px;
-    --extra-large-header-text-line-height: 48px;
+    --extra-large-header-text-font-size: 32px;
+    --extra-large-header-text-line-height: 46px;
 
     --small-title-text-font-size: 40px;
     --small-title-text-line-height: 52px;
@@ -80,4 +48,56 @@
 
     --large-title-text-font-size: 64px;
     --large-title-text-line-height: 88px;
+}
+
+/* FONT SIZING */
+.reduced-body-text {
+    font-size: var(--reduced-body-text-font-size);
+    line-height: var(--reduced-body-text-line-height);
+}
+
+.body-text {
+    font-size: var(--body-text-font-size);
+    line-height: var(--body-text-line-height);
+}
+
+.enlarged-body-text {
+    font-size: var(--enlarged-body-text-font-size);
+    line-height: var(--enlarged-body-text-line-height);
+}
+
+.small-header-text {
+    font-size: var(--small-header-text-font-size);
+    line-height: var(--small-header-text-line-height);
+}
+
+.header-text {
+    font-size: var(--header-text-font-size);
+    line-height: var(--header-text-line-height);
+    font-weight: var(--fw-medium);
+}
+
+.large-header-text {
+    font-size: var(--large-header-text-font-size);
+    line-height: var(--large-header-text-line-height);
+}
+
+.extra-large-header-text {
+    font-size: var(--extra-large-header-text-font-size);
+    line-height: var(--extra-large-header-text-line-height);
+}
+
+.small-title-text {
+    font-size: var(--small-title-text-font-size);
+    line-height: var(--small-title-text-line-height);
+}
+
+.title-text {
+    font-size: var(--title-text-font-size);
+    line-height: var(--title-text-line-height);
+}
+
+.large-title-text {
+    font-size: var(--large-title-text-font-size);
+    line-height: var(--large-title-text-line-height);
 }

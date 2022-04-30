@@ -1,10 +1,12 @@
 /* FORM_FACTORS */
 :root {
-    --min-supported-width: 320px;
+    --min-supported-width: 375px;
     --breakpoint-xs: 556px;
     --breakpoint-sm: 768px;
     --breakpoint-md: 992px;
     --breakpoint-lg: 1200px;
+
+    --tile-border-radius: 24px;
 }
 
 /* Works like bootstrap container */
@@ -13,7 +15,7 @@
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-    min-width: 290px; /* 290px + 15 padding each side = 320px minimum supported screen size */
+    min-width: 345px; /* 345px + 15 padding each side = 375px minimum supported screen size */
 }
 
 @media (min-width: 768px) {
