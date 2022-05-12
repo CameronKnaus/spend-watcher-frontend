@@ -1,0 +1,67 @@
+.container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.iconContainer {
+    font-size: 20px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    color: #FFFFFF;
+    /* The background color here is used as a default */
+    background-color: #333333;
+}
+
+.detailsContainer {
+    flex-basis: 70%;
+    min-width: 0;
+    text-align: left;
+}
+
+.category {
+    font-size: var(--enlarged-body-text-font-size);
+    color: #333;
+    font-weight: var(--fw-medium);
+}
+
+.description {
+    color: #3B3A39;
+    font-size: var(--reduced-body-text-font-size);
+    font-weight: var(--fw-light);
+    padding-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.valuesContainer {
+    text-align: right;
+    margin: 0 0.4rem;
+    flex-basis: 30%;
+}
+
+.amount {
+    color: var(--theme-money-loss);
+    font-size: var(--enlarged-body-text-font-size);
+    font-weight: var(--fw-semi-bold);
+}
+
+.date {
+    color: #3B3A39;
+    font-size: var(--reduced-body-text-font-size);
+    font-weight: var(--fw-light);
+    padding-top: 4px;
+}
+
+.chevron {
+    font-size: 1.5rem;
+    text-align: right;
+    flex-shrink: 0;
+}

@@ -1,13 +1,16 @@
 import EnvironmentSettings from '../Constants/EnvironmentSettings.json';
-const {devMode, prodAPI, localAPI} = EnvironmentSettings;
+const { devMode, prodAPI, localAPI } = EnvironmentSettings;
 
 const domainName = devMode ? localAPI : prodAPI;
 const authApi = (routeName) => domainName + '/auth' + routeName;
+const spendApi = (routeName) => domainName + '/spending' + routeName;
 
 const SERVICE_ROUTES = {
     login: authApi('/processLogin'), // POST
     register: authApi('/processRegistration'), // POST
-    checkAuthentication: authApi('/verifyLogin') // GET
-}
+    checkAuthentication: authApi('/verifyLogin'), // GET
+    spendingSummary: spendApi('/summary'), // GET
+    recentTransactions: spendApi('/recent') // GET
+};
 
 export default SERVICE_ROUTES;

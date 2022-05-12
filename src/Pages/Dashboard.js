@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../Styles/Pages/Dashboard.module.css';
 import Spending from '../Containers/Spending';
 import getContent from '../Util/getContent';
+import RecentTransactions from '../Containers/RecentTransactions';
 
 
 export default function Dashboard() {
@@ -12,6 +13,7 @@ export default function Dashboard() {
                 {getContent('ACCESSIBLE_PAGE_TITLES', 'DASHBOARD')}
             </h1>
             <Spending />
+            <RecentTransactions />
         </div>
     );
 }

@@ -10,44 +10,41 @@ import { CgChevronRight } from 'react-icons/cg';
 *   fallbackDescription - string - optional - adds extra description and only shows when value is falsy
 *   ariaValue - string - optional - alternative value for screen readers to read for value
 *   actionPrompt - string - required
-*   useShadow - boolean - default: true
+*   useShadow - boolean - default: false
 *   callback - function - required
 *   options: {
 *       showValueAbove: boolean - default: false
 *       valueColor: string - CSS color to set value text to - default: '#333333'
 *       minWidth: number|string - sets minimum width of container - default: 0
 *       maxWidth: number|string - sets maximum width of container - default: 'none'
+*       paddingBelow: number|string - sets padding-bottom - default: 24
 *   }
 */
 const defaultOptions = {
     showValueAbove: false,
     valueColor: '#333333',
     minWidth: 0,
-    maxWidth: 'none'
+    maxWidth: 'none',
+    paddingBelow: 24
 };
 function ActionTile({ title, subtitle, value, fallbackActionPrompt, fallbackDescription, ariaValue, actionPrompt, useShadow, callback, options }) {
     const args = Object.assign({}, defaultOptions, options);
 
-    const { minWidth, maxWidth } = args;
+    const { minWidth, maxWidth, paddingBelow } = args;
     const container = (children) => (
-        <button className={`
-                    ${styles.container} 
-                    ${useShadow ? 'high-shadow' : ''}
-                `}
-                style={{ minWidth, maxWidth }}
-                onClick={callback}
-        >
-            {children}
-        </button>
+        <div style={{ paddingBottom: paddingBelow }}>
+            <button className={`${styles.container} ${useShadow ? 'high-shadow' : ''}`}
+                    style={{ minWidth, maxWidth }}
+                    onClick={callback}
+            >
+                {children}
+            </button>
+        </div>
     );
 
     const Title = React.useCallback(({ extraSpace, hideFromScreenReader, hideFromScreen }) => (
         <div aria-hidden={hideFromScreen}
-             className={`
-                ${styles.title} 
-                ${hideFromScreenReader ? 'accessible-text' : '' }
-                ${extraSpace ? styles.pb12 : styles.pb8}
-            `}
+             className={`${styles.title} ${hideFromScreenReader ? 'accessible-text' : '' } ${extraSpace ? styles.pb12 : styles.pb8}`}
         >
             {title}
         </div>
@@ -65,7 +62,7 @@ function ActionTile({ title, subtitle, value, fallbackActionPrompt, fallbackDesc
                             </div>
                         )
                     }
-                    <div className={styles.fallbackActionPrompt}>
+                    <div className={styles.actionPrompt}>
                         {fallbackActionPrompt}
                     </div>
                 </div>
@@ -120,6 +117,9 @@ function ActionTile({ title, subtitle, value, fallbackActionPrompt, fallbackDesc
                          style={{ color: args.valueColor }}
                     >
                         {value}
+                    </div>
+                    <div className='accessible-text'>
+                        {actionPrompt}
                     </div>
                 </div>
             </>

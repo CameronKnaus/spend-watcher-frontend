@@ -5,7 +5,9 @@ body {
   font-family: Inter, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
 
+* {
   box-sizing: border-box;
 }
 

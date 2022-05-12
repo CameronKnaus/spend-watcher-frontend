@@ -1,15 +1,15 @@
-import msMapper from "./TimeMapping";
+import msMapper from './TimeMapping';
 
 // If later date is not specified, the current date time will be used for laterDate, i.e. time from earlier date until now
 // Note both params should be Vanilla Javascript Date objects
 function getTimeBetweenDates(earlierDate, laterDate = new Date()) {
     if(!(earlierDate instanceof Date) || !(laterDate instanceof Date)) {
-        return;
+        return { months: 0, weeks: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
     }
 
     let timeDifferenceMS = laterDate.getTime() - earlierDate.getTime();
 
-    const timePayload = {}
+    const timePayload = {};
 
     // Months
     timePayload.months = Math.floor(timeDifferenceMS / msMapper.month);

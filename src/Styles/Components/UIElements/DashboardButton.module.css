@@ -1,0 +1,14 @@
+.button {
+    font-size: var(--small-header-text-font-size);
+    text-align: center;
+    padding: 1rem 0;
+    width: 100%;
+    border-radius: 12px;
+    font-weight: var(--fw-regular);
+    color: #FFF;
+    transition-duration: 0.3s;
+}
+
+.button:hover {
+    filter: brightness(0.8);
+}

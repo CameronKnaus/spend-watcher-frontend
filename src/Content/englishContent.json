@@ -8,6 +8,47 @@
   "SPENDING": {
     "MY_SPENDING": "My Spending",
     "MONTHLY_DISCRETIONARY": "Monthly Discretionary",
-    "MONTH_TOTAL": "<<arg0:month_name>> Total <<arg1:month_name>>"
+    "MONTH_TOTAL": "<<arg0:month_name>> Total",
+    "SEE_TRENDS": "Tap to see trends",
+    "SPENT_ARIA_LABEL": "<<arg0:amount>> spent in <<arg1:current_month>> so far.",
+    "BUDGET_USED": "<<arg0:current_month>> Budget Used",
+    "ADJUST_BUDGET": "Adjust budget for <<arg0:current_month>>",
+    "RECURRING": "Monthly Recurring",
+    "ADJUST_RECURRING": "Tap to adjust",
+    "NO_RECURRING": "You currently have no recurring monthly expenses",
+    "NO_RECURRING_PROMPT": "Tap to change that",
+    "LOG_EXPENSE": "Log Expense",
+    "RECURRING_ARIA_LABEL": "<<arg0:amount>> spent every month."
+  },
+  "TRANSACTIONS": {
+    "RECENT": "Recent Transactions"
+  },
+  "CATEGORIES": {
+    "RESTAURANTS": "Dining Out",
+    "DRINKS": "Drinks",
+    "GROCERIES": "Groceries",
+    "ENTERTAINMENT": "Entertainment",
+    "TRANSPORTATION": "Transportation",
+    "VEHICLE": "Vehicle",
+    "FUEL": "Fuel",
+    "BUSINESS": "Business Expense",
+    "MATERIAL_ITEMS": "Material Items",
+    "TRAVEL": "Travel",
+    "HEALTH": "Healthcare",
+    "CLOTHING": "Clothing",
+    "GIFTS": "Gifts & Charity",
+    "EDUCATION": "Education",
+    "UTILITIES": "Utilities",
+    "HOUSING": "Housing",
+    "RECREATION": "Recreation",
+    "PETS": "Pets",
+    "DATES": "Dates",
+    "INSURANCE": "Insurance",
+    "GAMES": "Games",
+    "OTHER": "Other"
+  },
+  "GENERAL": {
+    "TODAY": "Today",
+    "YESTERDAY": "Yesterday"
   }
 }

@@ -73,13 +73,8 @@
     min-width: 0;
     text-align: right;
     flex-basis: 50%;
-}
-
-.fallbackActionPrompt {
-    font-size: var(--body-text-font-size);
+    font-size: var(--large-header-text-font-size);
     font-weight: var(--fw-light);
-    color: #555555;
-    user-select: text;
 }
 
 .chevron {
