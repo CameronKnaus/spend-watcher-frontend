@@ -4,17 +4,53 @@ import getContent from '../Util/getContent';
 import SERVICE_ROUTES from '../Constants/ServiceRoutes';
 import useFetch from '../CustomHooks/useFetch';
 import Transaction from '../Components/UIElements/Transaction';
+import Link from '../Components/UIElements/Link';
+import { PAGE_ROUTES } from '../Constants/RouteConstants';
 
 export default function RecentTransactions() {
     const service = useFetch(SERVICE_ROUTES.recentTransactions, true);
     const text = (key) => getContent('TRANSACTIONS', key);
 
+    const Container = React.useCallback(({ children }) => (
+        <>
+            <h2 className={`header-text ${styles.title}`}>
+                {text('RECENT')}
+            </h2>
+            {children}
+        </>
+    ), []);
+
     if(service.loading) {
-        return 'LOADING';
+        // TODO
+        return (
+            <Container>
+                LOADING
+            </Container>
+        );
     }
 
     if(service.error) {
-        return JSON.stringify(service.error);
+        // TODO Proper Error Handling
+        return (
+            <Container>
+                <div className={styles.issueMessage}>
+                    {text('ERROR')}
+                </div>
+                <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+                    {JSON.stringify(service.error, null, 2)}
+                </pre>
+            </Container>
+        );
+    }
+
+    if(service.response.data.noTransactions) {
+        return (
+            <Container>
+                <div className={styles.issueMessage}>
+                    {text('NO_TRANSACTIONS')}
+                </div>
+            </Container>
+        );
     }
 
     const mapTransactionList = (transactionList, header) => (
@@ -37,11 +73,6 @@ export default function RecentTransactions() {
             }
         </>
     );
-
-    if(service.response.data.noTransactions) {
-        // TODO
-        return 'No Transactions';
-    }
 
     const { today, yesterday, ...transactions } = service.response.data.transactions;
 
@@ -66,10 +97,7 @@ export default function RecentTransactions() {
 
 
     return (
-        <>
-            <h2 className={`header-text ${styles.title}`}>
-                {text('RECENT')}
-            </h2>
+        <Container>
             {
                 today && mapTransactionList(today, getContent('GENERAL', 'TODAY'))
             }
@@ -79,6 +107,12 @@ export default function RecentTransactions() {
             {
                 transactions && transactionGroupings()
             }
-        </>
+            <Link useChevron
+                  text={text('VIEW_ALL')}
+                  route={PAGE_ROUTES.transactionSummary}
+                  customClass={styles.linkContainer}
+                  textAlign='center'
+            />
+        </Container>
     );
 }

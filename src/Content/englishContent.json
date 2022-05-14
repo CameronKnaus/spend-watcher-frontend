@@ -21,7 +21,10 @@
     "RECURRING_ARIA_LABEL": "<<arg0:amount>> spent every month."
   },
   "TRANSACTIONS": {
-    "RECENT": "Recent Transactions"
+    "RECENT": "Recent Transactions",
+    "VIEW_ALL": "View all transactions",
+    "ERROR": "An error occurred while loading your transaction data.",
+    "NO_TRANSACTIONS": "You have not logged any spending yet."
   },
   "CATEGORIES": {
     "RESTAURANTS": "Dining Out",

@@ -51,7 +51,7 @@
 .actionPrompt {
     font-size: var(--reduced-body-text-font-size);
     font-weight: var(--fw-light);
-    color: #555555;
+    color: var(--theme-subdued-text-color);
     user-select: text;
 }
 

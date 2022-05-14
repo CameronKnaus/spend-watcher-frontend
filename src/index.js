@@ -7,6 +7,7 @@ import FormFactorContext from './Util/FormFactorContext';
 import Dashboard from './Pages/Dashboard';
 import AuthScreen from './Pages/AuthScreen';
 import SessionChecker from './Util/SessionChecker';
+import TransactionSummary from './Pages/TransactionSummary';
 
 const projectRoot = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -18,6 +19,7 @@ projectRoot.render(
                     <Routes>
                         <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
                         <Route path={PAGE_ROUTES.authScreen} element={<AuthScreen />} />
+                        <Route path={PAGE_ROUTES.transactionSummary} element={<TransactionSummary />} />
                     </Routes>
                 </SessionChecker>
             </BrowserRouter>

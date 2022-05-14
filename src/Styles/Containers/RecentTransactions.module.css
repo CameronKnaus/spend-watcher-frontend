@@ -1,5 +1,5 @@
 .title {
-    padding: 1rem 0;
+    padding: 2rem 0 1rem;
     margin: 0;
 }
 
@@ -8,8 +8,19 @@
 }
 
 .dateLabel {
-    padding-bottom: 0.375rem;
+    padding-bottom: 0.5rem;
     font-size: 10px;
     font-weight: var(--fw-light);
-    color: #555555;
+    color: var(--theme-subdued-text-color);
+    margin: 0;
+}
+
+.linkContainer {
+    padding-top: 4px;
+}
+
+.issueMessage {
+    font-size: var(--body-text-font-size);
+    color: var(--theme-subdued-text-color);
+    padding-bottom: 1rem;
 }

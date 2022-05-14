@@ -1,5 +1,5 @@
 .container {
     background-color: var(--theme-soft-background);
-    padding: 0 1.5rem;
+    padding: 0 1.5rem 2rem;
     min-width: var(--min-supported-width);
 }
