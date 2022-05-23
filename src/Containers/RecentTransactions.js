@@ -3,7 +3,7 @@ import styles from '../Styles/Containers/RecentTransactions.module.css';
 import getContent from '../Util/getContent';
 import SERVICE_ROUTES from '../Constants/ServiceRoutes';
 import useFetch from '../CustomHooks/useFetch';
-import Transaction from '../Components/UIElements/Transaction';
+import Transaction from '../Components/Transactions/Transaction';
 import Link from '../Components/UIElements/Link';
 import { PAGE_ROUTES } from '../Constants/RouteConstants';
 

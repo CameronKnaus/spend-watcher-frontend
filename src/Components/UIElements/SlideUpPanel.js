@@ -4,9 +4,11 @@ import styles from '../../Styles/Components/UIElements/SlideUpPanel.module.css';
 
 // If 'confirmText' and 'closeText' are provided, two buttons will appear at the bottom
 // If only 'closeText' is provided then only one button will appear at the bottom that closes the panel
-export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title }) {
+export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title, forwardActionCallback = () => { /* NOOP */ } }) {
     // Grab ref of panel for handling tabbing
     const panelRef = React.useRef();
+
+    const [panelClosing, setPanelClosing] = React.useState(false);
 
     const keystrokeHandlers = React.useMemo(() => ({
         // Tab Key
@@ -56,13 +58,26 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
         }
     }
 
+    function closePanel() {
+        setPanelClosing(true);
+
+        // Fire the panel closed callback after the animation plays
+        setTimeout(onPanelClose, 500);
+    }
+
+    // For buttons like 'submit' or 'confirm'
+    function forwardAction() {
+        forwardActionCallback();
+        closePanel();
+    }
+
     return createPortal(
         <>
-            <div className={styles.lockedBackground} onClick={onPanelClose} />
+            <div className={`${styles.lockedBackground} ${panelClosing ? styles.unlockedBackground : ''}`} onClick={closePanel} />
             <div ref={panelRef}
                  aria-modal
                  role='dialog'
-                 className={styles.panelContainer}
+                 className={`${styles.panelContainer} ${panelClosing ? styles.panelClosing : ''}`}
                  onClick={event => event.stopPropagation()}
             >
                 <div className={styles.titleTag}>
@@ -75,9 +90,20 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
                         { children }
                     </div>
                     <div className={styles.buttonRow}>
-                        <button className={styles.buttons}>
-                            Push Me
+                        <button className={`${styles.buttons} ${styles.closeButton}`}
+                                onClick={closePanel}
+                        >
+                            {closeText}
                         </button>
+                        {
+                            confirmText && (
+                                <button className={`${styles.buttons} ${styles.forwardActionButton}`}
+                                        onClick={forwardAction}
+                                >
+                                    {confirmText}
+                                </button>
+                            )
+                        }
                     </div>
                 </div>
             </div>

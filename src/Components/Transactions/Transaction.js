@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../Styles/Components/UIElements/Transaction.module.css';
+import styles from '../../Styles/Components/Transactions/Transaction.module.css';
 import getContent from '../../Util/getContent';
 import { CgChevronRight } from 'react-icons/cg';
 import { CATEGORY_COLORS, CATEGORY_ICONS } from '../../Constants/transactionConstants';
