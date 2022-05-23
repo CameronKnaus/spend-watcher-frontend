@@ -1,0 +1,81 @@
+.lockedBackground {
+    z-index: 998;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(30, 30, 30, 0.65);
+    animation: fadeIn;
+    animation-duration: 0.3s;
+}
+
+@keyframes fadeIn {
+    from {background-color: rgba(0.3, 0.3, 0.3, 0.0);}
+    to {background-color: rgba(0.3, 0.3, 0.3, 0.65);}
+}
+
+.fadeOut {
+    animation: fadeOutAnim;
+    animation-duration: 0.3s;
+}
+
+@keyframes fadeOutAnim {
+    from {background-color: rgba(0.3, 0.3, 0.3, 0.65);}
+    to {background-color: rgba(0.3, 0.3, 0.3, 0.0);}
+}
+
+.panelContainer {
+    z-index: 999;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    animation: slideUp;
+    animation-duration: 0.5s;
+}
+
+@keyframes slideUp {
+    from {transform: translateY(100vh)}
+    to {transform: translateY(0)}
+}
+
+.titleTag {
+    color: #FFFFFF;
+    background-color: var(--theme-red-dark);
+    display: inline-block;
+    border-radius: 18px 18px 0 0;
+    position: relative;
+    top: 1.5rem;
+    /* This hides the title tag's bottom section*/
+}
+
+.title {
+    font-size: var(--header-text-font-size);
+    margin: 0;
+    padding: 20px 1.5rem 40px;
+    font-weight: var(--fw-light);
+}
+
+.panelContent {
+    background-color: var(--theme-content-background);
+    border-radius: 32px 32px 0 0;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.scrollableArea {
+    padding: 1.5rem;
+    max-height: 75vh;
+    overflow-y: scroll;
+}
+
+.buttonRow {
+    background-color: var(--theme-content-background);
+    border-top: 2px solid #EEEEEE;
+}
+
+.buttons {
+    height: 50px;
+    width: 40%;
+    background-color: var(--theme-jungle-green-dark);
+}
