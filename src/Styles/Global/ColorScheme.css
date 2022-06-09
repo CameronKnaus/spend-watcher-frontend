@@ -1,6 +1,4 @@
 :root {
-    --theme-purple-primary: #53599A;
-
     --theme-content-background: #FFFFFF;
     --theme-soft-background: #F7FAFC;
 
@@ -12,7 +10,11 @@
 
     --theme-link-blue: #0694db;
 
+    --theme-placeholder-text: #BFC6C7;
+    --theme-light-text-color: #777777;
     --theme-subdued-text-color: #555555;
+
+    --theme-light-border: #EEEEEE;
 
     /* Main Theme Colors */
     --theme-red: #f94144;

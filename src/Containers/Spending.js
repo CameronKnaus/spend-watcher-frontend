@@ -1,10 +1,12 @@
 import React from 'react';
 import styles from '../Styles/Containers/Spending.module.css';
-import getContent from '../Util/getContent';
+import useContent from '../CustomHooks/useContent';
 import ActionTile from '../Components/Tiles/ActionTile';
 import SERVICE_ROUTES from '../Constants/ServiceRoutes';
 import useFetch from '../CustomHooks/useFetch';
-import DashboardButton from '../Components/UIElements/DashboardButton';
+import DashboardButton from '../Components/Dashboard/DashboardButton';
+import SlideUpPanel from '../Components/UIElements/SlideUpPanel';
+import TransactionForm from '../Components/Transactions/TransactionForm';
 
 export default function Spending() {
     const currentMonth = React.useMemo(() => {
@@ -13,8 +15,11 @@ export default function Spending() {
     }, []);
 
     const [spendingTotal, setSpendingTotal] = React.useState('$0.00');
+    const [logPanelOpen, setLogPanelOpen] = React.useState(false);
 
     const service = useFetch(SERVICE_ROUTES.spendingSummary, true);
+
+    const getContent = useContent();
     const text = (key, args) => getContent('SPENDING', key, args);
 
     React.useEffect(() => {
@@ -57,7 +62,19 @@ export default function Spending() {
             />
             <DashboardButton buttonColor='var(--theme-red-dark)'
                              text={text('LOG_EXPENSE')}
+                             callback={() => setLogPanelOpen(true)}
             />
+            {
+                logPanelOpen && (
+                    <SlideUpPanel title={getContent('TRANSACTIONS', 'NEW_EXPENSE')}
+                                  closeText='Cancel'
+                                  confirmText='Submit'
+                                  onPanelClose={() => setLogPanelOpen(false)}
+                    >
+                        <TransactionForm />
+                    </SlideUpPanel>
+                )
+            }
         </>
     );
 }

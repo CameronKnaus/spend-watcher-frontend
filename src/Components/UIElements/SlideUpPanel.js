@@ -7,6 +7,7 @@ import styles from '../../Styles/Components/UIElements/SlideUpPanel.module.css';
 export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title, forwardActionCallback = () => { /* NOOP */ } }) {
     // Grab ref of panel for handling tabbing
     const panelRef = React.useRef();
+    const titleRef = React.useRef();
 
     const [panelClosing, setPanelClosing] = React.useState(false);
 
@@ -17,9 +18,15 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
         27: onPanelClose
     }), [onPanelClose]);
 
-    // Lock scrolling
+
     React.useEffect(() => {
+        // Lock scrolling
         document.body.style.overflow = 'hidden';
+
+        // Set focus on title load
+        // const x = window.scrollX, y = window.scrollY;
+        titleRef.current.focus();
+        // window.scrollTo(x, y);
 
         return () => { document.body.style.overflow = 'auto' };
     }, []);
@@ -78,10 +85,9 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
                  aria-modal
                  role='dialog'
                  className={`${styles.panelContainer} ${panelClosing ? styles.panelClosing : ''}`}
-                 onClick={event => event.stopPropagation()}
             >
                 <div className={styles.titleTag}>
-                    <h2 tabIndex={0} className={styles.title}>
+                    <h2 ref={titleRef} tabIndex={0} className={styles.title}>
                         {title}
                     </h2>
                 </div>

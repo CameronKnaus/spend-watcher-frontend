@@ -5,18 +5,7 @@
 }
 
 .iconContainer {
-    font-size: 20px;
-    height: 40px;
-    width: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
     margin-right: 10px;
-    flex-shrink: 0;
-    color: #FFFFFF;
-    /* The background color here is used as a default */
-    background-color: #333333;
 }
 
 .detailsContainer {

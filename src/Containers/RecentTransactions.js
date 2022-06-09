@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../Styles/Containers/RecentTransactions.module.css';
-import getContent from '../Util/getContent';
+import useContent from '../CustomHooks/useContent';
 import SERVICE_ROUTES from '../Constants/ServiceRoutes';
 import useFetch from '../CustomHooks/useFetch';
 import Transaction from '../Components/Transactions/Transaction';
@@ -9,16 +9,19 @@ import { PAGE_ROUTES } from '../Constants/RouteConstants';
 
 export default function RecentTransactions() {
     const service = useFetch(SERVICE_ROUTES.recentTransactions, true);
+    const getContent = useContent();
     const text = (key) => getContent('TRANSACTIONS', key);
 
-    const Container = React.useCallback(({ children }) => (
-        <>
-            <h2 className={`header-text ${styles.title}`}>
-                {text('RECENT')}
-            </h2>
-            {children}
-        </>
-    ), []);
+    const Container = React.useCallback(({ children }) => {
+        return (
+            <>
+                <h2 className={`header-text ${styles.title}`}>
+                    {getContent('TRANSACTIONS', 'RECENT')}
+                </h2>
+                {children}
+            </>
+        );
+    }, [getContent]);
 
     if(service.loading) {
         // TODO

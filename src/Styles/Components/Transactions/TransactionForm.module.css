@@ -1,0 +1,49 @@
+.transactionForm > label {
+    font-weight: var(--fw-semi-bold);
+    color: var(--theme-light-text-color);
+    display: block;
+    font-size: var(--body-text-font-size);
+    padding-bottom: 0.5rem;
+}
+
+.transactionForm > label > input::placeholder {
+    color: var(--theme-placeholder-text);
+}
+
+.textInput {
+    border: none;
+    border-bottom: 1px solid #A9C0C1;
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-size: var(--small-header-text-font-size);
+    margin-bottom: 1.5rem;
+}
+
+.checkContainer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 1.5rem;
+}
+
+.checkBox {
+    height: 1.1rem;
+    width: 1.1rem;
+    margin: 0;
+}
+
+.checkLabel {
+    font-size: var(--enlarged-body-text-font-size);
+    font-weight: var(--fw-light);
+    padding-left: 0.5rem;
+}
+
+.checkDescription {
+    flex-basis: 100%;
+    padding-top: 6px;
+    font-size: 10px;
+    font-style: italic;
+    font-weight: var(--fw-light);
+    color: var(--theme-light-text-color);
+}

@@ -24,7 +24,7 @@ function authHandler() {
         setIsAuthenticated,
         getUsername,
         setUsername
-    }
+    };
 }
 
 const AuthHandler = authHandler();
