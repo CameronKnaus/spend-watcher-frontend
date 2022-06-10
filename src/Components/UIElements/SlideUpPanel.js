@@ -4,7 +4,7 @@ import styles from '../../Styles/Components/UIElements/SlideUpPanel.module.css';
 
 // If 'confirmText' and 'closeText' are provided, two buttons will appear at the bottom
 // If only 'closeText' is provided then only one button will appear at the bottom that closes the panel
-export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title, forwardActionCallback = () => { /* NOOP */ } }) {
+export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title, forwardActionCallback = () => { /* NOOP */ }, disableConfirmButton }) {
     // Grab ref of panel for handling tabbing
     const panelRef = React.useRef();
     const titleRef = React.useRef();
@@ -103,8 +103,8 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
                         </button>
                         {
                             confirmText && (
-                                <button className={`${styles.buttons} ${styles.forwardActionButton}`}
-                                        onClick={forwardAction}
+                                <button className={`${styles.buttons} ${disableConfirmButton ? styles.disabledButton : styles.forwardActionButton}`}
+                                        onClick={() => !disableConfirmButton && forwardAction()}
                                 >
                                     {confirmText}
                                 </button>

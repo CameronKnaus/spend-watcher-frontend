@@ -26,6 +26,7 @@
     "ERROR": "An error occurred while loading your transaction data.",
     "NO_TRANSACTIONS": "You have not logged any spending yet.",
     "NEW_EXPENSE": "New Expense",
+    "EDIT_EXPENSE": "Edit Expense",
     "AMOUNT_LABEL": "Amount",
     "AMOUNT_PLACEHOLDER": "$49.99",
     "CATEGORY_LABEL": "Category",
@@ -36,7 +37,8 @@
     "UNCOMMON_DESCRIPTION": "Expenses marked as ‘uncommon’ can be excluded from spending trends. Use this for one-time large expenses, like plane tickets or computers, that you don’t want skewing your average spending trends.",
     "DATE_LABEL": "Date of Expense",
     "CANCEL": "Cancel",
-    "SUBMIT": "Submit"
+    "SUBMIT": "Submit",
+    "EDIT": "Edit"
   },
   "CATEGORIES": {
     "RESTAURANTS": "Dining Out",

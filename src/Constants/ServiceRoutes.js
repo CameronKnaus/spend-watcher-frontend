@@ -10,7 +10,8 @@ const SERVICE_ROUTES = {
     register: authApi('/processRegistration'), // POST
     checkAuthentication: authApi('/verifyLogin'), // GET
     spendingSummary: spendApi('/summary'), // GET
-    recentTransactions: spendApi('/recent') // GET
+    recentTransactions: spendApi('/recent'), // GET
+    submitNewTransaction: spendApi('/new') // POST
 };
 
 export default SERVICE_ROUTES;

@@ -96,11 +96,21 @@
     color: #FFFFFF;
     font-weight: var(--fw-regular);
     font-size: var(--small-header-text-font-size);
+    transition-duration: 0.1s;
 }
 
 .forwardActionButton {
     background-color: var(--theme-jungle-green-dark);
     margin-left: 1rem;
+}
+
+.disabledButton {
+    background-color: var(--theme-disabled-button);
+    margin-left: 1rem;
+}
+
+.disabledButton:hover {
+    cursor: not-allowed;
 }
 
 .closeButton {

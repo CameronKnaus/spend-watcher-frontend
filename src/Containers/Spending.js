@@ -5,7 +5,6 @@ import ActionTile from '../Components/Tiles/ActionTile';
 import SERVICE_ROUTES from '../Constants/ServiceRoutes';
 import useFetch from '../CustomHooks/useFetch';
 import DashboardButton from '../Components/Dashboard/DashboardButton';
-import SlideUpPanel from '../Components/UIElements/SlideUpPanel';
 import TransactionForm from '../Components/Transactions/TransactionForm';
 
 export default function Spending() {
@@ -65,15 +64,7 @@ export default function Spending() {
                              callback={() => setLogPanelOpen(true)}
             />
             {
-                logPanelOpen && (
-                    <SlideUpPanel title={getContent('TRANSACTIONS', 'NEW_EXPENSE')}
-                                  closeText='Cancel'
-                                  confirmText='Submit'
-                                  onPanelClose={() => setLogPanelOpen(false)}
-                    >
-                        <TransactionForm />
-                    </SlideUpPanel>
-                )
+                logPanelOpen && <TransactionForm onPanelClose={() => setLogPanelOpen(false)} />
             }
         </>
     );
