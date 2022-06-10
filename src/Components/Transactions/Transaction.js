@@ -8,14 +8,14 @@ import CategoryIcon from '../UIElements/CategoryIcon';
 // description - optional string - an additional note about the transaction
 // amount - Number - Dollar amount of the transaction (will show in red with a minus)
 // date - String - String using the ISO Date format
-export default function Transaction({ category, description, amount, date }) {
+export default function Transaction({ category, description, amount, date, onClick }) {
     const getContent = useContent();
     const categoryText = key => getContent('CATEGORIES', key);
 
     const formattedDate = new Date(date).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
 
     return (
-        <button className={styles.container}>
+        <button className={styles.container} onClick={onClick}>
             <CategoryIcon categoryCode={category}
                           containerSize='40px'
                           iconSize='20px'

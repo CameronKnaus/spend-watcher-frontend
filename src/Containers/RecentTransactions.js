@@ -6,11 +6,13 @@ import useFetch from '../CustomHooks/useFetch';
 import Transaction from '../Components/Transactions/Transaction';
 import Link from '../Components/UIElements/Link';
 import { PAGE_ROUTES } from '../Constants/RouteConstants';
+import TransactionForm from '../Components/Transactions/TransactionForm';
 
-export default function RecentTransactions({ refreshRequested }) {
+export default function RecentTransactions({ refreshRequested, callForRefresh }) {
     const service = useFetch(SERVICE_ROUTES.recentTransactions, true);
     const getContent = useContent();
     const text = (key) => getContent('TRANSACTIONS', key);
+    const [transactionToEdit, setTransactionToEdit] = React.useState();
 
     const Container = React.useCallback(({ children }) => {
         return (
@@ -63,6 +65,20 @@ export default function RecentTransactions({ refreshRequested }) {
         );
     }
 
+    function setTransactionForEditing(transaction) {
+        setTransactionToEdit({
+            id: transaction.transaction_id,
+            amount: transaction.amount,
+            note: transaction.note,
+            category: {
+                code: transaction.category,
+                name: getContent('CATEGORIES', transaction.category)
+            },
+            isUncommon: transaction.uncommon,
+            date: transaction.date
+        });
+    }
+
     const mapTransactionList = (transactionList, header) => {
         const sortedList = transactionList.sort((a, b) => {
             return a.transaction_id < b.transaction_id ? 1 : -1;
@@ -82,6 +98,7 @@ export default function RecentTransactions({ refreshRequested }) {
                                          description={transaction.note}
                                          amount={transaction.amount}
                                          date={transaction.date}
+                                         onClick={() => setTransactionForEditing(transaction)}
                             />
                         </div>
                     ))
@@ -129,6 +146,15 @@ export default function RecentTransactions({ refreshRequested }) {
                   customClass={styles.linkContainer}
                   textAlign='center'
             />
+            {
+                transactionToEdit && (
+                    <TransactionForm editMode
+                                     existingTransaction={transactionToEdit}
+                                     onPanelClose={() => setTransactionToEdit(null)}
+                                     onSubmission={callForRefresh}
+                    />
+                )
+            }
         </Container>
     );
 }

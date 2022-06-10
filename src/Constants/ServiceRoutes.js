@@ -11,7 +11,8 @@ const SERVICE_ROUTES = {
     checkAuthentication: authApi('/verifyLogin'), // GET
     spendingSummary: spendApi('/summary'), // GET
     recentTransactions: spendApi('/recent'), // GET
-    submitNewTransaction: spendApi('/new') // POST
+    submitNewTransaction: spendApi('/new'), // POST
+    submitEditTransaction: spendApi('/edit') // POST
 };
 
 export default SERVICE_ROUTES;

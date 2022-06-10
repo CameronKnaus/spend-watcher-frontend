@@ -18,14 +18,6 @@ export default function CategoryInput({ id = 'category-input', textInputStyles, 
         return () => document.removeEventListener('click', toggleOpen);
     }, []);
 
-    React.useEffect(() => {
-        if(Array.isArray(categoryList) && categoryList.length) {
-            // Set starting default value to 'Other' category
-            onChange(categoryList[0]);
-        }
-
-    }, [categoryList, onChange]);
-
     function toggleOpen(event) {
         setOpen(event && event.target === ref.current);
     }

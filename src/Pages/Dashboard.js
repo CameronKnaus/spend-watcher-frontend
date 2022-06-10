@@ -27,7 +27,7 @@ export default function Dashboard() {
                 {getContent('ACCESSIBLE_PAGE_TITLES', 'DASHBOARD')}
             </h1>
             <Spending refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
-            <RecentTransactions refreshRequested={refreshRequested} />
+            <RecentTransactions refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
         </div>
     );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import useContent from '../CustomHooks/useContent';
 
 export const useCategoryList = () => {
-    const [categoryList, setCategoryList] = React.useState();
+    const [categoryList, setCategoryList] = React.useState([]);
     const getContent = useContent();
 
     React.useEffect(() => {
@@ -34,5 +34,5 @@ export const useCategoryList = () => {
         ]);
     }, [getContent]);
 
-    return categoryList || [];
+    return categoryList;
 };
