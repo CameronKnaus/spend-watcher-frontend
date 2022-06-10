@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { PAGE_ROUTES } from './Constants/RouteConstants';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import FormFactorContext from './Util/FormFactorContext';
@@ -11,9 +11,7 @@ import AuthScreen from './Pages/AuthScreen';
 import SessionChecker from './Util/SessionChecker';
 import TransactionSummary from './Pages/TransactionSummary';
 
-const projectRoot = ReactDOM.createRoot(document.getElementById('root'));
-
-projectRoot.render(
+ReactDOM.render(
     <React.StrictMode>
         <MuiPickersUtilsProvider utils={dayjs}>
             <FormFactorContext>
@@ -28,5 +26,6 @@ projectRoot.render(
                 </BrowserRouter>
             </FormFactorContext>
         </MuiPickersUtilsProvider>
-    </React.StrictMode>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
