@@ -7,7 +7,7 @@ import useFetch from '../CustomHooks/useFetch';
 import DashboardButton from '../Components/Dashboard/DashboardButton';
 import TransactionForm from '../Components/Transactions/TransactionForm';
 
-export default function Spending() {
+export default function Spending({ refreshRequested, callForRefresh }) {
     const currentMonth = React.useMemo(() => {
         const currentDate = new Date();
         return currentDate.toLocaleString('default', { month: 'long' });
@@ -29,6 +29,12 @@ export default function Spending() {
         const { spending } = service.response.data;
         setSpendingTotal(`$${spending.currentMonthTotal}`);
     }, [service.response]);
+
+    React.useEffect(() => {
+        if(refreshRequested) {
+            service.fire(true);
+        }
+    }, [refreshRequested, service]);
 
     if(service.loading) {
         return 'LOADING';
@@ -64,7 +70,7 @@ export default function Spending() {
                              callback={() => setLogPanelOpen(true)}
             />
             {
-                logPanelOpen && <TransactionForm onPanelClose={() => setLogPanelOpen(false)} />
+                logPanelOpen && <TransactionForm onPanelClose={() => setLogPanelOpen(false)} onSubmission={callForRefresh} />
             }
         </>
     );

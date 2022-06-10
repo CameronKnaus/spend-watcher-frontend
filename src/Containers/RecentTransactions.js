@@ -7,7 +7,7 @@ import Transaction from '../Components/Transactions/Transaction';
 import Link from '../Components/UIElements/Link';
 import { PAGE_ROUTES } from '../Constants/RouteConstants';
 
-export default function RecentTransactions() {
+export default function RecentTransactions({ refreshRequested }) {
     const service = useFetch(SERVICE_ROUTES.recentTransactions, true);
     const getContent = useContent();
     const text = (key) => getContent('TRANSACTIONS', key);
@@ -22,6 +22,13 @@ export default function RecentTransactions() {
             </>
         );
     }, [getContent]);
+
+    React.useEffect(() => {
+        if(refreshRequested) {
+            // If refresh is requested then silently make a new service request
+            service.fire(true);
+        }
+    }, [refreshRequested, service]);
 
     if(service.loading) {
         // TODO
@@ -56,26 +63,32 @@ export default function RecentTransactions() {
         );
     }
 
-    const mapTransactionList = (transactionList, header) => (
-        <>
-            <h3 className={styles.dateLabel}>
-                {header}
-            </h3>
-            {
-                transactionList.map((transaction) => (
-                    <div key={transaction.transaction_id}
-                         className={styles.transactionWrapper}
-                    >
-                        <Transaction category={transaction.category}
-                                     description={transaction.note}
-                                     amount={transaction.amount}
-                                     date={transaction.date}
-                        />
-                    </div>
-                ))
-            }
-        </>
-    );
+    const mapTransactionList = (transactionList, header) => {
+        const sortedList = transactionList.sort((a, b) => {
+            return a.transaction_id < b.transaction_id ? 1 : -1;
+        });
+
+        return (
+            <>
+                <h3 className={styles.dateLabel}>
+                    {header}
+                </h3>
+                {
+                    sortedList.map((transaction) => (
+                        <div key={transaction.transaction_id}
+                             className={styles.transactionWrapper}
+                        >
+                            <Transaction category={transaction.category}
+                                         description={transaction.note}
+                                         amount={transaction.amount}
+                                         date={transaction.date}
+                            />
+                        </div>
+                    ))
+                }
+            </>
+        );
+    };
 
     const { today, yesterday, ...transactions } = service.response.data.transactions;
 

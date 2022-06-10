@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
-export default function useFetch(url, fireImmediately = false) {
+export default function useFetch(url, fireImmediately = false, fireSilently = false) {
     const [response, setResponse] = React.useState(null);
-    const [loading, setLoading] = React.useState(fireImmediately);
+    const [loading, setLoading] = React.useState(fireImmediately && !fireSilently);
     const [error, setError] = React.useState(false);
     const [canFire, setCanFire] = React.useState(fireImmediately);
+    const [silentMode, setSilentMode] = React.useState(fireSilently);
 
     React.useEffect(() => {
         if(!canFire) {
@@ -13,7 +14,7 @@ export default function useFetch(url, fireImmediately = false) {
         }
 
         const source = axios.CancelToken.source();
-        setLoading(true);
+        !silentMode && setLoading(true);
         axios.get(url, { cancelToken: source.token })
             .then(response => {
                 setResponse(response);
@@ -28,12 +29,21 @@ export default function useFetch(url, fireImmediately = false) {
                 setCanFire(false);
             });
 
-    }, [canFire, url]);
+    }, [silentMode, canFire, url]);
 
-    return {
+    // Calling the fire method silently means the loading flag will not be set.  This ensures the
+    function fire(fireSilently) {
+        if(fireSilently) {
+            setSilentMode(true);
+        }
+
+        setCanFire(true);
+    }
+
+    return React.useMemo(() => ({
         response,
         loading,
         error,
-        fire: () => { setCanFire(true) }
-    };
+        fire
+    }), [response, loading, error]);
 }

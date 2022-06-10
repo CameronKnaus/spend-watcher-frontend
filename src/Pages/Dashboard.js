@@ -7,14 +7,27 @@ import RecentTransactions from '../Containers/RecentTransactions';
 
 export default function Dashboard() {
     const getContent = useContent();
+    const [refreshRequested, setRefreshRequested] = React.useState(false);
+
+    React.useEffect(() => {
+        // refreshRequested is used to trigger services on the dashboard to be called once more
+        // We can immediately set it to false after use.
+        if(refreshRequested) {
+            setRefreshRequested(false);
+        }
+    }, [refreshRequested]);
+
+    function callForRefresh() {
+        setRefreshRequested(true);
+    }
 
     return (
         <div className={styles.container}>
             <h1 className='accessible-text'>
                 {getContent('ACCESSIBLE_PAGE_TITLES', 'DASHBOARD')}
             </h1>
-            <Spending />
-            <RecentTransactions />
+            <Spending refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
+            <RecentTransactions refreshRequested={refreshRequested} />
         </div>
     );
 }

@@ -30,15 +30,18 @@
     z-index: 999;
     width: 100%;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     position: fixed;
     animation: slideUp;
     animation-duration: 0.5s;
     min-width: var(--min-supported-width);
+    max-width: 600px;
 }
 
 @keyframes slideUp {
-    from {transform: translateY(100vh)}
-    to {transform: translateY(0)}
+    from {transform: translate(-50%, 100vh)}
+    to {transform: translate(-50%, 0)}
 }
 
 .panelClosing {
@@ -48,8 +51,8 @@
 }
 
 @keyframes slideDown {
-    from {transform: translateY(0)}
-    to {transform: translateY(100vh)}
+    from {transform: translate(-50%, 0)}
+    to {transform: translate(-50%, 100vh)}
 }
 
 .titleTag {

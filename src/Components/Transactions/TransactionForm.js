@@ -9,7 +9,7 @@ import SlideUpPanel from '../UIElements/SlideUpPanel';
 import SERVICE_ROUTES from '../../Constants/ServiceRoutes';
 import axios from 'axios';
 
-export default function TransactionForm({ onPanelClose, editMode }) {
+export default function TransactionForm({ onPanelClose, editMode, onSubmission }) {
     const [formValid, setFormValid] = React.useState(false);
     const [amount, setAmount] = React.useState();
     const [category, setCategory] = React.useState();
@@ -32,16 +32,17 @@ export default function TransactionForm({ onPanelClose, editMode }) {
             return;
         }
 
-        console.log(selectedDate) // eslint-disable-line
-
         setLoading(true);
-        axios.post(SERVICE_ROUTES.submitNewTransaction, {
-            amount: parseFloat(amount),
-            category: (category && category.code) || 'OTHER',
-            isUncommon,
-            note,
-            selectedDate: selectedDate.format('YYYY-MM-DD')
-        });
+        axios
+            .post(SERVICE_ROUTES.submitNewTransaction, {
+                amount: parseFloat(amount),
+                category: (category && category.code) || 'OTHER',
+                isUncommon,
+                note,
+                selectedDate: selectedDate.format('YYYY-MM-DD')
+            })
+            .then(onSubmission)
+            .finally(() => setLoading(false));
     }
 
     const UNCOMMON_LABEL = text('UNCOMMON_LABEL');
