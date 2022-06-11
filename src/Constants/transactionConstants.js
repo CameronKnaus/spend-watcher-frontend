@@ -1,5 +1,5 @@
 import { FaCannabis, FaCar, FaGasPump, FaGift, FaTshirt, FaHome, FaHeart, FaDollarSign } from 'react-icons/fa';
-import { IoIosBeer, IoIosCart, IoIosAirplane } from 'react-icons/io';
+import { IoIosBeer, IoIosCart, IoIosAirplane, IoMdBrush } from 'react-icons/io';
 import { MdFastfood,
     MdMovieFilter,
     MdTrain,
@@ -35,6 +35,7 @@ export const CATEGORY_ICONS = {
     DATES: <FaHeart />,
     INSURANCE: <MdShield />,
     GAMES: <IoGameController />,
+    HOBBY: <IoMdBrush />,
     OTHER: <FaDollarSign />
 };
 
@@ -60,5 +61,6 @@ export const CATEGORY_COLORS = {
     DATES: 'var(--theme-red-pale)',
     INSURANCE: 'var(--theme-celadon-blue-dark)',
     GAMES: 'var(--theme-jungle-green)',
+    HOBBY: 'var(--theme-orange-pale)',
     OTHER: 'var(--theme-steel-teal)'
 };

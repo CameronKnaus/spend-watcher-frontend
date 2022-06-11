@@ -22,6 +22,7 @@ export const useCategoryList = () => {
             { name: get('GAMES'), code: 'GAMES' },
             { name: get('GIFTS'), code: 'GIFTS' },
             { name: get('HEALTH'), code: 'HEALTH' },
+            { name: get('HOBBY'), code: 'HOBBY' },
             { name: get('HOUSING'), code: 'HOUSING' },
             { name: get('INSURANCE'), code: 'INSURANCE' },
             { name: get('MATERIAL_ITEMS'), code: 'MATERIAL_ITEMS' },
