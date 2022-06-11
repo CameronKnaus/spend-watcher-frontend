@@ -5,9 +5,17 @@ import MoneyInput from '../FormElements/MoneyInput';
 import CategoryInput from '../FormElements/CategoryInput';
 import { DatePicker } from '@material-ui/pickers';
 import dayjs from 'dayjs';
-import SlideUpPanel from '../UIElements/SlideUpPanel';
+import SlideUpPanel, { ClosePanel } from '../UIElements/SlideUpPanel';
 import SERVICE_ROUTES from '../../Constants/ServiceRoutes';
 import axios from 'axios';
+import Link from '../UIElements/Link';
+import { IoTrashSharp } from 'react-icons/io5';
+
+const SUBMISSION_TYPES = {
+    DELETE: 'DELETE',
+    EDIT: 'EDIT',
+    NEW: 'NEW'
+};
 
 // existingTransaction should be an object containing all transaction keys
 export default function TransactionForm({ onPanelClose, onSubmission, editMode, existingTransaction = {} }) {
@@ -28,40 +36,46 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
         setFormValid(amount > 0);
     }, [amount]);
 
-
-    function submitNewTransaction() {
+    function submit(submissionType) {
         if(loading) {
             return;
         }
 
-        setLoading(true);
-        axios
-            .post(SERVICE_ROUTES.submitNewTransaction, {
+        // Create the payload and target endpoint based on submission type
+        let endpoint, payload;
+        if(submissionType === SUBMISSION_TYPES.NEW) {
+            endpoint = SERVICE_ROUTES.submitNewTransaction;
+            payload = {
                 amount: parseFloat(amount),
                 category: (category && category.code) || 'OTHER',
                 isUncommon,
                 note,
                 selectedDate: selectedDate.format('YYYY-MM-DD')
-            })
-            .then(onSubmission)
-            .finally(() => setLoading(false));
-    }
-
-    function submitTransactionEdit() {
-        if(loading) {
-            return;
-        }
-
-        setLoading(true);
-        axios
-            .post(SERVICE_ROUTES.submitEditTransaction, {
+            };
+        } else if(submissionType === SUBMISSION_TYPES.EDIT) {
+            endpoint = SERVICE_ROUTES.submitEditTransaction;
+            payload = {
                 transactionId: existingTransaction.id,
                 amount: parseFloat(amount),
                 category: (category && category.code) || 'OTHER',
                 isUncommon,
                 note,
                 selectedDate: selectedDate.format('YYYY-MM-DD')
-            })
+            };
+        } else if(submissionType === SUBMISSION_TYPES.DELETE) {
+            endpoint = SERVICE_ROUTES.submitDeleteTransaction;
+            payload = {
+                transactionId: existingTransaction.id
+            };
+        }
+
+        // Invalid submissionType provided
+        if(!endpoint) {
+            return;
+        }
+
+        // Handle service call
+        axios.post(endpoint, payload)
             .then(onSubmission)
             .finally(() => setLoading(false));
     }
@@ -73,65 +87,85 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                       closeText={getContent('TRANSACTIONS', 'CANCEL')}
                       confirmText={getContent('TRANSACTIONS', editMode ? 'EDIT' : 'SUBMIT')}
                       disableConfirmButton={!formValid}
-                      forwardActionCallback={editMode ? submitTransactionEdit : submitNewTransaction}
+                      forwardActionCallback={() => submit(editMode ? SUBMISSION_TYPES.EDIT : SUBMISSION_TYPES.NEW)}
                       onPanelClose={onPanelClose}
         >
-            <form className={styles.transactionForm}>
-                <label>
-                    {text('AMOUNT_LABEL')}
-                    <MoneyInput name='amount-spent-field'
-                                placeholder={text('AMOUNT_PLACEHOLDER')}
-                                className={styles.textInput}
-                                stateUpdater={setAmount}
-                                value={amount}
-                    />
-                </label>
-                <label htmlFor='category-input' style={{ width: 100 }}>
-                    {text('CATEGORY_LABEL')}
-                </label>
-                <CategoryInput textInputStyles={styles.textInput}
-                               value={category}
-                               onChange={setCategory}
-                />
-                <label>
-                    {text('NOTES_LABEL')}
-                    <input type='text'
-                           className={styles.textInput}
-                           placeholder={text('NOTES_PLACEHOLDER')}
-                           value={note}
-                           autoComplete='off'
-                           maxLength={60}
-                           onChange={(event) => setNote(event.target.value)}
-                    />
-                </label>
-                <div className={styles.checkContainer}>
-                    <input type='checkbox'
-                           aria-label={`${UNCOMMON_LABEL},${UNCOMMON_DESCRIPTION}`}
-                           className={styles.checkBox}
-                           checked={isUncommon}
-                           onChange={() => setIsUncommon(prev => !prev)}
-                    />
-                    <div aria-hidden className={styles.checkLabel}>
-                        {UNCOMMON_LABEL}
-                    </div>
-                    <div aria-hidden className={styles.checkDescription}>
-                        {UNCOMMON_DESCRIPTION}
-                    </div>
-                </div>
-                <label htmlFor='date-input'>
-                    {text('DATE_LABEL')}
-                </label>
-                <DatePicker autoOk
-                            disableFuture
-                            disableToolbar
-                            openTo='date'
-                            format='MMMM D, YYYY'
-                            value={selectedDate}
-                            variant='modal'
-                            className={styles.textInput}
-                            onChange={setSelectedDate}
-                />
-            </form>
+            <ClosePanel.Consumer>
+                {
+                    ({ closePanel }) => (
+                        <>
+                            <form className={styles.transactionForm}>
+                                <label>
+                                    {text('AMOUNT_LABEL')}
+                                    <MoneyInput name='amount-spent-field'
+                                                placeholder={text('AMOUNT_PLACEHOLDER')}
+                                                className={styles.textInput}
+                                                stateUpdater={setAmount}
+                                                value={amount}
+                                    />
+                                </label>
+                                <label htmlFor='category-input' style={{ width: 100 }}>
+                                    {text('CATEGORY_LABEL')}
+                                </label>
+                                <CategoryInput textInputStyles={styles.textInput}
+                                               value={category}
+                                               onChange={setCategory}
+                                />
+                                <label>
+                                    {text('NOTES_LABEL')}
+                                    <input type='text'
+                                           className={styles.textInput}
+                                           placeholder={text('NOTES_PLACEHOLDER')}
+                                           value={note}
+                                           autoComplete='off'
+                                           maxLength={60}
+                                           onChange={(event) => setNote(event.target.value)}
+                                    />
+                                </label>
+                                <div className={styles.checkContainer}>
+                                    <input type='checkbox'
+                                           aria-label={`${UNCOMMON_LABEL},${UNCOMMON_DESCRIPTION}`}
+                                           className={styles.checkBox}
+                                           checked={isUncommon}
+                                           onChange={() => setIsUncommon(prev => !prev)}
+                                    />
+                                    <div aria-hidden className={styles.checkLabel}>
+                                        {UNCOMMON_LABEL}
+                                    </div>
+                                    <div aria-hidden className={styles.checkDescription}>
+                                        {UNCOMMON_DESCRIPTION}
+                                    </div>
+                                </div>
+                                <label htmlFor='date-input'>
+                                    {text('DATE_LABEL')}
+                                </label>
+                                <DatePicker autoOk
+                                            disableFuture
+                                            disableToolbar
+                                            openTo='date'
+                                            format='MMMM D, YYYY'
+                                            value={selectedDate}
+                                            variant='modal'
+                                            className={styles.textInput}
+                                            onChange={setSelectedDate}
+                                />
+                            </form>
+                            {
+                                editMode && (
+                                    <Link text={text('DELETE')}
+                                          CustomIcon={IoTrashSharp}
+                                          customClass={styles.deleteLink}
+                                          onClickCallback={() => {
+                                              submit(SUBMISSION_TYPES.DELETE);
+                                              closePanel();
+                                          }}
+                                    />
+                                )
+                            }
+                        </>
+                    )
+                }
+            </ClosePanel.Consumer>
         </SlideUpPanel>
     );
 }

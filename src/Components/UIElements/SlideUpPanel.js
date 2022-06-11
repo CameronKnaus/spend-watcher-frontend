@@ -2,8 +2,12 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import styles from '../../Styles/Components/UIElements/SlideUpPanel.module.css';
 
+// This context is provided to all children to give them access to the closePanel method
+const ClosePanel = React.createContext(() => { /* NOOP */ });
+
 // If 'confirmText' and 'closeText' are provided, two buttons will appear at the bottom
 // If only 'closeText' is provided then only one button will appear at the bottom that closes the panel
+// All children of the SLideUpPanel will be given the closePanel function prop
 export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title, forwardActionCallback = () => { /* NOOP */ }, disableConfirmButton }) {
     // Grab ref of panel for handling tabbing
     const panelRef = React.useRef();
@@ -93,7 +97,10 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
                 </div>
                 <div className={styles.panelContent}>
                     <div className={styles.scrollableArea}>
-                        { children }
+                        {/* Provide the close panel function to all children inside the slideUpPanel*/}
+                        <ClosePanel.Provider value={{ closePanel }}>
+                            {children}
+                        </ClosePanel.Provider>
                     </div>
                     <div className={styles.buttonRow}>
                         <button className={`${styles.buttons} ${styles.closeButton}`}
@@ -117,3 +124,5 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
         document.body
     );
 }
+
+export { ClosePanel };

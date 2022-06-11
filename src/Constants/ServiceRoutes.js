@@ -12,7 +12,8 @@ const SERVICE_ROUTES = {
     spendingSummary: spendApi('/summary'), // GET
     recentTransactions: spendApi('/recent'), // GET
     submitNewTransaction: spendApi('/new'), // POST
-    submitEditTransaction: spendApi('/edit') // POST
+    submitEditTransaction: spendApi('/edit'), // POST
+    submitDeleteTransaction: spendApi('/delete') // POST
 };
 
 export default SERVICE_ROUTES;

@@ -47,3 +47,9 @@
     font-weight: var(--fw-light);
     color: var(--theme-light-text-color);
 }
+
+.deleteLink > button {
+    color: var(--theme-red) !important;
+    margin: 1.5rem auto 0;
+    text-align: center;
+}

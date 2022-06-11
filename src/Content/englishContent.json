@@ -38,7 +38,8 @@
     "DATE_LABEL": "Date of Expense",
     "CANCEL": "Cancel",
     "SUBMIT": "Submit",
-    "EDIT": "Edit"
+    "EDIT": "Edit",
+    "DELETE": "Delete this expense"
   },
   "CATEGORIES": {
     "RESTAURANTS": "Dining Out",
