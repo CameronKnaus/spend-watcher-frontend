@@ -41,7 +41,34 @@
     "EDIT": "Edit",
     "DELETE": "Delete this expense"
   },
-  "CATEGORIES": {
+  "MY_MONEY": {
+    "MY_MONEY": "My Money",
+    "As_OF": "As of <<arg0:date>>",
+    "TOTAL_VALUE_TITLE": "Total Account Values",
+    "SEE_TRENDS": "Tap to see trends",
+    "TOTAL_VALUE_ARIA": "The total value of all your accounts is <<arg0:amount>>.",
+    "ADD_ACCOUNT": "Add Account",
+    "EDIT_ACCOUNT": "Edit Account",
+    "NEW_ACCOUNT": "New Account",
+    "CANCEL": "Cancel",
+    "SUBMIT": "Submit",
+    "EDIT": "Edit",
+    "VARIABLE_GROWTH_LABEL": "This Growth Rate Varies",
+    "VARIABLE_GROWTH_DESCRIPTION": "Checking this box marks this account's annual growth rate as variable. When predicting future growth of this account a variance of ±2% will be used to simulate variance in the market.",
+    "NAME_LABEL": "Account Name",
+    "NAME_PLACEHOLDER": "Account Name",
+    "CATEGORY_LABEL": "Account Type",
+    "ACCOUNT_VALUE_LABEL": "Current Account Value",
+    "ACCOUNT_VALUE_PLACEHOLDER": "$0.00",
+    "GROWTH_RATE_LABEL": "Annual Growth Rate (%)",
+    "GROWTH_RATE_PLACEHOLDER": "0.00"
+  },
+  "ACCOUNT_CATEGORIES": {
+    "CHECKING": "Checking",
+    "SAVINGS": "Savings",
+    "INVESTING": "Investment"
+  },
+  "SPENDING_CATEGORIES": {
     "RESTAURANTS": "Dining Out",
     "DRINKS": "Drinks",
     "GROCERIES": "Groceries",

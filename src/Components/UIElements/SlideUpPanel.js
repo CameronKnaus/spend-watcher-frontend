@@ -8,7 +8,8 @@ const ClosePanel = React.createContext(() => { /* NOOP */ });
 // If 'confirmText' and 'closeText' are provided, two buttons will appear at the bottom
 // If only 'closeText' is provided then only one button will appear at the bottom that closes the panel
 // All children of the SLideUpPanel will be given the closePanel function prop
-export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title, forwardActionCallback = () => { /* NOOP */ }, disableConfirmButton }) {
+// tagColor - String - CSS color value for the top tag of the slideUpPanel, defaults to red
+export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title, forwardActionCallback = () => { /* NOOP */ }, disableConfirmButton, tagColor = 'var(--theme-red-dark)' }) {
     // Grab ref of panel for handling tabbing
     const panelRef = React.useRef();
     const titleRef = React.useRef();
@@ -90,7 +91,7 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
                  role='dialog'
                  className={`${styles.panelContainer} ${panelClosing ? styles.panelClosing : ''}`}
             >
-                <div className={styles.titleTag}>
+                <div className={styles.titleTag} style={{ backgroundColor: tagColor }}>
                     <h2 ref={titleRef} tabIndex={0} className={styles.title}>
                         {title}
                     </h2>

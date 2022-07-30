@@ -37,9 +37,12 @@
 }
 
 .amount {
-    color: var(--theme-money-loss);
     font-size: var(--enlarged-body-text-font-size);
     font-weight: var(--fw-semi-bold);
+}
+
+.expense {
+    color: var(--theme-money-loss);
 }
 
 .date {

@@ -3,7 +3,7 @@ import styles from '../Styles/Containers/RecentTransactions.module.css';
 import useContent from '../CustomHooks/useContent';
 import SERVICE_ROUTES from '../Constants/ServiceRoutes';
 import useFetch from '../CustomHooks/useFetch';
-import Transaction from '../Components/Transactions/Transaction';
+import InteractiveDataRow from '../Components/UIElements/InteractiveDataRow';
 import Link from '../Components/UIElements/Link';
 import { PAGE_ROUTES } from '../Constants/RouteConstants';
 import TransactionForm from '../Components/Transactions/TransactionForm';
@@ -72,7 +72,7 @@ export default function RecentTransactions({ refreshRequested, callForRefresh })
             note: transaction.note,
             category: {
                 code: transaction.category,
-                name: getContent('CATEGORIES', transaction.category)
+                name: getContent('SPENDING_CATEGORIES', transaction.category)
             },
             isUncommon: transaction.uncommon,
             date: transaction.date
@@ -94,11 +94,13 @@ export default function RecentTransactions({ refreshRequested, callForRefresh })
                         <div key={transaction.transaction_id}
                              className={styles.transactionWrapper}
                         >
-                            <Transaction category={transaction.category}
-                                         description={transaction.note}
-                                         amount={transaction.amount}
-                                         date={transaction.date}
-                                         onClick={() => setTransactionForEditing(transaction)}
+                            <InteractiveDataRow isExpense
+                                                title={getContent('SPENDING_CATEGORIES', transaction.category)}
+                                                iconCategory={transaction.category}
+                                                description={transaction.note}
+                                                amount={transaction.amount}
+                                                date={transaction.date}
+                                                onClick={() => setTransactionForEditing(transaction)}
                             />
                         </div>
                     ))

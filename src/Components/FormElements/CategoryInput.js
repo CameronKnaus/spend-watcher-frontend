@@ -5,8 +5,8 @@ import CategoryIcon from '../UIElements/CategoryIcon';
 
 // When tracking this field, the containing parent component should have a state like const [value, setValue] = React.useState();
 // Then you can pass the setValue to the onChange prop and value to the value prop to ensure the parent component remains up to date
-export default function CategoryInput({ id = 'category-input', textInputStyles, value, onChange }) {
-    const categoryList = useCategoryList();
+export default function CategoryInput({ id = 'category-input', textInputStyles, value, onChange, categoryType }) {
+    const categoryList = useCategoryList(categoryType);
     const [open, setOpen] = React.useState(false);
     const [filterText, setFilterText] = React.useState('');
     const ref = React.useRef(null);

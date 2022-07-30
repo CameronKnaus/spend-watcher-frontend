@@ -25,7 +25,7 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
     // State for form values
     const [formValid, setFormValid] = React.useState(Boolean(existingTransaction.amount)); // defaults false
     const [amount, setAmount] = React.useState(existingTransaction.amount || null);
-    const [category, setCategory] = React.useState(existingTransaction.category || { code: 'OTHER', name: getContent('CATEGORIES', 'OTHER') });
+    const [category, setCategory] = React.useState(existingTransaction.category || { code: 'OTHER', name: getContent('SPENDING_CATEGORIES', 'OTHER') });
     const [isUncommon, setIsUncommon] = React.useState(Boolean(existingTransaction.isUncommon));
     const [note, setNote] = React.useState(existingTransaction.note || '');
     const [selectedDate, setSelectedDate] = React.useState(existingTransaction.date ? dayjs(existingTransaction.date) : dayjs()); // defaults to today
@@ -83,9 +83,9 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
     const UNCOMMON_LABEL = text('UNCOMMON_LABEL');
     const UNCOMMON_DESCRIPTION = text('UNCOMMON_DESCRIPTION');
     return (
-        <SlideUpPanel title={getContent('TRANSACTIONS', editMode ? 'EDIT_EXPENSE' : 'NEW_EXPENSE')}
-                      closeText={getContent('TRANSACTIONS', 'CANCEL')}
-                      confirmText={getContent('TRANSACTIONS', editMode ? 'EDIT' : 'SUBMIT')}
+        <SlideUpPanel title={text(editMode ? 'EDIT_EXPENSE' : 'NEW_EXPENSE')}
+                      closeText={text('CANCEL')}
+                      confirmText={text(editMode ? 'EDIT' : 'SUBMIT')}
                       disableConfirmButton={!formValid}
                       forwardActionCallback={() => submit(editMode ? SUBMISSION_TYPES.EDIT : SUBMISSION_TYPES.NEW)}
                       onPanelClose={onPanelClose}
@@ -109,6 +109,7 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                                 </label>
                                 <CategoryInput textInputStyles={styles.textInput}
                                                value={category}
+                                               categoryType='transactions'
                                                onChange={setCategory}
                                 />
                                 <label>

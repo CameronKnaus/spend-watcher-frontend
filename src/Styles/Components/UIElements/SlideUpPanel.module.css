@@ -57,7 +57,6 @@
 
 .titleTag {
     color: #FFFFFF;
-    background-color: var(--theme-red-dark);
     display: inline-block;
     border-radius: 18px 18px 0 0;
     position: relative;

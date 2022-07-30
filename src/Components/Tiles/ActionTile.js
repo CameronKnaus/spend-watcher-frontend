@@ -43,14 +43,14 @@ function ActionTile({ title, subtitle, value, fallbackActionPrompt, fallbackDesc
     );
 
     const Title = React.useCallback(({ extraSpace, hideFromScreenReader, hideFromScreen }) => (
-        <div aria-hidden={hideFromScreen}
-             className={`${styles.title} ${hideFromScreenReader ? 'accessible-text' : '' } ${extraSpace ? styles.pb12 : styles.pb8}`}
+        <div aria-hidden={hideFromScreenReader}
+             className={`${styles.title} ${hideFromScreen ? 'accessible-text' : '' } ${extraSpace ? styles.pb12 : styles.pb8}`}
         >
             {title}
         </div>
     ), [title]);
 
-    if(!value) {
+    if(!value && value !== 0) {
         return container(
             <div className={styles.flexContainer}>
                 <div className={styles.descriptionContainer}>

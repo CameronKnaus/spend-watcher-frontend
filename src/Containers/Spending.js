@@ -58,7 +58,7 @@ export default function Spending({ refreshRequested, callForRefresh }) {
                         options={{ valueColor: 'var(--theme-money-loss)' }}
             />
             <ActionTile title={text('RECURRING')}
-                        value={0}
+                        value={null}
                         fallbackDescription={text('NO_RECURRING')}
                         fallbackActionPrompt={text('NO_RECURRING_PROMPT')}
                         ariaValue={text('RECURRING_ARIA_LABEL', [0])}

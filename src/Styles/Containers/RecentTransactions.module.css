@@ -17,6 +17,7 @@
 
 .linkContainer {
     padding-top: 4px;
+    font-size: var(--body-text-font-size);
 }
 
 .issueMessage {

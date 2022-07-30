@@ -3,6 +3,7 @@ import styles from '../Styles/Pages/Dashboard.module.css';
 import Spending from '../Containers/Spending';
 import useContent from '../CustomHooks/useContent';
 import RecentTransactions from '../Containers/RecentTransactions';
+// import MyMoney from '../Containers/MyMoney';
 
 
 export default function Dashboard() {
@@ -28,6 +29,7 @@ export default function Dashboard() {
             </h1>
             <Spending refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
             <RecentTransactions refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
+            {/* <MyMoney /> */}
         </div>
     );
 }

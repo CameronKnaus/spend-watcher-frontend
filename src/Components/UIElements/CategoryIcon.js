@@ -1,12 +1,16 @@
 import React from 'react';
 import styles from '../../Styles/Components/UIElements/CategoryIcon.module.css';
-import { CATEGORY_COLORS, CATEGORY_ICONS } from '../../Constants/transactionConstants';
+import CATEGORIES from '../../Constants/categories';
 
 export default function CategoryIcon({ categoryCode, containerSize, iconSize, customClasses }) {
+    if(!CATEGORIES[categoryCode]) {
+        return null;
+    }
+
     const containerStyle = {
         height: containerSize,
         width: containerSize,
-        backgroundColor: CATEGORY_COLORS[categoryCode],
+        backgroundColor: CATEGORIES[categoryCode].color,
         fontSize: iconSize
     };
 
@@ -14,7 +18,7 @@ export default function CategoryIcon({ categoryCode, containerSize, iconSize, cu
         <div className={`${styles.iconContainer} ${customClasses}`}
              style={containerStyle}
         >
-            {CATEGORY_ICONS[categoryCode]}
+            {CATEGORIES[categoryCode].icon}
         </div>
     );
 }

@@ -48,21 +48,20 @@ export default function Link({ text, route, useChevron, customClass, textAlign, 
 
     // Basic non-routing callback-only link
     return (
-        <div className={customClass}>
-            <button style={{
+        <button style={{
                         color: 'var(--theme-link-blue)',
                         textDecoration: useChevron ? 'none' : 'underline',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: textAlignment
                     }}
-                    onClick={onClickCallback}
-            >
-                <span style={{ paddingRight: 4 }}>
-                    {text}
-                </span>
-                {getIcon()}
-            </button>
-        </div>
+                className={customClass}
+                onClick={onClickCallback}
+        >
+            <span style={{ paddingRight: 4 }}>
+                {text}
+            </span>
+            {getIcon()}
+        </button>
     );
 }
