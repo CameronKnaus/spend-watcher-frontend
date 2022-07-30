@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from 'Styles/Components/FormElements/CategoryInput.module.css';
+import styles from 'Styles/Components/UIElements/Form/CategoryInput.module.css';
 import { useCategoryList } from 'CustomHooks/useCategoryList';
 import CategoryIcon from 'Components/UIElements/CategoryIcon';
 

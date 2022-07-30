@@ -4,7 +4,7 @@ import useContent from 'CustomHooks/useContent';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useFetch from 'CustomHooks/useFetch';
 import InteractiveDataRow from 'Components/UIElements/InteractiveDataRow';
-import Link from 'Components/UIElements/Link';
+import Link from 'Components/UIElements/Navigation/Link';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import TransactionForm from 'Components/Transactions/TransactionForm';
 

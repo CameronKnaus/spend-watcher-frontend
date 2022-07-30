@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import styles from 'Styles/Components/UIElements/SlideUpPanel.module.css';
+import styles from 'Styles/Components/UIElements/Modal/SlideUpPanel.module.css';
 
 // This context is provided to all children to give them access to the closePanel method
 const ClosePanel = React.createContext(() => { /* NOOP */ });
