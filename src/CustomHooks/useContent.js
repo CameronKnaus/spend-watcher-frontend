@@ -1,6 +1,6 @@
 import React from 'react';
-import EnvironmentSettings from '../Constants/EnvironmentSettings.json';
-import englishContent from '../Content/englishContent.json';
+import EnvironmentSettings from 'Constants/EnvironmentSettings.json';
+import englishContent from 'Content/englishContent.json';
 
 const DEV_MODE = EnvironmentSettings.devMode;
 

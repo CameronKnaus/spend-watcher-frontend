@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../Styles/Components/Tiles/ActionTile.module.css';
+import styles from 'Styles/Components/Tiles/ActionTile.module.css';
 import { CgChevronRight } from 'react-icons/cg';
 
 /* Params:

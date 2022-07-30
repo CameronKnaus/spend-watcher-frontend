@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from '../Styles/Containers/RecentTransactions.module.css';
-import useContent from '../CustomHooks/useContent';
-import SERVICE_ROUTES from '../Constants/ServiceRoutes';
-import useFetch from '../CustomHooks/useFetch';
-import InteractiveDataRow from '../Components/UIElements/InteractiveDataRow';
-import Link from '../Components/UIElements/Link';
-import { PAGE_ROUTES } from '../Constants/RouteConstants';
-import TransactionForm from '../Components/Transactions/TransactionForm';
+import styles from 'Styles/Containers/RecentTransactions.module.css';
+import useContent from 'CustomHooks/useContent';
+import SERVICE_ROUTES from 'Constants/ServiceRoutes';
+import useFetch from 'CustomHooks/useFetch';
+import InteractiveDataRow from 'Components/UIElements/InteractiveDataRow';
+import Link from 'Components/UIElements/Link';
+import { PAGE_ROUTES } from 'Constants/RouteConstants';
+import TransactionForm from 'Components/Transactions/TransactionForm';
 
 export default function RecentTransactions({ refreshRequested, callForRefresh }) {
     const service = useFetch(SERVICE_ROUTES.recentTransactions, true);

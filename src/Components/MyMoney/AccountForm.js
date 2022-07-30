@@ -1,13 +1,13 @@
 import React from 'react';
-import useContent from '../../CustomHooks/useContent';
-import styles from '../../Styles/Components/MyMoney/AccountForm.module.css';
-import CategoryInput from '../FormElements/CategoryInput';
-import SlideUpPanel, { ClosePanel } from '../UIElements/SlideUpPanel';
+import useContent from 'CustomHooks/useContent';
+import styles from 'Styles/Components/MyMoney/AccountForm.module.css';
+import CategoryInput from 'FormElements/CategoryInput';
+import SlideUpPanel, { ClosePanel } from 'UIElements/SlideUpPanel';
 import axios from 'axios';
-import Link from '../UIElements/Link';
+import Link from 'UIElements/Link';
 import { IoTrashSharp } from 'react-icons/io5';
-import MoneyInput from '../FormElements/MoneyInput';
-import ServiceRoutes from '../../Constants/ServiceRoutes';
+import MoneyInput from 'FormElements/MoneyInput';
+import ServiceRoutes from 'Constants/ServiceRoutes';
 
 // existingAccount should be an object containing all account data points for the form
 export default function AccountForm({ onPanelClose, onSubmission, editMode, existingAccount = {} }) {

@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from '../Styles/Pages/AuthScreen.module.css';
-import AuthHandler from '../Util/AuthHandler';
-import ServiceRoutes from '../Constants/ServiceRoutes';
-import { PAGE_ROUTES } from '../Constants/RouteConstants';
+import styles from 'Styles/Pages/AuthScreen.module.css';
+import AuthHandler from 'Util/AuthHandler';
+import ServiceRoutes from 'Constants/ServiceRoutes';
+import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 axios.defaults.withCredentials = true;

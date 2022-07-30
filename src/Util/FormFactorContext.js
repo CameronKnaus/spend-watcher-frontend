@@ -1,5 +1,5 @@
 import React from 'react';
-import { FORM_FACTOR_UPPER_BOUNDS } from '../Constants/FormFactorMapping';
+import { FORM_FACTOR_UPPER_BOUNDS } from 'Constants/FormFactorMapping';
 
 
 // Globally accessible context that contains the method that adds notifications to the queue

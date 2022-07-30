@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from '../../Styles/Components/UIElements/CategoryIcon.module.css';
-import CATEGORIES from '../../Constants/categories';
+import styles from 'Styles/Components/UIElements/CategoryIcon.module.css';
+import CATEGORIES from 'Constants/categories';
 
 export default function CategoryIcon({ categoryCode, containerSize, iconSize, customClasses }) {
     if(!CATEGORIES[categoryCode]) {

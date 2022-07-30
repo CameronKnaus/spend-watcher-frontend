@@ -1,4 +1,4 @@
-import EnvironmentSettings from '../Constants/EnvironmentSettings.json';
+import EnvironmentSettings from 'Constants/EnvironmentSettings.json';
 const { devMode, prodAPI, localAPI } = EnvironmentSettings;
 
 const domainName = devMode ? localAPI : prodAPI;

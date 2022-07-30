@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from '../../Styles/Components/FormElements/CategoryInput.module.css';
-import { useCategoryList } from '../../CustomHooks/useCategoryList';
-import CategoryIcon from '../UIElements/CategoryIcon';
+import styles from 'Styles/Components/FormElements/CategoryInput.module.css';
+import { useCategoryList } from 'CustomHooks/useCategoryList';
+import CategoryIcon from 'Components/UIElements/CategoryIcon';
 
 // When tracking this field, the containing parent component should have a state like const [value, setValue] = React.useState();
 // Then you can pass the setValue to the onChange prop and value to the value prop to ensure the parent component remains up to date

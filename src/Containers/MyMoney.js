@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from '../Styles/Containers/MyMoney.module.css';
-import useContent from '../CustomHooks/useContent';
-import ActionTile from '../Components/Tiles/ActionTile';
-import Link from '../Components/UIElements/Link';
-import AccountForm from '../Components/MyMoney/AccountForm';
+import styles from 'Styles/Containers/MyMoney.module.css';
+import useContent from 'CustomHooks/useContent';
+import ActionTile from 'Components/Tiles/ActionTile';
+import Link from 'Components/UIElements/Link';
+import AccountForm from 'Components/MyMoney/AccountForm';
 
 export default function MyMoney({ callForRefresh }) {
     const [newAccountPanelOpen, setNewAccountPanelOpen] = React.useState(false);

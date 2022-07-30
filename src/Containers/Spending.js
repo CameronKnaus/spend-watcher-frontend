@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from '../Styles/Containers/Spending.module.css';
-import useContent from '../CustomHooks/useContent';
-import ActionTile from '../Components/Tiles/ActionTile';
-import SERVICE_ROUTES from '../Constants/ServiceRoutes';
-import useFetch from '../CustomHooks/useFetch';
-import DashboardButton from '../Components/Dashboard/DashboardButton';
-import TransactionForm from '../Components/Transactions/TransactionForm';
+import styles from 'Styles/Containers/Spending.module.css';
+import useContent from 'CustomHooks/useContent';
+import ActionTile from 'Components/Tiles/ActionTile';
+import SERVICE_ROUTES from 'Constants/ServiceRoutes';
+import useFetch from 'CustomHooks/useFetch';
+import DashboardButton from 'Components/Dashboard/DashboardButton';
+import TransactionForm from 'Components/Transactions/TransactionForm';
 
 export default function Spending({ refreshRequested, callForRefresh }) {
     const currentMonth = React.useMemo(() => {

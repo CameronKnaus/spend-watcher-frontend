@@ -1,6 +1,6 @@
 import React from 'react';
-import useContent from '../CustomHooks/useContent';
-import { ACCOUNT_CATEGORIES, SPENDING_CATEGORIES } from '../Constants/categories';
+import useContent from 'CustomHooks/useContent';
+import { ACCOUNT_CATEGORIES, SPENDING_CATEGORIES } from 'Constants/categories';
 
 // Supported category lists
 const AVAILABLE_LISTS = {

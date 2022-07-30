@@ -1,14 +1,14 @@
 import React from 'react';
-import useContent from '../../CustomHooks/useContent';
-import styles from '../../Styles/Components/Transactions/TransactionForm.module.css';
-import MoneyInput from '../FormElements/MoneyInput';
-import CategoryInput from '../FormElements/CategoryInput';
+import useContent from 'CustomHooks/useContent';
+import styles from 'Styles/Components/Transactions/TransactionForm.module.css';
+import MoneyInput from 'Components/FormElements/MoneyInput';
+import CategoryInput from 'Components/FormElements/CategoryInput';
 import { DatePicker } from '@material-ui/pickers';
 import dayjs from 'dayjs';
-import SlideUpPanel, { ClosePanel } from '../UIElements/SlideUpPanel';
-import SERVICE_ROUTES from '../../Constants/ServiceRoutes';
+import SlideUpPanel, { ClosePanel } from 'Components/UIElements/SlideUpPanel';
+import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import axios from 'axios';
-import Link from '../UIElements/Link';
+import Link from 'Components/UIElements/Link';
 import { IoTrashSharp } from 'react-icons/io5';
 
 const SUBMISSION_TYPES = {

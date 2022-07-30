@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from '../Styles/Pages/Dashboard.module.css';
-import Spending from '../Containers/Spending';
-import useContent from '../CustomHooks/useContent';
-import RecentTransactions from '../Containers/RecentTransactions';
-// import MyMoney from '../Containers/MyMoney';
+import styles from 'Styles/Pages/Dashboard.module.css';
+import Spending from 'Containers/Spending';
+import useContent from 'CustomHooks/useContent';
+import RecentTransactions from 'Containers/RecentTransactions';
+// import MyMoney from 'Containers/MyMoney';
 
 
 export default function Dashboard() {
