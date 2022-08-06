@@ -1,5 +1,6 @@
 export const PAGE_ROUTES = {
     dashboard: '/',
     authScreen: '/auth',
-    transactionSummary: '/transactions'
+    transactionSummary: '/transactions',
+    spendingSummary: '/spending'
 };

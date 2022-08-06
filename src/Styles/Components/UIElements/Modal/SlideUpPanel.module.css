@@ -65,7 +65,7 @@
 }
 
 .title {
-    font-size: var(--header-text-font-size);
+    font-size: var(--header-text-24);
     margin: 0;
     padding: 20px 1.5rem 40px;
     font-weight: var(--fw-light);
@@ -97,7 +97,7 @@
     border-radius: 0.75rem;
     color: #FFFFFF;
     font-weight: var(--fw-regular);
-    font-size: var(--small-header-text-font-size);
+    font-size: var(--header-text-18);
     transition-duration: 0.1s;
 }
 

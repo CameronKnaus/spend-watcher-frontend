@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from 'Styles/Components/Transactions/Transaction.module.css';
 import { CgChevronRight } from 'react-icons/cg';
 import CategoryIcon from './CategoryIcon';

@@ -15,14 +15,14 @@
 }
 
 .category {
-    font-size: var(--enlarged-body-text-font-size);
+    font-size: var(--body-text-16);
     color: #333;
     font-weight: var(--fw-medium);
 }
 
 .description {
     color: #3B3A39;
-    font-size: var(--reduced-body-text-font-size);
+    font-size: var(--body-text-12);
     font-weight: var(--fw-light);
     padding-top: 4px;
     white-space: nowrap;
@@ -37,7 +37,7 @@
 }
 
 .amount {
-    font-size: var(--enlarged-body-text-font-size);
+    font-size: var(--body-text-16);
     font-weight: var(--fw-semi-bold);
 }
 
@@ -47,7 +47,7 @@
 
 .date {
     color: #3B3A39;
-    font-size: var(--reduced-body-text-font-size);
+    font-size: var(--body-text-12);
     font-weight: var(--fw-light);
     padding-top: 4px;
 }

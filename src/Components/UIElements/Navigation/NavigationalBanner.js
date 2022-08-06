@@ -1,4 +1,3 @@
-import React from 'react';
 import { CgChevronLeft } from 'react-icons/cg';
 import styles from 'Styles/Components/UIElements/Navigation/NavigationalBanner.module.css';
 import { useNavigate } from 'react-router';

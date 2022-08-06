@@ -17,11 +17,11 @@
 
 .linkContainer {
     padding-top: 4px;
-    font-size: var(--body-text-font-size);
+    font-size: var(--body-text-14);
 }
 
 .issueMessage {
-    font-size: var(--body-text-font-size);
+    font-size: var(--body-text-14);
     color: var(--theme-subdued-text-color);
     padding-bottom: 1rem;
 }

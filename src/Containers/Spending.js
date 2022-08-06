@@ -6,6 +6,8 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useFetch from 'CustomHooks/useFetch';
 import DashboardButton from 'Components/Dashboard/DashboardButton';
 import TransactionForm from 'Components/Transactions/TransactionForm';
+import { useNavigate } from 'react-router';
+import { PAGE_ROUTES } from '../Constants/RouteConstants';
 
 export default function Spending({ refreshRequested, callForRefresh }) {
     const currentMonth = React.useMemo(() => {
@@ -17,6 +19,7 @@ export default function Spending({ refreshRequested, callForRefresh }) {
     const [logPanelOpen, setLogPanelOpen] = React.useState(false);
 
     const service = useFetch(SERVICE_ROUTES.spendingSummary, true);
+    const navigate = useNavigate();
 
     const getContent = useContent();
     const text = (key, args) => getContent('SPENDING', key, args);
@@ -56,6 +59,7 @@ export default function Spending({ refreshRequested, callForRefresh }) {
                         ariaValue={text('SPENT_ARIA_LABEL', [spendingTotal, currentMonth])}
                         actionPrompt={text('SEE_TRENDS')}
                         options={{ valueColor: 'var(--theme-money-loss)' }}
+                        callback={() => navigate(PAGE_ROUTES.spendingSummary)}
             />
             <ActionTile title={text('RECURRING')}
                         value={null}

@@ -7,14 +7,14 @@
 }
 
 .subtitleValue {
-    font-size: var(--large-header-text-font-size);
+    font-size: var(--header-text-28);
     font-weight: var(--fw-light);
     width: 100%;
     text-align: center;
 }
 
 .centeredValue {
-    font-size: var(--extra-large-header-text-font-size);
+    font-size: var(--header-text-32);
     font-weight: var(--fw-light);
     padding-bottom: 1rem;
     width: 100%;
@@ -23,14 +23,14 @@
 
 .title {
     width: 100%;
-    font-size: var(--small-header-text-font-size);
+    font-size: var(--header-text-18);
     font-weight: var(--fw-semi-bold);
     color: #333333;
     margin: 0;
 }
 
 .subtitle {
-    font-size: var(--body-text-font-size);
+    font-size: var(--body-text-14);
     font-weight: var(--fw-regular);
     color: #333333;
     padding-bottom: 0.375rem;
@@ -49,7 +49,7 @@
 }
 
 .actionPrompt {
-    font-size: var(--reduced-body-text-font-size);
+    font-size: var(--body-text-12);
     font-weight: var(--fw-light);
     color: var(--theme-subdued-text-color);
     user-select: text;
@@ -73,7 +73,7 @@
     min-width: 0;
     text-align: right;
     flex-basis: 50%;
-    font-size: var(--large-header-text-font-size);
+    font-size: var(--header-text-28);
     font-weight: var(--fw-light);
 }
 

@@ -2,7 +2,7 @@
     font-weight: var(--fw-semi-bold);
     color: var(--theme-light-text-color);
     display: block;
-    font-size: var(--body-text-font-size);
+    font-size: var(--body-text-14);
     padding-bottom: 0.5rem;
 }
 
@@ -16,7 +16,7 @@
     width: 100%;
     display: block;
     text-align: center;
-    font-size: var(--small-header-text-font-size);
+    font-size: var(--header-text-18);
     margin-bottom: 1.5rem;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .checkLabel {
-    font-size: var(--enlarged-body-text-font-size);
+    font-size: var(--body-text-16);
     font-weight: var(--fw-light);
     padding-left: 0.5rem;
 }

@@ -10,6 +10,7 @@ import Dashboard from './Pages/Dashboard';
 import AuthScreen from './Pages/AuthScreen';
 import SessionChecker from './Util/SessionChecker';
 import TransactionSummary from './Pages/TransactionSummary';
+import SpendingSummary from './Containers/SpendingSummary';
 
 ReactDOM.render(
     <React.StrictMode>
@@ -21,6 +22,7 @@ ReactDOM.render(
                             <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
                             <Route path={PAGE_ROUTES.authScreen} element={<AuthScreen />} />
                             <Route path={PAGE_ROUTES.transactionSummary} element={<TransactionSummary />} />
+                            <Route path={PAGE_ROUTES.spendingSummary} element={<SpendingSummary />} />
                         </Routes>
                     </SessionChecker>
                 </BrowserRouter>
