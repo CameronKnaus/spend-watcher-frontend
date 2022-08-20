@@ -24,4 +24,5 @@
     text-align: center;
     font-weight: var(--fw-extra-light);
     font-size: var(--body-text-16);
+    margin: 0;
 }

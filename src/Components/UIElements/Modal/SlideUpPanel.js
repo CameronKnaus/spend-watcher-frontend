@@ -9,7 +9,7 @@ const ClosePanel = React.createContext(() => { /* NOOP */ });
 // If only 'closeText' is provided then only one button will appear at the bottom that closes the panel
 // All children of the SLideUpPanel will be given the closePanel function prop
 // tagColor - String - CSS color value for the top tag of the slideUpPanel, defaults to red
-export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title, forwardActionCallback = () => { /* NOOP */ }, disableConfirmButton, tagColor = 'var(--theme-red-dark)' }) {
+export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title, forwardActionCallback = () => { /* NOOP */ }, disableConfirmButton, tagColor = 'var(--theme-red-dark)', hideTag = false }) {
     // Grab ref of panel for handling tabbing
     const panelRef = React.useRef();
     const titleRef = React.useRef();
@@ -29,9 +29,7 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
         document.body.style.overflow = 'hidden';
 
         // Set focus on title load
-        // const x = window.scrollX, y = window.scrollY;
-        titleRef.current.focus();
-        // window.scrollTo(x, y);
+        titleRef?.current?.focus();
 
         return () => { document.body.style.overflow = 'auto' };
     }, []);
@@ -91,11 +89,15 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
                  role='dialog'
                  className={`${styles.panelContainer} ${panelClosing ? styles.panelClosing : ''}`}
             >
-                <div className={styles.titleTag} style={{ backgroundColor: tagColor }}>
-                    <h2 ref={titleRef} tabIndex={0} className={styles.title}>
-                        {title}
-                    </h2>
-                </div>
+                {
+                    !hideTag && (
+                        <div className={styles.titleTag} style={{ backgroundColor: tagColor }}>
+                            <h2 ref={titleRef} tabIndex={0} className={styles.title}>
+                                {title}
+                            </h2>
+                        </div>
+                    )
+                }
                 <div className={styles.panelContent}>
                     <div className={styles.scrollableArea}>
                         {/* Provide the close panel function to all children inside the slideUpPanel*/}

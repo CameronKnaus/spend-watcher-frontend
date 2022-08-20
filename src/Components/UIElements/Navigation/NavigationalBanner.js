@@ -10,9 +10,9 @@ export default function NavigationalBanner({ title }) {
             <div className={styles.backArrow} onClick={() => navigate(-1)}>
                 <CgChevronLeft />
             </div>
-            <div className={styles.titleText}>
+            <h1 className={styles.titleText}>
                 { title }
-            </div>
+            </h1>
         </div>
     );
 }
