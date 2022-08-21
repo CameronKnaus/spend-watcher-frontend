@@ -23,7 +23,7 @@ import { CgChevronRight } from 'react-icons/cg';
 const defaultOptions = {
     showValueAbove: false,
     valueColor: '#333333',
-    minWidth: 0,
+    minWidth: 345,
     maxWidth: 'none',
     paddingBelow: 24
 };
