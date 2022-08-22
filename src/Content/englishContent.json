@@ -22,8 +22,7 @@
   },
   "SPENDING_SUMMARY": {
     "TITLE": "Spending Summary",
-    "RESULTS": "Viewing spending for:",
-    "CHANGE_CONTEXT": "Tap to change context"
+    "RESULTS": "Viewing spending for:"
   },
   "TRANSACTIONS": {
     "RECENT": "Recent Transactions",
@@ -101,5 +100,20 @@
   "GENERAL": {
     "TODAY": "Today",
     "YESTERDAY": "Yesterday"
+  },
+  "DATE_CONTEXT_CHANGER": {
+    "CONFIRM": "Confirm",
+    "CANCEL": "Cancel",
+    "DATE_RANGE_TYPE": "Date range type:",
+    "YTD": "YTD",
+    "MONTH": "Month",
+    "YEAR": "Year",
+    "SPECIFIC": "Specific",
+    "CURRENT_MONTH": "Current month:",
+    "CURRENT_YEAR": "Current year:",
+    "YTD_MESSAGE": "\"Year to date\" - This option will show you all data so far in <<arg0:current_year>>.",
+    "SPECIFIC_MESSAGE": "This option has not been created yet.",
+    "CHANGE_CONTEXT": "Tap to change context",
+    "YTD_SELECTED_LABEL": "<<arg0:current_year>>, year-to-date"
   }
 }

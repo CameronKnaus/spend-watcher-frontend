@@ -1,0 +1,44 @@
+.label {
+    font-weight: var(--fw-semi-bold);
+    color: var(--theme-light-text-color);
+    display: block;
+    font-size: var(--body-text-14);
+    padding-bottom: 0.5rem;
+}
+
+.tabContainer {
+    border-bottom: 4px solid var(--theme-jungle-green);
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+.tab.active {
+    filter: none;
+    background-color: var(--theme-jungle-green);
+}
+
+.tab {
+    filter: brightness(60%);
+    transition-duration: 0.3s;
+    color: var(--theme-bright-text-color);
+    background-color: var(--theme-jungle-green-dark);
+    flex-grow: 1;
+    height: 2.5rem;
+    text-align: center;
+}
+
+.tab:hover {
+    filter: brightness(85%);
+}
+
+.datePickerBox {
+    display: flex;
+    justify-content: center;
+}
+
+.optionMessage {
+    font-size: var(--body-text-16);
+    color: var(--theme-subdued-text-color);
+    text-align: center;
+    padding: 1.5rem 0.75rem;
+}

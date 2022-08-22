@@ -11,6 +11,10 @@ import AuthScreen from './Pages/AuthScreen';
 import SessionChecker from './Util/SessionChecker';
 import TransactionSummary from './Pages/TransactionSummary';
 import SpendingSummary from './Containers/SpendingSummary';
+import DayJS from 'dayjs';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+
+DayJS.extend(LocalizedFormat);
 
 ReactDOM.render(
     <React.StrictMode>
