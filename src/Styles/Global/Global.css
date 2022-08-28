@@ -17,6 +17,7 @@ button, input[type="submit"], input[type="reset"] {
     font: inherit;
     cursor: pointer;
     outline: inherit;
+    margin: 0;
 }
 
 /* Remove auto margin from text tags */
