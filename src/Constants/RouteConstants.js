@@ -1,6 +1,8 @@
+const spendingBreakdown = '/spending';
 export const PAGE_ROUTES = {
     dashboard: '/',
     authScreen: '/auth',
-    transactionSummary: '/transactions',
-    spendingSummary: '/spending'
+    spendingHistory: `${spendingBreakdown}/history`,
+    spendingSummary: `${spendingBreakdown}/summary`,
+    spendingBreakdown: `${spendingBreakdown}/:defaultTab`
 };

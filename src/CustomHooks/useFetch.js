@@ -4,7 +4,7 @@ import axios from 'axios';
 export default function useFetch(url, fireImmediately = false, fireSilently = false) {
     const [response, setResponse] = React.useState(null);
     const [loading, setLoading] = React.useState(fireImmediately && !fireSilently);
-    const [error, setError] = React.useState(false);
+    const [error, setError] = React.useState(null);
     const [canFire, setCanFire] = React.useState(fireImmediately);
     const [silentMode, setSilentMode] = React.useState(fireSilently);
 
@@ -17,7 +17,11 @@ export default function useFetch(url, fireImmediately = false, fireSilently = fa
         !silentMode && setLoading(true);
         axios.get(url, { cancelToken: source.token })
             .then(response => {
-                setResponse(response);
+                if(!response && !response.data) {
+                    setError(new Error(`Invalid response form provided - ${url}`));
+                }
+
+                setResponse(response.data);
                 setError(null);
             })
             .catch((error) => {
@@ -31,7 +35,8 @@ export default function useFetch(url, fireImmediately = false, fireSilently = fa
 
     }, [silentMode, canFire, url]);
 
-    // Calling the fire method silently means the loading flag will not be set.  This ensures the
+    // Calling the fire method silently means the loading flag will not be set.
+    // Use this when you want to load something without triggering loading UI
     function fire(fireSilently) {
         if(fireSilently) {
             setSilentMode(true);

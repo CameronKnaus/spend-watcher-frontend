@@ -3,16 +3,14 @@ import styles from 'Styles/Containers/RecentTransactions.module.css';
 import useContent from 'CustomHooks/useContent';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useFetch from 'CustomHooks/useFetch';
-import InteractiveDataRow from 'Components/UIElements/InteractiveDataRow';
 import Link from 'Components/UIElements/Navigation/Link';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
-import TransactionForm from 'Components/Transactions/TransactionForm';
+import TransactionsList from '../Components/UIElements/TransactionsList';
 
 export default function RecentTransactions({ refreshRequested, callForRefresh }) {
     const service = useFetch(SERVICE_ROUTES.recentTransactions, true);
     const getContent = useContent();
     const text = (key) => getContent('TRANSACTIONS', key);
-    const [transactionToEdit, setTransactionToEdit] = React.useState();
 
     const Container = React.useCallback(({ children }) => {
         return (
@@ -55,108 +53,15 @@ export default function RecentTransactions({ refreshRequested, callForRefresh })
         );
     }
 
-    if(service.response.data.noTransactions) {
-        return (
-            <Container>
-                <div className={styles.issueMessage}>
-                    {text('NO_TRANSACTIONS')}
-                </div>
-            </Container>
-        );
-    }
-
-    function setTransactionForEditing(transaction) {
-        setTransactionToEdit({
-            id: transaction.transaction_id,
-            amount: transaction.amount,
-            note: transaction.note,
-            category: {
-                code: transaction.category,
-                name: getContent('SPENDING_CATEGORIES', transaction.category)
-            },
-            isUncommon: transaction.uncommon,
-            date: transaction.date
-        });
-    }
-
-    const mapTransactionList = (transactionList, header) => {
-        const sortedList = transactionList.sort((a, b) => {
-            return a.transaction_id < b.transaction_id ? 1 : -1;
-        });
-
-        return (
-            <>
-                <h3 className={styles.dateLabel}>
-                    {header}
-                </h3>
-                {
-                    sortedList.map((transaction) => (
-                        <div key={transaction.transaction_id}
-                             className={styles.transactionWrapper}
-                        >
-                            <InteractiveDataRow isExpense
-                                                title={getContent('SPENDING_CATEGORIES', transaction.category)}
-                                                iconCategory={transaction.category}
-                                                description={transaction.note}
-                                                amount={transaction.amount}
-                                                date={transaction.date}
-                                                onClick={() => setTransactionForEditing(transaction)}
-                            />
-                        </div>
-                    ))
-                }
-            </>
-        );
-    };
-
-    const { today, yesterday, ...transactions } = service.response.data.transactions;
-
-    // For transactions that aren't "today" or "yesterday"
-    const transactionGroupings = () => {
-        const renderList = [];
-        for(const key in transactions) {
-            const dateString =  new Date(key).toLocaleDateString('en-US', {
-                year: '2-digit',
-                month: '2-digit',
-                day: '2-digit'
-            });
-            renderList.push(
-                <div key={dateString}>
-                    { mapTransactionList(transactions[key], dateString) }
-                </div>
-            );
-        }
-
-        return renderList;
-    };
-
-
     return (
         <Container>
-            {
-                today && mapTransactionList(today, getContent('GENERAL', 'TODAY'))
-            }
-            {
-                yesterday && mapTransactionList(yesterday, getContent('GENERAL', 'YESTERDAY'))
-            }
-            {
-                transactions && transactionGroupings()
-            }
+            <TransactionsList transactionsList={service.response.transactions} onEditCallback={callForRefresh} />
             <Link useChevron
                   text={text('VIEW_ALL')}
-                  route={PAGE_ROUTES.transactionSummary}
+                  route={PAGE_ROUTES.spendingHistory}
                   customClass={styles.linkContainer}
                   textAlign='center'
             />
-            {
-                transactionToEdit && (
-                    <TransactionForm editMode
-                                     existingTransaction={transactionToEdit}
-                                     onPanelClose={() => setTransactionToEdit(null)}
-                                     onSubmission={callForRefresh}
-                    />
-                )
-            }
         </Container>
     );
 }

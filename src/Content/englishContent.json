@@ -20,9 +20,13 @@
     "LOG_EXPENSE": "Log Expense",
     "RECURRING_ARIA_LABEL": "<<arg0:amount>> spent every month."
   },
-  "SPENDING_SUMMARY": {
-    "TITLE": "Spending Summary",
-    "RESULTS": "Viewing spending for:"
+  "SPENDING_BREAKDOWN": {
+    "SUMMARY_BANNER_TITLE": "Spending Summary",
+    "HISTORY_BANNER_TITLE": "Spending History",
+    "RESULTS_SHOWN": "Viewing spending for:",
+    "SUMMARY_TAB": "Summary",
+    "HISTORY_TAB": "History",
+    "TAB_BAR_LABEL": "Spending data to view:"
   },
   "TRANSACTIONS": {
     "RECENT": "Recent Transactions",

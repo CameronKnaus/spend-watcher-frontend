@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router';
 import { PAGE_ROUTES } from '../Constants/RouteConstants';
 
 export default function Spending({ refreshRequested, callForRefresh }) {
+    const getContent = useContent('SPENDING');
     const currentMonth = React.useMemo(() => {
         const currentDate = new Date();
         return currentDate.toLocaleString('default', { month: 'long' });
@@ -21,15 +22,12 @@ export default function Spending({ refreshRequested, callForRefresh }) {
     const service = useFetch(SERVICE_ROUTES.spendingSummary, true);
     const navigate = useNavigate();
 
-    const getContent = useContent();
-    const text = (key, args) => getContent('SPENDING', key, args);
-
     React.useEffect(() => {
         if(!service.response) {
             return;
         }
 
-        const { spending } = service.response.data;
+        const { spending } = service.response;
         setSpendingTotal(`$${spending.currentMonthTotal}`);
     }, [service.response]);
 
@@ -50,27 +48,27 @@ export default function Spending({ refreshRequested, callForRefresh }) {
     return (
         <>
             <h2 className={`header-text ${styles.title}`}>
-                {text('MY_SPENDING')}
+                {getContent('MY_SPENDING')}
             </h2>
             <ActionTile useShadow
-                        title={text('MONTHLY_DISCRETIONARY')}
-                        subtitle={text('MONTH_TOTAL', [currentMonth])}
+                        title={getContent('MONTHLY_DISCRETIONARY')}
+                        subtitle={getContent('MONTH_TOTAL', [currentMonth])}
                         value={spendingTotal}
-                        ariaValue={text('SPENT_ARIA_LABEL', [spendingTotal, currentMonth])}
-                        actionPrompt={text('SEE_TRENDS')}
+                        ariaValue={getContent('SPENT_ARIA_LABEL', [spendingTotal, currentMonth])}
+                        actionPrompt={getContent('SEE_TRENDS')}
                         options={{ valueColor: 'var(--theme-money-loss)' }}
                         callback={() => navigate(PAGE_ROUTES.spendingSummary)}
             />
-            <ActionTile title={text('RECURRING')}
+            <ActionTile title={getContent('RECURRING')}
                         value={null}
-                        fallbackDescription={text('NO_RECURRING')}
-                        fallbackActionPrompt={text('NO_RECURRING_PROMPT')}
-                        ariaValue={text('RECURRING_ARIA_LABEL', [0])}
-                        actionPrompt={text('ADJUST_RECURRING')}
+                        fallbackDescription={getContent('NO_RECURRING')}
+                        fallbackActionPrompt={getContent('NO_RECURRING_PROMPT')}
+                        ariaValue={getContent('RECURRING_ARIA_LABEL', [0])}
+                        actionPrompt={getContent('ADJUST_RECURRING')}
                         options={{ valueColor: 'var(--theme-money-loss)' }}
             />
             <DashboardButton buttonColor='var(--theme-red-dark)'
-                             text={text('LOG_EXPENSE')}
+                             text={getContent('LOG_EXPENSE')}
                              callback={() => setLogPanelOpen(true)}
             />
             {

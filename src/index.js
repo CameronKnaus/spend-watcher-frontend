@@ -9,8 +9,7 @@ import dayjs from '@date-io/dayjs'; // Using DayJS for material-ui date picker h
 import Dashboard from './Pages/Dashboard';
 import AuthScreen from './Pages/AuthScreen';
 import SessionChecker from './Util/SessionChecker';
-import TransactionSummary from './Pages/TransactionSummary';
-import SpendingSummary from './Containers/SpendingSummary';
+import SpendingBreakdown from './Pages/SpendingBreakdown';
 import DayJS from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
@@ -25,8 +24,7 @@ ReactDOM.render(
                         <Routes>
                             <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
                             <Route path={PAGE_ROUTES.authScreen} element={<AuthScreen />} />
-                            <Route path={PAGE_ROUTES.transactionSummary} element={<TransactionSummary />} />
-                            <Route path={PAGE_ROUTES.spendingSummary} element={<SpendingSummary />} />
+                            <Route path={PAGE_ROUTES.spendingBreakdown} element={<SpendingBreakdown />} />
                         </Routes>
                     </SessionChecker>
                 </BrowserRouter>

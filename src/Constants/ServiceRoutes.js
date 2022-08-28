@@ -10,11 +10,13 @@ const SERVICE_ROUTES = {
     login: authApi('/processLogin'), // POST
     register: authApi('/processRegistration'), // POST
     checkAuthentication: authApi('/verifyLogin'), // GET
-    spendingSummary: spendApi('/summary'), // GET
+    transactionDateRange: spendApi('/available-range'), // GET
+    spendingSummary: spendApi('/summary'), // POST
     recentTransactions: spendApi('/recent'), // GET
     submitNewTransaction: spendApi('/new'), // POST
     submitEditTransaction: spendApi('/edit'), // POST
     submitDeleteTransaction: spendApi('/delete'), // POST
+    spendingBreakdown: spendApi('/breakdown'), // POST
     addNewAccount: accountsApi('/new') // POST
 };
 

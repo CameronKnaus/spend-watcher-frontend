@@ -6,11 +6,9 @@ import CategoryIcon from './CategoryIcon';
 // description - optional string - an additional note about the transaction
 // amount - Number - Dollar amount of the transaction
 // isExpense - Boolean - When true will show amount in red with a minus
-// date - String - String using the ISO Date format
+// date - String
 // iconCategory - String - uses the Account or transaction category code to render the right icon, leave blank for no icon
 export default function InteractiveDataRow({ title, description, amount, date, isExpense, iconCategory, onClick }) {
-    const formattedDate = new Date(date).toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
-
     // Amount to show
     const parsedAmount = (isExpense ? '-$' : '$') + amount.toFixed(2);
 
@@ -42,7 +40,7 @@ export default function InteractiveDataRow({ title, description, amount, date, i
                     {parsedAmount}
                 </div>
                 <div className={styles.date}>
-                    {formattedDate}
+                    {date}
                 </div>
             </div>
             <CgChevronRight className={styles.chevron} />

@@ -6,18 +6,23 @@
     padding-bottom: 0.5rem;
 }
 
-.tabBarContainer {
-    margin-bottom: 1.5rem;
-}
-
-.datePickerBox {
+.tabContainer {
     display: flex;
-    justify-content: center;
+    width: 100%;
 }
 
-.optionMessage {
-    font-size: var(--body-text-16);
-    color: var(--theme-subdued-text-color);
+.tab {
+    filter: brightness(60%);
+    transition-duration: 0.3s;
+    flex-grow: 1;
+    height: 2.5rem;
     text-align: center;
-    padding: 1.5rem 0.75rem;
+}
+
+.tab.active {
+    filter: none;
+}
+
+.tab:hover {
+    filter: brightness(85%);
 }

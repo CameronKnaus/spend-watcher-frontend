@@ -4,7 +4,8 @@ import englishContent from 'Content/englishContent.json';
 
 const DEV_MODE = EnvironmentSettings.devMode;
 
-export default function useContent() {
+// If a default Group key is given, then the consumer needs only to provide the content key or injections
+export default function useContent(defaultGroupKey) {
     // Can be updated later to support different languages
     // const [contentLanguage, setContentLanguage] = React.useState('EN');
 
@@ -19,7 +20,7 @@ export default function useContent() {
     *   Anything following ':' like ':month_name' is only for developer clarity to know what kind of text is expected.
     *   It is otherwise ignored.
     * */
-    return React.useCallback((groupKey, contentKey, injections) => {
+    function getContent(groupKey, contentKey, injections) {
         if(!groupKey || !contentKey) {
             return DEV_MODE ? 'MISSING_KEY_ARGS' : '';
         }
@@ -41,5 +42,10 @@ export default function useContent() {
         });
 
         return desiredText;
-    }, []);
+    }
+
+    const getContentWithDefault = (contentKey, injections) => getContent(defaultGroupKey, contentKey, injections);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return React.useCallback(defaultGroupKey ? getContentWithDefault : getContent, [defaultGroupKey]);
 }
