@@ -7,24 +7,22 @@ import AccountForm from 'Components/MyMoney/AccountForm';
 
 export default function MyMoney({ callForRefresh }) {
     const [newAccountPanelOpen, setNewAccountPanelOpen] = React.useState(false);
-
-    const getContent = useContent();
-    const text = (key, args) => getContent('MY_MONEY', key, args);
+    const getContent = useContent('MY_MONEY');
 
     return (
         <>
             <h2 className={`header-text ${styles.title}`}>
-                {text('MY_MONEY')}
+                {getContent('MY_MONEY')}
             </h2>
             <ActionTile useShadow
-                        title={text('TOTAL_VALUE_TITLE')}
+                        title={getContent('TOTAL_VALUE_TITLE')}
                         value={0}
-                        ariaValue={text('TOTAL_VALUE_ARIA', [0])}
-                        actionPrompt={text('SEE_TRENDS')}
+                        ariaValue={getContent('TOTAL_VALUE_ARIA', [0])}
+                        actionPrompt={getContent('SEE_TRENDS')}
                         options={{ showValueAbove: true }}
             />
             <Link useChevron
-                  text={text('ADD_ACCOUNT')}
+                  text={getContent('ADD_ACCOUNT')}
                   textAlign='center'
                   customClass={styles.linkContainer}
                   onClickCallback={() => setNewAccountPanelOpen(true)}

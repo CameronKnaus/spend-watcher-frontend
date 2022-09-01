@@ -40,13 +40,17 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
 
     // Maps out all transactions under a given grouping (i.e. under a single date)
     function mapTransactionList(transactionList, header) {
+        const sortedList = transactionList.sort((a, b) => {
+            return a.transactionId < b.transactionId ? 1 : -1;
+        });
+
         return (
             <>
                 <h3 className={styles.dateLabel}>
                     {header}
                 </h3>
                 {
-                    transactionList.map((transaction) => (
+                    sortedList.map((transaction) => (
                         <div key={transaction.transactionId}
                              className={styles.transactionWrapper}
                         >
