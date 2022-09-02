@@ -31,6 +31,7 @@ export default function SpendingBreakdown() {
     const [currentTab, setCurrentTab] = useState(defaultTabMap[urlParams.defaultTab] || TAB_ENUM.SUMMARY_TAB);
     const [minSupportedDate, setMinSupportedDate] = useState('01/01/0001');
     const [transactionsList, setTransactionsList] = useState();
+    const [categoryTotals, setCategoryTotals] = useState();
     const [error, setError] = useState();
 
     // Get the earliest spending logged to set date range handler min range
@@ -52,6 +53,7 @@ export default function SpendingBreakdown() {
         axios.post(SERVICE_ROUTES.spendingBreakdown, args)
             .then(({ data }) => {
                 setTransactionsList(data.transactionsGroupedByDate);
+                setCategoryTotals(data.totalsByCategory);
             })
             .catch(setError);
     }, [dateRange]);
@@ -85,7 +87,7 @@ export default function SpendingBreakdown() {
                         tabMargin='1.5rem'
                 />
             </div>
-            {currentTab === TAB_ENUM.SUMMARY_TAB && <SpendingSummary />}
+            {currentTab === TAB_ENUM.SUMMARY_TAB && <SpendingSummary categoryTotals={categoryTotals} />}
             {currentTab === TAB_ENUM.HISTORY_TAB && (
                 <div className={styles.transactionsContainer}>
                     <TransactionsList transactionsList={transactionsList} />

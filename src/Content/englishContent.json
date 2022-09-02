@@ -26,7 +26,11 @@
     "RESULTS_SHOWN": "Viewing spending for:",
     "SUMMARY_TAB": "Summary",
     "HISTORY_TAB": "History",
-    "TAB_BAR_LABEL": "Spending data to view:"
+    "TAB_BAR_LABEL": "Spending data to view:",
+    "CATEGORY_TOTAL_TITLE": "Top Categories",
+    "TOTAL_CATEGORY_ARIA_LABEL": "You spent $<<arg0:amount>> on <<arg1:category>>. Tap to view your transaction history filtered by <<arg2:category>>.",
+    "SHOW_ALL": "Show all",
+    "HIDE": "Hide Top Categories"
   },
   "TRANSACTIONS": {
     "RECENT": "Recent Transactions",

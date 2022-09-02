@@ -8,6 +8,8 @@ const alignmentMapper = {
     right: 'flex-end'
 };
 
+// This component was a mistake
+
 // Currently, this link will only support internal routing.
 // It can easily be converted to external routing but there isn't a use-case yet
 export default function Link({ text, route, useChevron, customClass, textAlign, CustomIcon, onClickCallback }) {
