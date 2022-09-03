@@ -2,14 +2,17 @@ import React from 'react';
 import styles from 'Styles/Components/UIElements/Form/CategoryInput.module.css';
 import { useCategoryList } from 'CustomHooks/useCategoryList';
 import CategoryIcon from 'Components/UIElements/CategoryIcon';
+import useContent from '../../../CustomHooks/useContent';
 
 // When tracking this field, the containing parent component should have a state like const [value, setValue] = React.useState();
 // Then you can pass the setValue to the onChange prop and value to the value prop to ensure the parent component remains up to date
 export default function CategoryInput({ id = 'category-input', textInputStyles, value, onChange, categoryType }) {
+    // TODO: Clean this up so that CategoryInput only tracks category code i.e. 'MATERIAL_ITEMS' / gets category code only from useCategoryList
     const categoryList = useCategoryList(categoryType);
     const [open, setOpen] = React.useState(false);
     const [filterText, setFilterText] = React.useState('');
     const ref = React.useRef(null);
+    const getContent = useContent('GENERAL');
 
 
     React.useEffect(() => {
@@ -38,11 +41,11 @@ export default function CategoryInput({ id = 'category-input', textInputStyles, 
         }
 
         if(value) {
-            return value.name;
+            return value.name || getContent('EMPTY');
         }
 
         // Default to 'Other'
-        return categoryList[0]?.name || '';
+        return categoryList[0]?.name || getContent('EMPTY');
     }
 
     return (

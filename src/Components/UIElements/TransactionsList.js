@@ -1,6 +1,6 @@
 import React from 'react';
 import useContent from '../../CustomHooks/useContent';
-import styles from '../../Styles/Containers/RecentTransactions.module.css';
+import styles from '../../Styles/Components/UIElements/TransactionsList.module.css';
 import TransactionForm from '../Transactions/TransactionForm';
 import dayjs from 'dayjs';
 import InteractiveDataRow from './InteractiveDataRow';
@@ -11,7 +11,7 @@ import InteractiveDataRow from './InteractiveDataRow';
                 01/02/2022: [{ *transaction data* }, { *transaction data* }]
                 01/01/2022: [{ *transaction data* }, { *transaction data* }]
 * */
-export default function TransactionsList({ transactionsList, onEditCallback = () => { /* NOOP */ } }) {
+export default function TransactionsList({ transactionsList, onEditCallback = () => { /* NOOP */ }, filteredCategory }) {
     const [transactionToEdit, setTransactionToEdit] = React.useState();
     const getContent = useContent();
     const text = (key) => getContent('TRANSACTIONS', key);
@@ -40,9 +40,17 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
 
     // Maps out all transactions under a given grouping (i.e. under a single date)
     function mapTransactionList(transactionList, header) {
-        const sortedList = transactionList.sort((a, b) => {
+        let sortedList = transactionList.sort((a, b) => {
             return a.transactionId < b.transactionId ? 1 : -1;
         });
+
+        if(filteredCategory) {
+            sortedList = sortedList.filter(transaction => transaction.category === filteredCategory);
+        }
+
+        if(!sortedList.length) {
+            return null;
+        }
 
         return (
             <>
@@ -82,9 +90,20 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
                 groupLabel = getContent('GENERAL', 'YESTERDAY');
             }
 
-            renderList.push(
-                <div key={dateKey}>
-                    { mapTransactionList(transactionsList[dateKey], groupLabel) }
+            const mappedTransactionList = mapTransactionList(transactionsList[dateKey], groupLabel);
+            if(mappedTransactionList) {
+                renderList.push(
+                    <div key={dateKey}>
+                        { mappedTransactionList }
+                    </div>
+                );
+            }
+        }
+
+        if(!renderList.length) {
+            return (
+                <div className={styles.noTransactions}>
+                    {text('NO_TRANSACTIONS_FOUND')}
                 </div>
             );
         }

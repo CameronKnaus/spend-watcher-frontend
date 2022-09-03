@@ -1,7 +1,21 @@
 .contentContainer {
-    margin-top: 1.5rem;
+    margin: 1.5rem 0;
 }
 
 .gutter {
     padding: 0 1.5rem;
+}
+
+.totalLabel {
+    font-size: 18px;
+    font-weight: var(--fw-medium);
+}
+
+.totalValue {
+    margin-top: 12px;
+    width: 100%;
+    text-align: center;
+    color: var(--theme-money-loss);
+    font-size: var(--header-text-32);
+    font-weight: var(--fw-light);
 }

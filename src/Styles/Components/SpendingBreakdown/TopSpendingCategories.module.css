@@ -11,8 +11,16 @@
     text-decoration: none;
     width: 100%;
     overflow: hidden;
-    animation: reveal 1s;
     opacity: 1;
+    transition-duration: 0.3s;
+}
+
+.totalsPill:hover {
+    filter: brightness(0.9);
+}
+
+.fadeInAnimation {
+    animation: reveal 1s;
 }
 
 @keyframes reveal {
@@ -42,4 +50,10 @@
 
 .showAllLink {
     margin: 1rem auto 0;
+}
+
+.label {
+    font-size: 18px;
+    font-weight: var(--fw-medium);
+    margin-top: 2rem;
 }

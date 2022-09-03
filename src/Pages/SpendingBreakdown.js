@@ -9,8 +9,8 @@ import useDateRange from '../CustomHooks/useDateRange';
 import TabBar from '../Components/UIElements/Navigation/TabBar';
 import { useParams } from 'react-router';
 import SpendingSummary from '../Containers/SpendingSummary';
-import TransactionsList from '../Components/UIElements/TransactionsList';
 import axios from 'axios';
+import SpendingHistory from '../Containers/SpendingHistory';
 
 export const TAB_ENUM = {
     SUMMARY_TAB: 'SUMMARY_TAB',
@@ -30,9 +30,9 @@ export default function SpendingBreakdown() {
 
     const [currentTab, setCurrentTab] = useState(defaultTabMap[urlParams.defaultTab] || TAB_ENUM.SUMMARY_TAB);
     const [minSupportedDate, setMinSupportedDate] = useState('01/01/0001');
-    const [transactionsList, setTransactionsList] = useState();
-    const [categoryTotals, setCategoryTotals] = useState();
+    const [spendingBreakdown, setSpendingBreakdown] = useState();
     const [error, setError] = useState();
+    const [filterCategory, setFilterCategory] = useState({ name: '', code: '' });
 
     // Get the earliest spending logged to set date range handler min range
     const { response: dateRangeResponse } = useFetch(SERVICE_ROUTES.transactionDateRange, true);
@@ -45,6 +45,7 @@ export default function SpendingBreakdown() {
     }, [dateRangeResponse]);
 
     useEffect(() => {
+        setSpendingBreakdown(null);
         const args = {
             startDate: dateRange.startDate.format(),
             endDate: dateRange.endDate.format()
@@ -52,15 +53,30 @@ export default function SpendingBreakdown() {
 
         axios.post(SERVICE_ROUTES.spendingBreakdown, args)
             .then(({ data }) => {
-                setTransactionsList(data.transactionsGroupedByDate);
-                setCategoryTotals(data.totalsByCategory);
+                setSpendingBreakdown({
+                    finalTotalSpent: data.finalTotalSpent,
+                    categoryTotals: data.totalsByCategory,
+                    transactionsList: data.transactionsGroupedByDate
+                });
             })
             .catch(setError);
     }, [dateRange]);
 
+    if(!spendingBreakdown) {
+        return (
+            <div>
+                loading...
+            </div>
+        );
+    }
+
     // TODO: Proper error handling
     if(error) {
-        return error;
+        return (
+            <div>
+                {error}
+            </div>
+        );
     }
 
     return (
@@ -87,11 +103,17 @@ export default function SpendingBreakdown() {
                         tabMargin='1.5rem'
                 />
             </div>
-            {currentTab === TAB_ENUM.SUMMARY_TAB && <SpendingSummary categoryTotals={categoryTotals} />}
+            {currentTab === TAB_ENUM.SUMMARY_TAB && (
+                <SpendingSummary spendingBreakdown={spendingBreakdown}
+                                 setCurrentTab={setCurrentTab}
+                                 setFilterCategory={setFilterCategory}
+                />
+            )}
             {currentTab === TAB_ENUM.HISTORY_TAB && (
-                <div className={styles.transactionsContainer}>
-                    <TransactionsList transactionsList={transactionsList} />
-                </div>
+                <SpendingHistory transactionsList={spendingBreakdown.transactionsList}
+                                 filterCategory={filterCategory}
+                                 setFilterCategory={setFilterCategory}
+                />
             )}
         </>
     );

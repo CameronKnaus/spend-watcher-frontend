@@ -30,7 +30,10 @@
     "CATEGORY_TOTAL_TITLE": "Top Categories",
     "TOTAL_CATEGORY_ARIA_LABEL": "You spent $<<arg0:amount>> on <<arg1:category>>. Tap to view your transaction history filtered by <<arg2:category>>.",
     "SHOW_ALL": "Show all",
-    "HIDE": "Hide Top Categories"
+    "HIDE": "Hide Top Categories",
+    "TOTAL_SPENT": "Total Spent",
+    "FILTER_BY_CATEGORY": "Filter by Category",
+    "REMOVE_FILTER": "Remove filter"
   },
   "TRANSACTIONS": {
     "RECENT": "Recent Transactions",
@@ -51,7 +54,8 @@
     "CANCEL": "Cancel",
     "SUBMIT": "Submit",
     "EDIT": "Edit",
-    "DELETE": "Delete this expense"
+    "DELETE": "Delete this expense",
+    "NO_TRANSACTIONS_FOUND": "No transactions returned for the selected time frame / filter."
   },
   "MY_MONEY": {
     "MY_MONEY": "My Money",
@@ -107,7 +111,8 @@
   },
   "GENERAL": {
     "TODAY": "Today",
-    "YESTERDAY": "Yesterday"
+    "YESTERDAY": "Yesterday",
+    "EMPTY": "--"
   },
   "DATE_CONTEXT_CHANGER": {
     "CONFIRM": "Confirm",

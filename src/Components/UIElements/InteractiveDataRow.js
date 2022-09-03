@@ -1,6 +1,7 @@
 import styles from 'Styles/Components/Transactions/Transaction.module.css';
 import { CgChevronRight } from 'react-icons/cg';
 import CategoryIcon from './CategoryIcon';
+import formatCurrency from '../../Util/formatCurrency';
 
 // category - string constant for the category of account or transaction (i.e. 'RESTAURANTS' or 'CHECKING')
 // description - optional string - an additional note about the transaction
@@ -10,7 +11,7 @@ import CategoryIcon from './CategoryIcon';
 // iconCategory - String - uses the Account or transaction category code to render the right icon, leave blank for no icon
 export default function InteractiveDataRow({ title, description, amount, date, isExpense, iconCategory, onClick }) {
     // Amount to show
-    const parsedAmount = (isExpense ? '-$' : '$') + amount.toFixed(2);
+    const parsedAmount = (isExpense ? '-' : '') + formatCurrency(amount);
 
     return (
         <button className={styles.container} onClick={onClick}>

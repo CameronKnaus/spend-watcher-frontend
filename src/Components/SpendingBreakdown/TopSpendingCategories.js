@@ -3,8 +3,10 @@ import styles from '../../Styles/Components/SpendingBreakdown/TopSpendingCategor
 import { SPENDING_CATEGORIES } from 'Constants/categories';
 import useContent from '../../CustomHooks/useContent';
 import Link from '../UIElements/Navigation/Link';
+import clsx from 'clsx';
+import { TAB_ENUM } from '../../Pages/SpendingBreakdown';
 
-export default function TopSpendingCategories({ categoryTotals }) {
+export default function TopSpendingCategories({ categoryTotals, setCurrentTab, setFilterCategory }) {
     const [viewAll, setViewAll] = useState(false);
     const getContent = useContent();
     const getSpendingContent = (...args) => getContent('SPENDING_BREAKDOWN', ...args);
@@ -29,21 +31,25 @@ export default function TopSpendingCategories({ categoryTotals }) {
     const hideLabel = getSpendingContent('HIDE');
     return (
         <div>
-            <div>
+            <div className={styles.label}>
                 { getSpendingContent('CATEGORY_TOTAL_TITLE') }
             </div>
             {
-                sortedList.map(({ category, amount }) => {
+                sortedList.map(({ category, amount }, index) => {
                     const categoryData = SPENDING_CATEGORIES[category];
                     const backgroundColor = categoryData.color;
                     const Icon = categoryData.icon;
                     const categoryLabel = getContent('SPENDING_CATEGORIES', category);
                     return (
                         <button key={category}
-                                className={styles.totalsPill}
+                                className={clsx(styles.totalsPill, index > 2 && styles.fadeInAnimation)}
                                 style={{ backgroundColor }}
                                 aria-label={getSpendingContent('TOTAL_CATEGORY_ARIA_LABEL', [amount, categoryLabel, categoryLabel])}
                                 tabIndex={0}
+                                onClick={() => {
+                                    setCurrentTab(TAB_ENUM.HISTORY_TAB);
+                                    setFilterCategory({ code: category, name: categoryLabel });
+                                }}
                         >
                             <div className={styles.icon}>
                                 { Icon }

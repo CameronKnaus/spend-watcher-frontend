@@ -3,3 +3,21 @@
     color: var(--theme-subdued-text-color);
     padding-bottom: 1rem;
 }
+
+.transactionWrapper {
+    padding-bottom: 0.75rem;
+}
+
+.dateLabel {
+    padding-bottom: 0.5rem;
+    font-size: 10px;
+    font-weight: var(--fw-light);
+    color: var(--theme-subdued-text-color);
+    margin: 0;
+}
+
+.noTransactions {
+    font-size: var(--body-text-14);
+    color: var(--theme-light-text-color);
+    text-align: center;
+}

@@ -1,0 +1,11 @@
+.filterLabel {
+    font-weight: var(--fw-semi-bold);
+    color: var(--theme-light-text-color);
+    font-size: var(--body-text-14);
+    margin-bottom: 0.5rem;
+}
+
+.clearFilterLink {
+    margin-top: 1rem;
+    font-size: var(--body-text-14);
+}
