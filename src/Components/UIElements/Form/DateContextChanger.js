@@ -13,11 +13,10 @@ export default function DateContextChanger(
         setExpanded,
         updateDateRange,
         minAllowedDate,
-        defaultRangeOption = DATE_RANGE_TYPES.MONTH,
-        syncSelectedRangeOption = () => { /* NOOP */ }
+        startingRangeOption = DATE_RANGE_TYPES.MONTH
     }
 ) {
-    const [selectedRangeOption, setSelectedRangeOption] = useState(defaultRangeOption);
+    const [selectedRangeOption, setSelectedRangeOption] = useState(startingRangeOption);
     const [selectedDate, setSelectedDate] = useState(dayjs());
 
     const getContent = useContent('DATE_CONTEXT_CHANGER');
@@ -32,8 +31,6 @@ export default function DateContextChanger(
         }
 
         updateDateRange(newDate.startOf('month'), newDate.endOf('month'), DATE_RANGE_TYPES.MONTH);
-
-        syncSelectedRangeOption(selectedRangeOption);
         closePanel();
     }
 
@@ -56,7 +53,6 @@ export default function DateContextChanger(
 
             updateDateRange(startDate, endDate, DATE_RANGE_TYPES.YEAR);
 
-            syncSelectedRangeOption(selectedRangeOption);
             closePanel();
         }
     }
@@ -64,8 +60,6 @@ export default function DateContextChanger(
     function submitYTD() {
         // TODO: Check this
         updateDateRange(dayjs(dayjs().startOf('year')), dayjs(), DATE_RANGE_TYPES.YTD);
-
-        syncSelectedRangeOption(selectedRangeOption);
     }
 
     const isMonth = selectedRangeOption === DATE_RANGE_TYPES.MONTH;

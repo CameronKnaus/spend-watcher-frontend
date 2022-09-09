@@ -95,6 +95,7 @@ export default function SpendingBreakdown() {
                                  endDate={dateRange.endDate}
                                  startDate={dateRange.startDate}
                                  minAllowedDate={minSupportedDate}
+                                 dateRangeType={dateRangeType}
                 />
                 <div className={styles.dateContextShifterContainer}>
                     <DateContextShifter dateRangeType={dateRangeType}

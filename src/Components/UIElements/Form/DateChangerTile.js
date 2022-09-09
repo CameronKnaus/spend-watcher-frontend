@@ -11,23 +11,23 @@ export default function DateChangerTile(
         endDate,
         updateDateRange = () => { /* NOOP */ },
         minAllowedDate,
-        defaultRangeOption = DATE_RANGE_TYPES.MONTH, resultsText }
+        dateRangeType = DATE_RANGE_TYPES.MONTH,
+        resultsText }
 ) {
-    const [selectedDateRangeOption, setSelectedDateRangeOption] = useState(defaultRangeOption);
     const [editMode, setEditMode] = useState(false);
     const getContent = useContent('DATE_CONTEXT_CHANGER');
 
     function getRangeText() {
-        if(selectedDateRangeOption === DATE_RANGE_TYPES.MONTH) {
+        if(dateRangeType === DATE_RANGE_TYPES.MONTH) {
             return `${MONTH_NAMES[startDate.month()]}, ${startDate.year()}`;
         }
 
         const currentYear = dayjs().year();
-        if(selectedDateRangeOption === DATE_RANGE_TYPES.YTD) {
+        if(dateRangeType === DATE_RANGE_TYPES.YTD) {
             return getContent('YTD_SELECTED_LABEL', [currentYear]);
         }
 
-        if(selectedDateRangeOption === DATE_RANGE_TYPES.YEAR) {
+        if(dateRangeType === DATE_RANGE_TYPES.YEAR) {
             if(startDate.year() === currentYear) {
                 return getContent('YTD_SELECTED_LABEL', [currentYear]);
             }
@@ -61,7 +61,7 @@ export default function DateChangerTile(
                                 startDate={startDate}
                                 endDate={endDate}
                                 updateDateRange={updateDateRange}
-                                syncSelectedRangeOption={setSelectedDateRangeOption}
+                                startingRangeOption={dateRangeType}
                                 minAllowedDate={minAllowedDate}
             />
         </>
