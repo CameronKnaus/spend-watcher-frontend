@@ -12,8 +12,10 @@ import SessionChecker from './Util/SessionChecker';
 import SpendingBreakdown from './Pages/SpendingBreakdown';
 import DayJS from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import duration from 'dayjs/plugin/duration';
 
 DayJS.extend(LocalizedFormat);
+DayJS.extend(duration);
 
 ReactDOM.render(
     <React.StrictMode>

@@ -5,13 +5,7 @@ import styles from '../../../Styles/Components/UIElements/Form/DateContextChange
 import { DatePicker } from '@material-ui/pickers';
 import dayjs from 'dayjs';
 import TabBar from '../Navigation/TabBar';
-
-export const DATE_RANGE_OPTIONS = {
-    MONTH: 'MONTH',
-    YEAR: 'YEAR',
-    YTD: 'YTD',
-    SPECIFIC: 'SPECIFIC'
-};
+import DATE_RANGE_TYPES from '../../../Constants/DateRangeTypes';
 
 export default function DateContextChanger(
     {
@@ -19,7 +13,7 @@ export default function DateContextChanger(
         setExpanded,
         updateDateRange,
         minAllowedDate,
-        defaultRangeOption = DATE_RANGE_OPTIONS.MONTH,
+        defaultRangeOption = DATE_RANGE_TYPES.MONTH,
         syncSelectedRangeOption = () => { /* NOOP */ }
     }
 ) {
@@ -33,23 +27,23 @@ export default function DateContextChanger(
     }
 
     function handleMonthChange(newDate, closePanel) {
-        if(selectedRangeOption !== DATE_RANGE_OPTIONS.MONTH) {
+        if(selectedRangeOption !== DATE_RANGE_TYPES.MONTH) {
             return;
         }
 
-        updateDateRange(newDate.startOf('month'), newDate.endOf('month'));
+        updateDateRange(newDate.startOf('month'), newDate.endOf('month'), DATE_RANGE_TYPES.MONTH);
 
         syncSelectedRangeOption(selectedRangeOption);
         closePanel();
     }
 
     function handleYearChange(newDate, closePanel) {
-        if(selectedRangeOption !== DATE_RANGE_OPTIONS.YEAR) {
+        if(selectedRangeOption !== DATE_RANGE_TYPES.YEAR) {
             return;
         }
 
         const today = dayjs();
-        if(selectedRangeOption === DATE_RANGE_OPTIONS.YEAR) {
+        if(selectedRangeOption === DATE_RANGE_TYPES.YEAR) {
             const startDate = dayjs(newDate.startOf('year'));
 
             let endDate;
@@ -60,7 +54,7 @@ export default function DateContextChanger(
                 endDate = newDate.endOf('year');
             }
 
-            updateDateRange(startDate, endDate);
+            updateDateRange(startDate, endDate, DATE_RANGE_TYPES.YEAR);
 
             syncSelectedRangeOption(selectedRangeOption);
             closePanel();
@@ -69,15 +63,15 @@ export default function DateContextChanger(
 
     function submitYTD() {
         // TODO: Check this
-        updateDateRange(dayjs(dayjs().startOf('year')), dayjs());
+        updateDateRange(dayjs(dayjs().startOf('year')), dayjs(), DATE_RANGE_TYPES.YTD);
 
         syncSelectedRangeOption(selectedRangeOption);
     }
 
-    const isMonth = selectedRangeOption === DATE_RANGE_OPTIONS.MONTH;
-    const isMonthOrYear = isMonth || selectedRangeOption === DATE_RANGE_OPTIONS.YEAR;
-    const isYTD = selectedRangeOption === DATE_RANGE_OPTIONS.YTD;
-    const isSpecificOrYTD = isYTD || selectedRangeOption === DATE_RANGE_OPTIONS.SPECIFIC;
+    const isMonth = selectedRangeOption === DATE_RANGE_TYPES.MONTH;
+    const isMonthOrYear = isMonth || selectedRangeOption === DATE_RANGE_TYPES.YEAR;
+    const isYTD = selectedRangeOption === DATE_RANGE_TYPES.YTD;
+    const isSpecificOrYTD = isYTD || selectedRangeOption === DATE_RANGE_TYPES.SPECIFIC;
     return (
         <SlideUpPanel hideTag
                       closeText={getContent('CANCEL')}
@@ -92,7 +86,7 @@ export default function DateContextChanger(
                             <div className={styles.tabBarContainer}>
                                 <TabBar contentGroupKey='DATE_CONTEXT_CHANGER'
                                         labelContentKey='DATE_RANGE_TYPE'
-                                        tabMapping={Object.values(DATE_RANGE_OPTIONS)}
+                                        tabMapping={Object.values(DATE_RANGE_TYPES)}
                                         currentTab={selectedRangeOption}
                                         setCurrentTab={setSelectedRangeOption}
                                         activeTabColor='var(--theme-jungle-green)'

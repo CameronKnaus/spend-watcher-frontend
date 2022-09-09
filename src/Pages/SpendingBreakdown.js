@@ -11,6 +11,7 @@ import { useParams } from 'react-router';
 import SpendingSummary from '../Containers/SpendingSummary';
 import axios from 'axios';
 import SpendingHistory from '../Containers/SpendingHistory';
+import DateContextShifter from '../Components/UIElements/Form/DateContextShifter';
 
 export const TAB_ENUM = {
     SUMMARY_TAB: 'SUMMARY_TAB',
@@ -25,7 +26,13 @@ const defaultTabMap = {
 export default function SpendingBreakdown() {
     const getContent = useContent('SPENDING_BREAKDOWN');
 
-    const { dateRange, updateDateRange } = useDateRange();
+    const {
+        dateRange,
+        dateRangeType,
+        updateDateRange,
+        shiftYearInContext,
+        shiftMonthInContext
+    } = useDateRange();
     const urlParams = useParams();
 
     const [currentTab, setCurrentTab] = useState(defaultTabMap[urlParams.defaultTab] || TAB_ENUM.SUMMARY_TAB);
@@ -89,6 +96,15 @@ export default function SpendingBreakdown() {
                                  startDate={dateRange.startDate}
                                  minAllowedDate={minSupportedDate}
                 />
+                <div className={styles.dateContextShifterContainer}>
+                    <DateContextShifter dateRangeType={dateRangeType}
+                                        shiftYearInContext={shiftYearInContext}
+                                        shiftMonthInContext={shiftMonthInContext}
+                                        minAllowedDate={minSupportedDate}
+                                        endDate={dateRange.endDate}
+                                        startDate={dateRange.startDate}
+                    />
+                </div>
             </div>
             <div className={styles.tabContainer}>
                 <TabBar contentGroupKey='SPENDING_BREAKDOWN'
