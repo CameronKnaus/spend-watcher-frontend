@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { CgChevronRight } from 'react-icons/cg';
+import { CgChevronRight, CgChevronLeft } from 'react-icons/cg';
 
 const alignmentMapper = {
     center: 'center',
@@ -12,7 +12,7 @@ const alignmentMapper = {
 
 // Currently, this link will only support internal routing.
 // It can easily be converted to external routing but there isn't a use-case yet
-export default function Link({ text, route, useChevron, customClass, textAlign, CustomIcon, onClickCallback }) {
+export default function Link({ text, route, useChevron, useChevronLeft, customClass, textAlign, CustomIcon, onClickCallback }) {
     const textAlignment = alignmentMapper[textAlign] || 'flex-start';
 
     function getIcon() {
@@ -27,6 +27,8 @@ export default function Link({ text, route, useChevron, customClass, textAlign, 
         return null;
     }
 
+    const hasChevron = useChevron || useChevronLeft;
+
     // An internal route was specified so wrap the link in router
     if(route) {
         return (
@@ -34,15 +36,16 @@ export default function Link({ text, route, useChevron, customClass, textAlign, 
                 <span className={customClass}
                       style={{
                           color: 'var(--theme-link-blue)',
-                          textDecoration: useChevron ? 'none' : 'underline',
+                          textDecoration: hasChevron ? 'none' : 'underline',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: textAlignment
                       }}
                       onClick={onClickCallback}
                 >
+                    {useChevronLeft && <CgChevronLeft />}
                     {text}
-                    {getIcon()}
+                    {!useChevronLeft && getIcon()}
                 </span>
             </ReactRouterLink>
         );
@@ -52,7 +55,7 @@ export default function Link({ text, route, useChevron, customClass, textAlign, 
     return (
         <button style={{
                         color: 'var(--theme-link-blue)',
-                        textDecoration: useChevron ? 'none' : 'underline',
+                        textDecoration: hasChevron ? 'none' : 'underline',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: textAlignment
@@ -60,10 +63,11 @@ export default function Link({ text, route, useChevron, customClass, textAlign, 
                 className={customClass}
                 onClick={onClickCallback}
         >
-            <span style={{ paddingRight: 4 }}>
+            {useChevronLeft && <CgChevronLeft />}
+            <span style={useChevronLeft ? { paddingLeft: 4 } : { paddingRight: 4 }}>
                 {text}
             </span>
-            {getIcon()}
+            {!useChevronLeft && getIcon()}
         </button>
     );
 }

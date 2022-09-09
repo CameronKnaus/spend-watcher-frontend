@@ -1,32 +1,33 @@
 import useContent from '../../../CustomHooks/useContent';
-import DateContextChanger, { DATE_RANGE_OPTIONS } from './DateContextChanger';
+import DateContextChanger from './DateContextChanger';
 import ActionTile from '../../Tiles/ActionTile';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import MONTH_NAMES from '../../../Constants/MonthNames';
+import DATE_RANGE_TYPES from '../../../Constants/DateRangeTypes';
 
 export default function DateChangerTile(
     { startDate,
         endDate,
         updateDateRange = () => { /* NOOP */ },
         minAllowedDate,
-        defaultRangeOption = DATE_RANGE_OPTIONS.MONTH, resultsText }
+        defaultRangeOption = DATE_RANGE_TYPES.MONTH, resultsText }
 ) {
     const [selectedDateRangeOption, setSelectedDateRangeOption] = useState(defaultRangeOption);
     const [editMode, setEditMode] = useState(false);
     const getContent = useContent('DATE_CONTEXT_CHANGER');
 
     function getRangeText() {
-        if(selectedDateRangeOption === DATE_RANGE_OPTIONS.MONTH) {
+        if(selectedDateRangeOption === DATE_RANGE_TYPES.MONTH) {
             return `${MONTH_NAMES[startDate.month()]}, ${startDate.year()}`;
         }
 
         const currentYear = dayjs().year();
-        if(selectedDateRangeOption === DATE_RANGE_OPTIONS.YTD) {
+        if(selectedDateRangeOption === DATE_RANGE_TYPES.YTD) {
             return getContent('YTD_SELECTED_LABEL', [currentYear]);
         }
 
-        if(selectedDateRangeOption === DATE_RANGE_OPTIONS.YEAR) {
+        if(selectedDateRangeOption === DATE_RANGE_TYPES.YEAR) {
             if(startDate.year() === currentYear) {
                 return getContent('YTD_SELECTED_LABEL', [currentYear]);
             }

@@ -128,5 +128,11 @@
     "SPECIFIC_MESSAGE": "This option has not been created yet.",
     "CHANGE_CONTEXT": "Tap to change context",
     "YTD_SELECTED_LABEL": "<<arg0:current_year>>, year-to-date"
+  },
+  "DATE_CONTEXT_SHIFTER": {
+    "NEXT_YEAR": "Next Year",
+    "LAST_YEAR": "Last Year",
+    "NEXT_MONTH": "Next Month",
+    "LAST_MONTH": "Last Month"
   }
 }
