@@ -65,7 +65,7 @@ export default function TopSpendingCategories({ categoryTotals, setCurrentTab, s
                 })
             }
             {
-                sortedList.length > 2 && (
+                sortedList.length > 3 && (
                     <Link text={viewAll ? hideLabel : showAllLabel}
                           customClass={styles.showAllLink}
                           onClickCallback={() => setViewAll(!viewAll)}
