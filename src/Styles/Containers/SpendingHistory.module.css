@@ -36,7 +36,7 @@
 
 .transactionsListContainer {
     height: 100%;
-    padding: 0 1.5rem;
+    padding: 1rem 1.5rem 0;
 }
 
 @media (min-width: 768px) {
