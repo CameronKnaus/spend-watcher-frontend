@@ -12,6 +12,7 @@ import SpendingSummary from '../Containers/SpendingSummary';
 import axios from 'axios';
 import SpendingHistory from '../Containers/SpendingHistory';
 import DateContextShifter from '../Components/UIElements/Form/DateContextShifter';
+import { useIsMobile } from '../Util/IsMobileContext';
 
 export const TAB_ENUM = {
     SUMMARY_TAB: 'SUMMARY_TAB',
@@ -25,6 +26,7 @@ const defaultTabMap = {
 
 export default function SpendingBreakdown() {
     const getContent = useContent('SPENDING_BREAKDOWN');
+    const isMobile = useIsMobile();
 
     const {
         dateRange,
@@ -51,7 +53,7 @@ export default function SpendingBreakdown() {
         setMinSupportedDate(dateRangeResponse.minDate);
     }, [dateRangeResponse]);
 
-    useEffect(() => {
+    function fetchStats() {
         setSpendingBreakdown(null);
         const args = {
             startDate: dateRange.startDate.format(),
@@ -62,12 +64,15 @@ export default function SpendingBreakdown() {
             .then(({ data }) => {
                 setSpendingBreakdown({
                     finalTotalSpent: data.finalTotalSpent,
-                    categoryTotals: data.totalsByCategory,
-                    transactionsList: data.transactionsGroupedByDate
+                    finalTotalTransactions: data.finalTotalTransactions,
+                    categoryTotals: data.totalSpentPerCategory,
+                    transactionsList: data.transactionsGroupedByDate,
+                    totalTransactionsPerCategory: data.totalTransactionsPerCategory
                 });
             })
             .catch(setError);
-    }, [dateRange]);
+    }
+    useEffect(fetchStats, [dateRange]);
 
     if(!spendingBreakdown) {
         return (
@@ -86,52 +91,82 @@ export default function SpendingBreakdown() {
         );
     }
 
+    const dateMangement = (
+        <div className={styles.gutter}>
+            <DateChangerTile resultsText={getContent('RESULTS_SHOWN')}
+                             updateDateRange={updateDateRange}
+                             endDate={dateRange.endDate}
+                             startDate={dateRange.startDate}
+                             minAllowedDate={minSupportedDate}
+                             dateRangeType={dateRangeType}
+            />
+            <div className={styles.dateContextShifterContainer}>
+                <DateContextShifter dateRangeType={dateRangeType}
+                                    shiftYearInContext={shiftYearInContext}
+                                    shiftMonthInContext={shiftMonthInContext}
+                                    minAllowedDate={minSupportedDate}
+                                    endDate={dateRange.endDate}
+                                    startDate={dateRange.startDate}
+                />
+            </div>
+        </div>
+    );
+
+    const summaryWithProps = (
+        <SpendingSummary spendingBreakdown={spendingBreakdown}
+                         setCurrentTab={setCurrentTab}
+                         setFilterCategory={setFilterCategory}
+        />
+    );
+
+    const historyWithProps = (
+        <SpendingHistory transactionsList={spendingBreakdown.transactionsList}
+                         filterCategory={filterCategory}
+                         setFilterCategory={setFilterCategory}
+                         totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
+                         finalTotalTransactions={spendingBreakdown.finalTotalTransactions}
+                         refreshStats={fetchStats}
+        />
+    );
+
+    if(isMobile) {
+        // XS Mobile experience
+        return (
+            <>
+                <NavigationalBanner title={getContent(currentTab === TAB_ENUM.SUMMARY_TAB ? 'SUMMARY_BANNER_TITLE' : 'HISTORY_BANNER_TITLE')} />
+                {dateMangement}
+                <div className={styles.tabContainer}>
+                    <TabBar contentGroupKey='SPENDING_BREAKDOWN'
+                            labelContentKey='TAB_BAR_LABEL'
+                            tabMapping={Object.values(TAB_ENUM)}
+                            currentTab={currentTab}
+                            setCurrentTab={setCurrentTab}
+                            activeTabColor='var(--theme-celadon-blue)'
+                            inactiveTabColor='var(--theme-celadon-blue-dark)'
+                            tabTextColor='var(--theme-bright-text-color)'
+                            tabBorderColor='var(--theme-celadon-blue)'
+                            tabMargin='1.5rem'
+                    />
+                </div>
+                {currentTab === TAB_ENUM.SUMMARY_TAB && summaryWithProps}
+                {currentTab === TAB_ENUM.HISTORY_TAB && historyWithProps}
+            </>
+        );
+    }
+
+    // Desktop experience
     return (
         <>
             <NavigationalBanner title={getContent(currentTab === TAB_ENUM.SUMMARY_TAB ? 'SUMMARY_BANNER_TITLE' : 'HISTORY_BANNER_TITLE')} />
-            <div className={styles.gutter}>
-                <DateChangerTile resultsText={getContent('RESULTS_SHOWN')}
-                                 updateDateRange={updateDateRange}
-                                 endDate={dateRange.endDate}
-                                 startDate={dateRange.startDate}
-                                 minAllowedDate={minSupportedDate}
-                                 dateRangeType={dateRangeType}
-                />
-                <div className={styles.dateContextShifterContainer}>
-                    <DateContextShifter dateRangeType={dateRangeType}
-                                        shiftYearInContext={shiftYearInContext}
-                                        shiftMonthInContext={shiftMonthInContext}
-                                        minAllowedDate={minSupportedDate}
-                                        endDate={dateRange.endDate}
-                                        startDate={dateRange.startDate}
-                    />
+            <div className={styles.desktopLayout}>
+                <div className={`${styles.desktopSideBar} low-shadow`}>
+                    {dateMangement}
+                    {historyWithProps}
+                </div>
+                <div className={styles.desktopSummaryContainer}>
+                    {summaryWithProps}
                 </div>
             </div>
-            <div className={styles.tabContainer}>
-                <TabBar contentGroupKey='SPENDING_BREAKDOWN'
-                        labelContentKey='TAB_BAR_LABEL'
-                        tabMapping={Object.values(TAB_ENUM)}
-                        currentTab={currentTab}
-                        setCurrentTab={setCurrentTab}
-                        activeTabColor='var(--theme-celadon-blue)'
-                        inactiveTabColor='var(--theme-celadon-blue-dark)'
-                        tabTextColor='var(--theme-bright-text-color)'
-                        tabBorderColor='var(--theme-celadon-blue)'
-                        tabMargin='1.5rem'
-                />
-            </div>
-            {currentTab === TAB_ENUM.SUMMARY_TAB && (
-                <SpendingSummary spendingBreakdown={spendingBreakdown}
-                                 setCurrentTab={setCurrentTab}
-                                 setFilterCategory={setFilterCategory}
-                />
-            )}
-            {currentTab === TAB_ENUM.HISTORY_TAB && (
-                <SpendingHistory transactionsList={spendingBreakdown.transactionsList}
-                                 filterCategory={filterCategory}
-                                 setFilterCategory={setFilterCategory}
-                />
-            )}
         </>
     );
 }

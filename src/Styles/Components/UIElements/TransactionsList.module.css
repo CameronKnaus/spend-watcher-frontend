@@ -20,4 +20,5 @@
     font-size: var(--body-text-14);
     color: var(--theme-light-text-color);
     text-align: center;
+    padding-top: 1rem;
 }

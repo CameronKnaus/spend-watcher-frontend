@@ -16,7 +16,8 @@ export default function TopSpendingCategories({ categoryTotals, setCurrentTab, s
         return 'Loading...';
     }
 
-    let sortedList = Object.keys(categoryTotals).map(key => {
+    const categoryTotalList = Object.keys(categoryTotals);
+    let sortedList = categoryTotalList.map(key => {
         return {
             category: key,
             amount: categoryTotals[key]
@@ -65,7 +66,7 @@ export default function TopSpendingCategories({ categoryTotals, setCurrentTab, s
                 })
             }
             {
-                sortedList.length > 3 && (
+                categoryTotalList.length > 2 && (
                     <Link text={viewAll ? hideLabel : showAllLabel}
                           customClass={styles.showAllLink}
                           onClickCallback={() => setViewAll(!viewAll)}

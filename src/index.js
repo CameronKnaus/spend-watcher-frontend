@@ -3,8 +3,8 @@ import './index.css';
 import ReactDOM from 'react-dom';
 import { PAGE_ROUTES } from './Constants/RouteConstants';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import FormFactorContext from './Util/FormFactorContext';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { IsMobileContextProvider } from './Util/IsMobileContext';
 import dayjs from '@date-io/dayjs'; // Using DayJS for material-ui date picker handling
 import Dashboard from './Pages/Dashboard';
 import AuthScreen from './Pages/AuthScreen';
@@ -20,7 +20,7 @@ DayJS.extend(duration);
 ReactDOM.render(
     <React.StrictMode>
         <MuiPickersUtilsProvider utils={dayjs}>
-            <FormFactorContext>
+            <IsMobileContextProvider>
                 <BrowserRouter>
                     <SessionChecker>
                         <Routes>
@@ -30,7 +30,7 @@ ReactDOM.render(
                         </Routes>
                     </SessionChecker>
                 </BrowserRouter>
-            </FormFactorContext>
+            </IsMobileContextProvider>
         </MuiPickersUtilsProvider>
     </React.StrictMode>,
     document.getElementById('root')

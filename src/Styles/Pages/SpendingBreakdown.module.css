@@ -11,3 +11,21 @@
 .dateContextShifterContainer {
     padding: 1.5rem 1.5rem 0;
 }
+
+.desktopLayout {
+    width: 100%;
+}
+
+.desktopSideBar {
+    width: var(--min-supported-width);
+    position: fixed;
+    top: 2rem;
+    bottom: 0;
+    left: 0;
+    border-right: 2px solid var(--theme-light-border);
+}
+
+.desktopSummaryContainer {
+    width: calc(100% - var(--min-supported-width));
+    margin-left: var(--min-supported-width);
+}

@@ -33,7 +33,9 @@
     "HIDE": "Hide Top Categories",
     "TOTAL_SPENT": "Total Spent",
     "FILTER_BY_CATEGORY": "Filter by Category",
-    "REMOVE_FILTER": "Remove filter"
+    "REMOVE_FILTER": "Remove filter",
+    "TRANSACTION_COUNT": "Showing <<arg0:amount>> transactions",
+    "TRANSACTIONS_LIST_LABEL": "Transactions for period"
   },
   "TRANSACTIONS": {
     "RECENT": "Recent Transactions",

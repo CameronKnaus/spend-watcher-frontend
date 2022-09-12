@@ -11,12 +11,18 @@
 
     --theme-link-blue: #0694db;
 
+    /* Text colors */
+    --theme-standard-text: #333333;
     --theme-placeholder-text: #BFC6C7;
     --theme-bright-text-color: #FFFFFF;
     --theme-light-text-color: #777777;
     --theme-subdued-text-color: #555555;
 
+    /* Border colors */
+    --theme-light-border-blue-accent: #A9C0C1;
+    --theme-accent-border: #BFC6C7;
     --theme-light-border: #EEEEEE;
+    --theme-heavy-border: #555555;
 
     --theme-tab-inactive: #CFCFCF;
 
