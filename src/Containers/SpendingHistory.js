@@ -28,8 +28,7 @@ export default function SpendingHistory({
             )}
             <div className={styles.transactionsContainer}>
                 <div className={styles.horizontalPadding}>
-                    <SpendCategoryFilter custom
-                                         activeCategory={filterCategory}
+                    <SpendCategoryFilter activeCategory={filterCategory}
                                          setFilterCategory={setFilterCategory}
                                          filterCategory={filterCategory}
                                          textInputStyles={styles.categoryFilter}

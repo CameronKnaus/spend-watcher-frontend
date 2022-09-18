@@ -1,5 +1,7 @@
 .contentContainer {
-    margin: 1.5rem 0;
+    padding: 1.5rem 0;
+    background-color: var(--theme-soft-background);
+    min-height: 60vh;
 }
 
 .gutter {
@@ -18,4 +20,10 @@
     color: var(--theme-money-loss);
     font-size: var(--header-text-32);
     font-weight: var(--fw-light);
+}
+
+@media (min-width: 768px) {
+    .contentContainer {
+        min-height: 95vh;
+    }
 }

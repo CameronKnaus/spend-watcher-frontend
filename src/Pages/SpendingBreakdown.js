@@ -13,6 +13,7 @@ import axios from 'axios';
 import SpendingHistory from '../Containers/SpendingHistory';
 import DateContextShifter from '../Components/UIElements/Form/DateContextShifter';
 import { useIsMobile } from '../Util/IsMobileContext';
+import clsx from 'clsx';
 
 export const TAB_ENUM = {
     SUMMARY_TAB: 'SUMMARY_TAB',
@@ -91,8 +92,8 @@ export default function SpendingBreakdown() {
         );
     }
 
-    const dateMangement = (
-        <div className={styles.gutter}>
+    const dateManagement = (
+        <div className={clsx(styles.gutter, isMobile ? styles.mobileDateManager : styles.desktopDateManager)}>
             <DateChangerTile resultsText={getContent('RESULTS_SHOWN')}
                              updateDateRange={updateDateRange}
                              endDate={dateRange.endDate}
@@ -134,7 +135,7 @@ export default function SpendingBreakdown() {
         return (
             <>
                 <NavigationalBanner title={getContent(currentTab === TAB_ENUM.SUMMARY_TAB ? 'SUMMARY_BANNER_TITLE' : 'HISTORY_BANNER_TITLE')} />
-                {dateMangement}
+                {dateManagement}
                 <div className={styles.tabContainer}>
                     <TabBar contentGroupKey='SPENDING_BREAKDOWN'
                             labelContentKey='TAB_BAR_LABEL'
@@ -148,8 +149,10 @@ export default function SpendingBreakdown() {
                             tabMargin='1.5rem'
                     />
                 </div>
-                {currentTab === TAB_ENUM.SUMMARY_TAB && summaryWithProps}
-                {currentTab === TAB_ENUM.HISTORY_TAB && historyWithProps}
+                <div className={styles.softBackground}>
+                    {currentTab === TAB_ENUM.SUMMARY_TAB && summaryWithProps}
+                    {currentTab === TAB_ENUM.HISTORY_TAB && historyWithProps}
+                </div>
             </>
         );
     }
@@ -158,14 +161,12 @@ export default function SpendingBreakdown() {
     return (
         <>
             <NavigationalBanner title={getContent(currentTab === TAB_ENUM.SUMMARY_TAB ? 'SUMMARY_BANNER_TITLE' : 'HISTORY_BANNER_TITLE')} />
-            <div className={styles.desktopLayout}>
-                <div className={`${styles.desktopSideBar} low-shadow`}>
-                    {dateMangement}
-                    {historyWithProps}
-                </div>
-                <div className={styles.desktopSummaryContainer}>
-                    {summaryWithProps}
-                </div>
+            <div className={`${styles.desktopSideBar} low-shadow`}>
+                {dateManagement}
+                {historyWithProps}
+            </div>
+            <div className={styles.desktopSummaryContainer}>
+                {summaryWithProps}
             </div>
         </>
     );

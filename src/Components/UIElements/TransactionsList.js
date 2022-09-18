@@ -112,7 +112,7 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
     }
 
     return (
-        <div>
+        <>
             { transactionsList && transactionGroupings() }
             {
                 transactionToEdit && (
@@ -123,6 +123,6 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
                     />
                 )
             }
-        </div>
+        </>
     );
 }

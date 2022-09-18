@@ -1,7 +1,10 @@
 .gutter {
     padding: 0 1.5rem;
-    margin-top: 1rem;
     min-width: var(--min-supported-width);
+}
+
+.mobileDateManager {
+    padding-top: 1rem;
 }
 
 .tabContainer {
@@ -12,20 +15,31 @@
     padding: 1.5rem 1.5rem 0;
 }
 
-.desktopLayout {
-    width: 100%;
-}
-
 .desktopSideBar {
     width: var(--min-supported-width);
     position: fixed;
     top: 2rem;
-    bottom: 0;
+    height: 100%;
     left: 0;
+    overflow-y: auto;
     border-right: 2px solid var(--theme-light-border);
 }
 
 .desktopSummaryContainer {
     width: calc(100% - var(--min-supported-width));
     margin-left: var(--min-supported-width);
+}
+
+.desktopDateManager {
+    border-bottom: 2px solid var(--theme-celadon-blue);
+    padding-bottom: 2rem;
+    padding-top: 1.25rem;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--theme-content-background);
+}
+
+.softBackground {
+    background-color: var(--theme-soft-background);
 }
