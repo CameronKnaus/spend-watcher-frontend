@@ -117,6 +117,7 @@ export default function SpendingBreakdown() {
         <SpendingSummary spendingBreakdown={spendingBreakdown}
                          setCurrentTab={setCurrentTab}
                          setFilterCategory={setFilterCategory}
+                         totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
         />
     );
 

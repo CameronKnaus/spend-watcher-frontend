@@ -1,12 +1,9 @@
 .contentContainer {
-    padding: 1.5rem 0;
+    padding: 1.5rem 1.5rem;
     background-color: var(--theme-soft-background);
     min-height: 60vh;
 }
 
-.gutter {
-    padding: 0 1.5rem;
-}
 
 .totalLabel {
     font-size: 18px;
@@ -22,7 +19,22 @@
     font-weight: var(--fw-light);
 }
 
+.totalSpentContainer {
+    max-width: 350px;
+}
+
+.topCategories {
+    flex-basis: 100%;
+}
+
 @media (min-width: 768px) {
+    .totalSpentContainer {
+        background-color: var(--theme-content-background);
+        padding: 1rem;
+        border-radius: 12px;
+        border: 1px solid var(--theme-light-border);
+    }
+
     .contentContainer {
         min-height: 95vh;
     }

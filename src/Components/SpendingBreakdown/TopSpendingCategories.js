@@ -5,8 +5,9 @@ import useContent from '../../CustomHooks/useContent';
 import Link from '../UIElements/Navigation/Link';
 import clsx from 'clsx';
 import { TAB_ENUM } from '../../Pages/SpendingBreakdown';
+import CategoryAmountChart from '../UIElements/DataVisualization/CategoryAmountChart';
 
-export default function TopSpendingCategories({ categoryTotals, setCurrentTab, setFilterCategory }) {
+export default function TopSpendingCategories({ label, categoryTotals, setCurrentTab, setFilterCategory, useDollarValues }) {
     const [viewAll, setViewAll] = useState(false);
     const getContent = useContent();
     const getSpendingContent = (...args) => getContent('SPENDING_BREAKDOWN', ...args);
@@ -24,6 +25,8 @@ export default function TopSpendingCategories({ categoryTotals, setCurrentTab, s
         };
     }).sort((a, b) => a.amount < b.amount ? 1 : -1);
 
+    const listForPieChart = sortedList;
+
     if(!viewAll) {
         sortedList = sortedList.filter((_, index) => index < 3);
     }
@@ -33,14 +36,16 @@ export default function TopSpendingCategories({ categoryTotals, setCurrentTab, s
     return (
         <div>
             <div className={styles.label}>
-                { getSpendingContent('CATEGORY_TOTAL_TITLE') }
+                {label}
             </div>
+            <CategoryAmountChart amountList={listForPieChart} useDollarValues={useDollarValues} />
             {
                 sortedList.map(({ category, amount }, index) => {
                     const categoryData = SPENDING_CATEGORIES[category];
                     const backgroundColor = categoryData.color;
                     const Icon = categoryData.icon;
                     const categoryLabel = getContent('SPENDING_CATEGORIES', category);
+                    const displayedValue = useDollarValues ? `-$${amount.toFixed(2)}` : `x${amount}`;
                     return (
                         <button key={category}
                                 className={clsx(styles.totalsPill, index > 2 && styles.fadeInAnimation)}
@@ -59,7 +64,7 @@ export default function TopSpendingCategories({ categoryTotals, setCurrentTab, s
                                 {categoryLabel}
                             </div>
                             <div className={styles.amount}>
-                                {`-$${amount.toFixed(2)}`}
+                                {displayedValue}
                             </div>
                         </button>
                     );
