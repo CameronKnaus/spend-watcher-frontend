@@ -80,12 +80,17 @@
     "ACCOUNT_VALUE_LABEL": "Current Account Value",
     "ACCOUNT_VALUE_PLACEHOLDER": "$0.00",
     "GROWTH_RATE_LABEL": "Annual Growth Rate (%)",
-    "GROWTH_RATE_PLACEHOLDER": "0.00"
+    "GROWTH_RATE_PLACEHOLDER": "0.00",
+    "FIXED_RATE": "(fixed)",
+    "VARIABLE_RATE": "(variable)",
+    "UPDATE_FOR_MONTH": "Update for <<arg0:month_name>>",
+    "AS_OF": "As of <<arg0:date>>"
   },
   "ACCOUNT_CATEGORIES": {
     "CHECKING": "Checking",
     "SAVINGS": "Savings",
-    "INVESTING": "Investment"
+    "INVESTING": "Investment",
+    "BONDS": "Bonds"
   },
   "SPENDING_CATEGORIES": {
     "RESTAURANTS": "Dining Out",

@@ -9,7 +9,7 @@ import formatCurrency from '../../Util/formatCurrency';
 // isExpense - Boolean - When true will show amount in red with a minus
 // date - String
 // iconCategory - String - uses the Account or transaction category code to render the right icon, leave blank for no icon
-export default function InteractiveDataRow({ title, description, amount, date, isExpense, iconCategory, onClick }) {
+export default function InteractiveDataRow({ title, description, amount, date, isExpense, isGain, iconCategory, onClick }) {
     // Amount to show
     const parsedAmount = (isExpense ? '-' : '') + formatCurrency(amount);
 

@@ -5,7 +5,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useFetch from 'CustomHooks/useFetch';
 import Link from 'Components/UIElements/Navigation/Link';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
-import TransactionsList from '../Components/UIElements/TransactionsList';
+import TransactionsList from '../Components/Transactions/TransactionsList';
 
 export default function RecentTransactions({ refreshRequested, callForRefresh }) {
     const service = useFetch(SERVICE_ROUTES.recentTransactions, true);
@@ -31,7 +31,7 @@ export default function RecentTransactions({ refreshRequested, callForRefresh })
     }, [refreshRequested, service]);
 
     if(service.loading) {
-        // TODO
+        // TODO:
         return (
             <Container>
                 LOADING
@@ -40,7 +40,7 @@ export default function RecentTransactions({ refreshRequested, callForRefresh })
     }
 
     if(service.error) {
-        // TODO Proper Error Handling
+        // TODO: Proper Error Handling
         return (
             <Container>
                 <div className={styles.issueMessage}>

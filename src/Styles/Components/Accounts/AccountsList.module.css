@@ -1,0 +1,27 @@
+.rowContainer {
+    padding-bottom: 12px;
+}
+
+.updateButton {
+    display: inline-block;
+    height: 40px;
+    width: 100%;
+    color: white;
+    background-color: var(--theme-jungle-green-dark);
+    margin-top: 12px;
+    border-radius: 0 0 12px 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.3s;
+}
+
+.updateButton:hover {
+    filter: brightness(0.8);
+}
+
+.editIcon {
+    padding-right: 12px;
+    display: inline-block;
+}

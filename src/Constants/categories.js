@@ -6,7 +6,8 @@ import { FaCannabis,
     FaHome,
     FaHeart,
     FaDollarSign,
-    FaMoneyBillWave } from 'react-icons/fa';
+    FaMoneyBillWave,
+    FaLandmark } from 'react-icons/fa';
 import { IoIosBeer, IoIosCart, IoIosAirplane, IoMdBrush, IoIosTrendingUp } from 'react-icons/io';
 import { MdFastfood,
     MdMovieFilter,
@@ -128,6 +129,10 @@ export const ACCOUNT_CATEGORIES = {
     INVESTING: {
         icon: <IoIosTrendingUp />,
         color: 'var(--theme-jungle-green)'
+    },
+    BONDS: {
+        icon: <FaLandmark />,
+        color: 'var(--theme-yellow-orange)'
     }
 };
 

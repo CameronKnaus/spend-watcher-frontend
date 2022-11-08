@@ -1,9 +1,9 @@
 import React from 'react';
-import useContent from '../../CustomHooks/useContent';
-import styles from '../../Styles/Components/UIElements/TransactionsList.module.css';
-import TransactionForm from '../Transactions/TransactionForm';
+import useContent from 'CustomHooks/useContent';
+import styles from 'Styles/Components/Transactions/TransactionsList.module.css';
+import TransactionForm from './TransactionForm';
 import dayjs from 'dayjs';
-import InteractiveDataRow from './InteractiveDataRow';
+import InteractiveDataRow from 'Components/UIElements/InteractiveDataRow';
 
 /* TransactionsList prop should be transactions grouped by date with they date being the key:
     Example:

@@ -4,10 +4,9 @@ import styles from 'Styles/Components/MyMoney/AccountForm.module.css';
 import CategoryInput from '../UIElements/Form/CategoryInput';
 import SlideUpPanel, { ClosePanel } from '../UIElements/Modal/SlideUpPanel';
 import axios from 'axios';
-import Link from '../UIElements/Navigation/Link';
-import { IoTrashSharp } from 'react-icons/io5';
 import MoneyInput from '../UIElements/Form/MoneyInput';
 import ServiceRoutes from 'Constants/ServiceRoutes';
+import formatCurrency from 'Util/formatCurrency';
 
 // existingAccount should be an object containing all account data points for the form
 export default function AccountForm({ onPanelClose, onSubmission, editMode, existingAccount = {} }) {
@@ -15,12 +14,20 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
     const text = (key, args) => getContent('MY_MONEY', key, args);
 
     // State for form values
-    const [formValid, setFormValid] = React.useState(Boolean(existingAccount.amount)); // defaults false
-    const [accountName, setAccountName] = React.useState('');
-    const [category, setCategory] = React.useState(existingAccount.category || { code: 'CHECKING', name: getContent('ACCOUNT_CATEGORIES', 'CHECKING') });
+    const [formValid, setFormValid] = React.useState(Boolean(existingAccount.currentAccountValue)); // defaults false
+    const [accountName, setAccountName] = React.useState(existingAccount.accountName || '');
+    const [category, setCategory] = React.useState(() => {
+        const accountType = existingAccount.accountType;
+        if(accountType) {
+            return { code: accountType, name: getContent('ACCOUNT_CATEGORIES', accountType) };
+        }
+
+        // Default to checking
+        return { code: 'CHECKING', name: getContent('ACCOUNT_CATEGORIES', 'CHECKING') };
+    });
     const [accountValue, setAccountValue] = React.useState(null);
-    const [growthRate, setGrowthRate] = React.useState('');
-    const [isVariable, setIsVariable] = React.useState(Boolean(existingAccount.isUncommon));
+    const [growthRate, setGrowthRate] = React.useState(existingAccount.growthRate || '');
+    const [isVariable, setIsVariable] = React.useState(existingAccount.hasVariableGrowthRate);
     const [loading, setLoading] = React.useState(false);
 
     // Update form validity only based on amount having a positive value
@@ -35,14 +42,20 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
 
         const payload = {
             accountName,
-            accountCategory: category,
+            accountCategory: category.code,
             startingAccountValue: accountValue,
             growthRate,
             hasVariableGrowthRate: isVariable
         };
 
+        if(editMode) {
+            payload.accountId = existingAccount.accountId;
+        }
+
+        const endpoint = editMode ? ServiceRoutes.editAccount : ServiceRoutes.addNewAccount;
+
         // Handle service call
-        axios.post(ServiceRoutes.addNewAccount, payload)
+        axios.post(endpoint, payload)
             .then(onSubmission)
             .finally(() => setLoading(false));
     }
@@ -68,30 +81,39 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
             <ClosePanel.Consumer>
                 {
                     ({ closePanel }) => (
-                        <>
-                            <form className={styles.transactionForm}>
-                                {/* ACCOUNT NAME */}
-                                <label>
-                                    {text('NAME_LABEL')}
-                                    <input type='text'
-                                           className={styles.textInput}
-                                           placeholder={text('NAME_PLACEHOLDER')}
-                                           value={accountName}
-                                           autoComplete='off'
-                                           maxLength={50}
-                                           onChange={(event) => setAccountName(event.target.value)}
-                                    />
-                                </label>
-                                {/* ACCOUNT CATEGORY */}
-                                <label htmlFor='category-input' style={{ width: 100 }}>
-                                    {text('CATEGORY_LABEL')}
-                                </label>
-                                <CategoryInput textInputStyles={styles.textInput}
-                                               value={category}
-                                               categoryType='accounts'
-                                               onChange={setCategory}
+                        <form className={styles.transactionForm}>
+                            {/* ACCOUNT NAME */}
+                            <label>
+                                {text('NAME_LABEL')}
+                                <input type='text'
+                                       className={styles.textInput}
+                                       placeholder={text('NAME_PLACEHOLDER')}
+                                       value={accountName}
+                                       autoComplete='off'
+                                       maxLength={50}
+                                       onChange={(event) => setAccountName(event.target.value)}
                                 />
-                                {/* ACCOUNT VALUE */}
+                            </label>
+                            {/* ACCOUNT CATEGORY */}
+                            <label htmlFor='category-input' style={{ width: 100 }}>
+                                {text('CATEGORY_LABEL')}
+                            </label>
+                            <CategoryInput textInputStyles={styles.textInput}
+                                           value={category}
+                                           categoryType='accounts'
+                                           onChange={setCategory}
+                            />
+                            {/* ACCOUNT VALUE */}
+                            {editMode ? (
+                                <>
+                                    <label>
+                                        {text('ACCOUNT_VALUE_LABEL')}
+                                    </label>
+                                    <div className={styles.accountValue}>
+                                        {formatCurrency(existingAccount.currentAccountValue)}
+                                    </div>
+                                </>
+                            ) : (
                                 <label>
                                     {text('ACCOUNT_VALUE_LABEL')}
                                     <MoneyInput name='account-value-spent-field'
@@ -101,47 +123,35 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
                                                 value={accountValue}
                                     />
                                 </label>
-                                {/* GROWTH RATE */}
-                                <label>
-                                    {text('GROWTH_RATE_LABEL')}
-                                    <input type='number'
-                                           className={styles.textInput}
-                                           placeholder={text('GROWTH_RATE_PLACEHOLDER')}
-                                           value={growthRate}
-                                           autoComplete='off'
-                                           step='.01'
-                                           onChange={updateGrowthRate}
-                                    />
-                                </label>
-                                {/* VARIABLE GROWTH RATE */}
-                                <div className={styles.checkContainer}>
-                                    <input type='checkbox'
-                                           aria-label={`${VARIABLE_GROWTH_LABEL},${VARIABLE_GROWTH_DESCRIPTION}`}
-                                           className={styles.checkBox}
-                                           checked={isVariable}
-                                           onChange={() => setIsVariable(prev => !prev)}
-                                    />
-                                    <div aria-hidden className={styles.checkLabel}>
-                                        {VARIABLE_GROWTH_LABEL}
-                                    </div>
-                                    <div aria-hidden className={styles.checkDescription}>
-                                        {VARIABLE_GROWTH_DESCRIPTION}
-                                    </div>
+                            )}
+                            {/* GROWTH RATE */}
+                            <label>
+                                {text('GROWTH_RATE_LABEL')}
+                                <input type='number'
+                                       className={styles.textInput}
+                                       placeholder={text('GROWTH_RATE_PLACEHOLDER')}
+                                       value={growthRate}
+                                       autoComplete='off'
+                                       step='.01'
+                                       onChange={updateGrowthRate}
+                                />
+                            </label>
+                            {/* VARIABLE GROWTH RATE */}
+                            <div className={styles.checkContainer}>
+                                <input type='checkbox'
+                                       aria-label={`${VARIABLE_GROWTH_LABEL},${VARIABLE_GROWTH_DESCRIPTION}`}
+                                       className={styles.checkBox}
+                                       checked={isVariable}
+                                       onChange={() => setIsVariable(prev => !prev)}
+                                />
+                                <div aria-hidden className={styles.checkLabel}>
+                                    {VARIABLE_GROWTH_LABEL}
                                 </div>
-                            </form>
-                            {
-                                editMode && (
-                                    <Link text={text('DELETE')}
-                                          CustomIcon={IoTrashSharp}
-                                          customClass={styles.deleteLink}
-                                          onClickCallback={() => {
-                                              submit();
-                                              closePanel();
-                                          }}
-                                    />
-                                )
-                            }
-                        </>
+                                <div aria-hidden className={styles.checkDescription}>
+                                    {VARIABLE_GROWTH_DESCRIPTION}
+                                </div>
+                            </div>
+                        </form>
                     )
                 }
             </ClosePanel.Consumer>

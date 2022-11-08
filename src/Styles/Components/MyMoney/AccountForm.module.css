@@ -53,3 +53,11 @@
     margin: 1.5rem auto 0;
     text-align: center;
 }
+
+.accountValue {
+    color: var(--theme-money-gain);
+    text-align: center;
+    font-size: var(--header-text-18);
+    font-weight: var(--fw-semi-bold);
+    padding: 0.5rem 0 1.5rem;
+}

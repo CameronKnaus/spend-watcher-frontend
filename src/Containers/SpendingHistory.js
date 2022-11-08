@@ -1,5 +1,5 @@
 import styles from '../Styles/Containers/SpendingHistory.module.css';
-import TransactionsList from '../Components/UIElements/TransactionsList';
+import TransactionsList from '../Components/Transactions/TransactionsList';
 import SpendCategoryFilter from '../Components/SpendingHistory/SpendCategoryFilter';
 import useContent from '../CustomHooks/useContent';
 import { useIsMobile } from '../Util/IsMobileContext';
