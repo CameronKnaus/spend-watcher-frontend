@@ -84,7 +84,11 @@
     "FIXED_RATE": "(fixed)",
     "VARIABLE_RATE": "(variable)",
     "UPDATE_FOR_MONTH": "Update for <<arg0:month_name>>",
-    "AS_OF": "As of <<arg0:date>>"
+    "AS_OF": "As of <<arg0:date>>",
+    "UPDATE_BALANCE": "Update Account Balance",
+    "ACCOUNT_VALUE_UPDATE_LABEL": "New Balance for <<arg0:month_name>>",
+    "VALUE_CHANGE_LABEL": "Value Change Amount",
+    "EDIT_ACCOUNT_BALANCE_LABEL": "Edit <<arg0:month_name>> account value"
   },
   "ACCOUNT_CATEGORIES": {
     "CHECKING": "Checking",

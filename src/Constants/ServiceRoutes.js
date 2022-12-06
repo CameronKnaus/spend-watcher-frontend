@@ -19,7 +19,8 @@ const SERVICE_ROUTES = {
     spendingBreakdown: spendApi('/breakdown'), // POST
     addNewAccount: accountsApi('/new'), // POST
     accountsSummary: accountsApi('/summary'), // GET
-    editAccount: accountsApi('/edit') // POST
+    editAccount: accountsApi('/edit'), // POST
+    updateAccountBalance: accountsApi('/update') // POST
 };
 
 export default SERVICE_ROUTES;
