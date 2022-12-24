@@ -18,7 +18,10 @@ import { MdFastfood,
     MdWaterDrop,
     MdPets,
     MdShield,
-    MdShoppingBag, MdSavings } from 'react-icons/md';
+    MdShoppingBag,
+    MdSavings,
+    MdFitnessCenter,
+    MdContentCut } from 'react-icons/md';
 
 import { IoGameController } from 'react-icons/io5';
 
@@ -50,6 +53,14 @@ export const SPENDING_CATEGORIES = {
     FUEL: {
         icon: <FaGasPump />,
         color: 'var(--theme-orange-dark)'
+    },
+    FITNESS: {
+        icon: <MdFitnessCenter />,
+        color: 'var(--theme-queen-blue-pale)'
+    },
+    GROOMING: {
+        icon: <MdContentCut />,
+        color: 'var(--theme-pistachio-pale)'
     },
     BUSINESS: {
         icon: <MdBusinessCenter />,
@@ -87,7 +98,7 @@ export const SPENDING_CATEGORIES = {
         icon: <FaHome />,
         color: 'var(--theme-queen-blue)'
     },
-    RECREATION: {
+    CANNABIS: {
         icon: <FaCannabis />,
         color: 'var(--theme-pistachio-dark)'
     },
