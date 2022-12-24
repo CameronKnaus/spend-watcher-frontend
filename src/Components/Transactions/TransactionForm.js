@@ -95,11 +95,6 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                     ({ closePanel }) => (
                         <>
                             <form className={styles.transactionForm}>
-                                <div>
-                                    Existing Date:
-                                    {' '}
-                                    {existingTransaction.date}
-                                </div>
                                 <label>
                                     {text('AMOUNT_LABEL')}
                                     <MoneyInput name='amount-spent-field'

@@ -34,7 +34,7 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
                 name: getContent('SPENDING_CATEGORIES', transaction.category)
             },
             isUncommon: transaction.isUncommon,
-            date: transaction.dateISO
+            date: transaction.date
         });
     }
 
