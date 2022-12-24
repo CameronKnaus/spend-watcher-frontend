@@ -28,7 +28,7 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
     const [category, setCategory] = React.useState(existingTransaction.category || { code: 'OTHER', name: getContent('SPENDING_CATEGORIES', 'OTHER') });
     const [isUncommon, setIsUncommon] = React.useState(Boolean(existingTransaction.isUncommon));
     const [note, setNote] = React.useState(existingTransaction.note || '');
-    const [selectedDate, setSelectedDate] = React.useState(existingTransaction.date ? dayjs(existingTransaction.date) : dayjs()); // defaults to today
+    const [selectedDate, setSelectedDate] = React.useState(existingTransaction.date ? existingTransaction.date : dayjs()); // defaults to today
     const [loading, setLoading] = React.useState(false);
 
     // Update form validity only based on amount having a positive value
