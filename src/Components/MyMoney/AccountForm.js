@@ -47,7 +47,7 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
             accountName,
             accountCategory: category.code,
             startingAccountValue: accountValue,
-            growthRate,
+            growthRate: Number(growthRate),
             hasVariableGrowthRate: isVariable
         };
 
