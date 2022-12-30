@@ -11,10 +11,21 @@ import InteractiveDataRow from 'Components/UIElements/InteractiveDataRow';
                 01/02/2022: [{ *transaction data* }, { *transaction data* }]
                 01/01/2022: [{ *transaction data* }, { *transaction data* }]
 * */
-export default function TransactionsList({ transactionsList, onEditCallback = () => { /* NOOP */ }, filteredCategory }) {
+export default function TransactionsList({ transactionsList, onEditCallback = () => { /* NOOP */ }, filteredCategory, isLoading }) {
     const [transactionToEdit, setTransactionToEdit] = React.useState();
     const getContent = useContent();
     const text = (key) => getContent('TRANSACTIONS', key);
+
+    if(isLoading) {
+        return new Array(5).fill('').map((_, index) => (
+            <div key={`loading-transaction-${index}`} // eslint-disable-line react/no-array-index-key
+                 className={styles.transactionWrapper}
+            >
+                <InteractiveDataRow isLoading />
+            </div>
+        )
+        );
+    }
 
     if(!transactionsList) {
         return (

@@ -8,11 +8,22 @@ import { useState } from 'react';
 import AccountForm from 'Components/MyMoney/AccountForm';
 import AccountBalanceUpdateForm from 'Components/MyMoney/AccountBalanceUpdateForm';
 
-export default function AccountsList({ listOfAccounts, onEditCallback = () => { /* NOOP */ } }) {
+export default function AccountsList({ listOfAccounts, onEditCallback = () => { /* NOOP */ }, isLoading }) {
     const getContent = useContent();
     const [accountToEdit, setAccountToEdit] = useState(null);
     const [accountToUpdate, setAccountToUpdate] = useState(null);
     const [isBalanceEditMode, setIsBalanceEditMode] = useState(false);
+
+    if(isLoading) {
+        return new Array(3).fill('').map((_, index) => (
+            <div key={`loading-account-${index}`} // eslint-disable-line react/no-array-index-key
+                 className={styles.rowContainer}
+            >
+                <InteractiveDataRow isLoading />
+            </div>
+        )
+        );
+    }
 
     return (
         <>

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from 'Styles/Components/Tiles/ActionTile.module.css';
 import { CgChevronRight } from 'react-icons/cg';
+import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader';
 
 /* Params:
 *   title - string - required
@@ -19,6 +20,8 @@ import { CgChevronRight } from 'react-icons/cg';
 *       maxWidth: number|string - sets maximum width of container - default: 'none'
 *       paddingBelow: number|string - sets padding-bottom - default: 24
 *   }
+*   isLoading - boolean - if true shows skeleton loaders in the value positions
+*   isInactive - boolean - True when no value is present and a descriptive message needs to be shown
 */
 const defaultOptions = {
     showValueAbove: false,
@@ -27,7 +30,8 @@ const defaultOptions = {
     maxWidth: 'none',
     paddingBelow: 24
 };
-function ActionTile({ title, subtitle, value, fallbackActionPrompt, fallbackDescription, ariaValue, actionPrompt, useShadow, callback, options }) {
+
+function ActionTile({ title, subtitle, value, fallbackActionPrompt, fallbackDescription, ariaValue, actionPrompt, useShadow, callback, options, isLoading, isInactive }) {
     const args = Object.assign({}, defaultOptions, options);
 
     const { minWidth, maxWidth, paddingBelow } = args;
@@ -50,7 +54,7 @@ function ActionTile({ title, subtitle, value, fallbackActionPrompt, fallbackDesc
         </div>
     ), [title]);
 
-    if(!value && value !== 0) {
+    if(isInactive) {
         return container(
             <div className={styles.flexContainer}>
                 <div className={styles.descriptionContainer}>
@@ -80,7 +84,9 @@ function ActionTile({ title, subtitle, value, fallbackActionPrompt, fallbackDesc
                      className={`${styles.centeredValue} ${styles.pb12}`}
                      style={{ color: args.valueColor }}
                 >
-                    {value}
+                    <SkeletonLoader isActive={isLoading} height={38} width='60%' align='center'>
+                        {value}
+                    </SkeletonLoader>
                 </div>
                 <Title hideFromScreenReader />
                 {
@@ -116,7 +122,9 @@ function ActionTile({ title, subtitle, value, fallbackActionPrompt, fallbackDesc
                          className={styles.valueContainer}
                          style={{ color: args.valueColor }}
                     >
-                        {value}
+                        <SkeletonLoader isActive={isLoading} height={34}>
+                            {value}
+                        </SkeletonLoader>
                     </div>
                     <div className='accessible-text'>
                         {actionPrompt}

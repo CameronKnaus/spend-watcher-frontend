@@ -12,3 +12,12 @@
 .button:hover {
     filter: brightness(0.8);
 }
+
+.disabledButton {
+    background-color: var(--theme-disabled-button);
+}
+
+.disabledButton:hover {
+    filter: none;
+    cursor: not-allowed;
+}

@@ -21,9 +21,6 @@ export default function MyMoney({ refreshRequested, callForRefresh }) {
         }
     }, [refreshRequested, service]);
 
-    if(service.loading) {
-        return 'LOADING';
-    }
 
     if(service.error) {
         return JSON.stringify(service.error);
@@ -35,13 +32,14 @@ export default function MyMoney({ refreshRequested, callForRefresh }) {
                 {getContent('MY_MONEY')}
             </h2>
             <ActionTile useShadow
+                        isLoading={service.loading}
                         title={getContent('TOTAL_VALUE_TITLE')}
-                        value={formatCurrency(service.response.totalEquity)}
+                        value={formatCurrency(service?.response?.totalEquity)}
                         ariaValue={getContent('TOTAL_VALUE_ARIA', [0])}
                         actionPrompt={getContent('SEE_TRENDS')}
                         options={{ showValueAbove: true, valueColor: 'var(--theme-money-gain)' }}
             />
-            <AccountsList listOfAccounts={service.response.accountsList} onEditCallback={callForRefresh} />
+            <AccountsList listOfAccounts={service?.response?.accountsList} isLoading={service.loading} onEditCallback={callForRefresh} />
             <Link useChevron
                   text={getContent('ADD_ACCOUNT')}
                   textAlign='center'

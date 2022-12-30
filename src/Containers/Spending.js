@@ -37,10 +37,6 @@ export default function Spending({ refreshRequested, callForRefresh }) {
         }
     }, [refreshRequested, service]);
 
-    if(service.loading) {
-        return 'LOADING';
-    }
-
     if(service.error) {
         return JSON.stringify(service.error);
     }
@@ -58,18 +54,21 @@ export default function Spending({ refreshRequested, callForRefresh }) {
                         actionPrompt={getContent('SEE_TRENDS')}
                         options={{ valueColor: 'var(--theme-money-loss)' }}
                         callback={() => navigate(PAGE_ROUTES.spendingSummary)}
+                        isLoading={service.loading}
             />
-            <ActionTile title={getContent('RECURRING')}
-                        value={null}
+            <ActionTile isInactive
+                        title={getContent('RECURRING')}
                         fallbackDescription={getContent('NO_RECURRING')}
                         fallbackActionPrompt={getContent('NO_RECURRING_PROMPT')}
                         ariaValue={getContent('RECURRING_ARIA_LABEL', [0])}
                         actionPrompt={getContent('ADJUST_RECURRING')}
                         options={{ valueColor: 'var(--theme-money-loss)' }}
+                        isLoading={service.loading}
             />
             <DashboardButton buttonColor='var(--theme-red-dark)'
                              text={getContent('LOG_EXPENSE')}
                              callback={() => setLogPanelOpen(true)}
+                             isDisabled={service.loading}
             />
             {
                 logPanelOpen && <TransactionForm onPanelClose={() => setLogPanelOpen(false)} onSubmission={callForRefresh} />

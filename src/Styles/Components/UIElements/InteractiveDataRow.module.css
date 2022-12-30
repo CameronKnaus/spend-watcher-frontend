@@ -34,6 +34,7 @@
     text-align: right;
     margin: 0 0.4rem;
     flex-basis: 30%;
+    position: relative;
 }
 
 .amount {

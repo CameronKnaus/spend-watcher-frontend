@@ -30,15 +30,6 @@ export default function RecentTransactions({ refreshRequested, callForRefresh })
         }
     }, [refreshRequested, service]);
 
-    if(service.loading) {
-        // TODO:
-        return (
-            <Container>
-                LOADING
-            </Container>
-        );
-    }
-
     if(service.error) {
         // TODO: Proper Error Handling
         return (
@@ -55,7 +46,10 @@ export default function RecentTransactions({ refreshRequested, callForRefresh })
 
     return (
         <Container>
-            <TransactionsList transactionsList={service.response.transactions} onEditCallback={callForRefresh} />
+            <TransactionsList isLoading={service.loading}
+                              transactionsList={service?.response?.transactions}
+                              onEditCallback={callForRefresh}
+            />
             <Link useChevron
                   text={text('VIEW_ALL')}
                   route={PAGE_ROUTES.spendingHistory}
