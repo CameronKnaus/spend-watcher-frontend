@@ -27,7 +27,7 @@ export default function MyMoney({ refreshRequested, callForRefresh }) {
     }
 
     return (
-        <>
+        <div className={styles.myMoneyContainer}>
             <h2 className={`header-text ${styles.title}`}>
                 {getContent('MY_MONEY')}
             </h2>
@@ -49,6 +49,6 @@ export default function MyMoney({ refreshRequested, callForRefresh }) {
             {
                 newAccountPanelOpen && <AccountForm onPanelClose={() => setNewAccountPanelOpen(false)} onSubmission={callForRefresh} />
             }
-        </>
+        </div>
     );
 }

@@ -10,7 +10,8 @@ export default function SpendingHistory({
     setFilterCategory,
     totalTransactionsPerCategory,
     finalTotalTransactions,
-    refreshStats = () => { /* NOOP */ }
+    refreshStats = () => { /* NOOP */ },
+    noTransactions
 }) {
     const getContent = useContent('SPENDING_BREAKDOWN');
     const isMobile = useIsMobile();
@@ -28,12 +29,16 @@ export default function SpendingHistory({
             )}
             <div className={styles.transactionsContainer}>
                 <div className={styles.horizontalPadding}>
-                    <SpendCategoryFilter activeCategory={filterCategory}
-                                         setFilterCategory={setFilterCategory}
-                                         filterCategory={filterCategory}
-                                         textInputStyles={styles.categoryFilter}
-                    />
-                    <div className={styles.verticalSpacing}>
+                    {
+                        !noTransactions && (
+                            <SpendCategoryFilter activeCategory={filterCategory}
+                                                 setFilterCategory={setFilterCategory}
+                                                 filterCategory={filterCategory}
+                                                 textInputStyles={styles.categoryFilter}
+                            />
+                        )
+                    }
+                    <div className={noTransactions ? '' : styles.verticalSpacing}>
                         <div className={styles.countLabel}>
                             {transactionsShownText}
                         </div>

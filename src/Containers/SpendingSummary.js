@@ -2,9 +2,18 @@ import TopSpendingCategories from '../Components/SpendingBreakdown/TopSpendingCa
 import styles from '../Styles/Containers/SpendingSummary.module.css';
 import useContent from '../CustomHooks/useContent';
 import formatCurrency from '../Util/formatCurrency';
+import clsx from 'clsx';
 
-export default function SpendingSummary({ spendingBreakdown, setCurrentTab, setFilterCategory, totalTransactionsPerCategory }) {
+export default function SpendingSummary({ spendingBreakdown, setCurrentTab, setFilterCategory, totalTransactionsPerCategory, noTransactions }) {
     const getContent = useContent('SPENDING_BREAKDOWN');
+
+    if(noTransactions) {
+        return (
+            <div className={clsx(styles.contentContainer, styles.noTransactionsLabel)}>
+                {getContent('NO_TRANSACTIONS')}
+            </div>
+        );
+    }
 
     return (
         <div className={styles.contentContainer}>

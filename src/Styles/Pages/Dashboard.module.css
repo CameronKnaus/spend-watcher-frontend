@@ -2,4 +2,14 @@
     background-color: var(--theme-soft-background);
     padding: 0 1.5rem 2rem;
     min-width: var(--min-supported-width);
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.contentContainer {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    justify-content: center;
 }

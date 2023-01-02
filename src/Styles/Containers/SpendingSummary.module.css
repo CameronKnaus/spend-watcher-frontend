@@ -27,6 +27,11 @@
     flex-basis: 100%;
 }
 
+.noTransactionsLabel {
+    font-size: var(--body-text-14);
+    color: var(--theme-subdued-text-color);
+}
+
 @media (min-width: 768px) {
     .totalSpentContainer {
         background-color: var(--theme-content-background);

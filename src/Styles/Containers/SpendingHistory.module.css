@@ -1,6 +1,7 @@
 .transactionsContainer {
     padding: 1.5rem 0;
     min-width: var(--min-supported-width);
+    min-height: 60vh;
 }
 
 .horizontalPadding {

@@ -36,7 +36,8 @@
     "FILTER_BY_CATEGORY": "Filter by Category",
     "REMOVE_FILTER": "Remove filter",
     "TRANSACTION_COUNT": "Showing <<arg0:amount>> transactions",
-    "TRANSACTIONS_LIST_LABEL": "Transactions for period"
+    "TRANSACTIONS_LIST_LABEL": "Transactions for period",
+    "NO_TRANSACTIONS": "You have not yet logged any spending for this time period."
   },
   "TRANSACTIONS": {
     "RECENT": "Recent Transactions",

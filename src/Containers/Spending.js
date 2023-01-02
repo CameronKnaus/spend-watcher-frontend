@@ -42,7 +42,7 @@ export default function Spending({ refreshRequested, callForRefresh }) {
     }
 
     return (
-        <>
+        <div className={styles.spendingContainer}>
             <h2 className={`header-text ${styles.title}`}>
                 {getContent('MY_SPENDING')}
             </h2>
@@ -73,6 +73,6 @@ export default function Spending({ refreshRequested, callForRefresh }) {
             {
                 logPanelOpen && <TransactionForm onPanelClose={() => setLogPanelOpen(false)} onSubmission={callForRefresh} />
             }
-        </>
+        </div>
     );
 }

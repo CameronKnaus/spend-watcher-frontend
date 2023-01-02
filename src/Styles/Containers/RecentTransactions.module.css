@@ -1,3 +1,17 @@
+.recentTransactionsContainer {
+    width: 100%;
+    flex-basis: 100%
+}
+
+@media (min-width: 768px) {
+    .recentTransactionsContainer {
+        flex-basis: 33%;
+        justify-self: center;
+        padding: 1rem;
+        flex-grow: 1;
+    }
+}
+
 .title {
     padding: 2rem 0 1rem;
     margin: 0;

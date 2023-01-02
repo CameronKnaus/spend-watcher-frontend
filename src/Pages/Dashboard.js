@@ -24,12 +24,14 @@ export default function Dashboard() {
 
     return (
         <div className={styles.container}>
-            <h1 className='accessible-text'>
-                {getContent('ACCESSIBLE_PAGE_TITLES', 'DASHBOARD')}
-            </h1>
-            <Spending refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
-            <RecentTransactions refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
-            <MyMoney refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
+            <div className={styles.contentContainer}>
+                <h1 className='accessible-text'>
+                    {getContent('ACCESSIBLE_PAGE_TITLES', 'DASHBOARD')}
+                </h1>
+                <Spending refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
+                <RecentTransactions refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
+                <MyMoney refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
+            </div>
         </div>
     );
 }

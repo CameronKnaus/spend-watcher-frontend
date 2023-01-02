@@ -51,7 +51,9 @@ export default function DateChangerTile(
 
     return (
         <>
-            <ActionTile useShadow title={dateContextTitle}
+            <ActionTile useShadow
+                        isInactive
+                        title={dateContextTitle}
                         fallbackActionPrompt={getContent('CHANGE_CONTEXT')}
                         callback={() => setEditMode(current => !current)}
                         options={{ paddingBelow: 0 }}

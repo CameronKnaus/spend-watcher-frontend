@@ -14,12 +14,12 @@ export default function RecentTransactions({ refreshRequested, callForRefresh })
 
     const Container = React.useCallback(({ children }) => {
         return (
-            <>
+            <div className={styles.recentTransactionsContainer}>
                 <h2 className={`header-text ${styles.title}`}>
                     {getContent('TRANSACTIONS', 'RECENT')}
                 </h2>
                 {children}
-            </>
+            </div>
         );
     }, [getContent]);
 

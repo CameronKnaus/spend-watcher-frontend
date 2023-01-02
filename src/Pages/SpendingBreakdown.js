@@ -43,6 +43,7 @@ export default function SpendingBreakdown() {
     const [spendingBreakdown, setSpendingBreakdown] = useState();
     const [error, setError] = useState();
     const [filterCategory, setFilterCategory] = useState({ name: '', code: '' });
+    const [noTransactions, setNoTransactions] = useState(false);
 
     // Get the earliest spending logged to set date range handler min range
     const { response: dateRangeResponse } = useFetch(SERVICE_ROUTES.transactionDateRange, true);
@@ -63,6 +64,7 @@ export default function SpendingBreakdown() {
 
         axios.post(SERVICE_ROUTES.spendingBreakdown, args)
             .then(({ data }) => {
+                setNoTransactions(data.noTransactions);
                 setSpendingBreakdown({
                     finalTotalSpent: data.finalTotalSpent,
                     finalTotalTransactions: data.finalTotalTransactions,
@@ -114,7 +116,8 @@ export default function SpendingBreakdown() {
     );
 
     const summaryWithProps = (
-        <SpendingSummary spendingBreakdown={spendingBreakdown}
+        <SpendingSummary noTransactions={noTransactions}
+                         spendingBreakdown={spendingBreakdown}
                          setCurrentTab={setCurrentTab}
                          setFilterCategory={setFilterCategory}
                          totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
@@ -123,6 +126,7 @@ export default function SpendingBreakdown() {
 
     const historyWithProps = (
         <SpendingHistory transactionsList={spendingBreakdown.transactionsList}
+                         noTransactions={noTransactions}
                          filterCategory={filterCategory}
                          setFilterCategory={setFilterCategory}
                          totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
