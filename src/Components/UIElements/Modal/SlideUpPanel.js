@@ -9,7 +9,17 @@ const ClosePanel = React.createContext(() => { /* NOOP */ });
 // If only 'closeText' is provided then only one button will appear at the bottom that closes the panel
 // All children of the SLideUpPanel will be given the closePanel function prop
 // tagColor - String - CSS color value for the top tag of the slideUpPanel, defaults to red
-export default function SlideUpPanel({ children, onPanelClose, closeText, confirmText, title, forwardActionCallback = () => { /* NOOP */ }, disableConfirmButton, tagColor = 'var(--theme-red-dark)', hideTag = false }) {
+export default function SlideUpPanel({ children,
+    onPanelClose,
+    closeText,
+    confirmText,
+    title,
+    forwardActionCallback = () => { /* NOOP */ },
+    backwardsActionCallback, // Defaults to closing the panel if not provided
+    disableConfirmButton,
+    tagColor = 'var(--theme-red-dark)',
+    hideTag = false,
+    forwardActionButtonColor }) {
     // Grab ref of panel for handling tabbing
     const panelRef = React.useRef();
     const titleRef = React.useRef();
@@ -78,6 +88,7 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
     // For buttons like 'submit' or 'confirm'
     function forwardAction() {
         forwardActionCallback();
+
         closePanel();
     }
 
@@ -101,19 +112,20 @@ export default function SlideUpPanel({ children, onPanelClose, closeText, confir
                 <div className={styles.panelContent}>
                     <div className={styles.scrollableArea}>
                         {/* Provide the close panel function to all children inside the slideUpPanel*/}
-                        <ClosePanel.Provider value={{ closePanel }}>
+                        <ClosePanel.Provider value={closePanel}>
                             {children}
                         </ClosePanel.Provider>
                     </div>
                     <div className={styles.buttonRow}>
                         <button className={`${styles.buttons} ${styles.closeButton}`}
-                                onClick={closePanel}
+                                onClick={backwardsActionCallback ? backwardsActionCallback : closePanel}
                         >
                             {closeText}
                         </button>
                         {
                             confirmText && (
                                 <button className={`${styles.buttons} ${disableConfirmButton ? styles.disabledButton : styles.forwardActionButton}`}
+                                        style={{ backgroundColor: forwardActionButtonColor }}
                                         onClick={() => !disableConfirmButton && forwardAction()}
                                 >
                                     {confirmText}

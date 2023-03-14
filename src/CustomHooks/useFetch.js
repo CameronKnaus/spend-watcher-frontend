@@ -4,6 +4,7 @@ import axios from 'axios';
 export default function useFetch(url, fireImmediately = false, fireSilently = false) {
     const [response, setResponse] = React.useState(null);
     const [loading, setLoading] = React.useState(fireImmediately && !fireSilently);
+    const [silentLoadingStatus, setSilentLoadingStatus] = React.useState(fireImmediately && !fireSilently);
     const [error, setError] = React.useState(null);
     const [canFire, setCanFire] = React.useState(fireImmediately);
     const [silentMode, setSilentMode] = React.useState(fireSilently);
@@ -15,6 +16,7 @@ export default function useFetch(url, fireImmediately = false, fireSilently = fa
 
         const source = axios.CancelToken.source();
         !silentMode && setLoading(true);
+        setSilentLoadingStatus(true);
         axios.get(url, { cancelToken: source.token })
             .then(response => {
                 if(!response && !response.data) {
@@ -30,6 +32,7 @@ export default function useFetch(url, fireImmediately = false, fireSilently = fa
             })
             .finally(() => {
                 setLoading(false);
+                setSilentLoadingStatus(false);
                 setCanFire(false);
             });
 
@@ -48,7 +51,8 @@ export default function useFetch(url, fireImmediately = false, fireSilently = fa
     return React.useMemo(() => ({
         response,
         loading,
+        silentLoadingStatus,
         error,
         fire
-    }), [response, loading, error]);
+    }), [response, loading, error, silentLoadingStatus]);
 }

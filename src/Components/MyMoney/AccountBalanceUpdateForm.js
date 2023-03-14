@@ -36,7 +36,7 @@ export default function AccountBalanceUpdateForm({ onPanelClose, onSubmission, a
     const valueChangePercentage = ((valueChange / accountToUpdate.currentAccountValue) * 100).toFixed(2);
     const isGain = valueChange > 0;
     const changeSign = isGain ? '+' : '';
-    const valueMatchesOriginal = !accountValue || accountValue === accountToUpdate.currentAccountValue;
+    const valueMatchesOriginal = !accountValue || Number(accountValue) === accountToUpdate.currentAccountValue;
     const valueChangeStyle = valueMatchesOriginal ? {} : { color: isGain ? 'var(--theme-money-gain)' : 'var(--theme-money-loss)' };
 
     return (
@@ -81,7 +81,9 @@ export default function AccountBalanceUpdateForm({ onPanelClose, onSubmission, a
 
                 </div>
                 <label>
-                    {text('ACCOUNT_VALUE_UPDATE_LABEL', [MONTH_NAMES[dayjs().month()]])}
+                    <div className={styles.updateLabel}>
+                        {text('ACCOUNT_VALUE_UPDATE_LABEL', [MONTH_NAMES[dayjs().month()]])}
+                    </div>
                     <MoneyInput name='account-value-spent-field'
                                 placeholder={text('ACCOUNT_VALUE_PLACEHOLDER')}
                                 className={styles.textInput}

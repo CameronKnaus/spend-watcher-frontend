@@ -8,10 +8,10 @@ import SkeletonLoader from './Loading/SkeletonLoader';
 // description - optional string - an additional note about the transaction
 // amount - Number - Dollar amount of the transaction
 // isExpense - Boolean - When true will show amount in red with a minus
-// date - String
+// amountDescription - String
 // iconCategory - String - uses the Account or transaction category code to render the right icon
 // isLoading - boolean - when true shows skeleton loaders
-export default function InteractiveDataRow({ title, description, amount, date, isExpense, isGain, iconCategory, onClick, isLoading }) {
+export default function InteractiveDataRow({ title, description, amount, amountDescription, isExpense, isGain, iconCategory, onClick, isLoading }) {
     // Amount to show
     const parsedAmount = (isExpense ? '-' : '') + formatCurrency(amount);
 
@@ -51,12 +51,12 @@ export default function InteractiveDataRow({ title, description, amount, date, i
             <div className={styles.valuesContainer}>
                 <div className={`${styles.amount} ${isExpense ? styles.expense : ''}`}>
                     <SkeletonLoader isActive={isLoading} height={20} width='65%' align='right'>
-                        {parsedAmount}
+                        {typeof amount === 'string' ? amount : parsedAmount}
                     </SkeletonLoader>
                 </div>
-                <div className={styles.date}>
+                <div className={styles.amountDescription}>
                     <SkeletonLoader isActive={isLoading} height={14} width='50%' align='right'>
-                        {date}
+                        {amountDescription}
                     </SkeletonLoader>
                 </div>
             </div>

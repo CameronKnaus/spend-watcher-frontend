@@ -7,6 +7,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import AccountForm from 'Components/MyMoney/AccountForm';
 import AccountBalanceUpdateForm from 'Components/MyMoney/AccountBalanceUpdateForm';
+import LoadingInteractiveRowList from 'Components/UIElements/Loading/LoadingInteractiveRowList';
 
 export default function AccountsList({ listOfAccounts, onEditCallback = () => { /* NOOP */ }, isLoading }) {
     const getContent = useContent();
@@ -15,14 +16,7 @@ export default function AccountsList({ listOfAccounts, onEditCallback = () => { 
     const [isBalanceEditMode, setIsBalanceEditMode] = useState(false);
 
     if(isLoading) {
-        return new Array(3).fill('').map((_, index) => (
-            <div key={`loading-account-${index}`} // eslint-disable-line react/no-array-index-key
-                 className={styles.rowContainer}
-            >
-                <InteractiveDataRow isLoading />
-            </div>
-        )
-        );
+        return <LoadingInteractiveRowList id='loading-account' rowCount={3} rowSpacing={12} />;
     }
 
     return (
@@ -44,7 +38,7 @@ export default function AccountsList({ listOfAccounts, onEditCallback = () => { 
                                                 amount={accountInfo.currentAccountValue}
                                                 iconCategory={accountType}
                                                 description={description}
-                                                date={getContent('MY_MONEY', 'AS_OF', [accountInfo.lastUpdated])}
+                                                amountDescription={getContent('MY_MONEY', 'AS_OF', [accountInfo.lastUpdated])}
                                                 onClick={() => setAccountToEdit(accountInfo)}
                             />
                             {

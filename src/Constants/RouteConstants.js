@@ -4,5 +4,6 @@ export const PAGE_ROUTES = {
     authScreen: '/auth',
     spendingHistory: `${spendingBreakdown}/history`,
     spendingSummary: `${spendingBreakdown}/summary`,
-    spendingBreakdown: `${spendingBreakdown}/:defaultTab`
+    spendingBreakdown: `${spendingBreakdown}/:defaultTab`,
+    recurringSpending: '/recurring'
 };

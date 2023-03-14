@@ -1,11 +1,11 @@
-.balanceUpdateForm > label {
+.expenseUpdateForm > label {
     font-weight: var(--fw-semi-bold);
     color: var(--theme-light-text-color);
     display: block;
     font-size: var(--body-text-14);
 }
 
-.balanceUpdateForm > label > input::placeholder {
+.expenseUpdateForm > label > input::placeholder {
     color: var(--theme-placeholder-text);
 }
 
@@ -16,10 +16,10 @@
     display: block;
     text-align: center;
     font-size: var(--header-text-18);
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
-.accountSummary {
+.expenseSummary {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,28 +31,18 @@
     flex-shrink: 0;
 }
 
-.accountDetailsContainer {
-    text-align: center;
-}
-
-.accountNameLabel {
+.expenseNameLabel {
     font-size: var(--header-text-18);
 }
 
-.accountValueLabel {
+.expenseAmountLabel {
     font-size: var(--body-text-16);
     margin-top: 2px;
     color: var(--theme-subdued-text-color);
 }
 
-.asOfLabel {
-    color: var(--theme-faint-text-color);
-    font-size: 10px;
-    margin-top: 4px;
-}
-
-.valueChange {
-    margin: 1rem 0;
+.amountDifference {
+    padding-top: 1rem;
     text-align: center;
 }
 

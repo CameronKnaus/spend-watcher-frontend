@@ -4,6 +4,7 @@ import styles from 'Styles/Components/Transactions/TransactionsList.module.css';
 import TransactionForm from './TransactionForm';
 import dayjs from 'dayjs';
 import InteractiveDataRow from 'Components/UIElements/InteractiveDataRow';
+import LoadingInteractiveRowList from 'Components/UIElements/Loading/LoadingInteractiveRowList';
 
 /* TransactionsList prop should be transactions grouped by date with they date being the key:
     Example:
@@ -17,14 +18,7 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
     const text = (key) => getContent('TRANSACTIONS', key);
 
     if(isLoading) {
-        return new Array(5).fill('').map((_, index) => (
-            <div key={`loading-transaction-${index}`} // eslint-disable-line react/no-array-index-key
-                 className={styles.transactionWrapper}
-            >
-                <InteractiveDataRow isLoading />
-            </div>
-        )
-        );
+        return <LoadingInteractiveRowList id='loading-transaction' rowCount={5} rowSpacing={12} />;
     }
 
     if(!transactionsList) {
@@ -78,7 +72,7 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
                                                 iconCategory={transaction.category}
                                                 description={transaction.note}
                                                 amount={transaction.amount}
-                                                date={transaction.date}
+                                                amountDescription={transaction.date}
                                                 onClick={() => setTransactionForEditing(transaction)}
                             />
                         </div>

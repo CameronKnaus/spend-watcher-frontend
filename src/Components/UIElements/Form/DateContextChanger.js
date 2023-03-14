@@ -75,7 +75,7 @@ export default function DateContextChanger(
         >
             <ClosePanel.Consumer>
                 {
-                    ({ closePanel }) => (
+                    (closePanel) => (
                         <>
                             <div className={styles.tabBarContainer}>
                                 <TabBar contentGroupKey='DATE_CONTEXT_CHANGER'

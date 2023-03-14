@@ -1,0 +1,21 @@
+.container {
+    background-color: var(--theme-content-background);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--theme-light-border);
+    min-width: 320px;
+    width: 100%;
+}
+
+.secondaryTheme {
+    background-color: inherit;
+    border: 2px solid var(--theme-light-border);
+}
+
+.valueChange {
+    width: 100%;
+    text-align: right;
+    font-weight: var(--fw-light);
+    font-size: var(--body-text-12);
+    padding-top: 0.5rem;
+}

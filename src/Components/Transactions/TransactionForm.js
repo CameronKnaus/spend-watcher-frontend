@@ -92,7 +92,7 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
         >
             <ClosePanel.Consumer>
                 {
-                    ({ closePanel }) => (
+                    (closePanel) => (
                         <>
                             <form className={styles.transactionForm}>
                                 <label>

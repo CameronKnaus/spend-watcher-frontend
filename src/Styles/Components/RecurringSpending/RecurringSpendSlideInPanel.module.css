@@ -1,0 +1,9 @@
+.speedBumpHeader {
+    font-size: var(--header-text-18);
+    padding-bottom: 1rem;
+}
+
+.speedBumpDesc {
+    font-size: var(--body-text-14);
+    color: var(--theme-standard-text);
+}

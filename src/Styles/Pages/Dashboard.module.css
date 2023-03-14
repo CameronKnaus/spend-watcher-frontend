@@ -2,14 +2,21 @@
     background-color: var(--theme-soft-background);
     padding: 0 1.5rem 2rem;
     min-width: var(--min-supported-width);
-    display: flex;
-    justify-content: center;
     width: 100%;
 }
 
 .contentContainer {
     display: flex;
     flex-wrap: wrap;
-    max-width: 1200px;
     justify-content: center;
+    max-width: 1200px;
+    flex-grow: 1;
+}
+
+@media(min-width: 768px) {
+    .container {
+        display: flex;
+        justify-content: center;
+        padding: 0 1rem 2rem;
+    }
 }

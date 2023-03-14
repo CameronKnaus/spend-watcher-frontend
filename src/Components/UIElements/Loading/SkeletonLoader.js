@@ -20,5 +20,5 @@ export default function SkeletonLoader({ children, isActive, height = 24, width 
         return <div className={styles.loadingWrapper} style={loaderStyles} />;
     }
 
-    return children;
+    return children || null;
 }

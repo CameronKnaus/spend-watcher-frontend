@@ -13,6 +13,7 @@ import SpendingBreakdown from './Pages/SpendingBreakdown';
 import DayJS from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import duration from 'dayjs/plugin/duration';
+import RecurringSpending from 'Pages/RecurringSpending';
 
 DayJS.extend(LocalizedFormat);
 DayJS.extend(duration);
@@ -27,6 +28,7 @@ ReactDOM.render(
                             <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
                             <Route path={PAGE_ROUTES.authScreen} element={<AuthScreen />} />
                             <Route path={PAGE_ROUTES.spendingBreakdown} element={<SpendingBreakdown />} />
+                            <Route path={PAGE_ROUTES.recurringSpending} element={<RecurringSpending />} />
                         </Routes>
                     </SessionChecker>
                 </BrowserRouter>

@@ -5,6 +5,7 @@ const domainName = devMode ? localAPI : prodAPI;
 const authApi = (routeName) => domainName + '/auth' + routeName;
 const spendApi = (routeName) => domainName + '/spending' + routeName;
 const accountsApi = (routeName) => domainName + '/accounts' + routeName;
+const recurringSpendApi = (routeName) => domainName + '/recurring' + routeName;
 
 const SERVICE_ROUTES = {
     login: authApi('/processLogin'), // POST
@@ -20,7 +21,13 @@ const SERVICE_ROUTES = {
     addNewAccount: accountsApi('/new'), // POST
     accountsSummary: accountsApi('/summary'), // GET
     editAccount: accountsApi('/edit'), // POST
-    updateAccountBalance: accountsApi('/update') // POST
+    updateAccountBalance: accountsApi('/update'), // POST
+    submitNewRecurringExpense: recurringSpendApi('/new'), // POST
+    getAllRecurringExpenses: recurringSpendApi('/all_transactions'), // GET
+    deleteRecurringExpense: recurringSpendApi('/delete'), // POST
+    editRecurringExpense: recurringSpendApi('/edit'), // POST
+    updateRecurringExpense: recurringSpendApi('/update'), // POST
+    getRecurringExpenseTransactionHistory: recurringSpendApi('/transaction_history?') // GET
 };
 
 export default SERVICE_ROUTES;

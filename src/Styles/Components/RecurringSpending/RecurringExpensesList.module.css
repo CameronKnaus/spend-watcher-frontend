@@ -1,0 +1,46 @@
+.categoryLabel {
+    color: var(--theme-standard-text);
+    font-weight: var(--fw-regular);
+    padding-bottom: 1rem;
+}
+
+.noTransactionsDescription {
+    font-size: var(--body-text-14);
+    color: var(--theme-subdued-text-color);
+    font-weight: var( --fw-light);
+}
+
+.listItemWrapper {
+    padding-bottom: 0.75rem;
+}
+
+.updateButton {
+    display: inline-block;
+    height: 40px;
+    width: 100%;
+    color: white;
+    background-color: var(--theme-jungle-green-dark);
+    margin-top: 0.5rem;
+    border-radius: 0 0 12px 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.3s;
+}
+
+.editIcon {
+    padding-right: 12px;
+    display: inline-block;
+}
+
+.quickUpdateHeader {
+    padding: 2rem 0 1rem;
+    margin: 0;
+    font-size: var(--header-text-18);
+    font-weight: var(--fw-regular);
+}
+
+.alertContainer {
+    padding-bottom: 1.5rem;
+}
