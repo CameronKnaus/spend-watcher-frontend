@@ -7,8 +7,8 @@ import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader';
 
 export default function EditableTransactionListItem({ date, amount, amountLabel, placeholderLabel, confirmButtonLabel, onConfirm, transactionId, showAsLoader, isNewTransaction = false, newTransactionLabel }) {
     const startingAmount = amount?.toFixed(2) ?? null;
-    const [expenseAmount, setExpenseAmount] = useState(startingAmount);
-    const [initialExpenseAmount, setInitialExpenseAmount] = useState(isNewTransaction ? null : startingAmount);
+    const [expenseAmount, setExpenseAmount] = useState(isNewTransaction ? null : startingAmount);
+    const [initialExpenseAmount, setInitialExpenseAmount] = useState(startingAmount ?? -1);
     const [isNewTransactionMode, setIsNewTransactionMode] = useState(isNewTransaction);
 
     if(!showAsLoader && isNewTransactionMode) {
@@ -55,7 +55,7 @@ export default function EditableTransactionListItem({ date, amount, amountLabel,
                 </SkeletonLoader>
             </div>
             {
-                !showAsLoader && (expenseAmount !== initialExpenseAmount) && Number(expenseAmount) > 0 && (
+                !showAsLoader && (expenseAmount !== initialExpenseAmount) && (
                     <button className={styles.confirmButton} onClick={handleConfirmation}>
                         {confirmButtonLabel}
                     </button>

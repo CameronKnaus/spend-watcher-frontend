@@ -148,7 +148,9 @@ function ActionTile({ title, subtitle, value, fallbackActionPrompt, fallbackDesc
                  className={styles.valueContainer}
                  style={{ color: args.valueColor }}
             >
-                {value}
+                <SkeletonLoader isActive={isLoading} height={34}>
+                    {value}
+                </SkeletonLoader>
             </div>
             <div className='accessible-text'>
                 {actionPrompt}
