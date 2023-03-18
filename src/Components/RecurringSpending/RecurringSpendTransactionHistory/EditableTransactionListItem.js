@@ -23,10 +23,12 @@ export default function EditableTransactionListItem({ date, amount, amountLabel,
     }
 
     function handleConfirmation() {
+        const amountToLog = isNewTransaction && expenseAmount == null ? startingAmount : expenseAmount;
+
         // Reset initial expense amount to the new value.
         setIsNewTransactionMode(isNewTransaction);
         setInitialExpenseAmount(isNewTransaction ? null : expenseAmount);
-        onConfirm(expenseAmount, transactionId, date, isNewTransaction);
+        onConfirm(amountToLog, transactionId, date, isNewTransaction);
     }
 
     return (

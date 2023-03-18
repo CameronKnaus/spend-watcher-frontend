@@ -4,6 +4,16 @@ import CategoryIcon from './CategoryIcon';
 import formatCurrency from '../../Util/formatCurrency';
 import SkeletonLoader from './Loading/SkeletonLoader';
 
+function parseAmount(amount, isExpense) {
+    const formattedAmount = formatCurrency(amount);
+
+    if(amount === 0 || !isExpense) {
+        return formattedAmount;
+    }
+
+    return `-${formattedAmount}`;
+}
+
 // category - string constant for the category of account or transaction (i.e. 'RESTAURANTS' or 'CHECKING')
 // description - optional string - an additional note about the transaction
 // amount - Number - Dollar amount of the transaction
@@ -11,9 +21,9 @@ import SkeletonLoader from './Loading/SkeletonLoader';
 // amountDescription - String
 // iconCategory - String - uses the Account or transaction category code to render the right icon
 // isLoading - boolean - when true shows skeleton loaders
-export default function InteractiveDataRow({ title, description, amount, amountDescription, isExpense, isGain, iconCategory, onClick, isLoading }) {
+export default function InteractiveDataRow({ title, description, amount, amountDescription, isExpense, iconCategory, onClick, isLoading }) {
     // Amount to show
-    const parsedAmount = (isExpense ? '-' : '') + formatCurrency(amount);
+    const parsedAmount = parseAmount(amount, isExpense);
 
     function handleClick() {
         if(isLoading) {
@@ -49,7 +59,7 @@ export default function InteractiveDataRow({ title, description, amount, amountD
                 }
             </div>
             <div className={styles.valuesContainer}>
-                <div className={`${styles.amount} ${isExpense ? styles.expense : ''}`}>
+                <div className={`${styles.amount} ${!isExpense || amount === 0 ? '' : styles.expense}`}>
                     <SkeletonLoader isActive={isLoading} height={20} width='65%' align='right'>
                         {typeof amount === 'string' ? amount : parsedAmount}
                     </SkeletonLoader>

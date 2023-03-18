@@ -33,7 +33,7 @@ export default function MonthlySpendUpdateForm({ onPanelClose, onSubmission, exp
         axios.post(SERVICE_ROUTES.updateRecurringExpense, payload).then(onSubmission);
     }
 
-    const estimatedMonthlyAmount = expenseToUpdate.amount;
+    const estimatedMonthlyAmount = expenseToUpdate.estimatedAmount;
     const amountDifference = spendAmount - estimatedMonthlyAmount;
     const amountDifferencePercent = ((amountDifference / estimatedMonthlyAmount) * 100).toFixed(2);
     const spentMore = amountDifference > 0;

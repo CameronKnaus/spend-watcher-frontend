@@ -79,7 +79,7 @@ export default function RecurringSpendTransactionHistory({ recurringExpense, set
                 )
             }
             {
-                response.transactionList.map(({ transactionId, date, transactionAmount }, index) => {
+                response.transactionList.map(({ transactionId, date, transactionAmount }) => {
                     return (
                         <EditableTransactionListItem key={date}
                                                      confirmButtonLabel={getContent('CONFIRM_CHANGE')}

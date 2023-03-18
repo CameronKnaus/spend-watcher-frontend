@@ -16,7 +16,7 @@ export default function RecurringSpendForm({ onSubmission, editMode, existingTra
     // State for form values
     const [expenseName, setExpenseName] = useState(existingTransaction.expenseName ?? '');
     const [isVariable, setIsVariable] = useState(Boolean(existingTransaction.isVariableRecurring ?? 0));
-    const [amount, setAmount] = useState(existingTransaction.amount || null);
+    const [amount, setAmount] = useState(existingTransaction.estimatedAmount || null);
     const [category, setCategory] = useState(existingTransaction.category || { code: 'OTHER', name: getContent('SPENDING_CATEGORIES', 'OTHER') });
 
     useEffect(() => {

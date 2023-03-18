@@ -79,7 +79,7 @@ export default function RecurringExpensesList({ isLoading, transactionList, onSu
                     ) :
                         transactionList?.map(transaction => {
                             const isVariable = transaction.isVariableRecurring;
-                            const { category, actualAmount, amount: estimatedAmount, requiresUpdate } = transaction;
+                            const { category, actualAmount, estimatedAmount, requiresUpdate } = transaction;
 
                             let description = getContent('SPENDING_CATEGORIES', category);
                             let amountDescription;
@@ -90,8 +90,9 @@ export default function RecurringExpensesList({ isLoading, transactionList, onSu
                                 description += ` ${getRecurringContent('VARIABLE')}`;
                                 amountDescription = getRecurringContent('VARIABLE_EXPENSE', [formatCurrency(estimatedAmount)]);
                             } else {
-                                amount = estimatedAmount;
-                                amountDescription = getRecurringContent('FIXED_EXPENSE');
+                                amount = actualAmount;
+                                const estimateDiffersFromActual = estimatedAmount !== actualAmount;
+                                amountDescription = estimateDiffersFromActual ? getRecurringContent('VARIABLE_EXPENSE', [formatCurrency(estimatedAmount)]) : getRecurringContent('FIXED_EXPENSE');
                             }
 
                             return (
