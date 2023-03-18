@@ -59,7 +59,6 @@ export default function RecurringSpendTransactionHistory({ recurringExpense, set
         });
     }
 
-    const isVariable = response?.isVariable;
     const estimatedAmount = response?.estimatedAmount;
 
     return (
@@ -69,7 +68,7 @@ export default function RecurringSpendTransactionHistory({ recurringExpense, set
                     <EditableTransactionListItem isNewTransaction
                                                  newTransactionLabel={getContent('ADD_TRANSACTION', [dayjs(currentDate).format('MM/YYYY')])}
                                                  confirmButtonLabel={getContent('CONFIRM_CHANGE')}
-                                                 amount={isVariable ? null : estimatedAmount}
+                                                 amount={estimatedAmount}
                                                  amountLabel={getContent('AMOUNT_SPENT_LABEL')}
                                                  date={currentDate}
                                                  placeholderLabel={formatCurrency(estimatedAmount)}
@@ -99,7 +98,7 @@ export default function RecurringSpendTransactionHistory({ recurringExpense, set
                                          isNewTransaction
                                          newTransactionLabel={getContent('ADD_TRANSACTION', [dayjs(response?.missingDate).format('MM/YYYY')])}
                                          confirmButtonLabel={getContent('CONFIRM_CHANGE')}
-                                         amount={isVariable ? null : estimatedAmount}
+                                         amount={estimatedAmount}
                                          amountLabel={getContent('AMOUNT_SPENT_LABEL')}
                                          date={response?.missingDate}
                                          placeholderLabel={formatCurrency(estimatedAmount)}
