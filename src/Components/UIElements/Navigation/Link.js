@@ -15,37 +15,32 @@ const alignmentMapper = {
 export default function Link({ text, route, useChevron, useChevronLeft, customClass, textAlign, CustomIcon, onClickCallback }) {
     const textAlignment = alignmentMapper[textAlign] || 'flex-start';
 
-    function getIcon() {
-        if(useChevron) {
-            return <CgChevronRight />;
-        }
-
-        if(CustomIcon) {
-            return <CustomIcon />;
-        }
-
-        return null;
+    let icon = null;
+    if(useChevron) {
+        icon = <CgChevronRight />;
+    } else if(CustomIcon) {
+        icon = <CustomIcon />;
     }
 
-    const hasChevron = useChevron || useChevronLeft;
+    const linkStyle = {
+        color: 'var(--theme-link-blue)',
+        textDecoration: icon ? 'none' : 'underline',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: textAlignment
+    };
 
     // An internal route was specified so wrap the link in router
     if(route) {
         return (
             <ReactRouterLink to={route} style={{ textDecoration: 'none' }}>
                 <span className={customClass}
-                      style={{
-                          color: 'var(--theme-link-blue)',
-                          textDecoration: hasChevron ? 'none' : 'underline',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: textAlignment
-                      }}
+                      style={linkStyle}
                       onClick={onClickCallback}
                 >
                     {useChevronLeft && <CgChevronLeft />}
                     {text}
-                    {!useChevronLeft && getIcon()}
+                    {!useChevronLeft && icon}
                 </span>
             </ReactRouterLink>
         );
@@ -53,13 +48,7 @@ export default function Link({ text, route, useChevron, useChevronLeft, customCl
 
     // Basic non-routing callback-only link
     return (
-        <button style={{
-                        color: 'var(--theme-link-blue)',
-                        textDecoration: hasChevron ? 'none' : 'underline',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: textAlignment
-                    }}
+        <button style={linkStyle}
                 className={customClass}
                 onClick={onClickCallback}
         >
@@ -67,7 +56,7 @@ export default function Link({ text, route, useChevron, useChevronLeft, customCl
             <span style={useChevronLeft ? { paddingLeft: 4 } : { paddingRight: 4 }}>
                 {text}
             </span>
-            {!useChevronLeft && getIcon()}
+            {!useChevronLeft && icon}
         </button>
     );
 }

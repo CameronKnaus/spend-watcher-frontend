@@ -7,6 +7,7 @@ import { FaCannabis,
     FaHeart,
     FaDollarSign,
     FaMoneyBillWave,
+    FaPlaneDeparture,
     FaLandmark } from 'react-icons/fa';
 import { IoIosBeer, IoIosCart, IoIosAirplane, IoMdBrush, IoIosTrendingUp } from 'react-icons/io';
 import { MdFastfood,
@@ -149,6 +150,10 @@ export const ACCOUNT_CATEGORIES = {
 
 const CATEGORIES = {
     ...SPENDING_CATEGORIES,
-    ...ACCOUNT_CATEGORIES
+    ...ACCOUNT_CATEGORIES,
+    TRIP: {
+        icon: <FaPlaneDeparture />,
+        color: 'var(--theme-jungle-green-pale)'
+    }
 };
 export default CATEGORIES;

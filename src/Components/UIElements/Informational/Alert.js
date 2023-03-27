@@ -12,7 +12,7 @@ const SIZE_CONFIG = {
     }
 };
 
-export default function Alert({ alertText, size = 'base' }) {
+export default function Alert({ alertText, size = 'base', color = 'var(--theme-red)' }) {
     const containerSize = SIZE_CONFIG[size];
 
     if(!containerSize) {
@@ -20,7 +20,7 @@ export default function Alert({ alertText, size = 'base' }) {
     }
 
     return (
-        <div className={`${styles.alertContainer} ${containerSize.container}`}>
+        <div className={`${styles.alertContainer} ${containerSize.container}`} style={{ color }}>
             <div className={`${styles.alertIcon} ${containerSize.icon}`}>
                 <MdInfoOutline />
             </div>

@@ -10,6 +10,9 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import axios from 'axios';
 import Link from 'Components/UIElements/Navigation/Link';
 import { IoTrashSharp } from 'react-icons/io5';
+import useTripDetails from 'CustomHooks/useTripDetails';
+import FilterableSelect from 'Components/UIElements/Form/FilterableSelect';
+import Alert from 'Components/UIElements/Informational/Alert';
 
 const SUBMISSION_TYPES = {
     DELETE: 'DELETE',
@@ -22,6 +25,8 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
     const getContent = useContent();
     const text = (key, args) => getContent('TRANSACTIONS', key, args);
 
+    const { filterableSelectTripsList, activeTrip } = useTripDetails();
+
     // State for form values
     const [formValid, setFormValid] = React.useState(Boolean(existingTransaction.amount)); // defaults false
     const [amount, setAmount] = React.useState(existingTransaction.amount || null);
@@ -29,6 +34,18 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
     const [isUncommon, setIsUncommon] = React.useState(Boolean(existingTransaction.isUncommon));
     const [note, setNote] = React.useState(existingTransaction.note || '');
     const [selectedDate, setSelectedDate] = React.useState(existingTransaction.date ? dayjs(existingTransaction.date) : dayjs()); // defaults to today
+    const [linkedTripId, setLinkedTripId] = React.useState(() => {
+        if(existingTransaction.linkedTripId) {
+            return existingTransaction.linkedTripId;
+        }
+
+        if(activeTrip) {
+            return activeTrip.tripId;
+        }
+
+        return '';
+    });
+    const [tripSelected, setTripSelected] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
     // Update form validity only based on amount having a positive value
@@ -50,7 +67,8 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                 category: (category && category.code) || 'OTHER',
                 isUncommon,
                 note,
-                selectedDate: selectedDate.format('YYYY-MM-DD')
+                selectedDate: selectedDate.format('YYYY-MM-DD'),
+                linkedTripId
             };
         } else if(submissionType === SUBMISSION_TYPES.EDIT) {
             endpoint = SERVICE_ROUTES.submitEditTransaction;
@@ -60,7 +78,8 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                 category: (category && category.code) || 'OTHER',
                 isUncommon,
                 note,
-                selectedDate: selectedDate.format('YYYY-MM-DD')
+                selectedDate: selectedDate.format('YYYY-MM-DD'),
+                linkedTripId
             };
         } else if(submissionType === SUBMISSION_TYPES.DELETE) {
             endpoint = SERVICE_ROUTES.submitDeleteTransaction;
@@ -94,6 +113,16 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                 {
                     (closePanel) => (
                         <>
+                            {
+                                (!editMode && !tripSelected && activeTrip) && (
+                                    <div className={styles.alertContainer}>
+                                        <Alert alertText={text('ACTIVE_TRIP', [activeTrip.tripName, activeTrip.startDate, activeTrip.endDate])}
+                                               color='var(--theme-yellow-orange)'
+                                               size='small'
+                                        />
+                                    </div>
+                                )
+                            }
                             <form className={styles.transactionForm}>
                                 <label>
                                     {text('AMOUNT_LABEL')}
@@ -150,6 +179,32 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                                             className={styles.textInput}
                                             onChange={setSelectedDate}
                                 />
+                                <div style={{ height: '1.5rem' }} />
+                                <label htmlFor='trip-input'>
+                                    {text('TRIP_LABEL')}
+                                </label>
+                                {
+                                    filterableSelectTripsList.length ? (
+                                        <>
+                                            <FilterableSelect value={linkedTripId}
+                                                              optionsList={filterableSelectTripsList}
+                                                              id='trip-selector'
+                                                              textInputStyles={styles.textInput}
+                                                              nothingSelectedText={text('NO_TRIPS')}
+                                                              setValue={(selectedTrip) => {
+                                                                setTripSelected(true);
+                                                                setLinkedTripId(selectedTrip);
+                                                              }}
+                                            />
+                                            <div style={{ height: '1rem' }} />
+                                        </>
+                                    ) : (
+                                        <div className={styles.noTripMessage}>
+                                            {text('NO_TRIPS_AVAILABLE')}
+                                        </div>
+                                    )
+
+                                }
                             </form>
                             {
                                 editMode && (

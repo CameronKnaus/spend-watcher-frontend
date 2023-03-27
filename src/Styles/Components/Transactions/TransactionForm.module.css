@@ -53,3 +53,14 @@
     margin: 1.5rem auto 0;
     text-align: center;
 }
+
+.alertContainer {
+    padding-bottom: 1.5rem;
+}
+
+.noTripMessage {
+    padding: 0.25rem 0;
+    color: var(--theme-subdued-text-color);
+    font-size: var(--body-text-14);
+    font-weight: var(--fw-light);
+}

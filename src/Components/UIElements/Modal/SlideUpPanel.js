@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createPortal } from 'react-dom';
 import styles from 'Styles/Components/UIElements/Modal/SlideUpPanel.module.css';
 
@@ -141,3 +141,7 @@ export default function SlideUpPanel({ children,
 }
 
 export { ClosePanel };
+
+export function useClosePanel() {
+    return useContext(ClosePanel);
+}

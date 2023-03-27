@@ -1,34 +1,28 @@
 .alertContainer {
-    color: var(--theme-red);
     display: inline-block;
-    line-height: var(--body-text-14-line-height);
     font-size: var(--body-text-14);
+    line-height: 26px;
 }
 
 .alertIcon {
     display: inline-block;
     padding-right: 0.5rem;
     font-size: var(--body-text-16);
-    line-height: var(--body-text-16-line-height);
     vertical-align: top;
 }
 
 .baseContainer {
-    line-height: var(--body-text-14-line-height);
     font-size: var(--body-text-14);
 }
 
 .baseIcon {
     font-size: var(--body-text-16);
-    line-height: var(--body-text-16-line-height);
 }
 
 .smallContainer {
-    line-height: var(--body-text-12-line-height);
     font-size: var(--body-text-12);
 }
 
 .smallIcon {
     font-size: var(--body-text-14);
-    line-height: var(--body-text-14-line-height);
 }

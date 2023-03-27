@@ -6,6 +6,7 @@ const authApi = (routeName) => domainName + '/auth' + routeName;
 const spendApi = (routeName) => domainName + '/spending' + routeName;
 const accountsApi = (routeName) => domainName + '/accounts' + routeName;
 const recurringSpendApi = (routeName) => domainName + '/recurring' + routeName;
+const tripsApi = (routeName) => domainName + '/trips' + routeName;
 
 const SERVICE_ROUTES = {
     login: authApi('/processLogin'), // POST
@@ -27,7 +28,12 @@ const SERVICE_ROUTES = {
     deleteRecurringExpense: recurringSpendApi('/delete'), // POST
     editRecurringExpense: recurringSpendApi('/edit'), // POST
     updateRecurringExpense: recurringSpendApi('/update'), // POST
-    getRecurringExpenseTransactionHistory: recurringSpendApi('/transaction_history?') // GET
+    getRecurringExpenseTransactionHistory: recurringSpendApi('/transaction_history?'), // GET
+    getAllTripDetails: tripsApi('/all'), // GET
+    getExpensesLinkedToTrip: tripsApi('/linked_expenses?'), // GET
+    editTrip: tripsApi('/edit'), // POST
+    newTrip: tripsApi('/new'), // POST
+    deleteTrip: tripsApi('/delete')
 };
 
 export default SERVICE_ROUTES;

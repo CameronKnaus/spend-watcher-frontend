@@ -12,13 +12,13 @@ import LoadingInteractiveRowList from 'Components/UIElements/Loading/LoadingInte
                 01/02/2022: [{ *transaction data* }, { *transaction data* }]
                 01/01/2022: [{ *transaction data* }, { *transaction data* }]
 * */
-export default function TransactionsList({ transactionsList, onEditCallback = () => { /* NOOP */ }, filteredCategory, isLoading }) {
+export default function TransactionsList({ transactionsList, onEditCallback = () => { /* NOOP */ }, filteredCategory, isLoading, skeletonLoaderCount = 5 }) {
     const [transactionToEdit, setTransactionToEdit] = React.useState();
     const getContent = useContent();
     const text = (key) => getContent('TRANSACTIONS', key);
 
     if(isLoading) {
-        return <LoadingInteractiveRowList id='loading-transaction' rowCount={5} rowSpacing={12} />;
+        return <LoadingInteractiveRowList id='loading-transaction' rowCount={skeletonLoaderCount} rowSpacing={12} />;
     }
 
     if(!transactionsList) {
@@ -39,7 +39,8 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
                 name: getContent('SPENDING_CATEGORIES', transaction.category)
             },
             isUncommon: transaction.isUncommon,
-            date: transaction.date
+            date: transaction.date,
+            linkedTripId: transaction.linkedTripId
         });
     }
 

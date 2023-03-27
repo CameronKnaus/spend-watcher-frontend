@@ -1,0 +1,39 @@
+.formContainer {
+    /* Offset for the delete link to be hidden */
+    margin-bottom: -6rem; 
+}
+
+.dateRange {
+    font-size: var(--header-text-24);
+    font-weight: var(--fw-regular);
+    color: var(--theme-standard-text);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.dataPointDescription {
+    font-size: var(--body-text-16);
+    font-weight: var(--fw-light);
+    color: var(--theme-standard-text);
+    margin-bottom: 1rem;
+}
+
+.editDetailsLink {
+    font-size: var(--body-text-14);
+    font-weight: var(--fw-light);
+    color: var(--theme-standard-text);
+    margin-bottom: 2.5rem;
+}
+
+.deleteLink {
+    color: var(--theme-red) !important;
+    margin: 3rem auto 0;
+    padding-bottom: 2rem;
+}
+
+.linkedTransactionHeader {
+    font-size: var(--header-text-18);
+    font-weight: var(--fw-medium);
+    color: var(--theme-standard-text);
+    margin-bottom: 1rem;
+}

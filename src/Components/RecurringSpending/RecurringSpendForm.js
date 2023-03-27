@@ -20,37 +20,29 @@ export default function RecurringSpendForm({ onSubmission, editMode, existingTra
     const [category, setCategory] = useState(existingTransaction.category || { code: 'OTHER', name: getContent('SPENDING_CATEGORIES', 'OTHER') });
 
     useEffect(() => {
-        if(editMode) {
-            const editCallback = () => {
+        setForwardActionCallback(() => {
+            if(editMode) {
+                return () => {
+                    // Handle service call
+                    axios.post(SERVICE_ROUTES.editRecurringExpense, {
+                        recurringSpendId: existingTransaction.recurringSpendId,
+                        spendName: expenseName,
+                        amount: parseFloat(amount),
+                        spendCategory: (category && category.code) || 'OTHER',
+                        isVariable
+                    }).then(onSubmission);
+                };
+            }
+
+            return () => {
                 // Handle service call
-                axios.post(SERVICE_ROUTES.editRecurringExpense, {
-                    recurringSpendId: existingTransaction.recurringSpendId,
+                axios.post(SERVICE_ROUTES.submitNewRecurringExpense, {
                     spendName: expenseName,
                     amount: parseFloat(amount),
                     spendCategory: (category && category.code) || 'OTHER',
                     isVariable
                 }).then(onSubmission);
             };
-
-            setForwardActionCallback(() => {
-                return editCallback;
-            });
-
-            return;
-        }
-
-        const newSubmissionCallback = () => {
-            // Handle service call
-            axios.post(SERVICE_ROUTES.submitNewRecurringExpense, {
-                spendName: expenseName,
-                amount: parseFloat(amount),
-                spendCategory: (category && category.code) || 'OTHER',
-                isVariable
-            }).then(onSubmission);
-        };
-
-        setForwardActionCallback(() => {
-            return newSubmissionCallback;
         });
     }, [amount, category, editMode, existingTransaction.recurringSpendId, expenseName, isVariable, onSubmission, setForwardActionCallback]);
 

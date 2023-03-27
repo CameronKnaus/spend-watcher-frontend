@@ -84,9 +84,7 @@ export default function CategoryInput({ id = 'category-input', textInputStyles, 
                                                   containerSize='2rem'
                                                   iconSize='1.2rem'
                                     />
-                                    <div className={styles.optionLabel}>
-                                        {category.name}
-                                    </div>
+                                    {category.name}
                                 </div>
                             ))
                         }

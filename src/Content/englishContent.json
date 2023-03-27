@@ -101,13 +101,45 @@
     "NOTES_LABEL": "Notes",
     "NOTES_PLACEHOLDER": "About your expense",
     "UNCOMMON_LABEL": "Mark Expense as Uncommon",
-    "UNCOMMON_DESCRIPTION": "Expenses marked as ‘uncommon’ can be excluded from spending trends. Use this for one-time large expenses, like plane tickets or computers, that you don’t want skewing your average spending trends.",
+    "UNCOMMON_DESCRIPTION": "Expenses marked as 'uncommon' can be excluded from spending trends. Use this for one-time large expenses, like plane tickets or computers, that you don’t want skewing your average spending trends.",
     "DATE_LABEL": "Date of Expense",
+    "TRIP_LABEL": "Linked Trip",
     "CANCEL": "Cancel",
     "SUBMIT": "Submit",
     "EDIT": "Edit",
     "DELETE": "Delete this expense",
-    "NO_TRANSACTIONS_FOUND": "No transactions returned for the selected time frame / filter."
+    "NO_TRANSACTIONS_FOUND": "No transactions returned for the selected time frame / filter.",
+    "NO_TRIPS": "no trip selected",
+    "ACTIVE_TRIP": "This expense is being linked to the trip \"<<arg0:trip_name>>\" by default as the trip is currently active (<<arg1:start_date>> - <<arg2:end_date>>).",
+    "NO_TRIPS_AVAILABLE": "You have no trips logged to link to."
+  },
+  "TRIPS": {
+    "DASHBOARD_TITLE": "My Trips",
+    "VIEW_ALL": "See all trips",
+    "VIEW_LESS": "See less trips",
+    "CREATE_TRIP": "Create trip",
+    "NO_TRIPS": "You haven't logged any trips yet.",
+    "TRIP_TOTAL": "Total Spent",
+    "NEW_TRIP": "New Trip",
+    "EDIT_TRIP": "Edit Trip",
+    "TRIP_DETAILS": "\"<<arg0:trip_name>>\" trip details",
+    "SUBMIT": "Submit",
+    "CLOSE": "Close",
+    "CANCEL": "Cancel",
+    "PERMANENTLY_DELETE": "Delete trip and unlink transactions",
+    "TRIP_NAME_LABEL": "Trip Name",
+    "START_DATE_LABEL": "Start date",
+    "END_DATE_LABEL": "End date",
+    "TRIP_NAME_PLACEHOLDER": "Europe trip",
+    "DAY_COUNT": "This trip is <<arg0:dayCounts>> day.",
+    "DAY_COUNT_PLURAL": "This trip is <<arg0:dayCounts>> days.",
+    "DAY_COUNT_PAST": "This trip was: <<arg0:dayCounts>> day.",
+    "DAY_COUNT_PAST_PLURAL": "This trip was: <<arg0:dayCounts>> days.",
+    "IT_COST": "It cost: <<arg0:cost>>.",
+    "IT_COST_SO_FAR": "It has cost: <<arg0:cost>> so far.",
+    "EDIT_DETAILS": "Edit details",
+    "LINKED_TRANSACTIONS": "Linked expenses",
+    "DELETE": "Permenantly delete this trip"
   },
   "MY_MONEY": {
     "MY_MONEY": "My Money",
@@ -175,7 +207,8 @@
   "GENERAL": {
     "TODAY": "Today",
     "YESTERDAY": "Yesterday",
-    "EMPTY": "--"
+    "EMPTY": "--",
+    "CLEAR_SELECTION": "clear selection"
   },
   "DATE_CONTEXT_CHANGER": {
     "CONFIRM": "Confirm",

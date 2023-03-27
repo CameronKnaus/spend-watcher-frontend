@@ -1,16 +1,18 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import styles from 'Styles/Pages/Dashboard.module.css';
 import Spending from 'Containers/Spending';
 import useContent from 'CustomHooks/useContent';
 import RecentTransactions from 'Containers/RecentTransactions';
 import MyMoney from 'Containers/MyMoney';
-
+import Trips from 'Containers/Trips';
+import useTripDetails from 'CustomHooks/useTripDetails';
 
 export default function Dashboard() {
     const getContent = useContent();
-    const [refreshRequested, setRefreshRequested] = React.useState(false);
+    const [refreshRequested, setRefreshRequested] = useState(false);
+    const { refreshTrips } = useTripDetails();
 
-    React.useEffect(() => {
+    useEffect(() => {
         // refreshRequested is used to trigger services on the dashboard to be called once more
         // We can immediately set it to false after use.
         if(refreshRequested) {
@@ -20,6 +22,7 @@ export default function Dashboard() {
 
     function callForRefresh() {
         setRefreshRequested(true);
+        refreshTrips(true);
     }
 
     return (
@@ -30,6 +33,7 @@ export default function Dashboard() {
                 </h1>
                 <Spending refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
                 <RecentTransactions refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
+                <Trips refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
                 <MyMoney refreshRequested={refreshRequested} callForRefresh={callForRefresh} />
             </div>
         </div>
