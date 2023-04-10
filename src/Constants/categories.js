@@ -8,7 +8,8 @@ import { FaCannabis,
     FaDollarSign,
     FaMoneyBillWave,
     FaPlaneDeparture,
-    FaLandmark } from 'react-icons/fa';
+    FaLandmark,
+    FaCookieBite } from 'react-icons/fa';
 import { IoIosBeer, IoIosCart, IoIosAirplane, IoMdBrush, IoIosTrendingUp } from 'react-icons/io';
 import { MdFastfood,
     MdMovieFilter,
@@ -122,6 +123,10 @@ export const SPENDING_CATEGORIES = {
     HOBBY: {
         icon: <IoMdBrush />,
         color: 'var(--theme-orange-pale)'
+    },
+    TREATS: {
+        icon: <FaCookieBite />,
+        color: 'var(--theme-dark-pink)'
     },
     OTHER: {
         icon: <FaDollarSign />,

@@ -32,6 +32,7 @@
 
     /* Main Theme Colors */
     --theme-red: #f94144;
+    --theme-pink: #EEAAD9;
     --theme-orange: #f3722c;
     --theme-yellow-orange: #f8961e;
     --theme-mango: #f9844a;
@@ -53,6 +54,7 @@
     --theme-steel-teal-pale: #57a19f;
     --theme-queen-blue-pale: #6183a0;
     --theme-celadon-blue-pale: #2d8fb9;
+    --theme-pale-pink: #F5CCE8;
 
     /* Darker Version of Main Theme Colors */
     --theme-red-dark: #db344a;
@@ -65,4 +67,5 @@
     --theme-steel-teal-dark: #49797c;
     --theme-queen-blue-dark: #50667f;
     --theme-celadon-blue-dark: #28658b;
+    --theme-dark-pink: #E477C1;
 }
