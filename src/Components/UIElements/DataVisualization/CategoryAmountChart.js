@@ -18,7 +18,7 @@ export default function CategoryAmountChart({ amountList, useDollarValues }) {
     const dataForChart = [];
     amountList.forEach(element => {
         const category = element.category;
-        const color = SPENDING_CATEGORIES[category].color;
+        const color = SPENDING_CATEGORIES[category]?.color ?? '#333333';
         const label = getSpendingLabel(category);
 
         generatedTheme.push(color);

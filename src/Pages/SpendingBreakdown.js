@@ -14,6 +14,7 @@ import SpendingHistory from '../Containers/SpendingHistory';
 import DateContextShifter from '../Components/UIElements/Form/DateContextShifter';
 import { useIsMobile } from '../Util/IsMobileContext';
 import clsx from 'clsx';
+import useTripDetails from 'CustomHooks/useTripDetails';
 
 export const TAB_ENUM = {
     SUMMARY_TAB: 'SUMMARY_TAB',
@@ -37,6 +38,7 @@ export default function SpendingBreakdown() {
         shiftMonthInContext
     } = useDateRange();
     const urlParams = useParams();
+    const { refreshTrips } = useTripDetails();
 
     const [currentTab, setCurrentTab] = useState(defaultTabMap[urlParams.defaultTab] || TAB_ENUM.SUMMARY_TAB);
     const [minSupportedDate, setMinSupportedDate] = useState('01/01/0001');
@@ -75,6 +77,7 @@ export default function SpendingBreakdown() {
             })
             .catch(setError);
     }
+
     useEffect(fetchStats, [dateRange]);
 
     if(!spendingBreakdown) {
@@ -131,7 +134,10 @@ export default function SpendingBreakdown() {
                          setFilterCategory={setFilterCategory}
                          totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
                          finalTotalTransactions={spendingBreakdown.finalTotalTransactions}
-                         refreshStats={fetchStats}
+                         refreshStats={() => {
+                            fetchStats();
+                            refreshTrips(true);
+                         }}
         />
     );
 
