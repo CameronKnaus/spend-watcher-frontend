@@ -198,11 +198,11 @@
     "HOUSING": "Housing",
     "CANNABIS": "Cannabis",
     "PETS": "Pets",
-    "DATES": "Dates",
     "INSURANCE": "Insurance",
     "GAMES": "Games",
     "HOBBY": "Hobbies",
     "TREATS": "Treats",
+    "TAXES": "Taxes",
     "OTHER": "Other"
   },
   "GENERAL": {

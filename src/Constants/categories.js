@@ -9,7 +9,8 @@ import { FaCannabis,
     FaMoneyBillWave,
     FaPlaneDeparture,
     FaLandmark,
-    FaCookieBite } from 'react-icons/fa';
+    FaCookieBite,
+    FaRegMoneyBillAlt } from 'react-icons/fa';
 import { IoIosBeer, IoIosCart, IoIosAirplane, IoMdBrush, IoIosTrendingUp } from 'react-icons/io';
 import { MdFastfood,
     MdMovieFilter,
@@ -108,10 +109,6 @@ export const SPENDING_CATEGORIES = {
         icon: <MdPets />,
         color: 'var(--theme-yellow-orange)'
     },
-    DATES: {
-        icon: <FaHeart />,
-        color: 'var(--theme-red-pale)'
-    },
     INSURANCE: {
         icon: <MdShield />,
         color: 'var(--theme-celadon-blue-dark)'
@@ -127,6 +124,10 @@ export const SPENDING_CATEGORIES = {
     TREATS: {
         icon: <FaCookieBite />,
         color: 'var(--theme-dark-pink)'
+    },
+    TAXES: {
+        icon: <FaRegMoneyBillAlt />,
+        color: 'var(--theme-red-pale)'
     },
     OTHER: {
         icon: <FaDollarSign />,
