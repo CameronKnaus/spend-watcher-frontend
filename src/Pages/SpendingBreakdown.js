@@ -69,6 +69,8 @@ export default function SpendingBreakdown() {
                 setNoTransactions(data.noTransactions);
                 setSpendingBreakdown({
                     finalTotalSpent: data.finalTotalSpent,
+                    discretionaryTotal: data.discretionaryTotal,
+                    recurringSpendTotal: data.recurringSpendTotal,
                     finalTotalTransactions: data.finalTotalTransactions,
                     categoryTotals: data.totalSpentPerCategory,
                     transactionsList: data.transactionsGroupedByDate,

@@ -81,6 +81,8 @@
     "SHOW_ALL": "Show all",
     "HIDE": "Hide Top Categories",
     "TOTAL_SPENT": "Total Spent",
+    "TOTAL_DISCRETIONARY": "Total Discretionary",
+    "TOTAL_RECURRING": "Total Recurring Expenses",
     "FILTER_BY_CATEGORY": "Filter by Category",
     "REMOVE_FILTER": "Remove filter",
     "TRANSACTION_COUNT": "Showing <<arg0:amount>> transactions",

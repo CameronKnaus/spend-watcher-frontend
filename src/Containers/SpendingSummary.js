@@ -25,6 +25,22 @@ export default function SpendingSummary({ spendingBreakdown, setCurrentTab, setF
                     {`-${formatCurrency(spendingBreakdown.finalTotalSpent)}`}
                 </div>
             </div>
+            <div className={styles.totalSpentContainer}>
+                <div className={styles.totalLabel}>
+                    {getContent('TOTAL_DISCRETIONARY')}
+                </div>
+                <div className={styles.totalValue}>
+                    {`-${formatCurrency(spendingBreakdown.discretionaryTotal)}`}
+                </div>
+            </div>
+            <div className={styles.totalSpentContainer}>
+                <div className={styles.totalLabel}>
+                    {getContent('TOTAL_RECURRING')}
+                </div>
+                <div className={styles.totalValue}>
+                    {`-${formatCurrency(spendingBreakdown.recurringSpendTotal)}`}
+                </div>
+            </div>
             <div className={styles.topCategories}>
                 <TopSpendingCategories useDollarValues
                                        label={getContent('CATEGORY_TOTAL_TITLE')}
