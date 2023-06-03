@@ -1,10 +1,11 @@
-import React from 'react';
+import { useState } from 'react';
 import useContent from 'CustomHooks/useContent';
 import styles from 'Styles/Components/Transactions/TransactionsList.module.css';
 import TransactionForm from './TransactionForm';
 import dayjs from 'dayjs';
 import InteractiveDataRow from 'Components/UIElements/InteractiveDataRow';
 import LoadingInteractiveRowList from 'Components/UIElements/Loading/LoadingInteractiveRowList';
+import RecurringSpendSlideInPanel from 'Components/RecurringSpending/RecurringSpendSlideInPanel';
 
 /* TransactionsList prop should be transactions grouped by date with they date being the key:
     Example:
@@ -13,7 +14,8 @@ import LoadingInteractiveRowList from 'Components/UIElements/Loading/LoadingInte
                 01/01/2022: [{ *transaction data* }, { *transaction data* }]
 * */
 export default function TransactionsList({ transactionsList, onEditCallback = () => { /* NOOP */ }, filteredCategory, isLoading, skeletonLoaderCount = 5 }) {
-    const [transactionToEdit, setTransactionToEdit] = React.useState();
+    const [transactionToEdit, setTransactionToEdit] = useState(null);
+    const [recurringTransactionToEdit, setRecurringTransactionToEdit] = useState(null);
     const getContent = useContent();
     const text = (key) => getContent('TRANSACTIONS', key);
 
@@ -44,6 +46,14 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
         });
     }
 
+    function handleRecurringSpendPanelClosure(serviceShouldRefresh) {
+        setRecurringTransactionToEdit(null);
+
+        if(serviceShouldRefresh) {
+            onEditCallback();
+        }
+    }
+
     // Maps out all transactions under a given grouping (i.e. under a single date)
     function mapTransactionList(transactionList, header) {
         let sortedList = transactionList.sort((a, b) => {
@@ -68,14 +78,26 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
                         <div key={transaction.transactionId}
                              className={styles.transactionWrapper}
                         >
-                            <InteractiveDataRow isExpense
-                                                title={getContent('SPENDING_CATEGORIES', transaction.category)}
-                                                iconCategory={transaction.category}
-                                                description={transaction.note}
-                                                amount={transaction.amount}
-                                                amountDescription={transaction.date}
-                                                onClick={() => setTransactionForEditing(transaction)}
-                            />
+                            {transaction.recurringSpendId ? (
+                                <InteractiveDataRow isExpense
+                                                    showRevolvingIcon
+                                                    title={getContent('SPENDING_CATEGORIES', transaction.category)}
+                                                    iconCategory={transaction.category}
+                                                    description={transaction.expenseName}
+                                                    amount={transaction.transactionAmount}
+                                                    amountDescription={transaction.date}
+                                                    onClick={() => setRecurringTransactionToEdit(transaction)}
+                                />
+                            ) : (
+                                <InteractiveDataRow isExpense
+                                                    title={getContent('SPENDING_CATEGORIES', transaction.category)}
+                                                    iconCategory={transaction.category}
+                                                    description={transaction.note}
+                                                    amount={transaction.amount}
+                                                    amountDescription={transaction.date}
+                                                    onClick={() => setTransactionForEditing(transaction)}
+                                />
+                            )}
                         </div>
                     ))
                 }
@@ -126,6 +148,15 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
                                      existingTransaction={transactionToEdit}
                                      onPanelClose={() => setTransactionToEdit(null)}
                                      onSubmission={onEditCallback}
+                    />
+                )
+            }
+            {
+                recurringTransactionToEdit && (
+                    <RecurringSpendSlideInPanel editMode
+                                                existingTransaction={recurringTransactionToEdit}
+                                                onPanelClose={handleRecurringSpendPanelClosure}
+                                                onSubmission={onEditCallback}
                     />
                 )
             }

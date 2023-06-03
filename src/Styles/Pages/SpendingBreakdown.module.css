@@ -43,3 +43,7 @@
 .softBackground {
     background-color: var(--theme-soft-background);
 }
+
+.toggleSwitchContainer {
+    padding-top: 1.5rem;
+}

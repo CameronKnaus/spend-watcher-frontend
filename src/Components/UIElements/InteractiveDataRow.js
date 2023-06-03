@@ -21,7 +21,7 @@ function parseAmount(amount, isExpense) {
 // amountDescription - String
 // iconCategory - String - uses the Account or transaction category code to render the right icon
 // isLoading - boolean - when true shows skeleton loaders
-export default function InteractiveDataRow({ title, description, amount, amountDescription, isExpense, iconCategory, onClick, isLoading }) {
+export default function InteractiveDataRow({ title, description, amount, amountDescription, isExpense, iconCategory, onClick, isLoading, showRevolvingIcon }) {
     // Amount to show
     const parsedAmount = parseAmount(amount, isExpense);
 
@@ -40,6 +40,7 @@ export default function InteractiveDataRow({ title, description, amount, amountD
                               containerSize='40px'
                               iconSize='20px'
                               customClasses={styles.iconContainer}
+                              showRevolvingIcon={showRevolvingIcon}
                 />
             </SkeletonLoader>
             <div className={styles.detailsContainer}>

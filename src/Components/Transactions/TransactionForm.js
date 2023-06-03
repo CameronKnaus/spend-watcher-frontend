@@ -39,7 +39,7 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
             return existingTransaction.linkedTripId;
         }
 
-        if(activeTrip) {
+        if(activeTrip && !editMode) {
             return activeTrip.tripId;
         }
 

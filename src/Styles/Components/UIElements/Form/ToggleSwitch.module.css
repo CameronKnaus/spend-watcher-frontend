@@ -1,0 +1,38 @@
+.toggleContainer {
+    align-items: center;
+    cursor: pointer;
+    column-gap: 0.5rem;
+}
+
+.toggleLabel {
+    color: var(--theme-subdued-text-color);
+    font-size: var(--body-text-14);
+    font-weight: var(--fw-light);
+}
+
+.toggleSwitch {
+    position: relative;
+    display: inline-block;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--theme-toggle-inactive);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.toggleBubble {
+    position: absolute;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 1px #CACACA;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}

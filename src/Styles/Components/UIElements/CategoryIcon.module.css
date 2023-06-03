@@ -8,4 +8,41 @@
     flex-shrink: 0;
     /* The background color here is used as a default */
     background-color: #333333;
+    position: relative;
+}
+
+.iconPlacement {
+    left: 5px;
+    bottom: 2px;
+    position: absolute;
+    font-size: 20px;
+}
+
+.revolvingIcon {
+    top: 3px;
+    right: 3px;
+    position: absolute;
+    font-size: 14px;
+    color: #F9F9F9;
+    height: 14px;
+    transform: rotate(0deg);
+    animation-name: rotating;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes rotating {
+    0% {
+        transform: rotate(0deg);
+    }
+    3% {
+        transform: rotate(-35deg);
+    }
+    11% {
+        transform: rotate(735deg);
+    }
+    14%, 100% {
+        transform: rotate(720deg);
+    }
 }

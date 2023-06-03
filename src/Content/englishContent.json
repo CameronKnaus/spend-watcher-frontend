@@ -87,7 +87,8 @@
     "REMOVE_FILTER": "Remove filter",
     "TRANSACTION_COUNT": "Showing <<arg0:amount>> transactions",
     "TRANSACTIONS_LIST_LABEL": "Transactions for period",
-    "NO_TRANSACTIONS": "You have not yet logged any spending for this time period."
+    "NO_TRANSACTIONS": "You have not yet logged any spending for this time period.",
+    "INCLUDE_RECURRING": "Include Recurring Transactions"
   },
   "TRANSACTIONS": {
     "RECENT": "Recent Transactions",

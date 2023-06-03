@@ -15,6 +15,7 @@ import DateContextShifter from '../Components/UIElements/Form/DateContextShifter
 import { useIsMobile } from '../Util/IsMobileContext';
 import clsx from 'clsx';
 import useTripDetails from 'CustomHooks/useTripDetails';
+import ToggleSwitch from 'Components/UIElements/Form/ToggleSwitch';
 
 export const TAB_ENUM = {
     SUMMARY_TAB: 'SUMMARY_TAB',
@@ -46,6 +47,7 @@ export default function SpendingBreakdown() {
     const [error, setError] = useState();
     const [filterCategory, setFilterCategory] = useState({ name: '', code: '' });
     const [noTransactions, setNoTransactions] = useState(false);
+    const [includeRecurringTransactions, setIncludeRecurringTransactions] = useState(false);
 
     // Get the earliest spending logged to set date range handler min range
     const { response: dateRangeResponse } = useFetch(SERVICE_ROUTES.transactionDateRange, true);
@@ -61,7 +63,8 @@ export default function SpendingBreakdown() {
         setSpendingBreakdown(null);
         const args = {
             startDate: dateRange.startDate.format(),
-            endDate: dateRange.endDate.format()
+            endDate: dateRange.endDate.format(),
+            includeRecurringTransactions
         };
 
         axios.post(SERVICE_ROUTES.spendingBreakdown, args)
@@ -80,7 +83,7 @@ export default function SpendingBreakdown() {
             .catch(setError);
     }
 
-    useEffect(fetchStats, [dateRange]);
+    useEffect(fetchStats, [dateRange, includeRecurringTransactions]);
 
     if(!spendingBreakdown) {
         return (
@@ -116,6 +119,9 @@ export default function SpendingBreakdown() {
                                     endDate={dateRange.endDate}
                                     startDate={dateRange.startDate}
                 />
+            </div>
+            <div className={styles.toggleSwitchContainer}>
+                <ToggleSwitch spaceBetween labelText={getContent('INCLUDE_RECURRING')} setOnState={() => setIncludeRecurringTransactions(current => !current)} activeColor='var(--theme-queen-blue-pale)' onState={includeRecurringTransactions} />
             </div>
         </div>
     );

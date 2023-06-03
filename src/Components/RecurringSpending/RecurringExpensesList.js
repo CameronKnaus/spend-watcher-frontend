@@ -98,6 +98,7 @@ export default function RecurringExpensesList({ isLoading, transactionList, onSu
                             return (
                                 <div key={transaction.recurringSpendId} className={styles.listItemWrapper}>
                                     <InteractiveDataRow isExpense
+                                                        showRevolvingIcon
                                                         title={transaction.expenseName}
                                                         iconCategory={category}
                                                         description={description}
