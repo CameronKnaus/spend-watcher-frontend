@@ -4,16 +4,19 @@ import axios from 'axios';
 import ServiceRoutes from 'Constants/ServiceRoutes';
 import { useLocation, useNavigate } from 'react-router';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
+import useTripDetails from 'CustomHooks/useTripDetails';
 
 // The purpose of this component is to check if the user is authenticated. If not, redirect to the auth page
 export default function SessionChecker({ children }) {
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    const { refreshTrips } = useTripDetails();
 
     React.useEffect(() => {
         axios.get(ServiceRoutes.checkAuthentication)
             .then(() => {
                 AuthHandler.setIsAuthenticated(true);
+                refreshTrips();
 
                 if(pathname === PAGE_ROUTES.authScreen) {
                     navigate(PAGE_ROUTES.dashboard);

@@ -5,6 +5,7 @@ import ServiceRoutes from 'Constants/ServiceRoutes';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import useTripDetails from 'CustomHooks/useTripDetails';
 axios.defaults.withCredentials = true;
 
 const REQUEST_TYPES = {
@@ -19,6 +20,7 @@ export default function AuthScreen() {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [errorMessage, setErrorMessage] = React.useState('');
+    const { refreshTrips } = useTripDetails();
 
     React.useEffect(() => {
         if(AuthHandler.isAuthenticated()) {
@@ -43,6 +45,7 @@ export default function AuthScreen() {
             .then((response) => {
                 AuthHandler.setIsAuthenticated(true);
                 AuthHandler.setUsername(response.data.username);
+                refreshTrips();
                 navigate(PAGE_ROUTES.dashboard);
             })
             .catch((error) => {
