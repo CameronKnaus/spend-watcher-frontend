@@ -17,28 +17,30 @@ export default function SpendingSummary({ spendingBreakdown, setCurrentTab, setF
 
     return (
         <div className={styles.contentContainer}>
-            <div className={styles.totalSpentContainer}>
-                <div className={styles.totalLabel}>
-                    {getContent('TOTAL_SPENT')}
+            <div className={styles.totalsGroup}>
+                <div className={styles.totalSpentContainer}>
+                    <div className={styles.totalLabel}>
+                        {getContent('TOTAL_SPENT')}
+                    </div>
+                    <div className={styles.totalValue}>
+                        {`-${formatCurrency(spendingBreakdown.finalTotalSpent)}`}
+                    </div>
                 </div>
-                <div className={styles.totalValue}>
-                    {`-${formatCurrency(spendingBreakdown.finalTotalSpent)}`}
+                <div className={styles.totalSpentContainer}>
+                    <div className={styles.totalLabel}>
+                        {getContent('TOTAL_DISCRETIONARY')}
+                    </div>
+                    <div className={styles.totalValue}>
+                        {`-${formatCurrency(spendingBreakdown.discretionaryTotal)}`}
+                    </div>
                 </div>
-            </div>
-            <div className={styles.totalSpentContainer}>
-                <div className={styles.totalLabel}>
-                    {getContent('TOTAL_DISCRETIONARY')}
-                </div>
-                <div className={styles.totalValue}>
-                    {`-${formatCurrency(spendingBreakdown.discretionaryTotal)}`}
-                </div>
-            </div>
-            <div className={styles.totalSpentContainer}>
-                <div className={styles.totalLabel}>
-                    {getContent('TOTAL_RECURRING')}
-                </div>
-                <div className={styles.totalValue}>
-                    {`-${formatCurrency(spendingBreakdown.recurringSpendTotal)}`}
+                <div className={styles.totalSpentContainer}>
+                    <div className={styles.totalLabel}>
+                        {getContent('TOTAL_RECURRING')}
+                    </div>
+                    <div className={styles.totalValue}>
+                        {`-${formatCurrency(spendingBreakdown.recurringSpendTotal)}`}
+                    </div>
                 </div>
             </div>
             <div className={styles.topCategories}>
