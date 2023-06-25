@@ -15,6 +15,8 @@ import DateContextShifter from '../Components/UIElements/Form/DateContextShifter
 import { useIsMobile } from '../Util/IsMobileContext';
 import clsx from 'clsx';
 import useTripDetails from 'CustomHooks/useTripDetails';
+import DATE_RANGE_TYPES from 'Constants/DateRangeTypes';
+import DateRangeLabel from 'Components/UIElements/Informational/DateRangeLabel/DateRangeLabel';
 
 export const TAB_ENUM = {
     SUMMARY_TAB: 'SUMMARY_TAB',
@@ -58,10 +60,15 @@ export default function SpendingBreakdown() {
     }, [dateRangeResponse]);
 
     function fetchStats() {
+        if(!dateRange || !dateRange.startDate || !dateRange.endDate) {
+            return;
+        }
+
         setSpendingBreakdown(null);
         const args = {
             startDate: dateRange.startDate.format(),
-            endDate: dateRange.endDate.format()
+            endDate: dateRange.endDate.format(),
+            showAllData: dateRangeType === DATE_RANGE_TYPES.MAX
         };
 
         axios.post(SERVICE_ROUTES.spendingBreakdown, args)
@@ -74,13 +81,15 @@ export default function SpendingBreakdown() {
                     finalTotalTransactions: data.finalTotalTransactions,
                     categoryTotals: data.totalSpentPerCategory,
                     transactionsList: data.transactionsGroupedByDate,
-                    totalTransactionsPerCategory: data.totalTransactionsPerCategory
+                    totalTransactionsPerCategory: data.totalTransactionsPerCategory,
+                    startDate: data.dateRange?.start,
+                    endDate: data.dateRange?.end
                 });
             })
             .catch(setError);
     }
 
-    useEffect(fetchStats, [dateRange]);
+    useEffect(fetchStats, [dateRange, dateRangeType]);
 
     if(!spendingBreakdown) {
         return (
@@ -107,16 +116,23 @@ export default function SpendingBreakdown() {
                              startDate={dateRange.startDate}
                              minAllowedDate={minSupportedDate}
                              dateRangeType={dateRangeType}
+                             minPossibleDate={dateRangeResponse.minDate}
+                             maxPossibleDate={dateRangeResponse.maxDate}
             />
-            <div className={styles.dateContextShifterContainer}>
-                <DateContextShifter dateRangeType={dateRangeType}
-                                    shiftYearInContext={shiftYearInContext}
-                                    shiftMonthInContext={shiftMonthInContext}
-                                    minAllowedDate={minSupportedDate}
-                                    endDate={dateRange.endDate}
-                                    startDate={dateRange.startDate}
-                />
-            </div>
+            { !isMobile &&  <DateRangeLabel dateRangeType={dateRangeType} startDate={spendingBreakdown.startDate} endDate={spendingBreakdown.endDate} /> }
+            {
+                dateRangeType !== DATE_RANGE_TYPES.MAX && (
+                    <div className={styles.dateContextShifterContainer}>
+                        <DateContextShifter dateRangeType={dateRangeType}
+                                            shiftYearInContext={shiftYearInContext}
+                                            shiftMonthInContext={shiftMonthInContext}
+                                            minAllowedDate={minSupportedDate}
+                                            endDate={dateRange.endDate}
+                                            startDate={dateRange.startDate}
+                        />
+                    </div>
+                )
+            }
         </div>
     );
 
@@ -149,6 +165,7 @@ export default function SpendingBreakdown() {
             <>
                 <NavigationalBanner title={getContent(currentTab === TAB_ENUM.SUMMARY_TAB ? 'SUMMARY_BANNER_TITLE' : 'HISTORY_BANNER_TITLE')} />
                 {dateManagement}
+                <DateRangeLabel dateRangeType={dateRangeType} startDate={spendingBreakdown.startDate} endDate={spendingBreakdown.endDate} />
                 <div className={styles.tabContainer}>
                     <TabBar contentGroupKey='SPENDING_BREAKDOWN'
                             labelContentKey='TAB_BAR_LABEL'

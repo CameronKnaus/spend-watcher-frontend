@@ -8,7 +8,7 @@ import useContent from '../../../CustomHooks/useContent';
         const tabMapping = {
             MONTH: 'MONTH',
             YEAR: 'YEAR',
-            YTD: 'YTD',
+            MAX: 'MAX',
             SPECIFIC: 'SPECIFIC'
         };
 

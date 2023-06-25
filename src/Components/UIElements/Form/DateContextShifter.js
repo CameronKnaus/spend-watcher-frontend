@@ -5,16 +5,12 @@ import useContent from '../../../CustomHooks/useContent';
 import DATE_RANGE_TYPES from '../../../Constants/DateRangeTypes';
 import dayjs from 'dayjs';
 
-const { YTD, MONTH, YEAR } = DATE_RANGE_TYPES;
+const { MONTH, YEAR } = DATE_RANGE_TYPES;
 
 export default function DateContextShifter({ dateRangeType, startDate, endDate, shiftMonthInContext, shiftYearInContext, minAllowedDate }) {
     const getContent = useContent('DATE_CONTEXT_SHIFTER');
 
     function shouldNextBeDisabled() {
-        if(dateRangeType === YTD) {
-            return true;
-        }
-
         const present = dayjs();
         const isPresentYear = present.year() === endDate.year();
         if(dateRangeType === YEAR) {
@@ -34,7 +30,7 @@ export default function DateContextShifter({ dateRangeType, startDate, endDate, 
         const minDateJS = dayjs(minAllowedDate);
 
         const isMinYear = minDateJS.year() === startDate.year();
-        if(dateRangeType === YTD || dateRangeType === YEAR) {
+        if(dateRangeType === YEAR) {
             return isMinYear;
         }
 
@@ -50,7 +46,7 @@ export default function DateContextShifter({ dateRangeType, startDate, endDate, 
             return;
         }
 
-        if(dateRangeType === YEAR || dateRangeType === YTD) {
+        if(dateRangeType === YEAR) {
             shiftYearInContext(isForward);
             return;
         }
@@ -60,7 +56,7 @@ export default function DateContextShifter({ dateRangeType, startDate, endDate, 
         }
     }
 
-    const isYear = dateRangeType === YEAR || dateRangeType === YTD;
+    const isYear = dateRangeType === YEAR;
     const nextText = getContent(isYear ? 'NEXT_YEAR' : 'NEXT_MONTH');
     const lastText = getContent(isYear ? 'LAST_YEAR' : 'LAST_MONTH');
     const disableLast = shouldLastBeDisabled();

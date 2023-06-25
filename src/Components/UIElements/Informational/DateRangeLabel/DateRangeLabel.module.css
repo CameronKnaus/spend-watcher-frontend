@@ -1,0 +1,41 @@
+.stickyContainer {
+    position: sticky;
+    top: 36px;
+    z-index: 2;
+    padding: 0.5rem 1.5rem;
+    transition-duration: 0.2s;
+}
+
+.transparentBackground {
+    background-color: #FFFFFF;
+    box-shadow: 1px 1px 4px 0 #EEEEEE;
+    padding-bottom: 0.5rem;
+}
+
+.dateRangeLabel {
+    font-size: var(--body-text-12);
+    font-weight: var(--fw-light);
+    color: var(--theme-standard-text);
+    position: sticky;
+    top: 36px;
+}
+
+.timeTotals {
+    padding-top: 0.5rem;
+    font-size: var(--body-text-12);
+    font-weight: var(--fw-extra-light);
+    color: var(--theme-subdued-text-color);
+}
+
+@media (min-width: 768px) {
+    .stickyContainer {
+        z-index: auto;
+        position: static;
+        padding-top: 1.5rem;
+        padding-bottom: 0;
+    }
+
+    .timeTotals {
+        padding-bottom: 0.5rem;
+    }
+}
