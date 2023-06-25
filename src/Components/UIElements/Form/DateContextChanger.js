@@ -13,7 +13,9 @@ export default function DateContextChanger(
         setExpanded,
         updateDateRange,
         minAllowedDate,
-        startingRangeOption = DATE_RANGE_TYPES.MONTH
+        startingRangeOption = DATE_RANGE_TYPES.MONTH,
+        minPossibleDate,
+        maxPossibleDate
     }
 ) {
     const [selectedRangeOption, setSelectedRangeOption] = useState(startingRangeOption);
@@ -57,20 +59,19 @@ export default function DateContextChanger(
         }
     }
 
-    function submitYTD() {
-        // TODO: Check this
-        updateDateRange(dayjs(dayjs().startOf('year')), dayjs(), DATE_RANGE_TYPES.YTD);
+    function submitMax() {
+        updateDateRange(dayjs(minPossibleDate), dayjs(maxPossibleDate), DATE_RANGE_TYPES.MAX);
     }
 
     const isMonth = selectedRangeOption === DATE_RANGE_TYPES.MONTH;
     const isMonthOrYear = isMonth || selectedRangeOption === DATE_RANGE_TYPES.YEAR;
-    const isYTD = selectedRangeOption === DATE_RANGE_TYPES.YTD;
-    const isSpecificOrYTD = isYTD || selectedRangeOption === DATE_RANGE_TYPES.SPECIFIC;
+    const isMax = selectedRangeOption === DATE_RANGE_TYPES.MAX;
+    const isSpecificOrMax = isMax || selectedRangeOption === DATE_RANGE_TYPES.SPECIFIC;
     return (
         <SlideUpPanel hideTag
                       closeText={getContent('CANCEL')}
-                      confirmText={isYTD ? getContent('CONFIRM') : ''}
-                      forwardActionCallback={submitYTD}
+                      confirmText={isMax ? getContent('CONFIRM') : ''}
+                      forwardActionCallback={submitMax}
                       onPanelClose={() => setExpanded(false)}
         >
             <ClosePanel.Consumer>
@@ -118,9 +119,9 @@ export default function DateContextChanger(
                                 )
                             }
                             {
-                                isSpecificOrYTD && (
+                                isSpecificOrMax && (
                                     <div className={styles.optionMessage}>
-                                        {isYTD ? getContent('YTD_MESSAGE', [dayjs().format('YYYY')]) : getContent('SPECIFIC_MESSAGE')}
+                                        {getContent(isMax ? 'MAX_MESSAGE' : 'SPECIFIC_MESSAGE')}
                                     </div>
                                 )
                             }

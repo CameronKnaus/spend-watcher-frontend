@@ -8,7 +8,7 @@ const present = (() => dayjs())();
 /* This hook keeps date range state for the caller, it returns:
    'dateRange' - {startDate: dayjs, endDate: dayjs,  } (Defaults to the first of the current month and today for the end date)
    updateDateRange(newStartDate: dayjs, newEndDate: dayjs) => void
-   dateRangeType - string containing if the current selected date range is a year period, month, or YTD
+   dateRangeType - string containing if the current selected date range is a year period, month
    shiftYearInContext - function that moves the current year in context forward or backwards 1 year
    shiftMonthInContext - function that moves the current month in context forward or backwards 1 month
  */
@@ -55,11 +55,6 @@ export default function useDateRange(
             startDate: dateRange.startDate.add(shiftAmount, 'year'),
             endDate: isCurrentYear ? presentDate : newYear.endOf('year')
         });
-
-        // If viewing the previous year from a YTD setting then the year range context should be changed to YEAR
-        if(dateRangeType === DATE_RANGE_TYPES.YTD) {
-            setDateRangeType(DATE_RANGE_TYPES.YEAR);
-        }
     }
 
     // increase or decrease the current month in context by 1 month

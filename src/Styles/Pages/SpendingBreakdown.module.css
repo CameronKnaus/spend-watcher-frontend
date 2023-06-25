@@ -5,10 +5,11 @@
 
 .mobileDateManager {
     padding-top: 1rem;
+    padding-bottom: 0.5rem;
 }
 
 .tabContainer {
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .dateContextShifterContainer {
@@ -38,6 +39,7 @@
     top: 0;
     z-index: 1;
     background-color: var(--theme-content-background);
+    padding-bottom: 0.5rem;
 }
 
 .softBackground {

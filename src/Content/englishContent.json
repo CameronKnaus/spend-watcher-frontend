@@ -88,7 +88,11 @@
     "TRANSACTION_COUNT": "Showing <<arg0:amount>> transactions",
     "TRANSACTIONS_LIST_LABEL": "Transactions for period",
     "NO_TRANSACTIONS": "You have not yet logged any spending for this time period.",
-    "INCLUDE_RECURRING": "Include Recurring Transactions"
+    "INCLUDE_RECURRING": "Include Recurring Transactions",
+    "DATE_RANGE_LABEL": "Data date range: <<arg0:startDate>> - <<arg1:endDate>>.",
+    "YEAR_COUNT": "Duration: <<arg0:count>> year(s), <<arg1:count>> month(s), and <<arg2:count>> day(s).",
+    "MONTH_COUNT": "Duration: <<arg0:count>> month(s), and <<arg1:count>> day(s).",
+    "DAY_COUNT": "Duration: <<arg0:count>> day(s)."
   },
   "TRANSACTIONS": {
     "RECENT": "Recent Transactions",
@@ -218,16 +222,17 @@
     "CONFIRM": "Confirm",
     "CANCEL": "Cancel",
     "DATE_RANGE_TYPE": "Date range type:",
-    "YTD": "YTD",
+    "MAX": "Max",
     "MONTH": "Month",
     "YEAR": "Year",
     "SPECIFIC": "Specific",
     "CURRENT_MONTH": "Current month:",
     "CURRENT_YEAR": "Current year:",
-    "YTD_MESSAGE": "\"Year to date\" - This option will show you all data so far in <<arg0:current_year>>.",
+    "MAX_MESSAGE": "This setting will show all data you've logged on SpendWatcher.",
     "SPECIFIC_MESSAGE": "This option has not been created yet.",
     "CHANGE_CONTEXT": "Tap to change context",
-    "YTD_SELECTED_LABEL": "<<arg0:current_year>>, year-to-date"
+    "YTD_SELECTED_LABEL": "<<arg0:current_year>>, year-to-date",
+    "MAX_SELECTED_LABEL": "Max"
   },
   "DATE_CONTEXT_SHIFTER": {
     "NEXT_YEAR": "Next Year",

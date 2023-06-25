@@ -9,6 +9,8 @@ import DATE_RANGE_TYPES from '../../../Constants/DateRangeTypes';
 export default function DateChangerTile(
     { startDate,
         endDate,
+        minPossibleDate,
+        maxPossibleDate,
         updateDateRange = () => { /* NOOP */ },
         minAllowedDate,
         dateRangeType = DATE_RANGE_TYPES.MONTH,
@@ -22,17 +24,17 @@ export default function DateChangerTile(
             return `${MONTH_NAMES[startDate.month()]}, ${startDate.year()}`;
         }
 
-        const currentYear = dayjs().year();
-        if(dateRangeType === DATE_RANGE_TYPES.YTD) {
-            return getContent('YTD_SELECTED_LABEL', [currentYear]);
-        }
-
         if(dateRangeType === DATE_RANGE_TYPES.YEAR) {
+            const currentYear = dayjs().year();
             if(startDate.year() === currentYear) {
                 return getContent('YTD_SELECTED_LABEL', [currentYear]);
             }
 
             return startDate.year();
+        }
+
+        if(dateRangeType === DATE_RANGE_TYPES.MAX) {
+            return getContent('MAX_SELECTED_LABEL');
         }
 
         return '';
@@ -65,6 +67,8 @@ export default function DateChangerTile(
                                 updateDateRange={updateDateRange}
                                 startingRangeOption={dateRangeType}
                                 minAllowedDate={minAllowedDate}
+                                minPossibleDate={minPossibleDate}
+                                maxPossibleDate={maxPossibleDate}
             />
         </>
     );
