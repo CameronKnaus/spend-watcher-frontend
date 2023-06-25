@@ -214,7 +214,6 @@
         }
       ],
       "no-negated-condition": "error",
-      "no-nested-ternary": "error",
       "func-call-spacing": "error",
       "react/jsx-boolean-value": "error",
       "react/jsx-equals-spacing": "error",
