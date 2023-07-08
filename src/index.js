@@ -2,41 +2,22 @@ import React from 'react';
 import './index.css';
 import ReactDOM from 'react-dom';
 import { PAGE_ROUTES } from './Constants/RouteConstants';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { IsMobileContextProvider } from './Util/IsMobileContext';
-import dayjs from '@date-io/dayjs'; // Using DayJS for material-ui date picker handling
+import { Routes, Route } from 'react-router-dom';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import AuthScreen from './Pages/AuthScreen/AuthScreen';
-import SessionChecker from './Util/SessionChecker';
+import Bootstrap from './Bootstrap';
 import SpendingBreakdown from './Pages/SpendingBreakdown/SpendingBreakdown';
-import DayJS from 'dayjs';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import duration from 'dayjs/plugin/duration';
 import RecurringSpending from 'Pages/RecurringSpending/RecurringSpending';
-import { TripsContextProvider } from 'Contexts/trips/TripsContext';
 
-DayJS.extend(LocalizedFormat);
-DayJS.extend(duration);
 
 ReactDOM.render(
-    <React.StrictMode>
-        <MuiPickersUtilsProvider utils={dayjs}>
-            <IsMobileContextProvider>
-                <TripsContextProvider>
-                    <BrowserRouter>
-                        <SessionChecker>
-                            <Routes>
-                                <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
-                                <Route path={PAGE_ROUTES.authScreen} element={<AuthScreen />} />
-                                <Route path={PAGE_ROUTES.spendingBreakdown} element={<SpendingBreakdown />} />
-                                <Route path={PAGE_ROUTES.recurringSpending} element={<RecurringSpending />} />
-                            </Routes>
-                        </SessionChecker>
-                    </BrowserRouter>
-                </TripsContextProvider>
-            </IsMobileContextProvider>
-        </MuiPickersUtilsProvider>
-    </React.StrictMode>,
+    <Bootstrap>
+        <Routes>
+            <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
+            <Route path={PAGE_ROUTES.authScreen} element={<AuthScreen />} />
+            <Route path={PAGE_ROUTES.spendingBreakdown} element={<SpendingBreakdown />} />
+            <Route path={PAGE_ROUTES.recurringSpending} element={<RecurringSpending />} />
+        </Routes>
+    </Bootstrap>,
     document.getElementById('root')
 );
