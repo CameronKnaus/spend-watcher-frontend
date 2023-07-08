@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import styles from 'Styles/Components/RecurringSpending/RecurringSpendTransactionHistory/EditableTransactionListItem.module.css';
-import MoneyInput from 'Components/UIElements/Form/MoneyInput';
+import styles from './EditableTransactionListItem.module.css';
+import MoneyInput from 'Components/UIElements/Form/MoneyInput/MoneyInput';
 import { FaPencilAlt, FaPlusCircle } from 'react-icons/fa';
 import dayjs from 'dayjs';
-import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader';
+import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader/SkeletonLoader';
 
 export default function EditableTransactionListItem({ date, amount, amountLabel, placeholderLabel, confirmButtonLabel, onConfirm, transactionId, showAsLoader, isNewTransaction = false, newTransactionLabel }) {
     const startingAmount = amount?.toFixed(2) ?? null;

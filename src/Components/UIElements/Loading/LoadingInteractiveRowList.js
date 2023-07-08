@@ -1,4 +1,4 @@
-import InteractiveDataRow from 'Components/UIElements/InteractiveDataRow';
+import InteractiveDataRow from 'Components/UIElements/DataVisualization/InteractiveDataRow/InteractiveDataRow';
 
 export default function LoadingInteractiveRowList({ id, rowCount, rowSpacing }) {
     return new Array(rowCount).fill('').map((_, index) => (

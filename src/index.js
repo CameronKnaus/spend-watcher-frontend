@@ -6,14 +6,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { IsMobileContextProvider } from './Util/IsMobileContext';
 import dayjs from '@date-io/dayjs'; // Using DayJS for material-ui date picker handling
-import Dashboard from './Pages/Dashboard';
-import AuthScreen from './Pages/AuthScreen';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import AuthScreen from './Pages/AuthScreen/AuthScreen';
 import SessionChecker from './Util/SessionChecker';
-import SpendingBreakdown from './Pages/SpendingBreakdown';
+import SpendingBreakdown from './Pages/SpendingBreakdown/SpendingBreakdown';
 import DayJS from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import duration from 'dayjs/plugin/duration';
-import RecurringSpending from 'Pages/RecurringSpending';
+import RecurringSpending from 'Pages/RecurringSpending/RecurringSpending';
 import { TripsContextProvider } from 'Contexts/trips/TripsContext';
 
 DayJS.extend(LocalizedFormat);
