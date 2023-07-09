@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "target": "es6",
-    "checkJs": true,
+    "checkJs": false,
     "jsx": "preserve",
     "allowSyntheticDefaultImports": true,
     "module": "es6",

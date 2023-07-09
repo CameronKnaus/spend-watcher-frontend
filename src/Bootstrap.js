@@ -2,13 +2,13 @@ import { StrictMode } from 'react';
 import DayJS from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import duration from 'dayjs/plugin/duration';
-import dayjs from '@date-io/dayjs'; // Using DayJS for material-ui date picker handling
 import { TripsContextProvider } from 'Contexts/trips/TripsContext';
 import SessionChecker from './Util/SessionChecker';
 import { BrowserRouter } from 'react-router-dom';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { IsMobileContextProvider } from './Util/IsMobileContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 DayJS.extend(LocalizedFormat);
 DayJS.extend(duration);
@@ -19,7 +19,7 @@ export default function Bootstrap({ children }) {
     return (
         <StrictMode>
             <QueryClientProvider client={queryClient}>
-                <MuiPickersUtilsProvider utils={dayjs}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <IsMobileContextProvider>
                         <TripsContextProvider>
                             <BrowserRouter>
@@ -29,7 +29,7 @@ export default function Bootstrap({ children }) {
                             </BrowserRouter>
                         </TripsContextProvider>
                     </IsMobileContextProvider>
-                </MuiPickersUtilsProvider>
+                </LocalizationProvider>
             </QueryClientProvider>
         </StrictMode>
     );

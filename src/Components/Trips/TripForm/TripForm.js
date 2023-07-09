@@ -4,7 +4,7 @@ import styles from './TripForm.module.css';
 import Link from 'Components/UIElements/Navigation/Link/Link';
 import { IoTrashSharp } from 'react-icons/io5';
 import dayjs from 'dayjs';
-import { DatePicker } from '@material-ui/pickers';
+import { DatePicker } from '@mui/x-date-pickers';
 import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 
@@ -25,7 +25,7 @@ export default function TripForm({ existingTrip, onSubmission, setForwardActionC
     }, [startDate, endDate]);
 
     useEffect(() => {
-        setFormValid(Boolean(tripName.length));
+        setFormValid(Boolean(tripName.length && startDate.isValid() && endDate.isValid()));
     });
 
     useEffect(() => {
@@ -75,12 +75,9 @@ export default function TripForm({ existingTrip, onSubmission, setForwardActionC
                     {text('START_DATE_LABEL')}
                 </label>
                 <div className={styles.datePickerContainer}>
-                    <DatePicker autoOk
-                                disableToolbar
-                                openTo='date'
+                    <DatePicker views={['year', 'month', 'day']}
                                 format='MMMM D, YYYY'
                                 value={startDate}
-                                variant='modal'
                                 className={styles.textInput}
                                 onChange={setStartDate}
                     />
@@ -89,15 +86,11 @@ export default function TripForm({ existingTrip, onSubmission, setForwardActionC
                     {text('END_DATE_LABEL')}
                 </label>
                 <div className={styles.datePickerContainer}>
-                    <DatePicker autoOk
-                                disableToolbar
-                                openTo='date'
+                    <DatePicker views={['year', 'month', 'day']}
                                 format='MMMM D, YYYY'
                                 value={endDate}
-                                variant='modal'
-                                className={styles.textInput}
                                 minDate={startDate}
-                                minDateMessage={text('DATE_CHRONOLOGY_WARNING')}
+                                className={styles.textInput}
                                 onChange={setEndDate}
                     />
                 </div>

@@ -48,7 +48,7 @@ export default function SlideUpPanel({ children,
     React.useEffect(() => {
         const handleKeyPress = (event) => {
             const handler = keystrokeHandlers[event.keyCode];
-            handler && handler();
+            handler && handler(event);
         };
 
         document.addEventListener('keydown', handleKeyPress);
@@ -61,6 +61,7 @@ export default function SlideUpPanel({ children,
             'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
         );
 
+        // TODO: Fix this
         const firstElement = focusableElements[0];
         const lastElement = focusableElements[focusableElements.length - 1];
 

@@ -4,7 +4,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { FaPlaneDeparture } from 'react-icons/fa';
 import AuthHandler from 'Util/AuthHandler';
 
-export const tripsContext = createContext([]);
+export const tripsContext = createContext({});
 
 export function TripsContextProvider({ children }) {
     const { response, fire, loading, error } = useFetch(SERVICE_ROUTES.getAllTripDetails, AuthHandler.isAuthenticated());

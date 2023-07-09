@@ -2,7 +2,7 @@ import SlideUpPanel, { ClosePanel } from '../../Modal/SlideUpPanel/SlideUpPanel'
 import useContent from 'CustomHooks/useContent';
 import React, { useState } from 'react';
 import styles from './DateContextChanger.module.css';
-import { DatePicker } from '@material-ui/pickers';
+import { StaticDatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import TabBar from 'Components/UIElements/Navigation/TabBar/TabBar';
 import DATE_RANGE_TYPES from 'Constants/DateRangeTypes';
@@ -98,21 +98,26 @@ export default function DateContextChanger(
                                             {getContent(isMonth ? 'CURRENT_MONTH' : 'CURRENT_YEAR') + ' ' + selectedDate.format(isMonth ? 'MM/YYYY' : 'YYYY')}
                                         </label>
                                         <div className={styles.datePickerBox}>
-                                            <DatePicker autoOk
-                                                        disableFuture
-                                                        disableToolbar
-                                                        openTo='date'
-                                                        variant='static'
-                                                        views={isMonth ? ['year', 'month'] : ['year']}
-                                                        value={selectedDate}
-                                                        minDate={minAllowedDate}
-                                                        onMonthChange={(newDate) => {
-                                                            handleMonthChange(newDate, closePanel);
-                                                        }}
-                                                        onYearChange={(newDate) => {
-                                                            handleYearChange(newDate, closePanel);
-                                                        }}
-                                                        onChange={setSelectedDate}
+                                            <StaticDatePicker disableFuture
+                                                              views={isMonth ? ['year', 'month'] : ['year']}
+                                                              value={selectedDate}
+                                                              minDate={minAllowedDate}
+                                                              className={styles.textInput}
+                                                              slotProps={{
+                                                                actionBar: {
+                                                                    actions: []
+                                                                },
+                                                                toolbar: {
+                                                                    hidden: true
+                                                                }
+                                                              }}
+                                                              onMonthChange={(newDate) => {
+                                                                handleMonthChange(newDate, closePanel);
+                                                              }}
+                                                              onYearChange={(newDate) => {
+                                                                handleYearChange(newDate, closePanel);
+                                                              }}
+                                                              onChange={setSelectedDate}
                                             />
                                         </div>
                                     </>

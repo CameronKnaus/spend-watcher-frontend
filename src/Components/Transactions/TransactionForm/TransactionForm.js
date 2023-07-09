@@ -3,7 +3,7 @@ import useContent from 'CustomHooks/useContent';
 import styles from './TransactionForm.module.css';
 import MoneyInput from 'Components/UIElements/Form/MoneyInput/MoneyInput';
 import CategoryInput from 'Components/UIElements/Form/CategoryInput/CategoryInput';
-import { DatePicker } from '@material-ui/pickers';
+import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import SlideUpPanel, { ClosePanel } from 'Components/UIElements/Modal/SlideUpPanel/SlideUpPanel';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
@@ -50,8 +50,8 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
 
     // Update form validity only based on amount having a positive value
     React.useEffect(() => {
-        setFormValid(amount > 0);
-    }, [amount]);
+        setFormValid(amount > 0 && selectedDate.isValid());
+    }, [amount, selectedDate]);
 
     function submit(submissionType) {
         if(loading) {
@@ -169,13 +169,10 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                                 <label htmlFor='date-input'>
                                     {text('DATE_LABEL')}
                                 </label>
-                                <DatePicker autoOk
-                                            disableFuture
-                                            disableToolbar
-                                            openTo='date'
+                                <DatePicker disableFuture
+                                            views={['year', 'month', 'day']}
                                             format='MMMM D, YYYY'
                                             value={selectedDate}
-                                            variant='modal'
                                             className={styles.textInput}
                                             onChange={setSelectedDate}
                                 />

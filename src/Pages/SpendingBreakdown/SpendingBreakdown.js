@@ -18,6 +18,8 @@ import useTripDetails from 'CustomHooks/useTripDetails';
 import ToggleSwitch from 'Components/UIElements/Form/TogleSwitch/ToggleSwitch';
 import DATE_RANGE_TYPES from 'Constants/DateRangeTypes';
 import DateRangeLabel from 'Components/UIElements/Informational/DateRangeLabel/DateRangeLabel';
+// import useSpendingBreakdown from 'CustomHooks/ServiceHooks/useSpendingBreakdown';
+import dayjs from 'dayjs';
 
 export const TAB_ENUM = {
     SUMMARY_TAB: 'SUMMARY_TAB',
@@ -44,7 +46,7 @@ export default function SpendingBreakdown() {
     const { refreshTrips } = useTripDetails();
 
     const [currentTab, setCurrentTab] = useState(defaultTabMap[urlParams.defaultTab] || TAB_ENUM.SUMMARY_TAB);
-    const [minSupportedDate, setMinSupportedDate] = useState('01/01/0001');
+    const [minSupportedDate, setMinSupportedDate] = useState(dayjs('01/01/0001'));
     const [spendingBreakdown, setSpendingBreakdown] = useState();
     const [error, setError] = useState();
     const [filterCategory, setFilterCategory] = useState({ name: '', code: '' });
@@ -58,8 +60,10 @@ export default function SpendingBreakdown() {
             return;
         }
 
-        setMinSupportedDate(dateRangeResponse.minDate);
+        setMinSupportedDate(dayjs(dateRangeResponse.minDate));
     }, [dateRangeResponse]);
+
+    // const test = useSpendingBreakdown(dateRange?.startDate?.format(), dateRange?.endDate?.format(), includeRecurringTransactions, dateRangeType === DATE_RANGE_TYPES.MAX);
 
     function fetchStats() {
         if(!dateRange || !dateRange.startDate || !dateRange.endDate) {

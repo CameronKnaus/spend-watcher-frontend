@@ -27,15 +27,15 @@ export default function DateContextShifter({ dateRangeType, startDate, endDate, 
     }
 
     function shouldLastBeDisabled() {
-        const minDateJS = dayjs(minAllowedDate);
+        const minDate = dayjs(minAllowedDate);
 
-        const isMinYear = minDateJS.year() === startDate.year();
+        const isMinYear = minDate.year() === startDate.year();
         if(dateRangeType === YEAR) {
             return isMinYear;
         }
 
         if(dateRangeType === MONTH) {
-            return isMinYear && minDateJS.add(1, 'month').month() === startDate.month();
+            return isMinYear && minDate.month() === startDate.month();
         }
 
         return true;
