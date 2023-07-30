@@ -5,7 +5,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import dayjs from 'dayjs';
 import generateParamsForGET from 'Util/generateParamsForGET';
 import useContent from 'CustomHooks/useContent';
-import formatCurrency from 'Util/formatCurrency';
+import formatCurrency from 'Util/Formatters/formatCurrency';
 import axios from 'axios';
 
 export default function RecurringSpendTransactionHistory({ recurringExpense, setHistoryModified }) {

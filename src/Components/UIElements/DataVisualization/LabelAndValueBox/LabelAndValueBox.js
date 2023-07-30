@@ -1,6 +1,6 @@
 import styles from './LabelAndValueBox.module.css';
 import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader/SkeletonLoader';
-import formatCurrency from 'Util/formatCurrency';
+import formatCurrency from 'Util/Formatters/formatCurrency';
 
 export default function LabelAndValueBox({ label,
     value,

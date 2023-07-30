@@ -6,7 +6,7 @@ import SlideUpPanel from '../../UIElements/Modal/SlideUpPanel/SlideUpPanel';
 import axios from 'axios';
 import MoneyInput from '../../UIElements/Form/MoneyInput/MoneyInput';
 import ServiceRoutes from 'Constants/ServiceRoutes';
-import formatCurrency from 'Util/formatCurrency';
+import formatCurrency from 'Util/Formatters/formatCurrency';
 import Link from 'Components/UIElements/Navigation/Link/Link';
 import MONTH_NAMES from 'Constants/MonthNames';
 import dayjs from 'dayjs';

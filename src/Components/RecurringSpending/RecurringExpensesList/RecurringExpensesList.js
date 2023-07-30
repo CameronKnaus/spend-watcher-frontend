@@ -5,7 +5,7 @@ import { useState } from 'react';
 import styles from './RecurringExpensesList.module.css';
 import InteractiveDataRow from 'Components/UIElements/DataVisualization/InteractiveDataRow/InteractiveDataRow';
 import RecurringSpendSlideInPanel from '../RecurringSpendSlideInPanel/RecurringSpendSlideInPanel';
-import formatCurrency from '../../../Util/formatCurrency';
+import formatCurrency from '../../../Util/Formatters/formatCurrency';
 import { FaPencilAlt } from 'react-icons/fa';
 import MonthlySpendUpdateForm from 'Components/RecurringSpending/MonthlySpendUpdateForm/MonthlySpendUpdateForm';
 import Alert from 'Components/UIElements/Informational/Alert/Alert';

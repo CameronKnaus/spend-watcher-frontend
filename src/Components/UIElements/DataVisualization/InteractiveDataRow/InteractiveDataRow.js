@@ -1,7 +1,7 @@
 import styles from './InteractiveDataRow.module.css';
 import { CgChevronRight } from 'react-icons/cg';
 import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/CategoryIcon';
-import formatCurrency from 'Util/formatCurrency';
+import formatCurrency from 'Util/Formatters/formatCurrency';
 import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader/SkeletonLoader';
 
 function parseAmount(amount, isExpense) {

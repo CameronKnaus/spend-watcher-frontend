@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './AuthScreen.module.css';
-import AuthHandler from 'Util/AuthHandler';
+import AuthHandler from 'Util/Authentication/AuthHandler';
 import ServiceRoutes from 'Constants/ServiceRoutes';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import axios from 'axios';

@@ -2,7 +2,7 @@ import { createContext, useMemo } from 'react';
 import useFetch from 'CustomHooks/useFetch';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { FaPlaneDeparture } from 'react-icons/fa';
-import AuthHandler from 'Util/AuthHandler';
+import AuthHandler from 'Util/Authentication/AuthHandler';
 
 export const tripsContext = createContext({});
 

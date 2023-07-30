@@ -7,7 +7,7 @@ import MoneyInput from 'Components/UIElements/Form/MoneyInput/MoneyInput';
 import MONTH_NAMES from 'Constants/MonthNames';
 import dayjs from 'dayjs';
 import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/CategoryIcon';
-import formatCurrency from 'Util/formatCurrency';
+import formatCurrency from 'Util/Formatters/formatCurrency';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 
 export default function AccountBalanceUpdateForm({ onPanelClose, onSubmission, accountToUpdate = {}, editMode }) {

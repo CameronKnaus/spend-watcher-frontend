@@ -1,6 +1,6 @@
 import styles from './TabBar.module.css';
 import React from 'react';
-import devLogger from 'Util/DevLogger';
+import devLogger from 'Util/DevTools/DevLogger';
 import useContent from 'CustomHooks/useContent';
 
 /*  tabMapping should be an object enumerating available tabs.

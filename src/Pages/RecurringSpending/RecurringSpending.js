@@ -6,9 +6,10 @@ import { useEffect, useMemo, useState } from 'react';
 import NavigationalBanner from 'Components/UIElements/Navigation/NavigationalBanner/NavigationalBanner';
 import useFetch from '../../CustomHooks/useFetch';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
-import formatCurrency from '../../Util/formatCurrency';
-import Alert from '../../Components/UIElements/Informational/Alert/Alert'
-;
+import formatCurrency from '../../Util/Formatters/formatCurrency';
+import Alert from '../../Components/UIElements/Informational/Alert/Alert';
+
+
 export default function RecurringSpending() {
     const currentMonth = useMemo(() => {
         const currentDate = new Date();

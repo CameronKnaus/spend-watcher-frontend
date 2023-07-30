@@ -3,7 +3,7 @@ import DayJS from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import duration from 'dayjs/plugin/duration';
 import { TripsContextProvider } from 'Contexts/trips/TripsContext';
-import SessionChecker from './Util/SessionChecker';
+import SessionChecker from './Util/Authentication/SessionChecker';
 import { BrowserRouter } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { IsMobileContextProvider } from './Util/IsMobileContext';

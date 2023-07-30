@@ -5,7 +5,7 @@ import SlideUpPanel from '../../UIElements/Modal/SlideUpPanel/SlideUpPanel';
 import axios from 'axios';
 import MoneyInput from 'Components/UIElements/Form/MoneyInput/MoneyInput';
 import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/CategoryIcon';
-import formatCurrency from 'Util/formatCurrency';
+import formatCurrency from 'Util/Formatters/formatCurrency';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import dayjs from 'dayjs';
 

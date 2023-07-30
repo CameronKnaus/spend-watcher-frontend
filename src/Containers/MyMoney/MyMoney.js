@@ -7,7 +7,7 @@ import AccountForm from 'Components/MyMoney/AccountForm/AccountForm';
 import useFetch from '../../CustomHooks/useFetch';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import AccountsList from 'Components/Accounts/AccountsList/AccountsList';
-import formatCurrency from 'Util/formatCurrency';
+import formatCurrency from 'Util/Formatters/formatCurrency';
 
 export default function MyMoney({ refreshRequested, callForRefresh }) {
     const [newAccountPanelOpen, setNewAccountPanelOpen] = React.useState(false);

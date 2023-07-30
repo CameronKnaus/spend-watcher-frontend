@@ -8,7 +8,7 @@ import ThickActionButton from 'Components/UIElements/Form/ThickActionButton/Thic
 import TransactionForm from 'Components/Transactions/TransactionForm/TransactionForm';
 import { useNavigate } from 'react-router';
 import { PAGE_ROUTES } from '../../Constants/RouteConstants';
-import formatCurrency from 'Util/formatCurrency';
+import formatCurrency from 'Util/Formatters/formatCurrency';
 import LabelAndValueBox from 'Components/UIElements/DataVisualization/LabelAndValueBox/LabelAndValueBox';
 import RecurringExpensesList from 'Components/RecurringSpending/RecurringExpensesList/RecurringExpensesList';
 

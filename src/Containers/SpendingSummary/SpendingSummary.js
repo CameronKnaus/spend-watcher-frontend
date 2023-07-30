@@ -1,7 +1,7 @@
 import TopSpendingCategories from 'Components/SpendingBreakdown/TopSpendingCategories/TopSpendingCategories';
 import styles from './SpendingSummary.module.css';
 import useContent from 'CustomHooks/useContent';
-import formatCurrency from 'Util/formatCurrency';
+import formatCurrency from 'Util/Formatters/formatCurrency';
 import clsx from 'clsx';
 
 export default function SpendingSummary({ spendingBreakdown, setCurrentTab, setFilterCategory, totalTransactionsPerCategory }) {
