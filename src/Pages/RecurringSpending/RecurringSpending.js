@@ -8,6 +8,8 @@ import useFetch from '../../CustomHooks/useFetch';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import formatCurrency from '../../Util/Formatters/formatCurrency';
 import Alert from '../../Components/UIElements/Informational/Alert/Alert';
+import { useQueryClient } from '@tanstack/react-query';
+import { invalidateTransactionQueries } from '../../Util/QueryKeys';
 
 
 export default function RecurringSpending() {
@@ -20,6 +22,7 @@ export default function RecurringSpending() {
     const [actualMonthTotal, setActualMonthTotal] = useState(0);
     const [estimatedMonthTotal, setEstimatedMonthTotal] = useState(0);
     const [hasVariableRecurring, setHasVariableRecurring] = useState(false);
+    const queryClient = useQueryClient();
 
     const { response, loading, fire } = useFetch(SERVICE_ROUTES.getAllRecurringExpenses, true);
 
@@ -36,6 +39,7 @@ export default function RecurringSpending() {
 
     function onSubmission(shouldShowLoaders) {
         const fireSilently = !shouldShowLoaders;
+        invalidateTransactionQueries(queryClient);
         fire(fireSilently);
     }
 

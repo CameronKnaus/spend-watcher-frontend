@@ -11,6 +11,8 @@ import { PAGE_ROUTES } from '../../Constants/RouteConstants';
 import formatCurrency from 'Util/Formatters/formatCurrency';
 import LabelAndValueBox from 'Components/UIElements/DataVisualization/LabelAndValueBox/LabelAndValueBox';
 import RecurringExpensesList from 'Components/RecurringSpending/RecurringExpensesList/RecurringExpensesList';
+import { invalidateTransactionQueries } from '../../Util/QueryKeys';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function Spending({ refreshRequested, callForRefresh }) {
     const getContent = useContent('SPENDING');
@@ -19,6 +21,7 @@ export default function Spending({ refreshRequested, callForRefresh }) {
         return currentDate.toLocaleString('default', { month: 'long' });
     }, []);
     const [logPanelOpen, setLogPanelOpen] = React.useState(false);
+    const queryClient = useQueryClient();
 
     const service = useFetch(SERVICE_ROUTES.spendingSummary, true);
     const navigate = useNavigate();
@@ -82,7 +85,11 @@ export default function Spending({ refreshRequested, callForRefresh }) {
             }
             {
                 service.response?.recurringSpending.monthlyExpenseRequiresUpdate && (
-                    <RecurringExpensesList quickUpdateMode transactionList={transactionsRequiringUpdate} onSubmission={() => service.fire()} />
+                    <RecurringExpensesList quickUpdateMode transactionList={transactionsRequiringUpdate} onSubmission={() => {
+                        invalidateTransactionQueries(queryClient);
+                        service.fire();
+                    }}
+                    />
                 )
             }
         </div>

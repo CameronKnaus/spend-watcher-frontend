@@ -6,11 +6,14 @@ import RecentTransactions from 'Containers/RecentTransactions/RecentTransactions
 import MyMoney from 'Containers/MyMoney/MyMoney';
 import Trips from 'Containers/Trips/Trips';
 import useTripDetails from 'CustomHooks/useTripDetails';
+import { invalidateAllDependentQueries } from 'Util/QueryKeys';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function Dashboard() {
     const getContent = useContent();
     const [refreshRequested, setRefreshRequested] = useState(false);
     const { refreshTrips } = useTripDetails();
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         // refreshRequested is used to trigger services on the dashboard to be called once more
@@ -21,6 +24,7 @@ export default function Dashboard() {
     }, [refreshRequested]);
 
     function callForRefresh() {
+        invalidateAllDependentQueries(queryClient);
         setRefreshRequested(true);
         refreshTrips(true);
     }

@@ -2,13 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import msMapper from 'Util/Time/TimeMapping';
+import { spendingBreakdownQueryKey } from '../../Util/QueryKeys';
 
 export default function useSpendingBreakdown(args) {
     const { startDate, endDate, includeRecurringTransactions, showAllData } = args;
 
     const { isLoading, isError, data, refetch } = useQuery({
         queryKey: [
-            'spending-breakdown',
+            spendingBreakdownQueryKey,
             startDate,
             endDate,
             includeRecurringTransactions,
@@ -16,7 +17,7 @@ export default function useSpendingBreakdown(args) {
         ],
         enabled: Boolean(startDate && endDate),
         refetchOnWindowFocus: false,
-        staleTime: msMapper.minute * 10,
+        staleTime: msMapper.day,
         queryFn: () => {
             return axios.post(SERVICE_ROUTES.spendingBreakdown, {
                 startDate,
