@@ -4,10 +4,10 @@ import useContent from 'CustomHooks/useContent';
 import formatCurrency from 'Util/formatCurrency';
 import clsx from 'clsx';
 
-export default function SpendingSummary({ spendingBreakdown, setCurrentTab, setFilterCategory, totalTransactionsPerCategory, noTransactions }) {
+export default function SpendingSummary({ spendingBreakdown, setCurrentTab, setFilterCategory, totalTransactionsPerCategory }) {
     const getContent = useContent('SPENDING_BREAKDOWN');
 
-    if(noTransactions) {
+    if(spendingBreakdown.noTransactions) {
         return (
             <div className={clsx(styles.contentContainer, styles.noTransactionsLabel)}>
                 {getContent('NO_TRANSACTIONS')}

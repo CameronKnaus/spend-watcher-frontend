@@ -9,7 +9,6 @@ import useDateRange from '../../CustomHooks/useDateRange';
 import TabBar from '../../Components/UIElements/Navigation/TabBar/TabBar';
 import { useParams } from 'react-router';
 import SpendingSummary from '../../Containers/SpendingSummary/SpendingSummary';
-import axios from 'axios';
 import SpendingHistory from '../../Containers/SpendingHistory/SpendingHistory';
 import DateContextShifter from '../../Components/UIElements/Form/DateContextShifter/DateContextShifter';
 import { useIsMobile } from '../../Util/IsMobileContext';
@@ -18,7 +17,7 @@ import useTripDetails from 'CustomHooks/useTripDetails';
 import ToggleSwitch from 'Components/UIElements/Form/TogleSwitch/ToggleSwitch';
 import DATE_RANGE_TYPES from 'Constants/DateRangeTypes';
 import DateRangeLabel from 'Components/UIElements/Informational/DateRangeLabel/DateRangeLabel';
-// import useSpendingBreakdown from 'CustomHooks/ServiceHooks/useSpendingBreakdown';
+import useSpendingBreakdown from 'CustomHooks/ServiceHooks/useSpendingBreakdown';
 import dayjs from 'dayjs';
 
 export const TAB_ENUM = {
@@ -47,10 +46,7 @@ export default function SpendingBreakdown() {
 
     const [currentTab, setCurrentTab] = useState(defaultTabMap[urlParams.defaultTab] || TAB_ENUM.SUMMARY_TAB);
     const [minSupportedDate, setMinSupportedDate] = useState(dayjs('01/01/0001'));
-    const [spendingBreakdown, setSpendingBreakdown] = useState();
-    const [error, setError] = useState();
     const [filterCategory, setFilterCategory] = useState({ name: '', code: '' });
-    const [noTransactions, setNoTransactions] = useState(false);
     const [includeRecurringTransactions, setIncludeRecurringTransactions] = useState(false);
 
     // Get the earliest spending logged to set date range handler min range
@@ -63,42 +59,21 @@ export default function SpendingBreakdown() {
         setMinSupportedDate(dayjs(dateRangeResponse.minDate));
     }, [dateRangeResponse]);
 
-    // const test = useSpendingBreakdown(dateRange?.startDate?.format(), dateRange?.endDate?.format(), includeRecurringTransactions, dateRangeType === DATE_RANGE_TYPES.MAX);
+    const serviceArgs = {
+        startDate: dateRange.startDate.format(),
+        endDate: dateRange.endDate.format(),
+        includeRecurringTransactions,
+        showAllData: dateRangeType === DATE_RANGE_TYPES.MAX
+    };
 
-    function fetchStats() {
-        if(!dateRange || !dateRange.startDate || !dateRange.endDate) {
-            return;
-        }
+    const {
+        spendingDataErrorOccurred,
+        spendingDataLoading,
+        spendingBreakdown,
+        refetchSpendingBreakdown
+    } = useSpendingBreakdown(serviceArgs);
 
-        setSpendingBreakdown(null);
-        const args = {
-            startDate: dateRange.startDate.format(),
-            endDate: dateRange.endDate.format(),
-            includeRecurringTransactions,
-            showAllData: dateRangeType === DATE_RANGE_TYPES.MAX
-        };
-
-        axios.post(SERVICE_ROUTES.spendingBreakdown, args)
-            .then(({ data }) => {
-                setNoTransactions(data.noTransactions);
-                setSpendingBreakdown({
-                    finalTotalSpent: data.finalTotalSpent,
-                    discretionaryTotal: data.discretionaryTotal,
-                    recurringSpendTotal: data.recurringSpendTotal,
-                    finalTotalTransactions: data.finalTotalTransactions,
-                    categoryTotals: data.totalSpentPerCategory,
-                    transactionsList: data.transactionsGroupedByDate,
-                    totalTransactionsPerCategory: data.totalTransactionsPerCategory,
-                    startDate: data.dateRange?.start,
-                    endDate: data.dateRange?.end
-                });
-            })
-            .catch(setError);
-    }
-
-    useEffect(fetchStats, [dateRange, includeRecurringTransactions, dateRangeType]);
-
-    if(!spendingBreakdown) {
+    if(!dateRangeResponse || spendingDataLoading || !spendingBreakdown) {
         return (
             <div>
                 loading...
@@ -107,10 +82,10 @@ export default function SpendingBreakdown() {
     }
 
     // TODO: Proper error handling
-    if(error) {
+    if(spendingDataErrorOccurred) {
         return (
             <div>
-                {error}
+                Error Occurred
             </div>
         );
     }
@@ -147,8 +122,7 @@ export default function SpendingBreakdown() {
     );
 
     const summaryWithProps = (
-        <SpendingSummary noTransactions={noTransactions}
-                         spendingBreakdown={spendingBreakdown}
+        <SpendingSummary spendingBreakdown={spendingBreakdown}
                          setCurrentTab={setCurrentTab}
                          setFilterCategory={setFilterCategory}
                          totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
@@ -156,14 +130,14 @@ export default function SpendingBreakdown() {
     );
 
     const historyWithProps = (
-        <SpendingHistory transactionsList={spendingBreakdown.transactionsList}
-                         noTransactions={noTransactions}
+        <SpendingHistory transactionsList={spendingBreakdown.transactionsGroupedByDate}
+                         noTransactions={spendingBreakdown.noTransactions}
                          filterCategory={filterCategory}
                          setFilterCategory={setFilterCategory}
                          totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
                          finalTotalTransactions={spendingBreakdown.finalTotalTransactions}
                          refreshStats={() => {
-                            fetchStats();
+                            refetchSpendingBreakdown();
                             refreshTrips(true);
                          }}
         />

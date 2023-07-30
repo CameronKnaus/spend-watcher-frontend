@@ -17,7 +17,7 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
     const [transactionToEdit, setTransactionToEdit] = useState(null);
     const [recurringTransactionToEdit, setRecurringTransactionToEdit] = useState(null);
     const getContent = useContent();
-    const text = (key) => getContent('TRANSACTIONS', key);
+    const text = (key, args) => getContent('TRANSACTIONS', key, args);
 
     if(isLoading) {
         return <LoadingInteractiveRowList id='loading-transaction' rowCount={skeletonLoaderCount} rowSpacing={12} />;
@@ -78,15 +78,20 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
                         <div key={transaction.transactionId}
                              className={styles.transactionWrapper}
                         >
-                            {transaction.recurringSpendId ? (
+                            {transaction.isRecurringTransaction ? (
                                 <InteractiveDataRow isExpense
                                                     showRevolvingIcon
                                                     title={getContent('SPENDING_CATEGORIES', transaction.category)}
                                                     iconCategory={transaction.category}
                                                     description={transaction.expenseName}
-                                                    amount={transaction.transactionAmount}
-                                                    amountDescription={transaction.date}
-                                                    onClick={() => setRecurringTransactionToEdit(transaction)}
+                                                    amount={transaction.amount}
+                                                    amountDescription={dayjs(transaction.date).format('MMMM')}
+                                                    onClick={() => {
+                                                        setRecurringTransactionToEdit({
+                                                            ...transaction,
+                                                            category: { code: transaction.category, name: getContent('SPENDING_CATEGORIES', transaction.category) }
+                                                        });
+                                                    }}
                                 />
                             ) : (
                                 <InteractiveDataRow isExpense
