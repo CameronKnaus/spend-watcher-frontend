@@ -1,3 +1,4 @@
+// English month names mapped by index
 const MONTH_NAMES = [
     'January',
     'February',

@@ -2,13 +2,13 @@ import EnvironmentSettings from 'Constants/EnvironmentSettings.json';
 const { devMode, prodAPI, localAPI } = EnvironmentSettings;
 
 const domainName = devMode ? localAPI : prodAPI;
-const authApi = (routeName) => domainName + '/auth' + routeName;
-const spendApi = (routeName) => domainName + '/spending' + routeName;
-const accountsApi = (routeName) => domainName + '/accounts' + routeName;
-const recurringSpendApi = (routeName) => domainName + '/recurring' + routeName;
-const tripsApi = (routeName) => domainName + '/trips' + routeName;
+const authApi = (routeName: string) => domainName + '/auth' + routeName;
+const spendApi = (routeName: string) => domainName + '/spending' + routeName;
+const accountsApi = (routeName: string) => domainName + '/accounts' + routeName;
+const recurringSpendApi = (routeName: string) => domainName + '/recurring' + routeName;
+const tripsApi = (routeName: string) => domainName + '/trips' + routeName;
 
-const SERVICE_ROUTES = {
+const SERVICE_ROUTES: Record<string, string> = {
     login: authApi('/processLogin'), // POST
     register: authApi('/processRegistration'), // POST
     checkAuthentication: authApi('/verifyLogin'), // GET
