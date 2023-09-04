@@ -1,4 +1,3 @@
-import React from 'react';
 import './index.css';
 import ReactDOM from 'react-dom';
 import { PAGE_ROUTES } from './Constants/RouteConstants';

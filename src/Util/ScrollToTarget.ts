@@ -1,17 +1,15 @@
 /*
     This is a wrapper for an element's scrollIntoView method. The second 'event' parameter is optional, it is only used
     to prevent default should this function be used with an anchor tag.
-    params:
-        REQUIRED
-        targetId - String
-
-        OPTIONAL
-        scrollTargetTo - String - {'start', 'center', 'end', 'nearest'} <- mirrors native JS scrollIntoView (defaults to 'start')
-            - https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
-        delay - Number - Time in MS to wait before scrolling
 */
 
-export default function scrollToTarget(params, event) {
+type ScrollToParamsType = {
+    targetId: string;
+    scrollTargetTo?: 'start' | 'center' | 'end' | 'nearest';
+    delay?: number;
+}
+
+export default function scrollToTarget(params: ScrollToParamsType, event: Event) {
     // Abort on invalid params
     if(!params || typeof params !== 'object') {
         return;
@@ -32,6 +30,7 @@ export default function scrollToTarget(params, event) {
             behavior: 'smooth',
             block: params.scrollTargetTo || 'start'
         };
+        // @ts-expect-error
         questionModule && questionModule.scrollIntoView(scrollBehavior);
     };
 

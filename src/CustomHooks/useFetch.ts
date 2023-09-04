@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
-export default function useFetch(url, fireImmediately = false, fireSilently = false) {
-    const [response, setResponse] = React.useState(null);
+// Typescript conversion for this is rough as it will soon be deprecated
+export default function useFetch(url: string, fireImmediately = false, fireSilently = false) {
+    const [response, setResponse] = React.useState<null | Record<any, any>>(null);
     const [loading, setLoading] = React.useState(fireImmediately && !fireSilently);
     const [silentLoadingStatus, setSilentLoadingStatus] = React.useState(fireImmediately && !fireSilently);
-    const [error, setError] = React.useState(null);
+    const [error, setError] = React.useState<Error | null>(null);
     const [canFire, setCanFire] = React.useState(fireImmediately);
     const [silentMode, setSilentMode] = React.useState(fireSilently);
 
@@ -18,12 +19,13 @@ export default function useFetch(url, fireImmediately = false, fireSilently = fa
         !silentMode && setLoading(true);
         setSilentLoadingStatus(true);
         axios.get(url, { cancelToken: source.token })
-            .then(response => {
-                if(!response && !response.data) {
+            .then(serviceResponse => {
+                // @ts-expect-error
+                if(!serviceResponse && !serviceResponse.data) {
                     setError(new Error(`Invalid response form provided - ${url}`));
                 }
 
-                setResponse(response.data);
+                setResponse(serviceResponse.data);
                 setError(null);
             })
             .catch((error) => {
@@ -40,7 +42,7 @@ export default function useFetch(url, fireImmediately = false, fireSilently = fa
 
     // Calling the fire method silently means the loading flag will not be set.
     // Use this when you want to load something without triggering loading UI
-    function fire(fireSilently) {
+    function fire(fireSilently = false) {
         if(fireSilently) {
             setSilentMode(true);
         }

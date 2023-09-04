@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router';
 import useTripDetails from 'CustomHooks/useTripDetails';
 axios.defaults.withCredentials = true;
 
-const REQUEST_TYPES = {
-    register: 'register',
-    login: 'login'
-};
+enum REQUEST_TYPES {
+    register = 'register',
+    login = 'login'
+}
 
 export default function AuthScreen() {
     let navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function AuthScreen() {
         }
     }, [navigate]);
 
-    function submitRequest(requestType) {
+    function submitRequest(requestType: REQUEST_TYPES) {
         if(loading) {
             return;
         }

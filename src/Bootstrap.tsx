@@ -1,4 +1,4 @@
-import { StrictMode } from 'react';
+import { ReactElement, StrictMode } from 'react';
 import DayJS from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import duration from 'dayjs/plugin/duration';
@@ -15,7 +15,7 @@ DayJS.extend(duration);
 
 const queryClient = new QueryClient();
 
-export default function Bootstrap({ children }) {
+export default function Bootstrap({ children }: { children: ReactElement }) {
     return (
         <StrictMode>
             <QueryClientProvider client={queryClient}>

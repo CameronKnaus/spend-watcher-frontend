@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ],
     /* Visit https://aka.ms/tsconfig to read more about this file */
     "target": "ES2022", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "lib": [
@@ -10,6 +15,7 @@
     "module": "ESNext", /* Specify what module code is generated. */
     "moduleResolution": "Node", /* Specify how TypeScript looks up a file from a given module specifier. */
     "baseUrl": "src", /* Specify the base directory to resolve non-relative module names. */
+    // TODO: Remove paths after typescript conversion is finished.  Paths don't work well with typescript and CRA as webpack.config isn't exposed
     "paths": {
       "@Components/*": [
         "Components/*"

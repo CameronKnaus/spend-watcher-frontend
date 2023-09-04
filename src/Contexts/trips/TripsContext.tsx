@@ -1,18 +1,28 @@
-import { createContext, useMemo } from 'react';
+import { ReactElement, createContext, useMemo } from 'react';
 import useFetch from 'CustomHooks/useFetch';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { FaPlaneDeparture } from 'react-icons/fa';
 import AuthHandler from 'Util/Authentication/AuthHandler';
 
-export const tripsContext = createContext({});
+// TODO: Replace with useQuery.  Typescript can be cleaned up when this is done.
+export interface TripContextType {
+    activeTrip: any,
+    tripsList: Array<any>,
+    filterableSelectTripsList: Array<any>,
+    refreshTrips: (fireSilently?: boolean) => void,
+    tripDetailsError: Error | null,
+    tripDetailsLoading: boolean
+}
 
-export function TripsContextProvider({ children }) {
+export const tripsContext = createContext({} as TripContextType);
+
+export function TripsContextProvider({ children }: {children: ReactElement}) {
     const { response, fire, loading, error } = useFetch(SERVICE_ROUTES.getAllTripDetails, AuthHandler.isAuthenticated());
 
-    const contextValue = useMemo(() => {
+    const contextValue = useMemo<TripContextType>(() => {
         const tripsList =  response?.tripsList ?? [];
-        let activeTrip = null;
-        const filterableSelectTripsList = tripsList.map(trip => {
+        let activeTrip: any = null;
+        const filterableSelectTripsList = tripsList.map((trip: any) => {
             if(!activeTrip && trip.tripIsActive) {
                 activeTrip = trip;
             }
