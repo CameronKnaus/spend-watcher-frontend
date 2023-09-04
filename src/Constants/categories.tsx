@@ -26,8 +26,47 @@ import { MdFastfood,
     MdContentCut } from 'react-icons/md';
 
 import { IoGameController } from 'react-icons/io5';
+import { ReactElement } from 'react';
 
-export const SPENDING_CATEGORIES = {
+export enum SpendingCategoryType {
+    RESTAURANTS = 'RESTAURANTS',
+    DRINKS = 'DRINKS',
+    GROCERIES = 'GROCERIES',
+    ENTERTAINMENT = 'ENTERTAINMENT',
+    TRANSPORTATION = 'TRANSPORTATION',
+    VEHICLE = 'VEHICLE',
+    FUEL = 'FUEL',
+    FITNESS = 'FITNESS',
+    GROOMING = 'GROOMING',
+    BUSINESS = 'BUSINESS',
+    MATERIAL_ITEMS = 'MATERIAL_ITEMS',
+    TRAVEL = 'TRAVEL',
+    HEALTH = 'HEALTH',
+    CLOTHING = 'CLOTHING',
+    GIFTS = 'GIFTS',
+    EDUCATION = 'EDUCATION',
+    UTILITIES = 'UTILITIES',
+    HOUSING = 'HOUSING',
+    CANNABIS = 'CANNABIS',
+    PETS = 'PETS',
+    INSURANCE = 'INSURANCE',
+    GAMES = 'GAMES',
+    HOBBY = 'HOBBY',
+    TREATS = 'TREATS',
+    TAXES = 'TAXES',
+    OTHER = 'OTHER',
+}
+
+export type CategoryDefinitionType = {
+    icon: ReactElement,
+    color: string
+}
+
+type SpendCategoryDefType = {
+    [key in SpendingCategoryType]: CategoryDefinitionType
+}
+
+export const SPENDING_CATEGORIES: SpendCategoryDefType = {
     RESTAURANTS: {
         icon: <MdFastfood />,
         color: 'var(--theme-mango)'
@@ -134,7 +173,18 @@ export const SPENDING_CATEGORIES = {
     }
 };
 
-export const ACCOUNT_CATEGORIES = {
+export enum AccountCategoryType {
+    CHECKING = 'CHECKING',
+    SAVINGS = 'SAVINGS',
+    INVESTING = 'INVESTING',
+    BONDS = 'BONDS',
+}
+
+type AccountCategoryDefType = {
+    [key in AccountCategoryType]: CategoryDefinitionType
+}
+
+export const ACCOUNT_CATEGORIES: AccountCategoryDefType = {
     CHECKING: {
         icon: <FaMoneyBillWave />,
         color: 'var(--theme-celadon-blue)'
@@ -152,6 +202,12 @@ export const ACCOUNT_CATEGORIES = {
         color: 'var(--theme-yellow-orange)'
     }
 };
+
+export interface CategoryBundleType {
+    SPENDING_CATEGORIES: SpendCategoryDefType,
+    ACCOUNT_CATEGORIES: AccountCategoryDefType,
+    TRIP: CategoryDefinitionType,
+}
 
 const CATEGORIES = {
     ...SPENDING_CATEGORIES,

@@ -1,6 +1,6 @@
 import styles from './DateRangeLabel.module.css';
 import useContent from 'CustomHooks/useContent';
-import DATE_RANGE_TYPES from 'Constants/DateRangeTypes';
+import DateRangeTypes from 'Constants/DateRangeTypes';
 import msMapper from 'Util/Time/TimeMapping';
 import { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
@@ -57,7 +57,7 @@ export default function DateRangeLabel({ dateRangeType, startDate, endDate }) {
                 {dateLabelString}
             </div>
             {
-                dateRangeType === DATE_RANGE_TYPES.MAX && (
+                dateRangeType === DateRangeTypes.MAX && (
                 <div className={styles.timeTotals}>
                     {
                         numberOfYears ? (

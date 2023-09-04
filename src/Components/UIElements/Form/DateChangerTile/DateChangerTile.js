@@ -4,7 +4,7 @@ import ActionTile from '../../../Tiles/ActionTile/ActionTile';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import MONTH_NAMES from '../../../../Constants/MonthNames';
-import DATE_RANGE_TYPES from '../../../../Constants/DateRangeTypes';
+import DateRangeTypes from '../../../../Constants/DateRangeTypes';
 
 export default function DateChangerTile(
     { startDate,
@@ -13,18 +13,18 @@ export default function DateChangerTile(
         maxPossibleDate,
         updateDateRange = () => { /* NOOP */ },
         minAllowedDate,
-        dateRangeType = DATE_RANGE_TYPES.MONTH,
+        dateRangeType = DateRangeTypes.MONTH,
         resultsText }
 ) {
     const [editMode, setEditMode] = useState(false);
     const getContent = useContent('DATE_CONTEXT_CHANGER');
 
     function getRangeText() {
-        if(dateRangeType === DATE_RANGE_TYPES.MONTH) {
+        if(dateRangeType === DateRangeTypes.MONTH) {
             return `${MONTH_NAMES[startDate.month()]}, ${startDate.year()}`;
         }
 
-        if(dateRangeType === DATE_RANGE_TYPES.YEAR) {
+        if(dateRangeType === DateRangeTypes.YEAR) {
             const currentYear = dayjs().year();
             if(startDate.year() === currentYear) {
                 return getContent('YTD_SELECTED_LABEL', [currentYear]);
@@ -33,7 +33,7 @@ export default function DateChangerTile(
             return startDate.year();
         }
 
-        if(dateRangeType === DATE_RANGE_TYPES.MAX) {
+        if(dateRangeType === DateRangeTypes.MAX) {
             return getContent('MAX_SELECTED_LABEL');
         }
 

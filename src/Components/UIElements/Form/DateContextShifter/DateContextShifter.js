@@ -2,10 +2,10 @@ import styles from './DateContextShifter.module.css';
 import { CgChevronLeft, CgChevronRight } from 'react-icons/cg';
 import clsx from 'clsx';
 import useContent from 'CustomHooks/useContent';
-import DATE_RANGE_TYPES from 'Constants/DateRangeTypes';
+import DateRangeTypes from 'Constants/DateRangeTypes';
 import dayjs from 'dayjs';
 
-const { MONTH, YEAR } = DATE_RANGE_TYPES;
+const { MONTH, YEAR } = DateRangeTypes;
 
 export default function DateContextShifter({ dateRangeType, startDate, endDate, shiftMonthInContext, shiftYearInContext, minAllowedDate }) {
     const getContent = useContent('DATE_CONTEXT_SHIFTER');

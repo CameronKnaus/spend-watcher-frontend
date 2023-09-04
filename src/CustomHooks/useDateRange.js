@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import DATE_RANGE_TYPES from '../Constants/DateRangeTypes';
+import DateRangeTypes from '../Constants/DateRangeTypes';
 
 // IIFE for current always current date
 const present = (() => dayjs())();
@@ -15,7 +15,7 @@ const present = (() => dayjs())();
 export default function useDateRange(
     initialStartDate = present.startOf('month'),
     initialEndDate = present,
-    initialDateRangeType = DATE_RANGE_TYPES.MONTH
+    initialDateRangeType = DateRangeTypes.MONTH
 ) {
     // Defaulting the starting date to the start of the current month
     // Defaulting the ending date to today

@@ -15,7 +15,7 @@ import { useIsMobile } from '../../Util/IsMobileContext';
 import clsx from 'clsx';
 import useTripDetails from 'CustomHooks/useTripDetails';
 import ToggleSwitch from 'Components/UIElements/Form/TogleSwitch/ToggleSwitch';
-import DATE_RANGE_TYPES from 'Constants/DateRangeTypes';
+import DateRangeTypes from 'Constants/DateRangeTypes';
 import DateRangeLabel from 'Components/UIElements/Informational/DateRangeLabel/DateRangeLabel';
 import useSpendingBreakdown from 'CustomHooks/ServiceHooks/useSpendingBreakdown';
 import dayjs from 'dayjs';
@@ -63,7 +63,7 @@ export default function SpendingBreakdown() {
         startDate: dateRange.startDate.format(),
         endDate: dateRange.endDate.format(),
         includeRecurringTransactions,
-        showAllData: dateRangeType === DATE_RANGE_TYPES.MAX
+        showAllData: dateRangeType === DateRangeTypes.MAX
     };
 
     const {
@@ -103,7 +103,7 @@ export default function SpendingBreakdown() {
             />
             { !isMobile &&  <DateRangeLabel dateRangeType={dateRangeType} startDate={spendingBreakdown.startDate} endDate={spendingBreakdown.endDate} /> }
             {
-                dateRangeType !== DATE_RANGE_TYPES.MAX && (
+                dateRangeType !== DateRangeTypes.MAX && (
                     <div className={styles.dateContextShifterContainer}>
                         <DateContextShifter dateRangeType={dateRangeType}
                                             shiftYearInContext={shiftYearInContext}
