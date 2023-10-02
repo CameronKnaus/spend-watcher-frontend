@@ -7,6 +7,7 @@ interface RawSpendingData {
         currentMonthTransactions: Array<Transaction>
     },
     recurringSpending: {
+        noTransactions: boolean,
         actualMonthTotal: number,
         estimateVariance: number,
         estimatedMonthTotal: number,

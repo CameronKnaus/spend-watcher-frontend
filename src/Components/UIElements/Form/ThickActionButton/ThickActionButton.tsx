@@ -1,8 +1,16 @@
 import React from 'react';
 import styles from './ThickActionButton.module.css';
 import clsx from 'clsx';
+import { Color } from 'Types/StyleTypes';
 
-export default function ThickActionButton({ text, buttonColor, callback, isDisabled }) {
+interface ThickActionButtonPropTypes {
+    text: string;
+    buttonColor: Color;
+    callback: () => void;
+    isDisabled?: boolean;
+}
+
+export default function ThickActionButton({ text, buttonColor, callback, isDisabled = false }: ThickActionButtonPropTypes) {
     function handleClick() {
         if(isDisabled) {
             return;

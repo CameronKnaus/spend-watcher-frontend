@@ -7,15 +7,17 @@ import msMapper from 'Util/Time/TimeMapping';
 import { useQuery } from '@tanstack/react-query';
 import { spendingSummaryQueryKey } from 'Util/QueryKeys';
 import formatCurrency from 'Util/Formatters/formatCurrency';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import ActionTile from 'Components/Tiles/ActionTile/ActionTile';
 import spendingTransform from './spendingTransform';
 import { useNavigate } from 'react-router';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
+import ThickActionButton from 'Components/UIElements/Form/ThickActionButton/ThickActionButton';
 
 export default function Spending() {
     const getContent = useContent('SPENDING');
     const navigate = useNavigate();
+    const [logPanelOpen, setLogPanelOpen] = useState(false);
     const currentMonth = useMemo(() => {
         const currentDate = new Date();
         return currentDate.toLocaleString('default', { month: 'long' });
@@ -38,6 +40,7 @@ export default function Spending() {
     }
 
     const spendingTotal = spendingData?.spending.currentMonthTotal || 0;
+    const monthlyTotal = spendingData?.recurringSpending?.actualMonthTotal || 0;
 
     return (
         <div className={styles.spendingContainer}>
@@ -62,6 +65,22 @@ export default function Spending() {
                         options={{ valueColor: 'var(--theme-money-loss)' }}
                         callback={() => navigate(PAGE_ROUTES.spendingSummary)}
                         isLoading={isLoading}
+            />
+            <ActionTile isInactive={spendingData?.recurringSpending.noTransactions}
+                        title={getContent('RECURRING')}
+                        fallbackDescription={getContent('NO_RECURRING')}
+                        fallbackActionPrompt={getContent('NO_RECURRING_PROMPT')}
+                        value={`-${formatCurrency(monthlyTotal)}`}
+                        ariaValue={getContent('RECURRING_ARIA_LABEL', [monthlyTotal])}
+                        actionPrompt={getContent('ADJUST_RECURRING')}
+                        options={{ valueColor: 'var(--theme-money-loss)' }}
+                        callback={() => navigate(PAGE_ROUTES.recurringSpending)}
+                        isLoading={isLoading}
+            />
+            <ThickActionButton buttonColor='var(--theme-red-dark)'
+                               text={getContent('LOG_EXPENSE')}
+                               callback={() => setLogPanelOpen(true)}
+                               isDisabled={isLoading}
             />
         </div>
     );
