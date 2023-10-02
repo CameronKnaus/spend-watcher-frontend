@@ -1,7 +1,24 @@
 import { SpendingCategoryType } from 'Constants/categories';
 
+// Managed in the sense that 'code' is used for state management and 'name' is used for the label on screen
+export type ManagedTransactionType = {
+    code: SpendingCategoryType,
+    name: string
+}
+
+// TODO: Consolidate all transaction types if possible
+export type FormattedTransaction = {
+    id: string;
+    amount: number,
+    category: ManagedTransactionType,
+    date: string;
+    isUncommon: boolean;
+    note?: string;
+    linkedTripId?: string;
+}
+
 export type Transaction = {
-    amount: number;
+    amount: string;
     category: SpendingCategoryType;
     date: string;
     is_custom_category: number; // TODO: Make boolean on backend

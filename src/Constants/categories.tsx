@@ -218,3 +218,5 @@ const CATEGORIES = {
     }
 };
 export default CATEGORIES;
+
+export type AnyCategoryCode = SpendingCategoryType | AccountCategoryType;

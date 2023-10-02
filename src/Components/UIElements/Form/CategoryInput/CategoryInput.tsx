@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styles from './CategoryInput.module.css';
-import { useCategoryList } from 'CustomHooks/useCategoryList';
+import { ProductCategoryType, useCategoryList } from 'CustomHooks/useCategoryList';
 import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/CategoryIcon';
 import useContent from 'CustomHooks/useContent';
+import { ManagedTransactionType } from 'Types/TransactionTypes';
 
-// When tracking this field, the containing parent component should have a state like const [value, setValue] = React.useState();
-// Then you can pass the setValue to the onChange prop and value to the value prop to ensure the parent component remains up to date
-export default function CategoryInput({ id = 'category-input', textInputStyles, value, onChange, categoryType }) {
+// This is a controlled-only component.  State must be managed by the parent
+
+type CategoryInputPropTypes = {
+    id?: string,
+    textInputStyles: string,
+    value: ManagedTransactionType,
+    onChange: Dispatch<SetStateAction<ManagedTransactionType>>,
+    categoryType: ProductCategoryType
+}
+
+export default function CategoryInput({ id = 'category-input', textInputStyles, value, onChange, categoryType }: CategoryInputPropTypes) {
     // TODO: Clean this up so that CategoryInput only tracks category code i.e. 'MATERIAL_ITEMS' / gets category code only from useCategoryList
     const categoryList = useCategoryList(categoryType);
     const [open, setOpen] = React.useState(false);
@@ -21,11 +30,11 @@ export default function CategoryInput({ id = 'category-input', textInputStyles, 
         return () => document.removeEventListener('click', toggleOpen);
     }, []);
 
-    function toggleOpen(event) {
+    function toggleOpen(event: MouseEvent) {
         setOpen(event && event.target === ref.current);
     }
 
-    function filter(categories) {
+    function filter(categories: Array<ManagedTransactionType>) {
         const target = filterText.toLowerCase();
 
         return categories.filter(category => {

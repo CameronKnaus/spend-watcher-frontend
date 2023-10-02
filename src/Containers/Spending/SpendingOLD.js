@@ -7,11 +7,11 @@ import useFetch from 'CustomHooks/useFetch';
 import ThickActionButton from 'Components/UIElements/Form/ThickActionButton/ThickActionButton';
 import TransactionForm from 'Components/Transactions/TransactionForm/TransactionForm';
 import { useNavigate } from 'react-router';
-import { PAGE_ROUTES } from '../../Constants/RouteConstants';
+import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import formatCurrency from 'Util/Formatters/formatCurrency';
 import LabelAndValueBox from 'Components/UIElements/DataVisualization/LabelAndValueBox/LabelAndValueBox';
 import RecurringExpensesList from 'Components/RecurringSpending/RecurringExpensesList/RecurringExpensesList';
-import { invalidateTransactionQueries } from '../../Util/QueryKeys';
+import { transactionDependentQueryKeys } from 'Util/QueryKeys';
 import { useQueryClient } from '@tanstack/react-query';
 
 export default function Spending({ refreshRequested, callForRefresh }) {
@@ -86,7 +86,7 @@ export default function Spending({ refreshRequested, callForRefresh }) {
             {
                 service.response?.recurringSpending.monthlyExpenseRequiresUpdate && (
                     <RecurringExpensesList quickUpdateMode transactionList={transactionsRequiringUpdate} onSubmission={() => {
-                        invalidateTransactionQueries(queryClient);
+                        queryClient.invalidateQueries(transactionDependentQueryKeys);
                         service.fire();
                     }}
                     />

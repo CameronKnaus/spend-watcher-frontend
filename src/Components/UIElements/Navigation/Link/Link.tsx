@@ -1,19 +1,35 @@
-import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { CgChevronRight, CgChevronLeft } from 'react-icons/cg';
+import { EmptyCallback } from 'Types/QoLTypes';
+import { JustifyContent } from 'Types/StyleTypes';
+import { IconType } from 'react-icons';
 
-const alignmentMapper = {
+// This component was a mistake
+
+type LinkAlignment = 'center' | 'left' | 'right';
+
+const alignmentMapper: Record<LinkAlignment, JustifyContent> = {
     center: 'center',
     left: 'flex-start',
     right: 'flex-end'
 };
 
-// This component was a mistake
 
 // Currently, this link will only support internal routing.
 // It can easily be converted to external routing but there isn't a use-case yet
-export default function Link({ text, route, useChevron, useChevronLeft, customClass, textAlign, CustomIcon, onClickCallback }) {
-    const textAlignment = alignmentMapper[textAlign] || 'flex-start';
+type LinkPropTypes = {
+    text: string,
+    route?: string,
+    useChevron?: boolean,
+    useChevronLeft?: boolean,
+    customClass: string,
+    textAlign?: LinkAlignment,
+    CustomIcon?: IconType,
+    onClickCallback: EmptyCallback
+}
+
+export default function Link({ text, route, useChevron, useChevronLeft, customClass, textAlign, CustomIcon, onClickCallback }: LinkPropTypes) {
+    const textAlignment = textAlign ? alignmentMapper[textAlign] : 'flex-start';
 
     let icon = null;
     if(useChevron) {

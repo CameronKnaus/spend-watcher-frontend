@@ -9,7 +9,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import formatCurrency from '../../Util/Formatters/formatCurrency';
 import Alert from '../../Components/UIElements/Informational/Alert/Alert';
 import { useQueryClient } from '@tanstack/react-query';
-import { invalidateTransactionQueries } from '../../Util/QueryKeys';
+import { transactionDependentQueryKeys } from 'Util/QueryKeys';
 
 
 export default function RecurringSpending() {
@@ -39,7 +39,7 @@ export default function RecurringSpending() {
 
     function onSubmission(shouldShowLoaders) {
         const fireSilently = !shouldShowLoaders;
-        invalidateTransactionQueries(queryClient);
+        queryClient.invalidateQueries(transactionDependentQueryKeys);
         fire(fireSilently);
     }
 

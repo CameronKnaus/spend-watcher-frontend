@@ -13,6 +13,7 @@ import spendingTransform from './spendingTransform';
 import { useNavigate } from 'react-router';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import ThickActionButton from 'Components/UIElements/Form/ThickActionButton/ThickActionButton';
+import TransactionForm from 'Components/Transactions/TransactionForm/TransactionForm';
 
 export default function Spending() {
     const getContent = useContent('SPENDING');
@@ -82,6 +83,9 @@ export default function Spending() {
                                callback={() => setLogPanelOpen(true)}
                                isDisabled={isLoading}
             />
+            {
+                logPanelOpen && <TransactionForm onPanelClose={() => setLogPanelOpen(false)} />
+            }
         </div>
     );
 }

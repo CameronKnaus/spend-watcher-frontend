@@ -17,8 +17,8 @@ type SlideUpPanelPropTypes = {
     backwardsActionCallback?: EmptyCallback, // Defaults to closing the panel if not provided
     disableConfirmButton: boolean,
     tagColor?: Color,
-    hideTag: boolean,
-    forwardActionButtonColor: Color
+    hideTag?: boolean,
+    forwardActionButtonColor?: Color
 }
 
 // If 'confirmText' and 'closeText' are provided, two buttons will appear at the bottom

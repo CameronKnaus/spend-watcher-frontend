@@ -1,10 +1,9 @@
-import React from 'react';
 import useContent from 'CustomHooks/useContent';
 import styles from './TransactionForm.module.css';
 import MoneyInput from 'Components/UIElements/Form/MoneyInput/MoneyInput';
 import CategoryInput from 'Components/UIElements/Form/CategoryInput/CategoryInput';
 import { DatePicker } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import SlideUpPanel, { ClosePanel } from 'Components/UIElements/Modal/SlideUpPanel/SlideUpPanel';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import axios from 'axios';
@@ -13,28 +12,52 @@ import { IoTrashSharp } from 'react-icons/io5';
 import useTripDetails from 'CustomHooks/useTripDetails';
 import FilterableSelect from 'Components/UIElements/Form/FilterableSelect/FilterableSelect';
 import Alert from 'Components/UIElements/Informational/Alert/Alert';
+import { EmptyCallback } from 'Types/QoLTypes';
+import { SpendingCategoryType } from 'Constants/categories';
+import { FormattedTransaction } from 'Types/TransactionTypes';
+import { useEffect, useState } from 'react';
+import { transactionDependentQueryKeys } from 'Util/QueryKeys';
+import { useQueryClient } from '@tanstack/react-query';
 
-const SUBMISSION_TYPES = {
-    DELETE: 'DELETE',
-    EDIT: 'EDIT',
-    NEW: 'NEW'
-};
+enum SubmissionType {
+    DELETE = 'DELETE',
+    EDIT = 'EDIT',
+    NEW = 'NEW'
+}
+
+type TransactionFormPropTypes = {
+    onPanelClose: EmptyCallback,
+    onSubmission?: EmptyCallback,
+    editMode: true,
+    existingTransaction: FormattedTransaction
+} | {
+    onPanelClose: EmptyCallback,
+    onSubmission?: EmptyCallback,
+    editMode?: false,
+    existingTransaction?: never
+}
 
 // existingTransaction should be an object containing all transaction keys
-export default function TransactionForm({ onPanelClose, onSubmission, editMode, existingTransaction = {} }) {
-    const getContent = useContent();
-    const text = (key, args) => getContent('TRANSACTIONS', key, args);
+export default function TransactionForm({
+    onPanelClose,
+    onSubmission = () => { /* NOOP */ },
+    editMode = false,
+    existingTransaction = {} as FormattedTransaction
+}: TransactionFormPropTypes) {
+    const getCategoryContent = useContent('SPENDING_CATEGORIES');
+    const getContent = useContent('TRANSACTIONS');
+    const queryClient = useQueryClient();
 
     const { filterableSelectTripsList, activeTrip } = useTripDetails();
 
     // State for form values
-    const [formValid, setFormValid] = React.useState(Boolean(existingTransaction.amount)); // defaults false
-    const [amount, setAmount] = React.useState(existingTransaction.amount || null);
-    const [category, setCategory] = React.useState(existingTransaction.category || { code: 'OTHER', name: getContent('SPENDING_CATEGORIES', 'OTHER') });
-    const [isUncommon, setIsUncommon] = React.useState(Boolean(existingTransaction.isUncommon));
-    const [note, setNote] = React.useState(existingTransaction.note || '');
-    const [selectedDate, setSelectedDate] = React.useState(existingTransaction.date ? dayjs(existingTransaction.date) : dayjs()); // defaults to today
-    const [linkedTripId, setLinkedTripId] = React.useState(() => {
+    const [formValid, setFormValid] = useState(Boolean(existingTransaction.amount)); // defaults false
+    const [amount, setAmount] = useState<number | null>(existingTransaction.amount ?? null);
+    const [category, setCategory] = useState(existingTransaction.category || { code: SpendingCategoryType.OTHER, name: getCategoryContent('OTHER') });
+    const [isUncommon, setIsUncommon] = useState(Boolean(existingTransaction.isUncommon));
+    const [note, setNote] = useState(existingTransaction.note || '');
+    const [selectedDate, setSelectedDate] = useState<Dayjs>(existingTransaction.date ? dayjs(existingTransaction.date) : dayjs()); // defaults to today
+    const [linkedTripId, setLinkedTripId] = useState(() => {
         if(existingTransaction.linkedTripId) {
             return existingTransaction.linkedTripId;
         }
@@ -45,43 +68,43 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
 
         return '';
     });
-    const [tripSelected, setTripSelected] = React.useState(false);
-    const [loading, setLoading] = React.useState(false);
+    const [tripSelected, setTripSelected] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // Update form validity only based on amount having a positive value
-    React.useEffect(() => {
-        setFormValid(amount > 0 && selectedDate.isValid());
+    useEffect(() => {
+        setFormValid((amount ?? 0) > 0 && selectedDate.isValid());
     }, [amount, selectedDate]);
 
-    function submit(submissionType) {
+    function submit(submissionType: SubmissionType) {
         if(loading) {
             return;
         }
 
         // Create the payload and target endpoint based on submission type
         let endpoint, payload;
-        if(submissionType === SUBMISSION_TYPES.NEW) {
+        if(submissionType === SubmissionType.NEW) {
             endpoint = SERVICE_ROUTES.submitNewTransaction;
             payload = {
-                amount: parseFloat(amount),
+                amount: parseFloat(`${amount}`), // TODO: Check that this conersion is necessary still?
                 category: (category && category.code) || 'OTHER',
                 isUncommon,
                 note,
                 selectedDate: selectedDate.format('YYYY-MM-DD'),
                 linkedTripId
             };
-        } else if(submissionType === SUBMISSION_TYPES.EDIT) {
+        } else if(submissionType === SubmissionType.EDIT) {
             endpoint = SERVICE_ROUTES.submitEditTransaction;
             payload = {
                 transactionId: existingTransaction.id,
-                amount: parseFloat(amount),
+                amount: parseFloat(`${amount}`),
                 category: (category && category.code) || 'OTHER',
                 isUncommon,
                 note,
                 selectedDate: selectedDate.format('YYYY-MM-DD'),
                 linkedTripId
             };
-        } else if(submissionType === SUBMISSION_TYPES.DELETE) {
+        } else if(submissionType === SubmissionType.DELETE) {
             endpoint = SERVICE_ROUTES.submitDeleteTransaction;
             payload = {
                 transactionId: existingTransaction.id
@@ -95,18 +118,22 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
 
         // Handle service call
         axios.post(endpoint, payload)
-            .then(onSubmission)
+            .then(() => {
+                // Invalidate any queries that may be dependent on transactions
+                queryClient.invalidateQueries(transactionDependentQueryKeys);
+                onSubmission();
+            })
             .finally(() => setLoading(false));
     }
 
-    const UNCOMMON_LABEL = text('UNCOMMON_LABEL');
-    const UNCOMMON_DESCRIPTION = text('UNCOMMON_DESCRIPTION');
+    const UNCOMMON_LABEL = getContent('UNCOMMON_LABEL');
+    const UNCOMMON_DESCRIPTION = getContent('UNCOMMON_DESCRIPTION');
     return (
-        <SlideUpPanel title={text(editMode ? 'EDIT_EXPENSE' : 'NEW_EXPENSE')}
-                      closeText={text('CANCEL')}
-                      confirmText={text(editMode ? 'EDIT' : 'SUBMIT')}
+        <SlideUpPanel title={getContent(editMode ? 'EDIT_EXPENSE' : 'NEW_EXPENSE')}
+                      closeText={getContent('CANCEL')}
+                      confirmText={getContent(editMode ? 'EDIT' : 'SUBMIT')}
                       disableConfirmButton={!formValid}
-                      forwardActionCallback={() => submit(editMode ? SUBMISSION_TYPES.EDIT : SUBMISSION_TYPES.NEW)}
+                      forwardActionCallback={() => submit(editMode ? SubmissionType.EDIT : SubmissionType.NEW)}
                       onPanelClose={onPanelClose}
         >
             <ClosePanel.Consumer>
@@ -116,7 +143,7 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                             {
                                 (!editMode && !tripSelected && activeTrip) && (
                                     <div className={styles.alertContainer}>
-                                        <Alert alertText={text('ACTIVE_TRIP', [activeTrip.tripName, activeTrip.startDate, activeTrip.endDate])}
+                                        <Alert alertText={getContent('ACTIVE_TRIP', [activeTrip.tripName, activeTrip.startDate, activeTrip.endDate])}
                                                color='var(--theme-yellow-orange)'
                                                size='small'
                                         />
@@ -125,16 +152,16 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                             }
                             <form className={styles.transactionForm}>
                                 <label>
-                                    {text('AMOUNT_LABEL')}
+                                    {getContent('AMOUNT_LABEL')}
                                     <MoneyInput name='amount-spent-field'
-                                                placeholder={text('AMOUNT_PLACEHOLDER')}
+                                                placeholder={getContent('AMOUNT_PLACEHOLDER')}
                                                 className={styles.textInput}
                                                 stateUpdater={setAmount}
                                                 value={amount}
                                     />
                                 </label>
                                 <label htmlFor='category-input' style={{ width: 100 }}>
-                                    {text('CATEGORY_LABEL')}
+                                    {getContent('CATEGORY_LABEL')}
                                 </label>
                                 <CategoryInput textInputStyles={styles.textInput}
                                                value={category}
@@ -142,10 +169,10 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                                                onChange={setCategory}
                                 />
                                 <label>
-                                    {text('NOTES_LABEL')}
+                                    {getContent('NOTES_LABEL')}
                                     <input type='text'
                                            className={styles.textInput}
-                                           placeholder={text('NOTES_PLACEHOLDER')}
+                                           placeholder={getContent('NOTES_PLACEHOLDER')}
                                            value={note}
                                            autoComplete='off'
                                            maxLength={60}
@@ -167,18 +194,20 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                                     </div>
                                 </div>
                                 <label htmlFor='date-input'>
-                                    {text('DATE_LABEL')}
+                                    {getContent('DATE_LABEL')}
                                 </label>
                                 <DatePicker disableFuture
                                             views={['year', 'month', 'day']}
                                             format='MMMM D, YYYY'
                                             value={selectedDate}
                                             className={styles.textInput}
-                                            onChange={setSelectedDate}
+                                            onChange={(value) => {
+                                                value && setSelectedDate(value);
+                                            }}
                                 />
                                 <div style={{ height: '1.5rem' }} />
                                 <label htmlFor='trip-input'>
-                                    {text('TRIP_LABEL')}
+                                    {getContent('TRIP_LABEL')}
                                 </label>
                                 {
                                     filterableSelectTripsList.length ? (
@@ -187,7 +216,7 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                                                               optionsList={filterableSelectTripsList}
                                                               id='trip-selector'
                                                               textInputStyles={styles.textInput}
-                                                              nothingSelectedText={text('NO_TRIPS')}
+                                                              nothingSelectedText={getContent('NO_TRIPS')}
                                                               setValue={(selectedTrip) => {
                                                                 setTripSelected(true);
                                                                 setLinkedTripId(selectedTrip);
@@ -197,7 +226,7 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                                         </>
                                     ) : (
                                         <div className={styles.noTripMessage}>
-                                            {text('NO_TRIPS_AVAILABLE')}
+                                            {getContent('NO_TRIPS_AVAILABLE')}
                                         </div>
                                     )
 
@@ -205,11 +234,11 @@ export default function TransactionForm({ onPanelClose, onSubmission, editMode, 
                             </form>
                             {
                                 editMode && (
-                                    <Link text={text('DELETE')}
+                                    <Link text={getContent('DELETE')}
                                           CustomIcon={IoTrashSharp}
                                           customClass={styles.deleteLink}
                                           onClickCallback={() => {
-                                              submit(SUBMISSION_TYPES.DELETE);
+                                              submit(SubmissionType.DELETE);
                                               closePanel();
                                           }}
                                     />

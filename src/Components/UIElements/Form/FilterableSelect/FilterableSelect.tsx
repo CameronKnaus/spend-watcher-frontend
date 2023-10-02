@@ -15,7 +15,7 @@ type FilterableSelectOption = {
 
 type FilterableSelectPropTypes = {
     id?: string,
-    textInputStyles: Record<string, string>,
+    textInputStyles: string,
     value: string | number,
     setValue: Dispatch<SetStateAction<string | number>>,
     optionsList: Array<FilterableSelectOption>,
