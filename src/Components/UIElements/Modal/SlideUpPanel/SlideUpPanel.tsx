@@ -1,9 +1,25 @@
-import React, { useContext } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './SlideUpPanel.module.css';
+import { EmptyCallback } from 'Types/QoLTypes';
+import { Color } from 'Types/StyleTypes';
 
 // This context is provided to all children to give them access to the closePanel method
-const ClosePanel = React.createContext(() => { /* NOOP */ });
+const ClosePanel = createContext(() => { /* NOOP */ });
+
+type SlideUpPanelPropTypes = {
+    children: any,
+    onPanelClose: EmptyCallback,
+    closeText: string,
+    confirmText: string,
+    title: string,
+    forwardActionCallback: EmptyCallback,
+    backwardsActionCallback?: EmptyCallback, // Defaults to closing the panel if not provided
+    disableConfirmButton: boolean,
+    tagColor?: Color,
+    hideTag: boolean,
+    forwardActionButtonColor: Color
+}
 
 // If 'confirmText' and 'closeText' are provided, two buttons will appear at the bottom
 // If only 'closeText' is provided then only one button will appear at the bottom that closes the panel
@@ -19,22 +35,20 @@ export default function SlideUpPanel({ children,
     disableConfirmButton,
     tagColor = 'var(--theme-red-dark)',
     hideTag = false,
-    forwardActionButtonColor }) {
+    forwardActionButtonColor }: SlideUpPanelPropTypes) {
     // Grab ref of panel for handling tabbing
-    const panelRef = React.useRef();
-    const titleRef = React.useRef();
+    const panelRef = useRef<HTMLDivElement>(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
 
-    const [panelClosing, setPanelClosing] = React.useState(false);
+    const [panelClosing, setPanelClosing] = useState(false);
 
-    const keystrokeHandlers = React.useMemo(() => ({
-        // Tab Key
-        9: handleTabPress,
-        // Escape Key
-        27: onPanelClose
+    const keystrokeHandlers: Record<string, (e: KeyboardEvent) => void> = useMemo(() => ({
+        Tab: handleTabPress,
+        Escape: onPanelClose
     }), [onPanelClose]);
 
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Lock scrolling
         document.body.style.overflow = 'hidden';
 
@@ -45,9 +59,9 @@ export default function SlideUpPanel({ children,
     }, []);
 
     // Event listeners to handle keystrokes
-    React.useEffect(() => {
-        const handleKeyPress = (event) => {
-            const handler = keystrokeHandlers[event.keyCode];
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+            const handler = keystrokeHandlers[event.code];
             handler && handler(event);
         };
 
@@ -56,10 +70,14 @@ export default function SlideUpPanel({ children,
     }, [keystrokeHandlers]);
 
     // Handling Tab Presses to create focus trap inside the panel
-    function handleTabPress(event) {
-        const focusableElements = panelRef.current.querySelectorAll(
+    function handleTabPress(event: KeyboardEvent) {
+        const focusableElements = panelRef.current?.querySelectorAll<HTMLElement>(
             'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
         );
+
+        if(!focusableElements) {
+            return;
+        }
 
         // TODO: Fix this
         const firstElement = focusableElements[0];
