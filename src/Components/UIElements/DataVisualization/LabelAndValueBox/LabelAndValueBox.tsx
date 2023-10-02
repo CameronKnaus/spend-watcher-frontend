@@ -2,20 +2,33 @@ import styles from './LabelAndValueBox.module.css';
 import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader/SkeletonLoader';
 import formatCurrency from 'Util/Formatters/formatCurrency';
 
-export default function LabelAndValueBox({ label,
+type LabelAndValueBoxPropTypes = {
+    label: string,
+    value: number | string,
+    isLoading: boolean,
+    valueChange?: number | null,
+    valueChangeLabel?: string,
+    secondaryTheme?: boolean,
+    fontSize?: number,
+    fontWeight?: string
+}
+
+export default function LabelAndValueBox({
+    label,
     value,
     isLoading,
     valueChange,
     valueChangeLabel,
-    secondaryTheme,
+    secondaryTheme = false,
     fontSize = 16,
-    fontWeight = 'var(--fw-regular)' }) {
+    fontWeight = 'var(--fw-regular)'
+}: LabelAndValueBoxPropTypes) {
 
     let valueChangeSign = '+';
     let valueChangeColor = 'var(--theme-standard-text)';
-    if(valueChange > 0) {
+    if(valueChange && valueChange > 0) {
         valueChangeColor = 'var(--theme-money-loss)';
-    } else if(valueChange < 0) {
+    } else if(valueChange && valueChange < 0) {
         valueChangeSign = '';
         valueChangeColor = 'var(--theme-money-gain)';
     }
@@ -32,12 +45,10 @@ export default function LabelAndValueBox({ label,
             </div>
             { (valueChange != null && valueChange !== 0) && (
                 <div className={styles.valueChange}>
-                    <SkeletonLoader height={20} width={90}>
-                        {valueChangeLabel}
-                        <span style={{ color: valueChangeColor }}>
-                            {` (${valueChangeSign + formatCurrency(valueChange)})`}
-                        </span>
-                    </SkeletonLoader>
+                    {valueChangeLabel}
+                    <span style={{ color: valueChangeColor }}>
+                        {` (${valueChangeSign + formatCurrency(valueChange)})`}
+                    </span>
                 </div>
             )}
         </div>

@@ -5,7 +5,7 @@ import styles from './DateContextChanger.module.css';
 import { StaticDatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import TabBar from 'Components/UIElements/Navigation/TabBar/TabBar';
-import DateRangeTypes from 'Constants/DateRangeTypes';
+import DateRangeType from 'Constants/DateRangeTypes';
 
 export default function DateContextChanger(
     {
@@ -13,7 +13,7 @@ export default function DateContextChanger(
         setExpanded,
         updateDateRange,
         minAllowedDate,
-        startingRangeOption = DateRangeTypes.MONTH,
+        startingRangeOption = DateRangeType.MONTH,
         minPossibleDate,
         maxPossibleDate
     }
@@ -28,21 +28,21 @@ export default function DateContextChanger(
     }
 
     function handleMonthChange(newDate, closePanel) {
-        if(selectedRangeOption !== DateRangeTypes.MONTH) {
+        if(selectedRangeOption !== DateRangeType.MONTH) {
             return;
         }
 
-        updateDateRange(newDate.startOf('month'), newDate.endOf('month'), DateRangeTypes.MONTH);
+        updateDateRange(newDate.startOf('month'), newDate.endOf('month'), DateRangeType.MONTH);
         closePanel();
     }
 
     function handleYearChange(newDate, closePanel) {
-        if(selectedRangeOption !== DateRangeTypes.YEAR) {
+        if(selectedRangeOption !== DateRangeType.YEAR) {
             return;
         }
 
         const today = dayjs();
-        if(selectedRangeOption === DateRangeTypes.YEAR) {
+        if(selectedRangeOption === DateRangeType.YEAR) {
             const startDate = dayjs(newDate.startOf('year'));
 
             let endDate;
@@ -53,20 +53,20 @@ export default function DateContextChanger(
                 endDate = newDate.endOf('year');
             }
 
-            updateDateRange(startDate, endDate, DateRangeTypes.YEAR);
+            updateDateRange(startDate, endDate, DateRangeType.YEAR);
 
             closePanel();
         }
     }
 
     function submitMax() {
-        updateDateRange(dayjs(minPossibleDate), dayjs(maxPossibleDate), DateRangeTypes.MAX);
+        updateDateRange(dayjs(minPossibleDate), dayjs(maxPossibleDate), DateRangeType.MAX);
     }
 
-    const isMonth = selectedRangeOption === DateRangeTypes.MONTH;
-    const isMonthOrYear = isMonth || selectedRangeOption === DateRangeTypes.YEAR;
-    const isMax = selectedRangeOption === DateRangeTypes.MAX;
-    const isSpecificOrMax = isMax || selectedRangeOption === DateRangeTypes.SPECIFIC;
+    const isMonth = selectedRangeOption === DateRangeType.MONTH;
+    const isMonthOrYear = isMonth || selectedRangeOption === DateRangeType.YEAR;
+    const isMax = selectedRangeOption === DateRangeType.MAX;
+    const isSpecificOrMax = isMax || selectedRangeOption === DateRangeType.SPECIFIC;
     return (
         <SlideUpPanel hideTag
                       closeText={getContent('CANCEL')}
@@ -81,7 +81,7 @@ export default function DateContextChanger(
                             <div className={styles.tabBarContainer}>
                                 <TabBar contentGroupKey='DATE_CONTEXT_CHANGER'
                                         labelContentKey='DATE_RANGE_TYPE'
-                                        tabMapping={Object.values(DateRangeTypes)}
+                                        tabMapping={Object.values(DateRangeType)}
                                         currentTab={selectedRangeOption}
                                         setCurrentTab={setSelectedRangeOption}
                                         activeTabColor='var(--theme-jungle-green)'

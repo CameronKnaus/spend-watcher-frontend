@@ -2,14 +2,14 @@
 import EnvironmentSettings from 'Constants/EnvironmentSettings.json';
 const DEV_MODE = EnvironmentSettings.devMode;
 
-export function log(...args) {
+export function log(...args: any) {
     if(DEV_MODE) {
         // eslint-disable-next-line
         console.log(...args);
     }
 }
 
-export function error(...args) {
+export function error(...args: any) {
     if(DEV_MODE) {
         // eslint-disable-next-line
         console.error(...args);

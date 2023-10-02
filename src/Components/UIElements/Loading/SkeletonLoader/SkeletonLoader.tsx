@@ -1,9 +1,17 @@
 import styles from './SkeletonLoader.module.css';
 
-// align - string - 'center' | 'left' | 'right'
-export default function SkeletonLoader({ children, isActive, height = 24, width = '100%', customStyling = {}, align }) {
+type SkeletonLoaderPropTypes = {
+    children: any,
+    isActive: boolean,
+    height: number | string,
+    width?: number | string,
+    customStyling?: Record<any, string>,
+    align?: 'center' | 'left' | 'right'
+}
+
+export default function SkeletonLoader({ children, isActive, height = 24, width = '100%', customStyling = {}, align }: SkeletonLoaderPropTypes) {
     if(isActive) {
-        const loaderStyles = {
+        const loaderStyles: Record<string, string | number> = {
             height,
             width,
             ...customStyling

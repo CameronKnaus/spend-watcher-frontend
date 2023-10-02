@@ -13,7 +13,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 DayJS.extend(LocalizedFormat);
 DayJS.extend(duration);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false
+        }
+    }
+});
 
 export default function Bootstrap({ children }: { children: ReactElement }) {
     return (
