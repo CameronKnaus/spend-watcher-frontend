@@ -1,39 +1,48 @@
-import React from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import styles from './FilterableSelect.module.css';
 import useContent from 'CustomHooks/useContent';
+import { Color } from 'Types/StyleTypes';
+import { IconComponentType } from 'Types/QoLTypes';
 
-// When tracking this field, the containing parent component should have a state like const [value, setValue] = React.useState();
-// Then you can pass the setValue to the setValue prop and value to the value prop to ensure the parent component remains up to date
-// optionsList should contain an array of objects of type
-/*
-{
-    value: The value that will be passed to on change.  This is not seen by the user
-    icon: The icon to be used next to the option
-    iconBackgroundColor: string for the icon background color
-    optionName: The text shown to the user for the given option
+// When tracking this field, the containing parent component should manage the state for value
+
+type FilterableSelectOption = {
+    value: string | number; // The value that will be passed to on change.  This is not seen by the user
+    icon: IconComponentType;// The icon to be used next to the option
+    iconBackgroundColor: Color;
+    optionName: string; // The text shown to the user for the given option
 }
-*/
-export default function FilterableSelect({ id = 'filterable-select-input', textInputStyles, value, setValue, optionsList, nothingSelectedText }) {
-    const [open, setOpen] = React.useState(false);
-    const [filterText, setFilterText] = React.useState('');
-    const ref = React.useRef(null);
+
+type FilterableSelectPropTypes = {
+    id?: string,
+    textInputStyles: Record<string, string>,
+    value: string | number,
+    setValue: Dispatch<SetStateAction<string | number>>,
+    optionsList: Array<FilterableSelectOption>,
+    nothingSelectedText: string,
+}
+
+export default function FilterableSelect({ id = 'filterable-select-input', textInputStyles, value, setValue, optionsList, nothingSelectedText }: FilterableSelectPropTypes) {
+    const [open, setOpen] = useState(false);
+    const [filterText, setFilterText] = useState('');
+    const ref = useRef<HTMLInputElement | null>(null);
     const getContent = useContent('GENERAL');
 
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.addEventListener('click', toggleOpen);
 
         return () => document.removeEventListener('click', toggleOpen);
     }, []);
 
-    function toggleOpen(event) {
+    function toggleOpen(event: MouseEvent) {
         setOpen(event && event.target === ref.current);
     }
 
-    function filter(options) {
+    function filter(options: Array<FilterableSelectOption>) {
         const target = filterText.toLowerCase();
 
-        return options.filter(option => {
+        return options.filter((option: FilterableSelectOption) => {
             const optionName = option.optionName.toLowerCase();
             return optionName.indexOf(target) > -1;
         });
