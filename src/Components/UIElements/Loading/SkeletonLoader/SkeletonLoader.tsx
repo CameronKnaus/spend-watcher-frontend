@@ -5,7 +5,7 @@ type SkeletonLoaderPropTypes = {
     isActive: boolean,
     height: number | string,
     width?: number | string,
-    customStyling?: Record<any, string>,
+    customStyling?: Record<any, string | number >,
     align?: 'center' | 'left' | 'right'
 }
 

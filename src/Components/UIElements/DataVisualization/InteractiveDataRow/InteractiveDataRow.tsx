@@ -16,7 +16,9 @@ function parseAmount(amount: number, isExpense: boolean) {
     return `-${formattedAmount}`;
 }
 
-interface InteractiveDataRowPropTypes {
+type InteractiveDataRowPropTypes = {
+    isLoading: true
+} | {
     title: string,
     description?: string,
     amount: number,
