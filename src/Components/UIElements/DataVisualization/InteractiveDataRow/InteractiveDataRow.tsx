@@ -3,8 +3,10 @@ import { CgChevronRight } from 'react-icons/cg';
 import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/CategoryIcon';
 import formatCurrency from 'Util/Formatters/formatCurrency';
 import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader/SkeletonLoader';
+import { EmptyCallback } from 'Types/QoLTypes';
+import { AccountCategoryType, SpendingCategoryType } from 'Constants/categories';
 
-function parseAmount(amount, isExpense) {
+function parseAmount(amount: number, isExpense: boolean) {
     const formattedAmount = formatCurrency(amount);
 
     if(amount === 0 || !isExpense) {
@@ -14,14 +16,19 @@ function parseAmount(amount, isExpense) {
     return `-${formattedAmount}`;
 }
 
-// category - string constant for the category of account or transaction (i.e. 'RESTAURANTS' or 'CHECKING')
-// description - optional string - an additional note about the transaction
-// amount - Number - Dollar amount of the transaction
-// isExpense - Boolean - When true will show amount in red with a minus
-// amountDescription - String
-// iconCategory - String - uses the Account or transaction category code to render the right icon
-// isLoading - boolean - when true shows skeleton loaders
-export default function InteractiveDataRow({ title, description, amount, amountDescription, isExpense, iconCategory, onClick, isLoading, showRevolvingIcon }) {
+interface InteractiveDataRowPropTypes {
+    title: string,
+    description?: string,
+    amount: number,
+    amountDescription: string,
+    isExpense: boolean,
+    iconCategory: AccountCategoryType | SpendingCategoryType,
+    onClick: EmptyCallback,
+    isLoading: boolean,
+    showRevolvingIcon: boolean
+}
+
+export default function InteractiveDataRow({ title, description, amount, amountDescription, isExpense, iconCategory, onClick, isLoading, showRevolvingIcon }: InteractiveDataRowPropTypes) {
     // Amount to show
     const parsedAmount = parseAmount(amount, isExpense);
 
