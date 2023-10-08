@@ -9,30 +9,60 @@ import dayjs from 'dayjs';
 import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/CategoryIcon';
 import formatCurrency from 'Util/Formatters/formatCurrency';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
+import { MoneyAccount, UpdateAccountBalancePayload } from 'Types/AccountTypes';
+import { EmptyCallback } from 'Types/QoLTypes';
+import { AccountCategoryType } from 'Constants/categories';
+import { myMoneyDependentQueryKeys } from 'Util/QueryKeys';
+import { useQueryClient } from '@tanstack/react-query';
 
-export default function AccountBalanceUpdateForm({ onPanelClose, onSubmission, accountToUpdate = {}, editMode }) {
-    const getContent = useContent();
-    const text = (key, args) => getContent('MY_MONEY', key, args);
+type AccountBalanceEditProps = {
+    onPanelClose: EmptyCallback;
+    editMode: true;
+    accountToUpdate: MoneyAccount;
+}
+
+type AccountBalanceNewProps = {
+    onPanelClose: EmptyCallback;
+    editMode?: false;
+    accountToUpdate: never;
+}
+
+type AccountBalanceUpdateFormPropTypes = AccountBalanceEditProps | AccountBalanceNewProps;
+
+const defaultAccountToUpdate: MoneyAccount = {
+    accountId: '',
+    accountName: '',
+    hasVariableGrowthRate: false,
+    currentAccountValue: 0,
+    accountType: AccountCategoryType.CHECKING,
+    growthRate: ''
+};
+
+export default function AccountBalanceUpdateForm({ onPanelClose, accountToUpdate = defaultAccountToUpdate, editMode }: AccountBalanceUpdateFormPropTypes) {
+    const getContent = useContent('MY_MONEY');
+    const queryClient = useQueryClient();
 
     // State for form values
-    const [accountValue, setAccountValue] = React.useState(null);
+    const [accountValue, setAccountValue] = React.useState<number | null>(null);
 
     function submit() {
         if(accountValue == null) {
             return;
         }
 
-        const payload = {
+        const payload: UpdateAccountBalancePayload = {
             accountId: accountToUpdate.accountId,
             accountValue: Number(accountValue),
             isRevision: Boolean(editMode)
         };
 
         // Handle service call
-        axios.post(SERVICE_ROUTES.updateAccountBalance, payload).then(onSubmission);
+        axios.post(SERVICE_ROUTES.updateAccountBalance, payload).then(() => {
+            queryClient.invalidateQueries(myMoneyDependentQueryKeys);
+        });
     }
 
-    const valueChange = accountValue - accountToUpdate.currentAccountValue;
+    const valueChange = (accountValue || 0) - accountToUpdate.currentAccountValue;
     const valueChangePercentage = ((valueChange / accountToUpdate.currentAccountValue) * 100).toFixed(2);
     const isGain = valueChange > 0;
     const changeSign = isGain ? '+' : '';
@@ -40,9 +70,9 @@ export default function AccountBalanceUpdateForm({ onPanelClose, onSubmission, a
     const valueChangeStyle = valueMatchesOriginal ? {} : { color: isGain ? 'var(--theme-money-gain)' : 'var(--theme-money-loss)' };
 
     return (
-        <SlideUpPanel title={text('UPDATE_BALANCE')}
-                      closeText={text('CANCEL')}
-                      confirmText={text('SUBMIT')}
+        <SlideUpPanel title={getContent('UPDATE_BALANCE')}
+                      closeText={getContent('CANCEL')}
+                      confirmText={getContent('SUBMIT')}
                       forwardActionCallback={submit}
                       tagColor='var(--theme-jungle-green)'
                       disableConfirmButton={accountValue == null}
@@ -63,12 +93,12 @@ export default function AccountBalanceUpdateForm({ onPanelClose, onSubmission, a
                             {formatCurrency(accountToUpdate.currentAccountValue)}
                         </div>
                         <div className={styles.asOfLabel}>
-                            {`(${text('AS_OF', [accountToUpdate.lastUpdated])})`}
+                            {`(${getContent('AS_OF', [`${accountToUpdate.lastUpdated}`])})`}
                         </div>
                     </div>
                 </div>
                 <label>
-                    {text('VALUE_CHANGE_LABEL')}
+                    {getContent('VALUE_CHANGE_LABEL')}
                 </label>
                 <div style={valueChangeStyle} className={styles.valueChange}>
                     {
@@ -82,10 +112,10 @@ export default function AccountBalanceUpdateForm({ onPanelClose, onSubmission, a
                 </div>
                 <label>
                     <div className={styles.updateLabel}>
-                        {text('ACCOUNT_VALUE_UPDATE_LABEL', [MONTH_NAMES[dayjs().month()]])}
+                        {getContent('ACCOUNT_VALUE_UPDATE_LABEL', [MONTH_NAMES[dayjs().month()]])}
                     </div>
                     <MoneyInput name='account-value-spent-field'
-                                placeholder={text('ACCOUNT_VALUE_PLACEHOLDER')}
+                                placeholder={getContent('ACCOUNT_VALUE_PLACEHOLDER')}
                                 className={styles.textInput}
                                 stateUpdater={setAccountValue}
                                 value={accountValue}
