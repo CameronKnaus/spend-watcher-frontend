@@ -1,30 +1,31 @@
-import React, { Dispatch, SetStateAction } from 'react';
 import styles from './CategoryInput.module.css';
 import { ProductCategoryType, useCategoryList } from 'CustomHooks/useCategoryList';
 import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/CategoryIcon';
 import useContent from 'CustomHooks/useContent';
 import { ManagedTransactionType } from 'Types/TransactionTypes';
+import { ManagedAccountType } from 'Types/AccountTypes';
+import { useEffect, useRef, useState } from 'react';
 
 // This is a controlled-only component.  State must be managed by the parent
 
 type CategoryInputPropTypes = {
     id?: string,
     textInputStyles: string,
-    value: ManagedTransactionType,
-    onChange: Dispatch<SetStateAction<ManagedTransactionType>>,
+    value: ManagedTransactionType | ManagedAccountType,
+    onChange: (arg: ManagedAccountType | ManagedTransactionType) => void,
     categoryType: ProductCategoryType
 }
 
 export default function CategoryInput({ id = 'category-input', textInputStyles, value, onChange, categoryType }: CategoryInputPropTypes) {
     // TODO: Clean this up so that CategoryInput only tracks category code i.e. 'MATERIAL_ITEMS' / gets category code only from useCategoryList
     const categoryList = useCategoryList(categoryType);
-    const [open, setOpen] = React.useState(false);
-    const [filterText, setFilterText] = React.useState('');
-    const ref = React.useRef(null);
+    const [open, setOpen] = useState(false);
+    const [filterText, setFilterText] = useState('');
+    const ref = useRef(null);
     const getContent = useContent('GENERAL');
 
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.addEventListener('click', toggleOpen);
 
         return () => document.removeEventListener('click', toggleOpen);
@@ -34,7 +35,7 @@ export default function CategoryInput({ id = 'category-input', textInputStyles, 
         setOpen(event && event.target === ref.current);
     }
 
-    function filter(categories: Array<ManagedTransactionType>) {
+    function filter(categories: Array<ManagedTransactionType | ManagedAccountType>) {
         const target = filterText.toLowerCase();
 
         return categories.filter(category => {

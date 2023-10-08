@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import useContent from 'CustomHooks/useContent';
 import styles from './AccountForm.module.css';
 import CategoryInput from '../../UIElements/Form/CategoryInput/CategoryInput';
@@ -10,26 +10,55 @@ import formatCurrency from 'Util/Formatters/formatCurrency';
 import Link from 'Components/UIElements/Navigation/Link/Link';
 import MONTH_NAMES from 'Constants/MonthNames';
 import dayjs from 'dayjs';
+import { EmptyCallback } from 'Types/QoLTypes';
+import { ManagedAccountType, MoneyAccount, MoneyAccountPayload } from 'Types/AccountTypes';
+import { AccountCategoryType } from 'Constants/categories';
 
-// existingAccount should be an object containing all account data points for the form
-export default function AccountForm({ onPanelClose, onSubmission, editMode, existingAccount = {}, swapToEditBalance = () => { /* NOOP */ } }) {
-    const getContent = useContent();
-    const text = (key, args) => getContent('MY_MONEY', key, args);
+type NewAccountFormProps = {
+    onPanelClose: EmptyCallback;
+    onSubmission: EmptyCallback;
+    editMode: false;
+    existingAccount?: never;
+    swapToEditBalance?: never;
+};
+
+type EditAccountFormProps = {
+    onPanelClose: EmptyCallback;
+    onSubmission: EmptyCallback;
+    editMode: true;
+    existingAccount: MoneyAccount;
+    swapToEditBalance: EmptyCallback;
+}
+
+type AccountFormPropTypes = NewAccountFormProps | EditAccountFormProps;
+
+const defaultExistingAccount: MoneyAccount = {
+    accountId: '',
+    accountName: '',
+    currentAccountValue: 0,
+    hasVariableGrowthRate: false,
+    accountType: AccountCategoryType.CHECKING,
+    growthRate: '0'
+};
+
+export default function AccountForm({ onPanelClose, onSubmission, editMode, existingAccount = defaultExistingAccount, swapToEditBalance = () => { /* NOOP */ } }: AccountFormPropTypes) {
+    const getContent = useContent('MY_MONEY');
+    const getAccountCategoryContent = useContent('ACCOUNT_CATEGORIES');
 
     // State for form values
-    const [formValid, setFormValid] = React.useState(Boolean(existingAccount.currentAccountValue)); // defaults false
-    const [accountName, setAccountName] = React.useState(existingAccount.accountName || '');
-    const [category, setCategory] = React.useState(() => {
+    const [formValid, setFormValid] = React.useState(Boolean(existingAccount.currentAccountValue));
+    const [accountName, setAccountName] = React.useState(existingAccount.accountName);
+    const [category, setCategory] = React.useState<ManagedAccountType>(() => {
         const accountType = existingAccount.accountType;
         if(accountType) {
-            return { code: accountType, name: getContent('ACCOUNT_CATEGORIES', accountType) };
+            return { code: accountType, name: getAccountCategoryContent(accountType) } as ManagedAccountType;
         }
 
         // Default to checking
-        return { code: 'CHECKING', name: getContent('ACCOUNT_CATEGORIES', 'CHECKING') };
+        return { code: AccountCategoryType.CHECKING, name: getAccountCategoryContent(AccountCategoryType.CHECKING) } as ManagedAccountType;
     });
-    const [accountValue, setAccountValue] = React.useState(null);
-    const [growthRate, setGrowthRate] = React.useState(existingAccount.growthRate || '');
+    const [accountValue, setAccountValue] = React.useState<number | null>(null);
+    const [growthRate, setGrowthRate] = React.useState(existingAccount.growthRate);
     const [isVariable, setIsVariable] = React.useState(existingAccount.hasVariableGrowthRate);
     const [loading, setLoading] = React.useState(false);
 
@@ -39,11 +68,11 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
     }, [accountName]);
 
     function submit() {
-        if(loading || !formValid) {
+        if(loading || !formValid || accountValue == null) {
             return;
         }
 
-        const payload = {
+        const payload: MoneyAccountPayload = {
             accountName,
             accountCategory: category.code,
             startingAccountValue: accountValue,
@@ -63,19 +92,19 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
             .finally(() => setLoading(false));
     }
 
-    function updateGrowthRate(event) {
+    function updateGrowthRate(event: ChangeEvent<HTMLInputElement>) {
         const rate = event.target.value;
         // Prevent decimals precision higher than 2
         const growthRate = rate.indexOf('.') >= 0 ? rate.substr(0, rate.indexOf('.')) + rate.substr(rate.indexOf('.'), 3) : rate;
         setGrowthRate(growthRate);
     }
 
-    const VARIABLE_GROWTH_LABEL = text('VARIABLE_GROWTH_LABEL');
-    const VARIABLE_GROWTH_DESCRIPTION = text('VARIABLE_GROWTH_DESCRIPTION');
+    const VARIABLE_GROWTH_LABEL = getContent('VARIABLE_GROWTH_LABEL');
+    const VARIABLE_GROWTH_DESCRIPTION = getContent('VARIABLE_GROWTH_DESCRIPTION');
     return (
-        <SlideUpPanel title={text(editMode ? 'EDIT_ACCOUNT' : 'NEW_ACCOUNT')}
-                      closeText={text('CANCEL')}
-                      confirmText={text(editMode ? 'EDIT' : 'SUBMIT')}
+        <SlideUpPanel title={getContent(editMode ? 'EDIT_ACCOUNT' : 'NEW_ACCOUNT')}
+                      closeText={getContent('CANCEL')}
+                      confirmText={getContent(editMode ? 'EDIT' : 'SUBMIT')}
                       disableConfirmButton={!formValid}
                       forwardActionCallback={submit}
                       tagColor='var(--theme-celadon-blue)'
@@ -84,10 +113,10 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
             <form className={styles.transactionForm}>
                 {/* ACCOUNT NAME */}
                 <label>
-                    {text('NAME_LABEL')}
+                    {getContent('NAME_LABEL')}
                     <input type='text'
                            className={styles.textInput}
-                           placeholder={text('NAME_PLACEHOLDER')}
+                           placeholder={getContent('NAME_PLACEHOLDER')}
                            value={accountName}
                            autoComplete='off'
                            maxLength={50}
@@ -96,7 +125,7 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
                 </label>
                 {/* ACCOUNT CATEGORY */}
                 <label htmlFor='category-input' style={{ width: 100 }}>
-                    {text('CATEGORY_LABEL')}
+                    {getContent('CATEGORY_LABEL')}
                 </label>
                 <CategoryInput textInputStyles={styles.textInput}
                                value={category}
@@ -107,12 +136,12 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
                 {editMode ? (
                     <>
                         <label>
-                            {text('ACCOUNT_VALUE_LABEL')}
+                            {getContent('ACCOUNT_VALUE_LABEL')}
                         </label>
                         <div className={styles.accountValue}>
                             {formatCurrency(existingAccount.currentAccountValue)}
                         </div>
-                        <Link text={text('EDIT_ACCOUNT_BALANCE_LABEL', [MONTH_NAMES[dayjs().month()]])}
+                        <Link text={getContent('EDIT_ACCOUNT_BALANCE_LABEL', [MONTH_NAMES[dayjs().month()]])}
                               customClass={styles.editAccountBalanceLink}
                               textAlign='center'
                               onClickCallback={swapToEditBalance}
@@ -120,9 +149,9 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
                     </>
                     ) : (
                         <label>
-                            {text('ACCOUNT_VALUE_LABEL')}
+                            {getContent('ACCOUNT_VALUE_LABEL')}
                             <MoneyInput name='account-value-spent-field'
-                                        placeholder={text('ACCOUNT_VALUE_PLACEHOLDER')}
+                                        placeholder={getContent('ACCOUNT_VALUE_PLACEHOLDER')}
                                         className={styles.textInput}
                                         stateUpdater={setAccountValue}
                                         value={accountValue}
@@ -131,10 +160,10 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
                     )}
                 {/* GROWTH RATE */}
                 <label>
-                    {text('GROWTH_RATE_LABEL')}
+                    {getContent('GROWTH_RATE_LABEL')}
                     <input type='number'
                            className={styles.textInput}
-                           placeholder={text('GROWTH_RATE_PLACEHOLDER')}
+                           placeholder={getContent('GROWTH_RATE_PLACEHOLDER')}
                            value={growthRate}
                            autoComplete='off'
                            step='.01'
