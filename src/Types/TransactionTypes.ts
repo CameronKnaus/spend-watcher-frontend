@@ -31,7 +31,7 @@ export type Transaction = {
 
 export type RecurringTransaction = {
     actualAmount: number,
-    category: string,
+    category: SpendingCategoryType,
     estimatedAmount: number,
     expenseName: string,
     isActive: boolean,

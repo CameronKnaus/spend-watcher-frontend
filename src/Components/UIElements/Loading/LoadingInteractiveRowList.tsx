@@ -1,4 +1,5 @@
 import InteractiveDataRow from 'Components/UIElements/DataVisualization/InteractiveDataRow/InteractiveDataRow';
+import { AccountCategoryType } from 'Constants/categories';
 import { SizeValue } from 'Types/StyleTypes';
 
 type LoadingInteractiveRowListPropTypes = {
@@ -11,7 +12,15 @@ export default function LoadingInteractiveRowList({ id, rowCount, rowSpacing }: 
         <div key={`${id}-${index}`} // eslint-disable-line react/no-array-index-key
              style={{ paddingBottom: rowSpacing }}
         >
-            <InteractiveDataRow isLoading />
+            {/* Just to show a loader */}
+            <InteractiveDataRow isLoading
+                                isExpense
+                                title=''
+                                amount={0}
+                                amountDescription=''
+                                iconCategory={'' as AccountCategoryType}
+                                onClick={() => { /* NOOP */ }}
+            />
         </div>
     )
     );
