@@ -8,9 +8,17 @@ import { useState } from 'react';
 import AccountForm from 'Components/MyMoney/AccountForm/AccountForm';
 import AccountBalanceUpdateForm from 'Components/MyMoney/AccountBalanceUpdateForm/AccountBalanceUpdateForm';
 import LoadingInteractiveRowList from 'Components/UIElements/Loading/LoadingInteractiveRowList';
+import { EmptyCallback } from 'Types/QoLTypes';
 
-export default function AccountsList({ listOfAccounts, onEditCallback = () => { /* NOOP */ }, isLoading }) {
-    const getContent = useContent();
+type AccountsListPropTypes = {
+    listOfAccounts: Array<any>; // TODO: Proper typing
+    isLoading?: boolean;
+    onEditCallback: EmptyCallback;
+}
+
+export default function AccountsList({ listOfAccounts, onEditCallback = () => { /* NOOP */ }, isLoading = false }: AccountsListPropTypes) {
+    const getContent = useContent('MY_MONEY');
+    const getAccountCategoryContent = useContent('ACCOUNT_CATEGORIES');
     const [accountToEdit, setAccountToEdit] = useState(null);
     const [accountToUpdate, setAccountToUpdate] = useState(null);
     const [isBalanceEditMode, setIsBalanceEditMode] = useState(false);
@@ -26,9 +34,9 @@ export default function AccountsList({ listOfAccounts, onEditCallback = () => { 
                     const { accountType, growthRate, hasVariableGrowthRate } = accountInfo;
 
                     // Formulate description text
-                    let description = getContent('ACCOUNT_CATEGORIES', accountType);
+                    let description = getAccountCategoryContent(accountType);
                     if(growthRate) {
-                        const variability = hasVariableGrowthRate ? getContent('MY_MONEY', 'VARIABLE_RATE') : getContent('MY_MONEY', 'FIXED_RATE');
+                        const variability = hasVariableGrowthRate ? getContent('VARIABLE_RATE') : getContent('FIXED_RATE');
                         description += ` - ${growthRate}% ${variability}`;
                     }
 
@@ -38,7 +46,7 @@ export default function AccountsList({ listOfAccounts, onEditCallback = () => { 
                                                 amount={accountInfo.currentAccountValue}
                                                 iconCategory={accountType}
                                                 description={description}
-                                                amountDescription={getContent('MY_MONEY', 'AS_OF', [accountInfo.lastUpdated])}
+                                                amountDescription={getContent('AS_OF', [accountInfo.lastUpdated])}
                                                 onClick={() => setAccountToEdit(accountInfo)}
                             />
                             {
@@ -47,7 +55,7 @@ export default function AccountsList({ listOfAccounts, onEditCallback = () => { 
                                         <div className={styles.editIcon}>
                                             <FaPencilAlt />
                                         </div>
-                                        {getContent('MY_MONEY', 'UPDATE_FOR_MONTH', [MONTH_NAMES[dayjs().month()]])}
+                                        {getContent('UPDATE_FOR_MONTH', [MONTH_NAMES[dayjs().month()]])}
                                     </button>
                                 )
                             }

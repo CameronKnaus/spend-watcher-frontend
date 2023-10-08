@@ -21,14 +21,14 @@ type InteractiveDataRowPropTypes = {
     description?: string,
     amount: number,
     amountDescription: string,
-    isExpense: boolean,
+    isExpense?: boolean,
     iconCategory: AccountCategoryType | SpendingCategoryType,
     onClick: EmptyCallback,
-    isLoading: boolean,
+    isLoading?: boolean,
     showRevolvingIcon?: boolean
 }
 
-export default function InteractiveDataRow({ title, description, amount, amountDescription, isExpense, iconCategory, onClick, isLoading, showRevolvingIcon }: InteractiveDataRowPropTypes) {
+export default function InteractiveDataRow({ title, description, amount, amountDescription, isExpense = false, iconCategory, onClick, isLoading = false, showRevolvingIcon }: InteractiveDataRowPropTypes) {
     // Amount to show
     const parsedAmount = parseAmount(amount, isExpense);
 
