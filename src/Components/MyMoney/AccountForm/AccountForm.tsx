@@ -13,18 +13,18 @@ import dayjs from 'dayjs';
 import { EmptyCallback } from 'Types/QoLTypes';
 import { ManagedAccountType, MoneyAccount, MoneyAccountPayload } from 'Types/AccountTypes';
 import { AccountCategoryType } from 'Constants/categories';
+import { useQueryClient } from '@tanstack/react-query';
+import { myMoneyDependentQueryKeys } from 'Util/QueryKeys';
 
 type NewAccountFormProps = {
     onPanelClose: EmptyCallback;
-    onSubmission: EmptyCallback;
-    editMode: false;
+    editMode?: false;
     existingAccount?: never;
     swapToEditBalance?: never;
 };
 
 type EditAccountFormProps = {
     onPanelClose: EmptyCallback;
-    onSubmission: EmptyCallback;
     editMode: true;
     existingAccount: MoneyAccount;
     swapToEditBalance: EmptyCallback;
@@ -38,12 +38,14 @@ const defaultExistingAccount: MoneyAccount = {
     currentAccountValue: 0,
     hasVariableGrowthRate: false,
     accountType: AccountCategoryType.CHECKING,
-    growthRate: '0'
+    growthRate: '0',
+    requiresNewUpdate: false
 };
 
-export default function AccountForm({ onPanelClose, onSubmission, editMode, existingAccount = defaultExistingAccount, swapToEditBalance = () => { /* NOOP */ } }: AccountFormPropTypes) {
+export default function AccountForm({ onPanelClose, editMode, existingAccount = defaultExistingAccount, swapToEditBalance = () => { /* NOOP */ } }: AccountFormPropTypes) {
     const getContent = useContent('MY_MONEY');
     const getAccountCategoryContent = useContent('ACCOUNT_CATEGORIES');
+    const queryClient = useQueryClient();
 
     // State for form values
     const [formValid, setFormValid] = React.useState(Boolean(existingAccount.currentAccountValue));
@@ -88,7 +90,9 @@ export default function AccountForm({ onPanelClose, onSubmission, editMode, exis
 
         // Handle service call
         axios.post(endpoint, payload)
-            .then(onSubmission)
+            .then(() => {
+                queryClient.invalidateQueries(myMoneyDependentQueryKeys);
+            })
             .finally(() => setLoading(false));
     }
 

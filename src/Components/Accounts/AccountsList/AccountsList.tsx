@@ -8,19 +8,18 @@ import { useState } from 'react';
 import AccountForm from 'Components/MyMoney/AccountForm/AccountForm';
 import AccountBalanceUpdateForm from 'Components/MyMoney/AccountBalanceUpdateForm/AccountBalanceUpdateForm';
 import LoadingInteractiveRowList from 'Components/UIElements/Loading/LoadingInteractiveRowList';
-import { EmptyCallback } from 'Types/QoLTypes';
+import { MoneyAccount } from 'Types/AccountTypes';
 
 type AccountsListPropTypes = {
-    listOfAccounts: Array<any>; // TODO: Proper typing
+    listOfAccounts: Array<MoneyAccount>;
     isLoading?: boolean;
-    onEditCallback: EmptyCallback;
 }
 
-export default function AccountsList({ listOfAccounts, onEditCallback = () => { /* NOOP */ }, isLoading = false }: AccountsListPropTypes) {
+export default function AccountsList({ listOfAccounts = [], isLoading = false }: AccountsListPropTypes) {
     const getContent = useContent('MY_MONEY');
     const getAccountCategoryContent = useContent('ACCOUNT_CATEGORIES');
-    const [accountToEdit, setAccountToEdit] = useState(null);
-    const [accountToUpdate, setAccountToUpdate] = useState(null);
+    const [accountToEdit, setAccountToEdit] = useState<MoneyAccount | null>(null);
+    const [accountToUpdate, setAccountToUpdate] = useState<MoneyAccount | null>(null);
     const [isBalanceEditMode, setIsBalanceEditMode] = useState(false);
 
     if(isLoading) {
@@ -46,7 +45,7 @@ export default function AccountsList({ listOfAccounts, onEditCallback = () => { 
                                                 amount={accountInfo.currentAccountValue}
                                                 iconCategory={accountType}
                                                 description={description}
-                                                amountDescription={getContent('AS_OF', [accountInfo.lastUpdated])}
+                                                amountDescription={getContent('AS_OF', [accountInfo.lastUpdated || ''])}
                                                 onClick={() => setAccountToEdit(accountInfo)}
                             />
                             {
@@ -73,7 +72,6 @@ export default function AccountsList({ listOfAccounts, onEditCallback = () => { 
                                     setAccountToEdit(null);
                                  }}
                                  onPanelClose={() => setAccountToEdit(null)}
-                                 onSubmission={onEditCallback}
                     />
                 )
             }
@@ -85,7 +83,6 @@ export default function AccountsList({ listOfAccounts, onEditCallback = () => { 
                                                 setIsBalanceEditMode(false);
                                                 setAccountToUpdate(null);
                                               }}
-                                              onSubmission={onEditCallback}
                     />
                 )
             }

@@ -1,6 +1,7 @@
 import useContent from 'CustomHooks/useContent';
 import styles from './Dashboard.module.css';
 import Spending from 'Containers/Spending/Spending';
+import MyMoney from 'Containers/MyMoney/MyMoney';
 
 export default function Dashboard() {
     const getContent = useContent('ACCESSIBLE_PAGE_TITLES');
@@ -12,6 +13,7 @@ export default function Dashboard() {
                     {getContent('DASHBOARD')}
                 </h1>
                 <Spending />
+                <MyMoney />
             </div>
         </div>
     );

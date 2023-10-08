@@ -15,19 +15,11 @@ import { AccountCategoryType } from 'Constants/categories';
 import { myMoneyDependentQueryKeys } from 'Util/QueryKeys';
 import { useQueryClient } from '@tanstack/react-query';
 
-type AccountBalanceEditProps = {
+type AccountBalanceUpdateFormPropTypes = {
     onPanelClose: EmptyCallback;
-    editMode: true;
-    accountToUpdate: MoneyAccount;
-}
-
-type AccountBalanceNewProps = {
-    onPanelClose: EmptyCallback;
-    editMode?: false;
-    accountToUpdate: never;
-}
-
-type AccountBalanceUpdateFormPropTypes = AccountBalanceEditProps | AccountBalanceNewProps;
+    editMode?: boolean;
+    accountToUpdate?: MoneyAccount;
+};
 
 const defaultAccountToUpdate: MoneyAccount = {
     accountId: '',
@@ -35,7 +27,8 @@ const defaultAccountToUpdate: MoneyAccount = {
     hasVariableGrowthRate: false,
     currentAccountValue: 0,
     accountType: AccountCategoryType.CHECKING,
-    growthRate: ''
+    growthRate: '',
+    requiresNewUpdate: false
 };
 
 export default function AccountBalanceUpdateForm({ onPanelClose, accountToUpdate = defaultAccountToUpdate, editMode }: AccountBalanceUpdateFormPropTypes) {

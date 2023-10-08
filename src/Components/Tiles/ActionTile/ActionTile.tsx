@@ -28,7 +28,7 @@ type ActionTilePropTypes = {
     ariaValue?: string, // - alternative value for screen readers to read for value
     actionPrompt: string,
     useShadow?: boolean,
-    callback: () => void,
+    callback?: () => void,
     options?: ActionTileOptionsType,
     isLoading: boolean,
     isInactive?: boolean
@@ -41,7 +41,7 @@ type ActionTilePropTypes = {
     ariaValue?: string,
     actionPrompt: string,
     useShadow?: boolean,
-    callback: () => void,
+    callback?: () => void,
     options?: ActionTileOptionsType,
     isLoading: boolean,
     isInactive?: boolean
@@ -56,7 +56,7 @@ function ActionTile({
     ariaValue,
     actionPrompt,
     useShadow = false,
-    callback,
+    callback = () => { /* NOOP */ },
     options,
     isLoading = false,
     isInactive = false

@@ -4,26 +4,31 @@ import useContent from 'CustomHooks/useContent';
 import ActionTile from 'Components/Tiles/ActionTile/ActionTile';
 import Link from 'Components/UIElements/Navigation/Link/Link';
 import AccountForm from 'Components/MyMoney/AccountForm/AccountForm';
-import useFetch from '../../CustomHooks/useFetch';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import AccountsList from 'Components/Accounts/AccountsList/AccountsList';
 import formatCurrency from 'Util/Formatters/formatCurrency';
+import axios from 'axios';
+import msMapper from 'Util/Time/TimeMapping';
+import { useQuery } from '@tanstack/react-query';
+import { accountSummaryQueryKey } from 'Util/QueryKeys';
+import myMoneyTransform from './myMoneyTransform';
 
-export default function MyMoney({ refreshRequested, callForRefresh }) {
+export default function MyMoney() {
     const [newAccountPanelOpen, setNewAccountPanelOpen] = React.useState(false);
     const getContent = useContent('MY_MONEY');
 
-    const service = useFetch(SERVICE_ROUTES.accountsSummary, true);
+    const { isLoading, isError, data: accountData, error: serviceError } = useQuery({
+        queryKey: [accountSummaryQueryKey],
+        staleTime: msMapper.day,
+        queryFn: () => {
+            return axios.get(SERVICE_ROUTES.accountsSummary);
+        },
+        select: myMoneyTransform
+    });
 
-    React.useEffect(() => {
-        if(refreshRequested) {
-            service.fire(true);
-        }
-    }, [refreshRequested, service]);
-
-
-    if(service.error) {
-        return JSON.stringify(service.error);
+    if(isError) {
+        // TODO: Implement error scenario
+        return JSON.stringify(serviceError);
     }
 
     return (
@@ -32,14 +37,14 @@ export default function MyMoney({ refreshRequested, callForRefresh }) {
                 {getContent('MY_MONEY')}
             </h2>
             <ActionTile useShadow
-                        isLoading={service.loading}
+                        isLoading={isLoading}
                         title={getContent('TOTAL_VALUE_TITLE')}
-                        value={formatCurrency(service?.response?.totalEquity)}
+                        value={formatCurrency(accountData?.totalEquity || 0)}
                         ariaValue={getContent('TOTAL_VALUE_ARIA', [0])}
                         actionPrompt={getContent('SEE_TRENDS')}
                         options={{ showValueAbove: true, valueColor: 'var(--theme-money-gain)' }}
             />
-            <AccountsList listOfAccounts={service?.response?.accountsList} isLoading={service.loading} onEditCallback={callForRefresh} />
+            { accountData?.accountsList && <AccountsList listOfAccounts={accountData.accountsList} isLoading={isLoading} /> }
             <Link useChevron
                   text={getContent('ADD_ACCOUNT')}
                   textAlign='center'
@@ -47,7 +52,7 @@ export default function MyMoney({ refreshRequested, callForRefresh }) {
                   onClickCallback={() => setNewAccountPanelOpen(true)}
             />
             {
-                newAccountPanelOpen && <AccountForm onPanelClose={() => setNewAccountPanelOpen(false)} onSubmission={callForRefresh} />
+                newAccountPanelOpen && <AccountForm onPanelClose={() => setNewAccountPanelOpen(false)} />
             }
         </div>
     );

@@ -15,6 +15,7 @@ export type MoneyAccount = {
     accountType: AccountCategoryType;
     growthRate: string;
     lastUpdated?: string;
+    requiresNewUpdate: boolean;
 }
 
 // For the services used in editing and adding money accounts
