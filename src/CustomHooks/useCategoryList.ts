@@ -18,8 +18,8 @@ const AVAILABLE_LISTS: Record<ProductCategoryType, { name: string, list: any }> 
 
 export type ProductCategoryType = 'transactions' | 'accounts';
 
-export const useCategoryList = (listType: ProductCategoryType): Array<ManagedAccountType | ManagedTransactionType> => {
-    const [categoryList, setCategoryList] = useState<Array<ManagedTransactionType | ManagedAccountType>>([]);
+export function useCategoryList<T extends ManagedAccountType | ManagedTransactionType>(listType: ProductCategoryType): Array<T> {
+    const [categoryList, setCategoryList] = useState<Array<T>>([]);
     const getSpendingContent = useContent('SPENDING_CATEGORIES');
     const getMyMoneyContent = useContent('ACCOUNT_CATEGORIES');
 
@@ -39,4 +39,4 @@ export const useCategoryList = (listType: ProductCategoryType): Array<ManagedAcc
     }, [getMyMoneyContent, getSpendingContent, listType]);
 
     return categoryList;
-};
+}

@@ -4,21 +4,20 @@ import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/
 import useContent from 'CustomHooks/useContent';
 import { ManagedTransactionType } from 'Types/TransactionTypes';
 import { ManagedAccountType } from 'Types/AccountTypes';
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
-// This is a controlled-only component.  State must be managed by the parent
-
-type CategoryInputPropTypes = {
+type CategoryInputPropTypes<T extends ManagedTransactionType | ManagedAccountType> = {
     id?: string,
     textInputStyles: string,
-    value: ManagedTransactionType | ManagedAccountType,
-    onChange: (arg: ManagedAccountType | ManagedTransactionType) => void,
+    value: T,
+    onChange: Dispatch<SetStateAction<T>>,
     categoryType: ProductCategoryType
 }
 
-export default function CategoryInput({ id = 'category-input', textInputStyles, value, onChange, categoryType }: CategoryInputPropTypes) {
+// This is a controlled-only component.  State must be managed by the parent
+export default function CategoryInputs<T extends ManagedTransactionType | ManagedAccountType>({ id = 'category-input', textInputStyles, value, onChange, categoryType }: CategoryInputPropTypes<T>) {
     // TODO: Clean this up so that CategoryInput only tracks category code i.e. 'MATERIAL_ITEMS' / gets category code only from useCategoryList
-    const categoryList = useCategoryList(categoryType);
+    const categoryList = useCategoryList<T>(categoryType);
     const [open, setOpen] = useState(false);
     const [filterText, setFilterText] = useState('');
     const ref = useRef(null);
@@ -85,7 +84,7 @@ export default function CategoryInput({ id = 'category-input', textInputStyles, 
                                 <div key={category.code}
                                      className={`${styles.option} ${value === category ? styles.selected : ''}`}
                                      onClick={() => {
-                                         onChange(category);
+                                         onChange(category as T);
                                          setFilterText('');
                                          setOpen(false);
                                      }}
