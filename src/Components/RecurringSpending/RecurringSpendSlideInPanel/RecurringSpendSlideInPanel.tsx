@@ -6,22 +6,48 @@ import RecurringSpendForm from '../RecurringSpendForm/RecurringSpendForm';
 import styles from './RecurringSpendSlideInPanel.module.css';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import axios from 'axios';
+import { SpendingCategoryType } from 'Constants/categories';
+import { RecurringTransaction } from 'Types/TransactionTypes';
+import { EmptyCallback } from 'Types/QoLTypes';
 
-const PANEL_OPTIONS_ENUM = {
-    RECURRING: 'RECURRING',
-    DELETE_SPEED_BUMP: 'DELETE_SPEED_BUMP',
-    HISTORY: 'HISTORY'
+export enum RecurringPanelOptionsEnum {
+    RECURRING = 'RECURRING',
+    DELETE_SPEED_BUMP = 'DELETE_SPEED_BUMP',
+    HISTORY = 'HISTORY'
+}
+
+type RecurringSpendSlideInPanelPropTypes = {
+    onPanelClose: EmptyCallback,
+    onSubmission: EmptyCallback,
+    editMode?: boolean,
+    existingTransaction?: RecurringTransaction
+}
+
+const defaultExistingTransaction: RecurringTransaction = {
+    actualAmount: 0,
+    category: {
+        name: 'OTHER',
+        code: SpendingCategoryType.OTHER
+    },
+    estimatedAmount: 0,
+    expenseName: '',
+    isActive: false,
+    isVariableRecurring: false,
+    recurringSpendId: ''
 };
 
-export default function RecurringSpendSlideInPanel({ onPanelClose, onSubmission, editMode, existingTransaction = {} }) {
+export default function RecurringSpendSlideInPanel({ onPanelClose,
+    onSubmission,
+    editMode = false,
+    existingTransaction = defaultExistingTransaction }: RecurringSpendSlideInPanelPropTypes) {
     const getContent = useContent('RECURRING_SPENDING');
-    const [activePanelContent, setActivePanelContent] = useState(PANEL_OPTIONS_ENUM.RECURRING);
+    const [activePanelContent, setActivePanelContent] = useState(RecurringPanelOptionsEnum.RECURRING);
     const [enableForwardButton, setEnableForwardButton] = useState(true);
-    const [forwardActionCallback, setForwardActionCallback] = useState(() => { /* NOOP */ });
+    const [forwardActionCallback, setForwardActionCallback] = useState<EmptyCallback>(() => { /* NOOP */ });
     const [historyModified, setHistoryModified] = useState(false);
 
     useEffect(() => {
-        if(activePanelContent === PANEL_OPTIONS_ENUM.DELETE_SPEED_BUMP) {
+        if(activePanelContent === RecurringPanelOptionsEnum.DELETE_SPEED_BUMP) {
             setForwardActionCallback(() => {
                 return () => {
                     // Handle service call
@@ -35,22 +61,21 @@ export default function RecurringSpendSlideInPanel({ onPanelClose, onSubmission,
 
     function renderSlideInPanelContents() {
         switch (activePanelContent) {
-            case PANEL_OPTIONS_ENUM.RECURRING:
+            case RecurringPanelOptionsEnum.RECURRING:
                 return (
                     <RecurringSpendForm formIsValidCallback={setEnableForwardButton}
                                         editMode={editMode}
                                         existingTransaction={existingTransaction}
-                                        setDeleteSpeedBumpActive={() => setActivePanelContent(PANEL_OPTIONS_ENUM.DELETE_SPEED_BUMP)}
+                                        setDeleteSpeedBumpActive={() => setActivePanelContent(RecurringPanelOptionsEnum.DELETE_SPEED_BUMP)}
                                         setForwardActionCallback={setForwardActionCallback}
-                                        viewHistoryTab={() => setActivePanelContent(PANEL_OPTIONS_ENUM.HISTORY)}
-                                        onSubmission={onSubmission}
+                                        viewHistoryTab={() => setActivePanelContent(RecurringPanelOptionsEnum.HISTORY)}
                     />
                 );
-            case PANEL_OPTIONS_ENUM.HISTORY:
+            case RecurringPanelOptionsEnum.HISTORY:
                 return (
                     <RecurringSpendTransactionHistory recurringExpense={existingTransaction} setHistoryModified={setHistoryModified} />
                 );
-            case PANEL_OPTIONS_ENUM.DELETE_SPEED_BUMP:
+            case RecurringPanelOptionsEnum.DELETE_SPEED_BUMP:
                 return (
                     <div>
                         <h3 className={styles.speedBumpHeader}>
@@ -68,11 +93,11 @@ export default function RecurringSpendSlideInPanel({ onPanelClose, onSubmission,
 
     function getPanelTitle() {
         switch (activePanelContent) {
-            case PANEL_OPTIONS_ENUM.RECURRING:
+            case RecurringPanelOptionsEnum.RECURRING:
                 return getContent(editMode ? 'EDIT_EXPENSE' : 'NEW_EXPENSE');
-            case PANEL_OPTIONS_ENUM.DELETE_SPEED_BUMP:
+            case RecurringPanelOptionsEnum.DELETE_SPEED_BUMP:
                 return getContent('DELETE_EXPENSE');
-            case PANEL_OPTIONS_ENUM.HISTORY:
+            case RecurringPanelOptionsEnum.HISTORY:
                 return getContent('HISTORY_LABEL', [existingTransaction.expenseName]);
             default:
                 return '';
@@ -81,9 +106,9 @@ export default function RecurringSpendSlideInPanel({ onPanelClose, onSubmission,
 
     function getConfirmText() {
         switch (activePanelContent) {
-            case PANEL_OPTIONS_ENUM.RECURRING:
+            case RecurringPanelOptionsEnum.RECURRING:
                 return getContent(editMode ? 'EDIT' : 'SUBMIT');
-            case PANEL_OPTIONS_ENUM.DELETE_SPEED_BUMP:
+            case RecurringPanelOptionsEnum.DELETE_SPEED_BUMP:
                 return getContent('DELETE');
             default:
                 return '';
@@ -92,28 +117,28 @@ export default function RecurringSpendSlideInPanel({ onPanelClose, onSubmission,
 
     function handlePanelClose() {
         setHistoryModified(historyModified);
-        onPanelClose(historyModified);
+        onPanelClose();
     }
 
 
     function getBackwardsActionCallback() {
-        const { RECURRING } = PANEL_OPTIONS_ENUM;
+        const { RECURRING } = RecurringPanelOptionsEnum;
         if(activePanelContent !== RECURRING && !historyModified) {
             return () => setActivePanelContent(RECURRING);
         }
 
-        return null;
+        return () => { /* NOOP */ };
     }
 
-    const deleteSpeedBumpActive = activePanelContent === PANEL_OPTIONS_ENUM.DELETE_SPEED_BUMP;
-    const isHistoryList = activePanelContent === PANEL_OPTIONS_ENUM.HISTORY;
+    const deleteSpeedBumpActive = activePanelContent === RecurringPanelOptionsEnum.DELETE_SPEED_BUMP;
+    const isHistoryList = activePanelContent === RecurringPanelOptionsEnum.HISTORY;
     return (
         <SlideUpPanel title={getPanelTitle()}
-                      closeText={activePanelContent === PANEL_OPTIONS_ENUM.HISTORY && historyModified ? getContent('CLOSE') : getContent('CANCEL')}
+                      closeText={activePanelContent === RecurringPanelOptionsEnum.HISTORY && historyModified ? getContent('CLOSE') : getContent('CANCEL')}
                       confirmText={getConfirmText()}
                       disableConfirmButton={!(deleteSpeedBumpActive || enableForwardButton)}
                       forwardActionCallback={forwardActionCallback}
-                      forwardActionButtonColor={deleteSpeedBumpActive ? 'var(--theme-red-dark)' : null}
+                      forwardActionButtonColor={deleteSpeedBumpActive ? 'var(--theme-red-dark)' : void 0}
                       backwardsActionCallback={getBackwardsActionCallback()}
                       tagColor={isHistoryList ? 'var(--theme-celadon-blue-pale)' : void 0}
                       onPanelClose={handlePanelClose}

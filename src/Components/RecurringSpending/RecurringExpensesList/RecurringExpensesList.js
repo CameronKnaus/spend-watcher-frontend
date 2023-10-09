@@ -20,14 +20,6 @@ export default function RecurringExpensesList({ isLoading, transactionList, onSu
     const currentDate = new Date();
     const currentMonthName = currentDate.toLocaleString('default', { month: 'long' });
 
-    function handleEditableExpensePanelClosure(serviceShouldRefresh) {
-        setExpenseToEdit(null);
-
-        if(serviceShouldRefresh) {
-            onSubmission(true);
-        }
-    }
-
     const headerClass = quickUpdateMode ? styles.quickUpdateHeader : `small-header-text ${styles.categoryLabel}`;
     let headerContentKey;
     if(quickUpdateMode) {
@@ -133,7 +125,7 @@ export default function RecurringExpensesList({ isLoading, transactionList, onSu
                 expenseToEdit && (
                     <RecurringSpendSlideInPanel editMode
                                                 existingTransaction={expenseToEdit}
-                                                onPanelClose={handleEditableExpensePanelClosure}
+                                                onPanelClose={() => setExpenseToEdit(null)}
                                                 onSubmission={onSubmission}
                     />
                 )

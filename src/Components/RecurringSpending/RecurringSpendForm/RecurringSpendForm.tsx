@@ -18,7 +18,7 @@ type RecurringSpendFormPropTypes = {
     existingTransaction?: RecurringTransaction,
     formIsValidCallback: Dispatch<SetStateAction<boolean>>,
     setDeleteSpeedBumpActive: EmptyCallback,
-    setForwardActionCallback: (callback: Function) => void,
+    setForwardActionCallback: Dispatch<SetStateAction<EmptyCallback>>,
     viewHistoryTab: EmptyCallback,
 };
 
