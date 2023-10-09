@@ -1,9 +1,9 @@
 import styles from './SkeletonLoader.module.css';
 
 type SkeletonLoaderPropTypes = {
-    children: any,
+    children?: any,
     isActive: boolean,
-    height: number | string,
+    height?: number | string,
     width?: number | string,
     customStyling?: Record<any, string | number >,
     align?: 'center' | 'left' | 'right'

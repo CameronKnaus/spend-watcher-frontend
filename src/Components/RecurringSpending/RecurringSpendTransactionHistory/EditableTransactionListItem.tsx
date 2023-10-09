@@ -5,10 +5,31 @@ import { FaPencilAlt, FaPlusCircle } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader/SkeletonLoader';
 
-export default function EditableTransactionListItem({ date, amount, amountLabel, placeholderLabel, confirmButtonLabel, onConfirm, transactionId, showAsLoader, isNewTransaction = false, newTransactionLabel }) {
-    const startingAmount = amount?.toFixed(2) ?? null;
+type EditableTransactionListItemPropTypes = {
+    date: string, // TODO: Restrict string to certain date type?
+    amount: number,
+    amountLabel: string,
+    placeholderLabel: string,
+    confirmButtonLabel: string,
+    onConfirm: (amountToLog: number, transactionId: string, date: string, isNewTransaction: boolean) => void,
+    transactionId?: string,
+    showAsLoader?: boolean,
+    isNewTransaction?: boolean,
+    newTransactionLabel?: string
+};
+export default function EditableTransactionListItem({ date,
+    amount,
+    amountLabel,
+    placeholderLabel = '',
+    confirmButtonLabel,
+    onConfirm,
+    transactionId = '',
+    showAsLoader = false,
+    isNewTransaction = false,
+    newTransactionLabel }: EditableTransactionListItemPropTypes) {
+    const startingAmount = Number(amount?.toFixed(2)) ?? null;
     const [expenseAmount, setExpenseAmount] = useState(isNewTransaction ? null : startingAmount);
-    const [initialExpenseAmount, setInitialExpenseAmount] = useState(startingAmount ?? -1);
+    const [initialExpenseAmount, setInitialExpenseAmount] = useState<number | null>(startingAmount ?? -1);
     const [isNewTransactionMode, setIsNewTransactionMode] = useState(isNewTransaction);
 
     if(!showAsLoader && isNewTransactionMode) {
@@ -28,7 +49,7 @@ export default function EditableTransactionListItem({ date, amount, amountLabel,
         // Reset initial expense amount to the new value.
         setIsNewTransactionMode(isNewTransaction);
         setInitialExpenseAmount(isNewTransaction ? null : expenseAmount);
-        onConfirm(amountToLog, transactionId, date, isNewTransaction);
+        onConfirm(amountToLog!, transactionId, date, isNewTransaction);
     }
 
     return (

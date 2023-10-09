@@ -39,3 +39,9 @@ export type RecurringTransaction = {
     isVariableRecurring: boolean,
     recurringSpendId: string
 }
+
+export type RecurringTransactionDetail = {
+    transactionId: string;
+    date: string;
+    transactionAmount: number;
+}
