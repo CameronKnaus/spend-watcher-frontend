@@ -24,15 +24,13 @@ type RecurringSpendFormPropTypes = {
 
 const defaultExistingTransaction: RecurringTransaction = {
     actualAmount: 0,
-    category: {
-        name: 'OTHER',
-        code: SpendingCategoryType.OTHER
-    },
+    category: SpendingCategoryType.OTHER,
     estimatedAmount: 0,
     expenseName: '',
     isActive: false,
     isVariableRecurring: false,
-    recurringSpendId: ''
+    recurringSpendId: '',
+    requiresUpdate: false
 };
 
 // existingTransaction should be an object containing all transaction keys
@@ -43,14 +41,13 @@ export default function RecurringSpendForm({ editMode,
     setForwardActionCallback,
     viewHistoryTab }: RecurringSpendFormPropTypes) {
     const getContent = useContent('RECURRING_SPENDING');
-    const getCategoryContent = useContent('SPENDING_CATEGORIES');
     const queryClient = useQueryClient();
 
     // State for form values
     const [expenseName, setExpenseName] = useState(existingTransaction.expenseName ?? '');
     const [isVariable, setIsVariable] = useState(Boolean(existingTransaction.isVariableRecurring ?? 0));
     const [amount, setAmount] = useState(existingTransaction.estimatedAmount || null);
-    const [category, setCategory] = useState(existingTransaction.category || { code: 'OTHER', name: getCategoryContent('OTHER') });
+    const [category, setCategory] = useState(existingTransaction.category || SpendingCategoryType.OTHER);
 
     useEffect(() => {
         setForwardActionCallback(() => {
@@ -65,7 +62,7 @@ export default function RecurringSpendForm({ editMode,
                         recurringSpendId: existingTransaction.recurringSpendId,
                         spendName: expenseName,
                         amount: amount,
-                        spendCategory: (category && category.code) || 'OTHER',
+                        spendCategory: category || 'OTHER',
                         isVariable
                     }).then(onSubmission);
                 };
@@ -76,7 +73,7 @@ export default function RecurringSpendForm({ editMode,
                 axios.post(SERVICE_ROUTES.submitNewRecurringExpense, {
                     spendName: expenseName,
                     amount: amount,
-                    spendCategory: (category && category.code) || 'OTHER',
+                    spendCategory: category || 'OTHER',
                     isVariable
                 }).then(onSubmission);
             };
@@ -110,7 +107,8 @@ export default function RecurringSpendForm({ editMode,
                 <label htmlFor='category-input' style={{ width: 100 }}>
                     {getContent('CATEGORY_LABEL')}
                 </label>
-                <CategoryInput textInputStyles={styles.textInput}
+                <CategoryInput categoryContentType='SPENDING_CATEGORIES'
+                               textInputStyles={styles.textInput}
                                value={category}
                                categoryType='transactions'
                                onChange={setCategory}

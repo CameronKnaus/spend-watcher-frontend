@@ -15,7 +15,8 @@ export default function SpendCategoryFilter({ filterCategory, setFilterCategory,
                     { getContent('FILTER_BY_CATEGORY') }
                 </label>
             </div>
-            <CategoryInput categoryType='transactions'
+            <CategoryInput categoryContentType='SPENDING_CATEGORIES'
+                           categoryType='transactions'
                            value={filterCategory}
                            textInputStyles={textInputStyles}
                            onChange={setFilterCategory}

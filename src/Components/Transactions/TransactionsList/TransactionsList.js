@@ -87,10 +87,7 @@ export default function TransactionsList({ transactionsList, onEditCallback = ()
                                                     amount={transaction.amount}
                                                     amountDescription={dayjs(transaction.date).format('MMMM')}
                                                     onClick={() => {
-                                                        setRecurringTransactionToEdit({
-                                                            ...transaction,
-                                                            category: { code: transaction.category, name: getContent('SPENDING_CATEGORIES', transaction.category) }
-                                                        });
+                                                        setRecurringTransactionToEdit(transaction);
                                                     }}
                                 />
                             ) : (

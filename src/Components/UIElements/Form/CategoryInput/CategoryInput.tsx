@@ -2,26 +2,28 @@ import styles from './CategoryInput.module.css';
 import { ProductCategoryType, useCategoryList } from 'CustomHooks/useCategoryList';
 import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/CategoryIcon';
 import useContent from 'CustomHooks/useContent';
-import { ManagedTransactionType } from 'Types/TransactionTypes';
-import { ManagedAccountType } from 'Types/AccountTypes';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { AnyCategoryCode } from 'Constants/categories';
 
-type CategoryInputPropTypes<T extends ManagedTransactionType | ManagedAccountType> = {
+type categoryContentType = 'ACCOUNT_CATEGORIES' | 'SPENDING_CATEGORIES'; // TODO: Clean this up even further
+
+type CategoryInputPropTypes<T extends AnyCategoryCode> = {
     id?: string,
     textInputStyles: string,
     value: T,
     onChange: Dispatch<SetStateAction<T>>,
-    categoryType: ProductCategoryType
+    categoryType: ProductCategoryType,
+    categoryContentType: categoryContentType
 }
 
 // This is a controlled-only component.  State must be managed by the parent
-export default function CategoryInputs<T extends ManagedTransactionType | ManagedAccountType>({ id = 'category-input', textInputStyles, value, onChange, categoryType }: CategoryInputPropTypes<T>) {
-    // TODO: Clean this up so that CategoryInput only tracks category code i.e. 'MATERIAL_ITEMS' / gets category code only from useCategoryList
+export default function CategoryInputs<T extends AnyCategoryCode>({ id = 'category-input', textInputStyles, value, onChange, categoryType, categoryContentType }: CategoryInputPropTypes<T>) {
     const categoryList = useCategoryList<T>(categoryType);
     const [open, setOpen] = useState(false);
     const [filterText, setFilterText] = useState('');
     const ref = useRef(null);
     const getContent = useContent('GENERAL');
+    const getCategoryContent = useContent(categoryContentType);
 
 
     useEffect(() => {
@@ -34,11 +36,12 @@ export default function CategoryInputs<T extends ManagedTransactionType | Manage
         setOpen(event && event.target === ref.current);
     }
 
-    function filter(categories: Array<ManagedTransactionType | ManagedAccountType>) {
+    function filter(categories: Array<T>) {
         const target = filterText.toLowerCase();
 
         return categories.filter(category => {
-            const categoryName = category.name.toLowerCase();
+            // @ts-ignore // TODO: Correct this
+            const categoryName = getCategoryContent(category).toLowerCase();
             return categoryName.indexOf(target) > -1;
         });
     }
@@ -50,11 +53,12 @@ export default function CategoryInputs<T extends ManagedTransactionType | Manage
         }
 
         if(value) {
-            return value.name || getContent('EMPTY');
+            return value || getContent('EMPTY');
         }
 
-        // Default to 'Other'
-        return categoryList[0]?.name || getContent('EMPTY');
+        // Default to 'Other' TODO: Revisit typescript conversion
+        // @ts-ignore
+        return getCategoryContent(categoryList[0]) || getContent('EMPTY');
     }
 
     return (
@@ -63,7 +67,7 @@ export default function CategoryInputs<T extends ManagedTransactionType | Manage
                 <div className={styles.textInput}>
                     <input ref={ref}
                            id={id}
-                           className={`${textInputStyles} ${value && value.code === 'OTHER' ? styles.otherText : ''}`}
+                           className={`${textInputStyles} ${value && value === 'OTHER' ? styles.otherText : ''}`}
                            maxLength={20}
                            value={currentSelectedValue()}
                            autoComplete='off'
@@ -80,20 +84,22 @@ export default function CategoryInputs<T extends ManagedTransactionType | Manage
                 open && (
                     <div className={`${styles.options} low-shadow`}>
                         {
+                            // @ts-ignore TODO: Revisit Typescript
                             filter(categoryList).map(category => (
-                                <div key={category.code}
+                                <div key={category}
                                      className={`${styles.option} ${value === category ? styles.selected : ''}`}
                                      onClick={() => {
-                                         onChange(category as T);
+                                         onChange(category);
                                          setFilterText('');
                                          setOpen(false);
                                      }}
                                 >
-                                    <CategoryIcon categoryCode={category.code}
+                                    <CategoryIcon categoryCode={category}
                                                   containerSize='2rem'
                                                   iconSize='1.2rem'
                                     />
-                                    {category.name}
+                                    {/* @ts-ignore TODO: Revisit typescript conversion */}
+                                    {getCategoryContent(category)}
                                 </div>
                             ))
                         }

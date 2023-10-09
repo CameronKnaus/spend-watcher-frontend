@@ -9,6 +9,8 @@ import axios from 'axios';
 import { SpendingCategoryType } from 'Constants/categories';
 import { RecurringTransaction } from 'Types/TransactionTypes';
 import { EmptyCallback } from 'Types/QoLTypes';
+import { useQueryClient } from '@tanstack/react-query';
+import { recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
 
 export enum RecurringPanelOptionsEnum {
     RECURRING = 'RECURRING',
@@ -18,26 +20,22 @@ export enum RecurringPanelOptionsEnum {
 
 type RecurringSpendSlideInPanelPropTypes = {
     onPanelClose: EmptyCallback,
-    onSubmission: EmptyCallback,
     editMode?: boolean,
     existingTransaction?: RecurringTransaction
 }
 
 const defaultExistingTransaction: RecurringTransaction = {
     actualAmount: 0,
-    category: {
-        name: 'OTHER',
-        code: SpendingCategoryType.OTHER
-    },
+    category: SpendingCategoryType.OTHER,
     estimatedAmount: 0,
     expenseName: '',
     isActive: false,
     isVariableRecurring: false,
-    recurringSpendId: ''
+    recurringSpendId: '',
+    requiresUpdate: false
 };
 
 export default function RecurringSpendSlideInPanel({ onPanelClose,
-    onSubmission,
     editMode = false,
     existingTransaction = defaultExistingTransaction }: RecurringSpendSlideInPanelPropTypes) {
     const getContent = useContent('RECURRING_SPENDING');
@@ -45,6 +43,7 @@ export default function RecurringSpendSlideInPanel({ onPanelClose,
     const [enableForwardButton, setEnableForwardButton] = useState(true);
     const [forwardActionCallback, setForwardActionCallback] = useState<EmptyCallback>(() => { /* NOOP */ });
     const [historyModified, setHistoryModified] = useState(false);
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         if(activePanelContent === RecurringPanelOptionsEnum.DELETE_SPEED_BUMP) {
@@ -53,11 +52,13 @@ export default function RecurringSpendSlideInPanel({ onPanelClose,
                     // Handle service call
                     axios.post(SERVICE_ROUTES.deleteRecurringExpense, {
                         recurringSpendId: existingTransaction.recurringSpendId
-                    }).then(onSubmission);
+                    }).then(() => {
+                        queryClient.invalidateQueries(recurringTransactionDependentQueryKeys);
+                    });
                 };
             });
         }
-    }, [activePanelContent, existingTransaction.recurringSpendId, onSubmission]);
+    }, [activePanelContent, existingTransaction.recurringSpendId, queryClient]);
 
     function renderSlideInPanelContents() {
         switch (activePanelContent) {

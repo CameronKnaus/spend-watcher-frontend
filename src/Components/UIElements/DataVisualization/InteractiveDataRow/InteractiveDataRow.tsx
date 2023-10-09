@@ -19,7 +19,7 @@ function parseAmount(amount: number, isExpense: boolean) {
 type InteractiveDataRowPropTypes = {
     title: string,
     description?: string,
-    amount: number,
+    amount: number | String,
     amountDescription: string,
     isExpense?: boolean,
     iconCategory: AccountCategoryType | SpendingCategoryType,
@@ -30,7 +30,8 @@ type InteractiveDataRowPropTypes = {
 
 export default function InteractiveDataRow({ title, description, amount, amountDescription, isExpense = false, iconCategory, onClick, isLoading = false, showRevolvingIcon }: InteractiveDataRowPropTypes) {
     // Amount to show
-    const parsedAmount = parseAmount(amount, isExpense);
+    // TODO: Revisit after typescript conversion
+    const parsedAmount = parseAmount(Number(amount), isExpense);
 
     function handleClick() {
         if(isLoading) {

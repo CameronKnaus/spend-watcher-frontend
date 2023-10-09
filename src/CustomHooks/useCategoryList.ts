@@ -1,8 +1,6 @@
 import useContent from 'CustomHooks/useContent';
-import { ACCOUNT_CATEGORIES, SPENDING_CATEGORIES } from 'Constants/categories';
-import { ManagedTransactionType } from 'Types/TransactionTypes';
+import { ACCOUNT_CATEGORIES, AccountCategoryType, SPENDING_CATEGORIES, SpendingCategoryType } from 'Constants/categories';
 import { useState, useEffect } from 'react';
-import { ManagedAccountType } from 'Types/AccountTypes';
 
 // Supported category lists
 const AVAILABLE_LISTS: Record<ProductCategoryType, { name: string, list: any }> = {
@@ -18,7 +16,7 @@ const AVAILABLE_LISTS: Record<ProductCategoryType, { name: string, list: any }> 
 
 export type ProductCategoryType = 'transactions' | 'accounts';
 
-export function useCategoryList<T extends ManagedAccountType | ManagedTransactionType>(listType: ProductCategoryType): Array<T> {
+export function useCategoryList<T extends SpendingCategoryType | AccountCategoryType>(listType: ProductCategoryType): Array<T> {
     const [categoryList, setCategoryList] = useState<Array<T>>([]);
     const getSpendingContent = useContent('SPENDING_CATEGORIES');
     const getMyMoneyContent = useContent('ACCOUNT_CATEGORIES');

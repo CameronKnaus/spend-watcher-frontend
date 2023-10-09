@@ -9,19 +9,28 @@ import formatCurrency from '../../../Util/Formatters/formatCurrency';
 import { FaPencilAlt } from 'react-icons/fa';
 import MonthlySpendUpdateForm from 'Components/RecurringSpending/MonthlySpendUpdateForm/MonthlySpendUpdateForm';
 import Alert from 'Components/UIElements/Informational/Alert/Alert';
+import { RecurringTransaction } from 'Types/TransactionTypes';
+import englishContent from 'Content/englishContent.json';
 
-export default function RecurringExpensesList({ isLoading, transactionList, onSubmission, hasNoExpenses, quickUpdateMode }) {
+type RecurringExpensesListPropTypes = {
+    isLoading?: boolean,
+    transactionList: Array<RecurringTransaction>,
+    hasNoExpenses: boolean,
+    quickUpdateMode?: boolean
+}
+
+export default function RecurringExpensesList({ isLoading = false, transactionList, hasNoExpenses, quickUpdateMode = false }: RecurringExpensesListPropTypes) {
     const [createExpensePanelOpen, setCreateExpensePanelOpen] = useState(false);
-    const [expenseToEdit, setExpenseToEdit] = useState(null);
-    const [expenseToUpdate, setExpenseToUpdate] = useState(null);
-    const getRecurringContent = useContent('RECURRING_SPENDING');
-    const getContent = useContent();
+    const [expenseToEdit, setExpenseToEdit] = useState<RecurringTransaction | null>(null);
+    const [expenseToUpdate, setExpenseToUpdate] = useState<RecurringTransaction | null>(null);
+    const getContent = useContent('RECURRING_SPENDING');
+    const getCategoryContent = useContent('SPENDING_CATEGORIES');
 
     const currentDate = new Date();
     const currentMonthName = currentDate.toLocaleString('default', { month: 'long' });
 
     const headerClass = quickUpdateMode ? styles.quickUpdateHeader : `small-header-text ${styles.categoryLabel}`;
-    let headerContentKey;
+    let headerContentKey: keyof typeof englishContent.RECURRING_SPENDING;
     if(quickUpdateMode) {
         headerContentKey = 'MONTHLY_UPDATE_REQUIRED';
     } else if(hasNoExpenses) {
@@ -30,37 +39,31 @@ export default function RecurringExpensesList({ isLoading, transactionList, onSu
         headerContentKey = 'RECURRING_TRANSACTIONS';
     }
 
-    function handleListItemSelection(transaction) {
+    function handleListItemSelection(transaction: RecurringTransaction) {
         if(quickUpdateMode) {
             setExpenseToUpdate(transaction);
             return;
         }
 
-        setExpenseToEdit({
-            ...transaction,
-            category: {
-                code: transaction.category,
-                name: getContent('SPENDING_CATEGORIES', transaction.category)
-            }
-        });
+        setExpenseToEdit(transaction);
     }
 
     return (
         <>
             <h3 className={headerClass}>
-                {getRecurringContent(headerContentKey)}
+                {getContent(headerContentKey)}
             </h3>
             {
                 hasNoExpenses && (
                     <div className={styles.noTransactionsDescription}>
-                        {getRecurringContent('NONE_LOGGED_YET')}
+                        {getContent('NONE_LOGGED_YET')}
                     </div>
                 )
             }
             {
                 quickUpdateMode && (
                     <div className={styles.alertContainer}>
-                        <Alert alertText={getRecurringContent('ATTENTION_UPDATE_REQUIRED')} size='small' />
+                        <Alert alertText={getContent('ATTENTION_UPDATE_REQUIRED')} size='small' />
                     </div>
                 )
             }
@@ -73,18 +76,18 @@ export default function RecurringExpensesList({ isLoading, transactionList, onSu
                             const isVariable = transaction.isVariableRecurring;
                             const { category, actualAmount, estimatedAmount, requiresUpdate } = transaction;
 
-                            let description = getContent('SPENDING_CATEGORIES', category);
+                            let description = getCategoryContent(category);
                             let amountDescription;
                             let amount;
 
                             if(isVariable) {
                                 amount = requiresUpdate ? '--' : actualAmount;
-                                description += ` ${getRecurringContent('VARIABLE')}`;
-                                amountDescription = getRecurringContent('VARIABLE_EXPENSE', [formatCurrency(estimatedAmount)]);
+                                description += ` ${getContent('VARIABLE')}`;
+                                amountDescription = getContent('VARIABLE_EXPENSE', [formatCurrency(estimatedAmount)]);
                             } else {
                                 amount = actualAmount;
                                 const estimateDiffersFromActual = estimatedAmount !== actualAmount;
-                                amountDescription = estimateDiffersFromActual ? getRecurringContent('VARIABLE_EXPENSE', [formatCurrency(estimatedAmount)]) : getRecurringContent('FIXED_EXPENSE');
+                                amountDescription = estimateDiffersFromActual ? getContent('VARIABLE_EXPENSE', [formatCurrency(estimatedAmount)]) : getContent('FIXED_EXPENSE');
                             }
 
                             return (
@@ -103,7 +106,7 @@ export default function RecurringExpensesList({ isLoading, transactionList, onSu
                                             <div className={styles.editIcon}>
                                                 <FaPencilAlt />
                                             </div>
-                                            {getContent('RECURRING_SPENDING', 'UPDATE_REQUIRED', [currentMonthName])}
+                                            {getContent('UPDATE_REQUIRED', [currentMonthName])}
                                         </button>
                                     )}
                                 </div>
@@ -113,20 +116,19 @@ export default function RecurringExpensesList({ isLoading, transactionList, onSu
             </div>
             {
                 !quickUpdateMode && <ThickActionButton buttonColor='var(--theme-red-dark)'
-                                                       text={getRecurringContent('CREATE_NEW')}
+                                                       text={getContent('CREATE_NEW')}
                                                        callback={() => { setCreateExpensePanelOpen(true) }}
                                                        isDisabled={isLoading}
                                     />
             }
             {
-                createExpensePanelOpen && <RecurringSpendSlideInPanel onPanelClose={() => setCreateExpensePanelOpen(false)} onSubmission={onSubmission} />
+                createExpensePanelOpen && <RecurringSpendSlideInPanel onPanelClose={() => setCreateExpensePanelOpen(false)} />
             }
             {
                 expenseToEdit && (
                     <RecurringSpendSlideInPanel editMode
                                                 existingTransaction={expenseToEdit}
                                                 onPanelClose={() => setExpenseToEdit(null)}
-                                                onSubmission={onSubmission}
                     />
                 )
             }
@@ -135,7 +137,6 @@ export default function RecurringExpensesList({ isLoading, transactionList, onSu
                     <MonthlySpendUpdateForm expenseToUpdate={expenseToUpdate}
                                             currentMonthName={currentMonthName}
                                             onPanelClose={() => setExpenseToUpdate(null)}
-                                            onSubmission={onSubmission}
                     />
                 )
             }

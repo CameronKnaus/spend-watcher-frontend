@@ -11,7 +11,7 @@ import Link from 'Components/UIElements/Navigation/Link/Link';
 import MONTH_NAMES from 'Constants/MonthNames';
 import dayjs from 'dayjs';
 import { EmptyCallback } from 'Types/QoLTypes';
-import { ManagedAccountType, MoneyAccount, MoneyAccountPayload } from 'Types/AccountTypes';
+import { MoneyAccount, MoneyAccountPayload } from 'Types/AccountTypes';
 import { AccountCategoryType } from 'Constants/categories';
 import { useQueryClient } from '@tanstack/react-query';
 import { myMoneyDependentQueryKeys } from 'Util/QueryKeys';
@@ -44,20 +44,19 @@ const defaultExistingAccount: MoneyAccount = {
 
 export default function AccountForm({ onPanelClose, editMode, existingAccount = defaultExistingAccount, swapToEditBalance = () => { /* NOOP */ } }: AccountFormPropTypes) {
     const getContent = useContent('MY_MONEY');
-    const getAccountCategoryContent = useContent('ACCOUNT_CATEGORIES');
     const queryClient = useQueryClient();
 
     // State for form values
     const [formValid, setFormValid] = React.useState(Boolean(existingAccount.currentAccountValue));
     const [accountName, setAccountName] = React.useState(existingAccount.accountName);
-    const [category, setCategory] = React.useState<ManagedAccountType>(() => {
+    const [category, setCategory] = React.useState<AccountCategoryType>(() => {
         const accountType = existingAccount.accountType;
         if(accountType) {
-            return { code: accountType, name: getAccountCategoryContent(accountType) } as ManagedAccountType;
+            return accountType;
         }
 
         // Default to checking
-        return { code: AccountCategoryType.CHECKING, name: getAccountCategoryContent(AccountCategoryType.CHECKING) } as ManagedAccountType;
+        return AccountCategoryType.CHECKING;
     });
     const [accountValue, setAccountValue] = React.useState<number | null>(null);
     const [growthRate, setGrowthRate] = React.useState(existingAccount.growthRate);
@@ -76,7 +75,7 @@ export default function AccountForm({ onPanelClose, editMode, existingAccount = 
 
         const payload: MoneyAccountPayload = {
             accountName,
-            accountCategory: category.code,
+            accountCategory: category,
             startingAccountValue: accountValue,
             growthRate: Number(growthRate),
             hasVariableGrowthRate: isVariable
@@ -131,7 +130,8 @@ export default function AccountForm({ onPanelClose, editMode, existingAccount = 
                 <label htmlFor='category-input' style={{ width: 100 }}>
                     {getContent('CATEGORY_LABEL')}
                 </label>
-                <CategoryInput textInputStyles={styles.textInput}
+                <CategoryInput categoryContentType='ACCOUNT_CATEGORIES'
+                               textInputStyles={styles.textInput}
                                value={category}
                                categoryType='accounts'
                                onChange={setCategory}

@@ -4,12 +4,15 @@ import LabelAndValueBox from 'Components/UIElements/DataVisualization/LabelAndVa
 import RecurringExpensesList from 'Components/RecurringSpending/RecurringExpensesList/RecurringExpensesList';
 import { useEffect, useMemo, useState } from 'react';
 import NavigationalBanner from 'Components/UIElements/Navigation/NavigationalBanner/NavigationalBanner';
-import useFetch from '../../CustomHooks/useFetch';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import formatCurrency from '../../Util/Formatters/formatCurrency';
 import Alert from '../../Components/UIElements/Informational/Alert/Alert';
-import { useQueryClient } from '@tanstack/react-query';
-import { transactionDependentQueryKeys } from 'Util/QueryKeys';
+import { useQuery } from '@tanstack/react-query';
+import { recurringSpendingQueryKey } from 'Util/QueryKeys';
+import msMapper from 'Util/Time/TimeMapping';
+import axios from 'axios';
+import recurringSpendingTransform from './recurringSpendingTransform';
+import { RecurringTransaction } from 'Types/TransactionTypes';
 
 
 export default function RecurringSpending() {
@@ -18,13 +21,21 @@ export default function RecurringSpending() {
         return currentDate.toLocaleString('default', { month: 'long' });
     }, []);
     const getContent = useContent('RECURRING_SPENDING');
-    const [recurringTransactionsList, setRecurringTransactionsList] = useState([]);
+    const [recurringTransactionsList, setRecurringTransactionsList] = useState<Array<RecurringTransaction>>([]);
     const [actualMonthTotal, setActualMonthTotal] = useState(0);
     const [estimatedMonthTotal, setEstimatedMonthTotal] = useState(0);
     const [hasVariableRecurring, setHasVariableRecurring] = useState(false);
-    const queryClient = useQueryClient();
 
-    const { response, loading, fire } = useFetch(SERVICE_ROUTES.getAllRecurringExpenses, true);
+    const { isLoading, data: response } = useQuery({
+        queryKey: [
+            recurringSpendingQueryKey
+        ],
+        staleTime: msMapper.day,
+        queryFn: () => {
+            return axios.get(SERVICE_ROUTES.getAllRecurringExpenses);
+        },
+        select: recurringSpendingTransform
+    });
 
     useEffect(() => {
         if(!response) {
@@ -37,15 +48,9 @@ export default function RecurringSpending() {
         setHasVariableRecurring(response.hasVariableRecurring);
     }, [response]);
 
-    function onSubmission(shouldShowLoaders) {
-        const fireSilently = !shouldShowLoaders;
-        queryClient.invalidateQueries(transactionDependentQueryKeys);
-        fire(fireSilently);
-    }
-
     const estimateVariance = response?.estimateVariance ?? 0;
     const changeLabel = getContent(estimateVariance > 0 ? 'VALUE_CHANGE_OVERSPENT' : 'VALUE_CHANGE_SAVED');
-    const hasNoExpenses = response?.noTransactions;
+    const hasNoExpenses = Boolean(response?.noTransactions);
     return (
         <>
             <NavigationalBanner title={getContent('PAGE_TITLE')} />
@@ -53,13 +58,13 @@ export default function RecurringSpending() {
                 { !hasNoExpenses && (hasVariableRecurring ? (
                     <>
                         <div className={styles.totalContainer}>
-                            <LabelAndValueBox isLoading={loading}
+                            <LabelAndValueBox isLoading={isLoading}
                                               value={`-${formatCurrency(estimatedMonthTotal ?? 0)}`}
                                               label={getContent('TOTAL')}
                             />
                         </div>
                         <div className={styles.totalContainer}>
-                            <LabelAndValueBox isLoading={loading}
+                            <LabelAndValueBox isLoading={isLoading}
                                               value={`-${formatCurrency(actualMonthTotal ?? 0)}`}
                                               valueChange={response?.estimateVariance}
                                               valueChangeLabel={changeLabel}
@@ -69,7 +74,7 @@ export default function RecurringSpending() {
                     </>
                     ) : (
                         <div className={styles.totalContainer}>
-                            <LabelAndValueBox isLoading={loading}
+                            <LabelAndValueBox isLoading={isLoading}
                                               value={`-${formatCurrency(estimatedMonthTotal ?? 0)}`}
                                               label={getContent('MONTHLY_TOTAL')}
                             />
@@ -81,7 +86,7 @@ export default function RecurringSpending() {
                         <Alert alertText={getContent('ATTENTION_UPDATE_REQUIRED')} />
                     </div>
                 )}
-                <RecurringExpensesList hasNoExpenses={hasNoExpenses} isLoading={loading} transactionList={recurringTransactionsList} onSubmission={onSubmission} />
+                <RecurringExpensesList hasNoExpenses={hasNoExpenses} isLoading={isLoading} transactionList={recurringTransactionsList} />
             </div>
         </>
     );

@@ -44,7 +44,6 @@ export default function TransactionForm({
     editMode = false,
     existingTransaction = {} as FormattedTransaction
 }: TransactionFormPropTypes) {
-    const getCategoryContent = useContent('SPENDING_CATEGORIES');
     const getContent = useContent('TRANSACTIONS');
     const queryClient = useQueryClient();
 
@@ -53,7 +52,7 @@ export default function TransactionForm({
     // State for form values
     const [formValid, setFormValid] = useState(Boolean(existingTransaction.amount)); // defaults false
     const [amount, setAmount] = useState<number | null>(existingTransaction.amount ?? null);
-    const [category, setCategory] = useState(existingTransaction.category || { code: SpendingCategoryType.OTHER, name: getCategoryContent('OTHER') });
+    const [category, setCategory] = useState(existingTransaction.category || SpendingCategoryType.OTHER);
     const [isUncommon, setIsUncommon] = useState(Boolean(existingTransaction.isUncommon));
     const [note, setNote] = useState(existingTransaction.note || '');
     const [selectedDate, setSelectedDate] = useState<Dayjs>(existingTransaction.date ? dayjs(existingTransaction.date) : dayjs()); // defaults to today
@@ -87,7 +86,7 @@ export default function TransactionForm({
             endpoint = SERVICE_ROUTES.submitNewTransaction;
             payload = {
                 amount: parseFloat(`${amount}`), // TODO: Check that this conersion is necessary still?
-                category: (category && category.code) || 'OTHER',
+                category: category || 'OTHER',
                 isUncommon,
                 note,
                 selectedDate: selectedDate.format('YYYY-MM-DD'),
@@ -98,7 +97,7 @@ export default function TransactionForm({
             payload = {
                 transactionId: existingTransaction.id,
                 amount: parseFloat(`${amount}`),
-                category: (category && category.code) || 'OTHER',
+                category: category || 'OTHER',
                 isUncommon,
                 note,
                 selectedDate: selectedDate.format('YYYY-MM-DD'),
@@ -163,7 +162,8 @@ export default function TransactionForm({
                                 <label htmlFor='category-input' style={{ width: 100 }}>
                                     {getContent('CATEGORY_LABEL')}
                                 </label>
-                                <CategoryInput textInputStyles={styles.textInput}
+                                <CategoryInput categoryContentType='SPENDING_CATEGORIES'
+                                               textInputStyles={styles.textInput}
                                                value={category}
                                                categoryType='transactions'
                                                onChange={setCategory}

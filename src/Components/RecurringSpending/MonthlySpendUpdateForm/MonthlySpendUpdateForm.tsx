@@ -12,7 +12,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
 import { RecurringTransaction } from 'Types/TransactionTypes';
 import { EmptyCallback } from 'Types/QoLTypes';
-import { SpendingCategoryType } from 'Constants/categories';
 
 type MonthlySpendUpdateFormPropTypes = {
     onPanelClose: EmptyCallback;
@@ -65,8 +64,7 @@ export default function MonthlySpendUpdateForm({ onPanelClose, expenseToUpdate, 
         >
             <form className={styles.expenseUpdateForm}>
                 <div className={styles.expenseSummary}>
-                    {/* TODO: Originally this categoryIcon was receiving a categoryCode of expenseToUpdate.category, but theres a lot of typescript mismatch */}
-                    <CategoryIcon categoryCode={SpendingCategoryType.VEHICLE}
+                    <CategoryIcon categoryCode={expenseToUpdate.category}
                                   containerSize='56px'
                                   iconSize='33px'
                                   customClasses={styles.iconContainer}

@@ -1,17 +1,10 @@
 import { SpendingCategoryType } from 'Constants/categories';
-import englishContent from 'Content/englishContent.json';
-
-// Managed in the sense that 'code' is used for state management and 'name' is used for the label on screen
-export type ManagedTransactionType = {
-    code: SpendingCategoryType,
-    name: keyof typeof englishContent.SPENDING_CATEGORIES
-}
 
 // TODO: Consolidate all transaction types if possible
 export type FormattedTransaction = {
     id: string;
     amount: number,
-    category: ManagedTransactionType,
+    category: SpendingCategoryType,
     date: string;
     isUncommon: boolean;
     note?: string;
@@ -32,13 +25,14 @@ export type Transaction = {
 
 export type RecurringTransaction = {
     actualAmount: number,
-    category: ManagedTransactionType,
+    category: SpendingCategoryType,
     estimatedAmount: number,
     expenseName: string,
     isActive: boolean,
     isVariableRecurring: boolean,
     recurringSpendId: string,
     transactionId?: string,
+    requiresUpdate: boolean;
 }
 
 export type RecurringTransactionDetail = {
