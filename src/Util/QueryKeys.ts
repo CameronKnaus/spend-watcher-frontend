@@ -2,7 +2,8 @@ export const spendingBreakdownQueryKey = 'spending-breakdown';
 export const spendingSummaryQueryKey = 'spending-summary';
 export const tripManagerQueryKey = 'trip-manangement';
 export const accountSummaryQueryKey = 'money-account-summary';
-export const recurringExpenseTransactionHistory = 'recurring-expense-transaction-history';
+export const recurringExpenseTransactionHistoryQueryKey = 'recurring-expense-transaction-history';
+export const recurringSpendingQueryKey = 'recurring-spending';
 
 
 // Dependent query keys are all query keys that need to be invalidated when the user makes a modification.
@@ -18,7 +19,7 @@ export const myMoneyDependentQueryKeys = [
 ];
 
 export const recurringTransactionDependentQueryKeys = [
-    recurringExpenseTransactionHistory
+    recurringSpendingQueryKey
 ];
 
 export const allDependentQueryKeys = [

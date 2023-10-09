@@ -7,7 +7,7 @@ import useContent from 'CustomHooks/useContent';
 import formatCurrency from 'Util/Formatters/formatCurrency';
 import axios from 'axios';
 import { RecurringTransaction } from 'Types/TransactionTypes';
-import { recurringExpenseTransactionHistory, recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
+import { recurringExpenseTransactionHistoryQueryKey } from 'Util/QueryKeys';
 import msMapper from 'Util/Time/TimeMapping';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import recurringTransactionHistoryTransform from './recurringTransactionHistoryTransform';
@@ -28,7 +28,7 @@ export default function RecurringSpendTransactionHistory({ recurringExpense, set
     // TODO: Handle error scenario
     const { isLoading, data: response } = useQuery({
         queryKey: [
-            recurringExpenseTransactionHistory, recurringExpense.recurringSpendId, currentDate
+            recurringExpenseTransactionHistoryQueryKey, recurringExpense.recurringSpendId, currentDate
         ],
         staleTime: msMapper.day,
         queryFn: () => {
@@ -72,7 +72,7 @@ export default function RecurringSpendTransactionHistory({ recurringExpense, set
         axios.post(SERVICE_ROUTES.updateRecurringExpense, payload).then(() => {
             setTimeout(() => {
                 setLastEditedTransactionId('');
-                queryClient.invalidateQueries(recurringTransactionDependentQueryKeys);
+                queryClient.invalidateQueries([recurringExpenseTransactionHistoryQueryKey]);
             }, 300);
 
             setSuccessfulLoadOccurred(true);

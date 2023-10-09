@@ -32,12 +32,12 @@ export type Transaction = {
 
 export type RecurringTransaction = {
     actualAmount: number,
-    category: SpendingCategoryType,
+    category: ManagedTransactionType,
     estimatedAmount: number,
     expenseName: string,
     isActive: boolean,
     isVariableRecurring: boolean,
-    recurringSpendId: string
+    recurringSpendId: string,
 }
 
 export type RecurringTransactionDetail = {

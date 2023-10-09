@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import useContent from 'CustomHooks/useContent';
 import styles from './RecurringSpendForm.module.css';
 import MoneyInput from 'Components/UIElements/Form/MoneyInput/MoneyInput';
@@ -7,27 +7,64 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import axios from 'axios';
 import Link from 'Components/UIElements/Navigation/Link/Link';
 import { IoTrashSharp } from 'react-icons/io5';
+import { useQueryClient } from '@tanstack/react-query';
+import { EmptyCallback } from 'Types/QoLTypes';
+import { RecurringTransaction } from 'Types/TransactionTypes';
+import { SpendingCategoryType } from 'Constants/categories';
+import { recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
+
+type RecurringSpendFormPropTypes = {
+    editMode: boolean,
+    existingTransaction?: RecurringTransaction,
+    formIsValidCallback: Dispatch<SetStateAction<boolean>>,
+    setDeleteSpeedBumpActive: EmptyCallback,
+    setForwardActionCallback: (callback: Function) => void,
+    viewHistoryTab: EmptyCallback,
+};
+
+const defaultExistingTransaction: RecurringTransaction = {
+    actualAmount: 0,
+    category: {
+        name: 'OTHER',
+        code: SpendingCategoryType.OTHER
+    },
+    estimatedAmount: 0,
+    expenseName: '',
+    isActive: false,
+    isVariableRecurring: false,
+    recurringSpendId: ''
+};
 
 // existingTransaction should be an object containing all transaction keys
-export default function RecurringSpendForm({ onSubmission, editMode, existingTransaction = {}, formIsValidCallback, setDeleteSpeedBumpActive, setForwardActionCallback, viewHistoryTab }) {
-    const text = useContent('RECURRING_SPENDING');
-    const getContent = useContent();
+export default function RecurringSpendForm({ editMode,
+    existingTransaction = defaultExistingTransaction,
+    formIsValidCallback,
+    setDeleteSpeedBumpActive,
+    setForwardActionCallback,
+    viewHistoryTab }: RecurringSpendFormPropTypes) {
+    const getContent = useContent('RECURRING_SPENDING');
+    const getCategoryContent = useContent('SPENDING_CATEGORIES');
+    const queryClient = useQueryClient();
 
     // State for form values
     const [expenseName, setExpenseName] = useState(existingTransaction.expenseName ?? '');
     const [isVariable, setIsVariable] = useState(Boolean(existingTransaction.isVariableRecurring ?? 0));
     const [amount, setAmount] = useState(existingTransaction.estimatedAmount || null);
-    const [category, setCategory] = useState(existingTransaction.category || { code: 'OTHER', name: getContent('SPENDING_CATEGORIES', 'OTHER') });
+    const [category, setCategory] = useState(existingTransaction.category || { code: 'OTHER', name: getCategoryContent('OTHER') });
 
     useEffect(() => {
         setForwardActionCallback(() => {
+            function onSubmission() {
+                queryClient.invalidateQueries(recurringTransactionDependentQueryKeys);
+            }
+
             if(editMode) {
                 return () => {
                     // Handle service call
                     axios.post(SERVICE_ROUTES.editRecurringExpense, {
                         recurringSpendId: existingTransaction.recurringSpendId,
                         spendName: expenseName,
-                        amount: parseFloat(amount),
+                        amount: amount,
                         spendCategory: (category && category.code) || 'OTHER',
                         isVariable
                     }).then(onSubmission);
@@ -38,32 +75,32 @@ export default function RecurringSpendForm({ onSubmission, editMode, existingTra
                 // Handle service call
                 axios.post(SERVICE_ROUTES.submitNewRecurringExpense, {
                     spendName: expenseName,
-                    amount: parseFloat(amount),
+                    amount: amount,
                     spendCategory: (category && category.code) || 'OTHER',
                     isVariable
                 }).then(onSubmission);
             };
         });
-    }, [amount, category, editMode, existingTransaction.recurringSpendId, expenseName, isVariable, onSubmission, setForwardActionCallback]);
+    }, [amount, category, editMode, existingTransaction.recurringSpendId, expenseName, isVariable, queryClient, setForwardActionCallback]);
 
     // Update form validity only based on amount having a positive value
     useEffect(() => {
-        formIsValidCallback(amount > 0 && expenseName.length > 0);
+        formIsValidCallback((amount || 0) > 0 && expenseName.length > 0);
     }, [amount, expenseName, formIsValidCallback]);
 
-    const variableExpenseLabel = text('VARIABLE_EXPENSE_LABEL');
-    const variableExpenseDescription = text('VARIABLE_EXPENSE_DESCRIPTION');
-    const amountLabel = text(isVariable ? 'ESTIMATED_MONTHLY_AMOUNT' : 'MONTHLY_AMMOUNT');
+    const variableExpenseLabel = getContent('VARIABLE_EXPENSE_LABEL');
+    const variableExpenseDescription = getContent('VARIABLE_EXPENSE_DESCRIPTION');
+    const amountLabel = getContent(isVariable ? 'ESTIMATED_MONTHLY_AMOUNT' : 'MONTHLY_AMMOUNT');
 
     return (
         // This marginBottom offset keeps the permanently delete option out of the initial view (requiring scroll)
         <div style={{ marginBottom: editMode ? '-5rem' : '' }}>
             <form className={styles.RecurringSpendForm}>
                 <label>
-                    {text('EXPENSE_NAME_LABEL')}
+                    {getContent('EXPENSE_NAME_LABEL')}
                     <input type='text'
                            className={styles.textInput}
-                           placeholder={text('EXPENSE_NAME_PLACEHOLDER')}
+                           placeholder={getContent('EXPENSE_NAME_PLACEHOLDER')}
                            value={expenseName}
                            autoComplete='off'
                            maxLength={60}
@@ -71,7 +108,7 @@ export default function RecurringSpendForm({ onSubmission, editMode, existingTra
                     />
                 </label>
                 <label htmlFor='category-input' style={{ width: 100 }}>
-                    {text('CATEGORY_LABEL')}
+                    {getContent('CATEGORY_LABEL')}
                 </label>
                 <CategoryInput textInputStyles={styles.textInput}
                                value={category}
@@ -95,7 +132,7 @@ export default function RecurringSpendForm({ onSubmission, editMode, existingTra
                 <label>
                     {amountLabel}
                     <MoneyInput name='amount-spent-field'
-                                placeholder={text('AMOUNT_PLACEHOLDER')}
+                                placeholder={getContent('AMOUNT_PLACEHOLDER')}
                                 className={styles.textInput}
                                 stateUpdater={setAmount}
                                 value={amount}
@@ -105,7 +142,7 @@ export default function RecurringSpendForm({ onSubmission, editMode, existingTra
             {
                 editMode && (
                 <Link useChevron
-                      text={text('VIEW_HISTORY')}
+                      text={getContent('VIEW_HISTORY')}
                       customClass={styles.historyLink}
                       onClickCallback={viewHistoryTab}
                 />
@@ -113,11 +150,11 @@ export default function RecurringSpendForm({ onSubmission, editMode, existingTra
             }
             {
                 editMode && (
-                <Link text={text('PERMANENTLY_DELETE')}
+                <Link text={getContent('PERMANENTLY_DELETE')}
                       CustomIcon={IoTrashSharp}
                       customClass={styles.deleteLink}
                       onClickCallback={() => {
-                            setDeleteSpeedBumpActive(true);
+                            setDeleteSpeedBumpActive();
                       }}
                 />
                 )
