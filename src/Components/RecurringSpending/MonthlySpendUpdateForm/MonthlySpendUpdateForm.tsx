@@ -8,13 +8,24 @@ import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/
 import formatCurrency from 'Util/Formatters/formatCurrency';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import dayjs from 'dayjs';
+import { useQueryClient } from '@tanstack/react-query';
+import { recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
+import { RecurringTransaction } from 'Types/TransactionTypes';
+import { EmptyCallback } from 'Types/QoLTypes';
+import { SpendingCategoryType } from 'Constants/categories';
 
-export default function MonthlySpendUpdateForm({ onPanelClose, onSubmission, expenseToUpdate, currentMonthName }) {
-    const getContent = useContent();
-    const text = (key, args) => getContent('RECURRING_SPENDING', key, args);
+type MonthlySpendUpdateFormPropTypes = {
+    onPanelClose: EmptyCallback;
+    expenseToUpdate: RecurringTransaction;
+    currentMonthName: string;
+}
+
+export default function MonthlySpendUpdateForm({ onPanelClose, expenseToUpdate, currentMonthName }: MonthlySpendUpdateFormPropTypes) {
+    const getContent = useContent('RECURRING_SPENDING');
+    const queryClient = useQueryClient();
 
     // State for form values
-    const [spendAmount, setSpendAmount] = React.useState(null);
+    const [spendAmount, setSpendAmount] = React.useState<number | null>(null);
 
     function submit() {
         if(spendAmount == null) {
@@ -30,11 +41,13 @@ export default function MonthlySpendUpdateForm({ onPanelClose, onSubmission, exp
         };
 
         // Handle service call
-        axios.post(SERVICE_ROUTES.updateRecurringExpense, payload).then(onSubmission);
+        axios.post(SERVICE_ROUTES.updateRecurringExpense, payload).then(() => {
+            queryClient.invalidateQueries(recurringTransactionDependentQueryKeys);
+        });
     }
 
     const estimatedMonthlyAmount = expenseToUpdate.estimatedAmount;
-    const amountDifference = spendAmount - estimatedMonthlyAmount;
+    const amountDifference = (spendAmount || 0) - estimatedMonthlyAmount;
     const amountDifferencePercent = ((amountDifference / estimatedMonthlyAmount) * 100).toFixed(2);
     const spentMore = amountDifference > 0;
     const changeSign = spentMore ? '+' : '';
@@ -42,9 +55,9 @@ export default function MonthlySpendUpdateForm({ onPanelClose, onSubmission, exp
     const amountDifferenceStyle = valueMatchesOriginal ? {} : { color: spentMore ? 'var(--theme-money-loss)' : 'var(--theme-money-gain)' };
 
     return (
-        <SlideUpPanel title={text('UPDATE_EXPENSE_FOR_MONTH', [currentMonthName])}
-                      closeText={text('CANCEL')}
-                      confirmText={text('SUBMIT')}
+        <SlideUpPanel title={getContent('UPDATE_EXPENSE_FOR_MONTH', [currentMonthName])}
+                      closeText={getContent('CANCEL')}
+                      confirmText={getContent('SUBMIT')}
                       forwardActionCallback={submit}
                       tagColor='var(--theme-red-dark)'
                       disableConfirmButton={spendAmount == null}
@@ -52,7 +65,8 @@ export default function MonthlySpendUpdateForm({ onPanelClose, onSubmission, exp
         >
             <form className={styles.expenseUpdateForm}>
                 <div className={styles.expenseSummary}>
-                    <CategoryIcon categoryCode={expenseToUpdate.category}
+                    {/* TODO: Originally this categoryIcon was receiving a categoryCode of expenseToUpdate.category, but theres a lot of typescript mismatch */}
+                    <CategoryIcon categoryCode={SpendingCategoryType.VEHICLE}
                                   containerSize='56px'
                                   iconSize='33px'
                                   customClasses={styles.iconContainer}
@@ -62,13 +76,13 @@ export default function MonthlySpendUpdateForm({ onPanelClose, onSubmission, exp
                             {expenseToUpdate.expenseName}
                         </div>
                         <div className={styles.expenseAmountLabel}>
-                            {text('ESTIMATED_AMOUNT', [formatCurrency(estimatedMonthlyAmount)])}
+                            {getContent('ESTIMATED_AMOUNT', [formatCurrency(estimatedMonthlyAmount)])}
                         </div>
                     </div>
                 </div>
                 <label>
                     <div className={styles.updateLabel}>
-                        {text('AMOUNT_SPENT_IN_MONTH', [currentMonthName])}
+                        {getContent('AMOUNT_SPENT_IN_MONTH', [currentMonthName])}
                     </div>
                     <MoneyInput name='account-value-spent-field'
                                 placeholder={formatCurrency(estimatedMonthlyAmount)}
@@ -78,7 +92,7 @@ export default function MonthlySpendUpdateForm({ onPanelClose, onSubmission, exp
                     />
                 </label>
                 <label>
-                    {text('AMOUNT_SPENT_COMPARED')}
+                    {getContent('AMOUNT_SPENT_COMPARED')}
                 </label>
                 <div style={amountDifferenceStyle} className={styles.amountDifference}>
                     {
@@ -86,9 +100,7 @@ export default function MonthlySpendUpdateForm({ onPanelClose, onSubmission, exp
                             '$0.00 (0.00%)'
                          :
                             changeSign + formatCurrency(amountDifference) + ` (${changeSign + amountDifferencePercent}%)`
-
                     }
-
                 </div>
             </form>
         </SlideUpPanel>
