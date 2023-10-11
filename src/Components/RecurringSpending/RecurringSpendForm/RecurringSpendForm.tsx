@@ -2,7 +2,7 @@ import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import useContent from 'CustomHooks/useContent';
 import styles from './RecurringSpendForm.module.css';
 import MoneyInput from 'Components/UIElements/Form/MoneyInput/MoneyInput';
-import CategoryInput from 'Components/UIElements/Form/CategoryInput/CategoryInput';
+import { SpendingCategoryInputs } from 'Components/UIElements/Form/CategoryInput/CategoryInput';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import axios from 'axios';
 import Link from 'Components/UIElements/Navigation/Link/Link';
@@ -107,11 +107,9 @@ export default function RecurringSpendForm({ editMode,
                 <label htmlFor='category-input' style={{ width: 100 }}>
                     {getContent('CATEGORY_LABEL')}
                 </label>
-                <CategoryInput categoryContentType='SPENDING_CATEGORIES'
-                               textInputStyles={styles.textInput}
-                               value={category}
-                               categoryType='transactions'
-                               onChange={setCategory}
+                <SpendingCategoryInputs textInputStyles={styles.textInput}
+                                        value={category}
+                                        onChange={setCategory}
                 />
                 <div className={styles.checkContainer}>
                     <input type='checkbox'

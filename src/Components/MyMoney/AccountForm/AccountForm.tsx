@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import useContent from 'CustomHooks/useContent';
 import styles from './AccountForm.module.css';
-import CategoryInput from '../../UIElements/Form/CategoryInput/CategoryInput';
+import { AccountCategoryInput } from '../../UIElements/Form/CategoryInput/CategoryInput';
 import SlideUpPanel from '../../UIElements/Modal/SlideUpPanel/SlideUpPanel';
 import axios from 'axios';
 import MoneyInput from '../../UIElements/Form/MoneyInput/MoneyInput';
@@ -130,11 +130,9 @@ export default function AccountForm({ onPanelClose, editMode, existingAccount = 
                 <label htmlFor='category-input' style={{ width: 100 }}>
                     {getContent('CATEGORY_LABEL')}
                 </label>
-                <CategoryInput categoryContentType='ACCOUNT_CATEGORIES'
-                               textInputStyles={styles.textInput}
-                               value={category}
-                               categoryType='accounts'
-                               onChange={setCategory}
+                <AccountCategoryInput textInputStyles={styles.textInput}
+                                      value={category}
+                                      onChange={setCategory}
                 />
                 {/* ACCOUNT VALUE */}
                 {editMode ? (

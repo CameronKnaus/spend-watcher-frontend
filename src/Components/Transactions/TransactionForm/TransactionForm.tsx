@@ -1,7 +1,7 @@
 import useContent from 'CustomHooks/useContent';
 import styles from './TransactionForm.module.css';
 import MoneyInput from 'Components/UIElements/Form/MoneyInput/MoneyInput';
-import CategoryInput from 'Components/UIElements/Form/CategoryInput/CategoryInput';
+import { SpendingCategoryInputs } from 'Components/UIElements/Form/CategoryInput/CategoryInput';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import SlideUpPanel, { ClosePanel } from 'Components/UIElements/Modal/SlideUpPanel/SlideUpPanel';
@@ -162,11 +162,9 @@ export default function TransactionForm({
                                 <label htmlFor='category-input' style={{ width: 100 }}>
                                     {getContent('CATEGORY_LABEL')}
                                 </label>
-                                <CategoryInput categoryContentType='SPENDING_CATEGORIES'
-                                               textInputStyles={styles.textInput}
-                                               value={category}
-                                               categoryType='transactions'
-                                               onChange={setCategory}
+                                <SpendingCategoryInputs textInputStyles={styles.textInput}
+                                                        value={category}
+                                                        onChange={setCategory}
                                 />
                                 <label>
                                     {getContent('NOTES_LABEL')}
