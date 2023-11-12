@@ -1,6 +1,16 @@
 import styles from './ToggleSwitch.module.css';
+import { Color, SizeValue } from 'Types/StyleTypes';
+import { EmptyCallback } from 'Types/QoLTypes';
 
-export default function ToggleSwitch({ onState, labelText, setOnState, activeColor, spaceBetween }) {
+type ToggleSwitchPropTypes = {
+    onState: boolean;
+    labelText: string;
+    toggleOnState: EmptyCallback;
+    activeColor: Color;
+    spaceBetween: SizeValue;
+}
+
+export default function ToggleSwitch({ onState, labelText, toggleOnState, activeColor, spaceBetween }: ToggleSwitchPropTypes) {
     const height = 20;
     const width = 40;
 
@@ -27,7 +37,7 @@ export default function ToggleSwitch({ onState, labelText, setOnState, activeCol
     };
 
     return (
-        <div className={styles.toggleContainer} style={containerStyle} onClick={setOnState}>
+        <div className={styles.toggleContainer} style={containerStyle} onClick={toggleOnState}>
             <div className={styles.toggleLabel}>
                 {labelText}
             </div>

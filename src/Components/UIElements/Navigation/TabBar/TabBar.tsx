@@ -16,12 +16,12 @@ import { Dispatch, SetStateAction } from 'react';
     contentGroupKey: Should be a content group key that, if used with the useContent hook, should return plain text for a given tab enum and labelContentKey
 * */
 
-type TabBarPropTypes<T extends GroupKeyAccessor> = {
-    tabMapping: Array<string>,
+type TabBarPropTypes<T extends GroupKeyAccessor, K> = {
+    tabMapping: Array<K>,
     contentGroupKey: T,
     labelContentKey: ContentKeyAccessor<T>,
     currentTab: string,
-    setCurrentTab: Dispatch<SetStateAction<string>>,
+    setCurrentTab: Dispatch<SetStateAction<K>>,
     tabBorderColor: Color,
     activeTabColor: Color,
     inactiveTabColor: Color,
@@ -29,7 +29,7 @@ type TabBarPropTypes<T extends GroupKeyAccessor> = {
     tabMargin?: SizeValue
 }
 
-export default function TabBar<T extends GroupKeyAccessor>(
+export default function TabBar<T extends GroupKeyAccessor, K>(
     {
         tabMapping,
         contentGroupKey,
@@ -41,7 +41,7 @@ export default function TabBar<T extends GroupKeyAccessor>(
         inactiveTabColor,
         tabTextColor,
         tabMargin = '0px'
-    }: TabBarPropTypes<T>
+    }: TabBarPropTypes<T, K>
 ) {
     const getContent = useContent(contentGroupKey);
 
@@ -74,7 +74,7 @@ export default function TabBar<T extends GroupKeyAccessor>(
                         };
 
                         return (
-                            <button key={tabType}
+                            <button key={`${tabType}`}
                                     className={`${styles.tab} ${isCurrentTab ? styles.active : ''}`}
                                     style={tabStyle}
                                     onClick={() => setCurrentTab(tabType)}

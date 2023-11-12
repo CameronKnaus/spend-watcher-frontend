@@ -6,7 +6,7 @@ const mobileMatchMedia = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`
 
 export const IsMobileContext = createContext(mobileMatchMedia.matches);
 
-export function IsMobileContextProvider({ children }) {
+export function IsMobileContextProvider({ children }: { children: any }) {
     const [isMobile, setIsMobile] = useState(mobileMatchMedia.matches);
 
     useEffect(() => {

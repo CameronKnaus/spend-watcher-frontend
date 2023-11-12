@@ -6,19 +6,30 @@ import { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { useIsMobile } from 'Util/IsMobileContext';
 import dayjs from 'dayjs';
+import { DateType } from 'Types/DateTypes';
 
-export default function DateRangeLabel({ dateRangeType, startDate, endDate }) {
+type DateRangeLabelPropTypes = {
+    dateRangeType: DateRangeType;
+    startDate: DateType;
+    endDate: DateType;
+}
+
+export default function DateRangeLabel({ dateRangeType, startDate, endDate }: DateRangeLabelPropTypes) {
     const isMobile = useIsMobile();
     const [backgroundVisible, setBackgroundVisible] = useState(false);
-    const containerRef = useRef(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        if(!containerRef || !isMobile) {
+        if(!containerRef.current || !isMobile) {
             setBackgroundVisible(false);
             return () => { /* NOOP */ };
         }
 
         function handleVerticalScroll() {
+            if(!containerRef.current) {
+                return;
+            }
+
             setBackgroundVisible(containerRef.current.getBoundingClientRect().top < 37);
         }
 

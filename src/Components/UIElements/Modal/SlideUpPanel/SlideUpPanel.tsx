@@ -12,10 +12,10 @@ type SlideUpPanelPropTypes = {
     onPanelClose: EmptyCallback,
     closeText: string,
     confirmText: string,
-    title: string,
+    title?: string,
     forwardActionCallback: EmptyCallback,
     backwardsActionCallback?: EmptyCallback, // Defaults to closing the panel if not provided
-    disableConfirmButton: boolean,
+    disableConfirmButton?: boolean,
     tagColor?: Color,
     hideTag?: boolean,
     forwardActionButtonColor?: Color
@@ -32,7 +32,7 @@ export default function SlideUpPanel({ children,
     title,
     forwardActionCallback = () => { /* NOOP */ },
     backwardsActionCallback, // Defaults to closing the panel if not provided
-    disableConfirmButton,
+    disableConfirmButton = false,
     tagColor = 'var(--theme-red-dark)',
     hideTag = false,
     forwardActionButtonColor }: SlideUpPanelPropTypes) {

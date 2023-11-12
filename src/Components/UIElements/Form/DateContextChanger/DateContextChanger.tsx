@@ -1,11 +1,23 @@
 import SlideUpPanel, { ClosePanel } from '../../Modal/SlideUpPanel/SlideUpPanel';
 import useContent from 'CustomHooks/useContent';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './DateContextChanger.module.css';
 import { StaticDatePicker } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import TabBar from 'Components/UIElements/Navigation/TabBar/TabBar';
 import DateRangeType from 'Constants/DateRangeTypes';
+import { DateType } from 'Types/DateTypes';
+import { EmptyCallback } from 'Types/QoLTypes';
+
+type DateContextChangerPropTypes = {
+    expanded: Boolean;
+    setExpanded: Dispatch<SetStateAction<boolean>>,
+    updateDateRange: (startDate: Dayjs, endDate: Dayjs, dateRangeType: DateRangeType) => void,
+    minAllowedDate: Dayjs,
+    startingRangeOption?: DateRangeType,
+    minPossibleDate: DateType,
+    maxPossibleDate: DateType
+}
 
 export default function DateContextChanger(
     {
@@ -16,7 +28,7 @@ export default function DateContextChanger(
         startingRangeOption = DateRangeType.MONTH,
         minPossibleDate,
         maxPossibleDate
-    }
+    }: DateContextChangerPropTypes
 ) {
     const [selectedRangeOption, setSelectedRangeOption] = useState(startingRangeOption);
     const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -27,7 +39,7 @@ export default function DateContextChanger(
         return null;
     }
 
-    function handleMonthChange(newDate, closePanel) {
+    function handleMonthChange(newDate: Dayjs, closePanel: EmptyCallback) {
         if(selectedRangeOption !== DateRangeType.MONTH) {
             return;
         }
@@ -36,7 +48,7 @@ export default function DateContextChanger(
         closePanel();
     }
 
-    function handleYearChange(newDate, closePanel) {
+    function handleYearChange(newDate: Dayjs, closePanel: EmptyCallback) {
         if(selectedRangeOption !== DateRangeType.YEAR) {
             return;
         }
@@ -117,7 +129,9 @@ export default function DateContextChanger(
                                                               onYearChange={(newDate) => {
                                                                 handleYearChange(newDate, closePanel);
                                                               }}
-                                                              onChange={setSelectedDate}
+                                                              onChange={(value) => {
+                                                                value && setSelectedDate(value);
+                                                            }}
                                             />
                                         </div>
                                     </>
