@@ -1,5 +1,6 @@
 import styles from './Alert.module.css';
 import { MdInfoOutline } from 'react-icons/md';
+import { Color } from 'Types/StyleTypes';
 
 const SIZE_CONFIG = {
     base: {
@@ -12,7 +13,13 @@ const SIZE_CONFIG = {
     }
 };
 
-export default function Alert({ alertText, size = 'base', color = 'var(--theme-red)' }) {
+type AlertPropTypes = {
+    alertText: String,
+    size?: 'base' | 'small',
+    color?: Color
+}
+
+export default function Alert({ alertText, size = 'base', color = 'var(--theme-red)' }: AlertPropTypes) {
     const containerSize = SIZE_CONFIG[size];
 
     if(!containerSize) {
