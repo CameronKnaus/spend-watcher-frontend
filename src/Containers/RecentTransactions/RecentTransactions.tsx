@@ -7,35 +7,29 @@ import Link from 'Components/UIElements/Navigation/Link/Link';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import TransactionsList from '../../Components/Transactions/TransactionsList/TransactionsList';
 
-export default function RecentTransactions({ refreshRequested, callForRefresh }) {
+export default function RecentTransactions() {
     const service = useFetch(SERVICE_ROUTES.recentTransactions, true);
-    const getContent = useContent();
-    const text = (key) => getContent('TRANSACTIONS', key);
+    const getContent = useContent('TRANSACTIONS');
 
-    const Container = React.useCallback(({ children }) => {
+
+    const recentLabel = getContent('RECENT');
+    const Container = React.useCallback(({ children }: { children: any}) => {
         return (
             <div className={styles.recentTransactionsContainer}>
                 <h2 className={`header-text ${styles.title}`}>
-                    {getContent('TRANSACTIONS', 'RECENT')}
+                    {recentLabel}
                 </h2>
                 {children}
             </div>
         );
-    }, [getContent]);
-
-    React.useEffect(() => {
-        if(refreshRequested) {
-            // If refresh is requested then silently make a new service request
-            service.fire(true);
-        }
-    }, [refreshRequested, service]);
+    }, [recentLabel]);
 
     if(service.error) {
         // TODO: Proper Error Handling
         return (
             <Container>
                 <div className={styles.issueMessage}>
-                    {text('ERROR')}
+                    {getContent('ERROR')}
                 </div>
                 <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
                     {JSON.stringify(service.error, null, 2)}
@@ -48,10 +42,9 @@ export default function RecentTransactions({ refreshRequested, callForRefresh })
         <Container>
             <TransactionsList isLoading={service.loading}
                               transactionsList={service?.response?.transactions}
-                              onEditCallback={callForRefresh}
             />
             <Link useChevron
-                  text={text('VIEW_ALL')}
+                  text={getContent('VIEW_ALL')}
                   route={PAGE_ROUTES.spendingHistory}
                   customClass={styles.linkContainer}
                   textAlign='center'

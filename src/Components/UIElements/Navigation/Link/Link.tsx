@@ -17,16 +17,25 @@ const alignmentMapper: Record<LinkAlignment, JustifyContent> = {
 
 // Currently, this link will only support internal routing.
 // It can easily be converted to external routing but there isn't a use-case yet
+type RouteLink = {
+    route: string;
+    onClickCallback?: never;
+}
+
+type ClickEventLink = {
+    route?: never;
+    onClickCallback: EmptyCallback;
+}
+
+
 type LinkPropTypes = {
     text: string,
-    route?: string,
     useChevron?: boolean,
     useChevronLeft?: boolean,
     customClass: string,
     textAlign?: LinkAlignment,
     CustomIcon?: IconType,
-    onClickCallback: EmptyCallback
-}
+} & (RouteLink | ClickEventLink);
 
 export default function Link({ text, route, useChevron, useChevronLeft, customClass, textAlign, CustomIcon, onClickCallback }: LinkPropTypes) {
     const textAlignment = textAlign ? alignmentMapper[textAlign] : 'flex-start';

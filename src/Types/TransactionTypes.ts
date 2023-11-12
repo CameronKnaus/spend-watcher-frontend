@@ -1,8 +1,9 @@
 import { SpendingCategoryType } from 'Constants/categories';
+import { DateType, ISODateType } from './DateTypes';
 
 // TODO: Consolidate all transaction types if possible
 export type FormattedTransaction = {
-    id: string;
+    id: number | string;
     amount: number,
     category: SpendingCategoryType,
     date: string;
@@ -40,3 +41,25 @@ export type RecurringTransactionDetail = {
     date: string;
     transactionAmount: number;
 }
+
+export type TransactionListDiscretionary = {
+    transactionId: number;
+    category: SpendingCategoryType;
+    amount: number;
+    isUncommon: boolean;
+    date: DateType;
+    dateISO: ISODateType,
+    note: string;
+    linkedTripId?: string;
+    isRecurringTransaction: false
+}
+
+export type TransactionListRecurring = RecurringTransaction & {
+    amount: number,
+    date: DateType;
+    isRecurringTransaction: true
+}
+
+export type TransactionListTransaction = TransactionListDiscretionary | TransactionListRecurring;
+
+export type TransactionList = Record<DateType, Array<TransactionListTransaction>>
