@@ -3,11 +3,21 @@ import { CgChevronLeft, CgChevronRight } from 'react-icons/cg';
 import clsx from 'clsx';
 import useContent from 'CustomHooks/useContent';
 import DateRangeType from 'Constants/DateRangeTypes';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import { DateType } from 'Types/DateTypes';
 
 const { MONTH, YEAR } = DateRangeType;
 
-export default function DateContextShifter({ dateRangeType, startDate, endDate, shiftMonthInContext, shiftYearInContext, minAllowedDate }) {
+type DateContextShifterPropTypes = {
+    dateRangeType: DateRangeType;
+    startDate: Dayjs;
+    endDate: Dayjs;
+    shiftMonthInContext: (isForward: boolean) => void;
+    shiftYearInContext: (isForward: boolean) => void;
+    minAllowedDate: DateType;
+}
+
+export default function DateContextShifter({ dateRangeType, startDate, endDate, shiftMonthInContext, shiftYearInContext, minAllowedDate }: DateContextShifterPropTypes) {
     const getContent = useContent('DATE_CONTEXT_SHIFTER');
 
     function shouldNextBeDisabled() {
@@ -41,7 +51,7 @@ export default function DateContextShifter({ dateRangeType, startDate, endDate, 
         return true;
     }
 
-    function handleShift(isDisabled, isForward) {
+    function handleShift(isDisabled: boolean, isForward: boolean) {
         if(isDisabled) {
             return;
         }
