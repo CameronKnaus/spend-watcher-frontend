@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import ThickActionButton from 'Components/UIElements/Form/ThickActionButton/ThickActionButton';
 import TransactionForm from 'Components/Transactions/TransactionForm/TransactionForm';
+import RecurringExpensesList from 'Components/RecurringSpending/RecurringExpensesList/RecurringExpensesList';
 
 export default function Spending() {
     const getContent = useContent('SPENDING');
@@ -40,6 +41,7 @@ export default function Spending() {
         return JSON.stringify(serviceError);
     }
 
+    const transactionsRequiringUpdate = spendingData?.recurringSpending?.recurringTransactions?.filter(transaction => transaction.requiresUpdate);
     const spendingTotal = spendingData?.spending.currentMonthTotal || 0;
     const monthlyTotal = spendingData?.recurringSpending?.actualMonthTotal || 0;
 
@@ -85,6 +87,11 @@ export default function Spending() {
             />
             {
                 logPanelOpen && <TransactionForm onPanelClose={() => setLogPanelOpen(false)} />
+            }
+            {
+                spendingData?.recurringSpending.monthlyExpenseRequiresUpdate && transactionsRequiringUpdate?.length && (
+                    <RecurringExpensesList quickUpdateMode transactionList={transactionsRequiringUpdate} />
+                )
             }
         </div>
     );

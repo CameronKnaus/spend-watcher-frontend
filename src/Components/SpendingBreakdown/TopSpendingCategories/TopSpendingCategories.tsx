@@ -28,7 +28,7 @@ export default function TopSpendingCategories({ label, categoryTotals, setCurren
     const categoryTotalList = Object.keys(categoryTotals);
     let sortedList = categoryTotalList.map(key => {
         return {
-            category: key,
+            category: key as SpendingCategoryType,
             amount: categoryTotals[key as SpendingCategoryType]
         };
     }).sort((a, b) => a.amount < b.amount ? 1 : -1);
@@ -52,7 +52,6 @@ export default function TopSpendingCategories({ label, categoryTotals, setCurren
                     const categoryData = SPENDING_CATEGORIES[category as SpendingCategoryType];
                     const backgroundColor = categoryData.color;
                     const Icon = categoryData.icon;
-                    // @ts-expect-error
                     const categoryLabel = getSpendingCategoryContent(category);
                     const displayedValue = useDollarValues ? `-$${amount.toFixed(2)}` : `x${amount}`;
                     return (

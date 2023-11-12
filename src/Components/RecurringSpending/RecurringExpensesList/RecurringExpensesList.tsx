@@ -15,11 +15,11 @@ import englishContent from 'Content/englishContent.json';
 type RecurringExpensesListPropTypes = {
     isLoading?: boolean,
     transactionList: Array<RecurringTransaction>,
-    hasNoExpenses: boolean,
+    hasNoExpenses?: boolean,
     quickUpdateMode?: boolean
 }
 
-export default function RecurringExpensesList({ isLoading = false, transactionList, hasNoExpenses, quickUpdateMode = false }: RecurringExpensesListPropTypes) {
+export default function RecurringExpensesList({ isLoading = false, transactionList, hasNoExpenses = false, quickUpdateMode = false }: RecurringExpensesListPropTypes) {
     const [createExpensePanelOpen, setCreateExpensePanelOpen] = useState(false);
     const [expenseToEdit, setExpenseToEdit] = useState<RecurringTransaction | null>(null);
     const [expenseToUpdate, setExpenseToUpdate] = useState<RecurringTransaction | null>(null);

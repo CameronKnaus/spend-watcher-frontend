@@ -7,7 +7,7 @@ import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import useTripDetails from 'CustomHooks/useTripDetails';
 
 // The purpose of this component is to check if the user is authenticated. If not, redirect to the auth page
-export default function SessionChecker({ children }) {
+export default function SessionChecker({ children }: { children: any }) {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const { refreshTrips } = useTripDetails();

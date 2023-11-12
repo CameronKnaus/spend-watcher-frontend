@@ -27,6 +27,7 @@ import { MdFastfood,
 
 import { IoGameController } from 'react-icons/io5';
 import { ReactElement } from 'react';
+import { Color } from 'Types/StyleTypes';
 
 export enum SpendingCategoryType {
     RESTAURANTS = 'RESTAURANTS',
@@ -58,8 +59,8 @@ export enum SpendingCategoryType {
 }
 
 export type CategoryDefinitionType = {
-    icon: ReactElement,
-    color: string
+    icon: ReactElement;
+    color: Color;
 }
 
 type SpendCategoryDefType = {

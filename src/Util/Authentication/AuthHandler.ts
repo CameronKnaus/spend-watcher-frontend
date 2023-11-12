@@ -3,7 +3,7 @@ function authHandler() {
     let authenticated = false;
     let username = '';
 
-    function setIsAuthenticated(newValue) {
+    function setIsAuthenticated(newValue: boolean) {
         authenticated = newValue;
     }
 
@@ -11,7 +11,7 @@ function authHandler() {
         return authenticated;
     }
 
-    function setUsername(newName) {
+    function setUsername(newName: string) {
         username = newName;
     }
 

@@ -1,24 +1,39 @@
 import { ResponsivePie } from '@nivo/pie';
-import { SPENDING_CATEGORIES } from 'Constants/categories';
+import { SPENDING_CATEGORIES, SpendingCategoryType } from 'Constants/categories';
 import useContent from 'CustomHooks/useContent';
 import styles from './CategoryAmountChart.module.css';
 import { useIsMobile } from 'Util/IsMobileContext';
+import { Color } from 'Types/StyleTypes';
+
+type ChartDataPoint = {
+    id: string;
+    label: string;
+    value: number;
+    color: Color;
+}
+
+type CategoryAmountChartPropTypes = {
+    amountList: Array<{
+        category: SpendingCategoryType;
+        amount: number;
+    }>;
+    useDollarValues?: boolean;
+}
 
 // Expects an array of the structure {category: 'RESTAURANT', amount: 123}
-export default function CategoryAmountChart({ amountList, useDollarValues }) {
-    const getContent = useContent();
+export default function CategoryAmountChart({ amountList, useDollarValues = false }: CategoryAmountChartPropTypes) {
     const isMobile = useIsMobile();
-    const getSpendingLabel = (key) => getContent('SPENDING_CATEGORIES', key);
+    const getSpendingLabel = useContent('SPENDING_CATEGORIES');
 
     if(!amountList) {
         return null;
     }
 
-    const generatedTheme = [];
-    const dataForChart = [];
+    const generatedTheme: Array<Color> = [];
+    const dataForChart: Array<ChartDataPoint> = [];
     amountList.forEach(element => {
         const category = element.category;
-        const color = SPENDING_CATEGORIES[category]?.color ?? '#333333';
+        const color: Color = SPENDING_CATEGORIES[category]?.color ?? '#333333';
         const label = getSpendingLabel(category);
 
         generatedTheme.push(color);
@@ -30,7 +45,7 @@ export default function CategoryAmountChart({ amountList, useDollarValues }) {
         });
     });
 
-    function formatValue(value) {
+    function formatValue(value: number) {
         return useDollarValues ? `$${value.toFixed(2)}` : `x${value}`;
     }
 
