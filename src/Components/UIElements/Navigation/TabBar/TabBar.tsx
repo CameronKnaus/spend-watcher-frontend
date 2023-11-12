@@ -1,9 +1,10 @@
 import styles from './TabBar.module.css';
-import React from 'react';
 import devLogger from 'Util/DevTools/DevLogger';
-import useContent from 'CustomHooks/useContent';
+import useContent, { ContentKeyAccessor, GroupKeyAccessor } from 'CustomHooks/useContent';
+import { Color, SizeValue } from 'Types/StyleTypes';
+import { Dispatch, SetStateAction } from 'react';
 
-/*  tabMapping should be an object enumerating available tabs.
+/*  tabMapping should be an array of keys for an enum like the following
         Example:
         const tabMapping = {
             MONTH: 'MONTH',
@@ -14,7 +15,21 @@ import useContent from 'CustomHooks/useContent';
 
     contentGroupKey: Should be a content group key that, if used with the useContent hook, should return plain text for a given tab enum and labelContentKey
 * */
-export default function TabBar(
+
+type TabBarPropTypes<T extends GroupKeyAccessor> = {
+    tabMapping: Array<string>,
+    contentGroupKey: T,
+    labelContentKey: ContentKeyAccessor<T>,
+    currentTab: string,
+    setCurrentTab: Dispatch<SetStateAction<string>>,
+    tabBorderColor: Color,
+    activeTabColor: Color,
+    inactiveTabColor: Color,
+    tabTextColor: Color,
+    tabMargin?: SizeValue
+}
+
+export default function TabBar<T extends GroupKeyAccessor>(
     {
         tabMapping,
         contentGroupKey,
@@ -26,14 +41,9 @@ export default function TabBar(
         inactiveTabColor,
         tabTextColor,
         tabMargin = '0px'
-    }
+    }: TabBarPropTypes<T>
 ) {
     const getContent = useContent(contentGroupKey);
-
-    if(!tabBorderColor || !activeTabColor || !tabTextColor || !inactiveTabColor) {
-        devLogger.error('Missing color options for TabBar component');
-        return null;
-    }
 
     if(!contentGroupKey) {
         devLogger.error('Missing content group key for TabBar component');
@@ -69,7 +79,7 @@ export default function TabBar(
                                     style={tabStyle}
                                     onClick={() => setCurrentTab(tabType)}
                             >
-                                {getContent(tabType)}
+                                {getContent(tabType as ContentKeyAccessor<T>)}
                             </button>
                         );
                     })

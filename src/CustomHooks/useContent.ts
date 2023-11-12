@@ -2,8 +2,8 @@ import EnvironmentSettings from 'Constants/EnvironmentSettings.json';
 import englishContent from 'Content/englishContent.json';
 import { useCallback } from 'react';
 
-type GroupKeyAccessor = keyof typeof englishContent;
-type ContentKeyAccessor<T extends GroupKeyAccessor> = keyof typeof englishContent[T]
+export type GroupKeyAccessor = keyof typeof englishContent;
+export type ContentKeyAccessor<T extends GroupKeyAccessor> = keyof typeof englishContent[T]
 
 
 const DEV_MODE = EnvironmentSettings.devMode;
