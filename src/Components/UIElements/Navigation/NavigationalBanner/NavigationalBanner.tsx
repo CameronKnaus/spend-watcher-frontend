@@ -2,7 +2,11 @@ import { CgChevronLeft } from 'react-icons/cg';
 import styles from './NavigationalBanner.module.css';
 import { useNavigate } from 'react-router';
 
-export default function NavigationalBanner({ title }) {
+type NavigationalBannerPropTypes = {
+    title: string;
+}
+
+export default function NavigationalBanner({ title }: NavigationalBannerPropTypes) {
     const navigate = useNavigate();
 
     return (
