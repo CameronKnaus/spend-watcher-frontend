@@ -2,9 +2,21 @@ import useContent from '../../../../CustomHooks/useContent';
 import DateContextChanger from '../DateContextChanger/DateContextChanger';
 import ActionTile from '../../../Tiles/ActionTile/ActionTile';
 import { useState } from 'react';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import MONTH_NAMES from '../../../../Constants/MonthNames';
 import DateRangeType from '../../../../Constants/DateRangeTypes';
+import { DateType } from 'Types/DateTypes';
+
+type DateChangerTilePropTypes = {
+    startDate: Dayjs;
+    endDate: Dayjs;
+    minPossibleDate: DateType;
+    maxPossibleDate: DateType;
+    updateDateRange: (startDate: Dayjs, endDate: Dayjs, dateRangeType: DateRangeType) => void;
+    minAllowedDate: Dayjs;
+    dateRangeType: DateRangeType,
+    resultsText: string;
+}
 
 export default function DateChangerTile(
     { startDate,
@@ -14,7 +26,7 @@ export default function DateChangerTile(
         updateDateRange = () => { /* NOOP */ },
         minAllowedDate,
         dateRangeType = DateRangeType.MONTH,
-        resultsText }
+        resultsText }: DateChangerTilePropTypes
 ) {
     const [editMode, setEditMode] = useState(false);
     const getContent = useContent('DATE_CONTEXT_CHANGER');
@@ -62,8 +74,6 @@ export default function DateChangerTile(
             />
             <DateContextChanger expanded={editMode}
                                 setExpanded={setEditMode}
-                                startDate={startDate}
-                                endDate={endDate}
                                 updateDateRange={updateDateRange}
                                 startingRangeOption={dateRangeType}
                                 minAllowedDate={minAllowedDate}

@@ -2,6 +2,7 @@ import styles from './ActionTile.module.css';
 import { CgChevronRight } from 'react-icons/cg';
 import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader/SkeletonLoader';
 import { Color } from 'Types/StyleTypes';
+import { ReactElement } from 'react';
 
 interface ActionTileOptionsType {
     showValueAbove?: boolean,
@@ -20,30 +21,30 @@ const defaultOptions: ActionTileOptionsType = {
 };
 
 type ActionTilePropTypes = {
-    title: string,
+    title: string | ReactElement,
     subtitle?: string,
     value?: string,
     fallbackActionPrompt?: string,
     fallbackDescription?: string,
     ariaValue?: string, // - alternative value for screen readers to read for value
-    actionPrompt: string,
+    actionPrompt?: string,
     useShadow?: boolean,
     callback?: () => void,
     options?: ActionTileOptionsType,
-    isLoading: boolean,
+    isLoading?: boolean,
     isInactive?: boolean
 } | {
-    title: string,
+    title: string | ReactElement,
     subtitle?: string,
     value: undefined,
     fallbackActionPrompt: string,
     fallbackDescription?: string,
     ariaValue?: string,
-    actionPrompt: string,
+    actionPrompt?: string,
     useShadow?: boolean,
     callback?: () => void,
     options?: ActionTileOptionsType,
-    isLoading: boolean,
+    isLoading?: boolean,
     isInactive?: boolean
 }
 
@@ -183,7 +184,7 @@ function ActionTile({
 export default ActionTile;
 
 type TitlePropTypes = {
-    title: string,
+    title: string | ReactElement,
     extraSpace?: boolean,
     hideFromScreenReader?: boolean,
     hideFromScreen?: boolean
