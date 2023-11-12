@@ -3,12 +3,14 @@ import useFetch from 'CustomHooks/useFetch';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { FaPlaneDeparture } from 'react-icons/fa';
 import AuthHandler from 'Util/Authentication/AuthHandler';
+import { Trip } from 'Types/TripTypes';
+import { FilterableSelectOption } from 'Components/UIElements/Form/FilterableSelect/FilterableSelect';
 
 // TODO: Replace with useQuery.  Typescript can be cleaned up when this is done.
 export interface TripContextType {
     activeTrip: any,
-    tripsList: Array<any>,
-    filterableSelectTripsList: Array<any>,
+    tripsList: Array<Trip>,
+    filterableSelectTripsList: Array<FilterableSelectOption>,
     refreshTrips: (fireSilently?: boolean) => void,
     tripDetailsError: Error | null,
     tripDetailsLoading: boolean

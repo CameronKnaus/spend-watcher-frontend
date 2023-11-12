@@ -8,22 +8,21 @@ import { MdAddCircleOutline } from 'react-icons/md';
 import useTripDetails from 'CustomHooks/useTripDetails';
 import TripsSlideInPanel from 'Components/Trips/TripsSlideInPanel/TripsSlideInPanel';
 
-export default function Trips({ refreshRequested, callForRefresh }) {
+export default function Trips() {
     const [listCollapsed, setListCollapsed] = useState(true);
     const [createNewTrip, setCreateNewTrip] = useState(false);
     // existing trip to view is based on the trips list index
-    const [existingTripToView, setExistingTripToView] = useState(null);
+    const [existingTripToView, setExistingTripToView] = useState<number | null>(null);
 
-    const getContent = useContent();
-    const text = (key) => getContent('TRIPS', key);
+    const getContent = useContent('TRIPS');
 
     const { tripDetailsError, tripDetailsLoading, tripsList } = useTripDetails();
 
-    const Container = useCallback(({ children }) => {
+    const Container = useCallback(({ children }: any) => {
         return (
             <div className={styles.tripsContainer}>
                 <h2 className={`header-text ${styles.title}`}>
-                    {getContent('TRIPS', 'DASHBOARD_TITLE')}
+                    {getContent('DASHBOARD_TITLE')}
                 </h2>
                 {children}
             </div>
@@ -35,7 +34,7 @@ export default function Trips({ refreshRequested, callForRefresh }) {
         return (
             <Container>
                 <div className={styles.issueMessage}>
-                    {text('ERROR')}
+                    {getContent('ERROR')}
                 </div>
                 <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
                     {JSON.stringify(tripDetailsError, null, 2)}
@@ -59,7 +58,7 @@ export default function Trips({ refreshRequested, callForRefresh }) {
                 {
                     tripsList.length > 3 && (
                         <Link CustomIcon={listCollapsed ? CgChevronDown : CgChevronUp}
-                              text={text(listCollapsed ? 'VIEW_ALL' : 'VIEW_LESS')}
+                              text={getContent(listCollapsed ? 'VIEW_ALL' : 'VIEW_LESS')}
                               customClass={styles.linkContainer}
                               textAlign='center'
                               onClickCallback={() => setListCollapsed(current => !current)}
@@ -67,19 +66,22 @@ export default function Trips({ refreshRequested, callForRefresh }) {
                     )
                 }
                 <Link CustomIcon={MdAddCircleOutline}
-                      text={text('CREATE_TRIP')}
+                      text={getContent('CREATE_TRIP')}
                       customClass={styles.linkContainer}
                       textAlign='center'
                       onClickCallback={() => setCreateNewTrip(true)}
                 />
             </div>
             {
-                (existingTripToView != null || createNewTrip) && (
+                (existingTripToView != null) && (
                     <TripsSlideInPanel tripToView={tripsList[existingTripToView]}
                                        handlePanelClose={handlePanelClose}
-                                       refreshRequested={refreshRequested}
-                                       callForRefresh={callForRefresh}
                     />
+                )
+            }
+            {
+                createNewTrip && (
+                    <TripsSlideInPanel handlePanelClose={handlePanelClose} />
                 )
             }
         </Container>

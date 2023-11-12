@@ -1,14 +1,25 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useContent from 'CustomHooks/useContent';
 import styles from './TripForm.module.css';
 import Link from 'Components/UIElements/Navigation/Link/Link';
 import { IoTrashSharp } from 'react-icons/io5';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
+import { Trip } from 'Types/TripTypes';
+import { EmptyCallback } from 'Types/QoLTypes';
+import { useQueryClient } from '@tanstack/react-query';
+import { tripDependentQueryKeys } from 'Util/QueryKeys';
 
-export default function TripForm({ existingTrip, onSubmission, setForwardActionCallback, getDayCountMessage, setFormValid }) {
+type TripFromPropTypes = {
+    existingTrip?: Trip;
+    setForwardActionCallback: Dispatch<SetStateAction<EmptyCallback>>;
+    getDayCountMessage: (start: Dayjs, end: Dayjs) => string;
+    setFormValid: Dispatch<SetStateAction<boolean>>;
+}
+
+export default function TripForm({ existingTrip, setForwardActionCallback, getDayCountMessage, setFormValid }: TripFromPropTypes) {
     const text = useContent('TRIPS');
 
     // State for form values
@@ -16,6 +27,7 @@ export default function TripForm({ existingTrip, onSubmission, setForwardActionC
     const [startDate, setStartDate] = useState(existingTrip?.startDate ? dayjs(existingTrip?.startDate) : dayjs());
     const [endDate, setEndDate] = useState(existingTrip?.endDate ? dayjs(existingTrip?.endDate) : dayjs());
     const hasExistingTrip = Boolean(existingTrip);
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         const isDateRangeChronological = !startDate.isAfter(endDate);
@@ -37,7 +49,9 @@ export default function TripForm({ existingTrip, onSubmission, setForwardActionC
                         tripName,
                         startDate,
                         endDate
-                    }).then(onSubmission);
+                    }).then(() => {
+                        queryClient.invalidateQueries(tripDependentQueryKeys);
+                    });
                 };
             }
 
@@ -47,10 +61,12 @@ export default function TripForm({ existingTrip, onSubmission, setForwardActionC
                     tripName,
                     startDate,
                     endDate
-                }).then(onSubmission);
+                }).then(() => {
+                    queryClient.invalidateQueries(tripDependentQueryKeys);
+                });
             };
         });
-    }, [endDate, existingTrip?.tripId, hasExistingTrip, onSubmission, setForwardActionCallback, startDate, tripName]);
+    }, [endDate, existingTrip?.tripId, hasExistingTrip, queryClient, setForwardActionCallback, startDate, tripName]);
 
     return (
         // This marginBottom offset keeps the permanently delete option out of the initial view (requiring scroll)
@@ -69,7 +85,7 @@ export default function TripForm({ existingTrip, onSubmission, setForwardActionC
                 />
 
                 <div className={styles.dateCount}>
-                    {getDayCountMessage()}
+                    {getDayCountMessage(startDate, endDate)}
                 </div>
                 <label htmlFor='start-date-input'>
                     {text('START_DATE_LABEL')}
@@ -79,7 +95,9 @@ export default function TripForm({ existingTrip, onSubmission, setForwardActionC
                                 format='MMMM D, YYYY'
                                 value={startDate}
                                 className={styles.textInput}
-                                onChange={setStartDate}
+                                onChange={(value) => {
+                                    value && setStartDate(value);
+                                }}
                     />
                 </div>
                 <label htmlFor='end-date-input'>
@@ -91,7 +109,9 @@ export default function TripForm({ existingTrip, onSubmission, setForwardActionC
                                 value={endDate}
                                 minDate={startDate}
                                 className={styles.textInput}
-                                onChange={setEndDate}
+                                onChange={(value) => {
+                                    value && setEndDate(value);
+                                }}
                     />
                 </div>
             </form>

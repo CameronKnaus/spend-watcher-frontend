@@ -146,7 +146,8 @@
     "IT_COST_SO_FAR": "It has cost: <<arg0:cost>> so far.",
     "EDIT_DETAILS": "Edit details",
     "LINKED_TRANSACTIONS": "Linked expenses",
-    "DELETE": "Permenantly delete this trip"
+    "DELETE": "Permenantly delete this trip",
+    "ERROR": "Error occurred with trip details."
   },
   "MY_MONEY": {
     "MY_MONEY": "My Money",

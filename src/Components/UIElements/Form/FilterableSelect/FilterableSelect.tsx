@@ -6,7 +6,7 @@ import { IconComponentType } from 'Types/QoLTypes';
 
 // When tracking this field, the containing parent component should manage the state for value
 
-type FilterableSelectOption = {
+export type FilterableSelectOption = {
     value: string | number; // The value that will be passed to on change.  This is not seen by the user
     icon: IconComponentType;// The icon to be used next to the option
     iconBackgroundColor: Color;
@@ -88,8 +88,8 @@ export default function FilterableSelect({ id = 'filterable-select-input', textI
                                      className={`${styles.option} ${value === option.value ? styles.selected : ''}`}
                                      onClick={() => {
                                         setValue(option.value);
-                                         setFilterText('');
-                                         setOpen(false);
+                                        setFilterText('');
+                                        setOpen(false);
                                      }}
                                 >
                                     <div className={styles.iconContainer} style={{ backgroundColor: option.iconBackgroundColor }}>

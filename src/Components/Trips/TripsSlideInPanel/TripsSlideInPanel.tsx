@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import useContent from 'CustomHooks/useContent';
 import SlideUpPanel from 'Components/UIElements/Modal/SlideUpPanel/SlideUpPanel';
 import TripForm from 'Components/Trips/TripForm/TripForm';
 import TripDetails from 'Components/Trips/TripDetails/TripDetails';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import { Trip } from 'Types/TripTypes';
+import { EmptyCallback } from 'Types/QoLTypes';
+import useContent from 'CustomHooks/useContent';
 
 const PANEL_ENUM = {
     NEW: 'NEW',
@@ -11,13 +13,18 @@ const PANEL_ENUM = {
     DETAILS: 'DETAILS'
 };
 
-export default function TripsSlideInPanel({ tripToView, handlePanelClose, refreshRequested, callForRefresh }) {
+type TripsSlideInPanelPropTypes = {
+    tripToView?: Trip;
+    handlePanelClose: EmptyCallback;
+}
+
+export default function TripsSlideInPanel({ tripToView, handlePanelClose }: TripsSlideInPanelPropTypes) {
     const [formValid, setFormValid] = useState(false);
     const [panelState, setPanelState] = useState(tripToView ? PANEL_ENUM.DETAILS : PANEL_ENUM.NEW);
-    const [forwardActionCallback, setForwardActionCallback] = useState(() => { /* NOOP */ });
+    const [forwardActionCallback, setForwardActionCallback] = useState<EmptyCallback>(() => { /* NOOP */ });
     const getContent = useContent('TRIPS');
 
-    function getDayCountMessage(startDate, endDate) {
+    function getDayCountMessage(startDate: Dayjs, endDate: Dayjs) {
         if(!startDate || !endDate) {
             return '';
         }
@@ -30,6 +37,7 @@ export default function TripsSlideInPanel({ tripToView, handlePanelClose, refres
             key += '_PLURAL';
         }
 
+        // @ts-expect-error
         return getContent(key, [daysDiff]);
     }
 
@@ -39,20 +47,16 @@ export default function TripsSlideInPanel({ tripToView, handlePanelClose, refres
             case PANEL_ENUM.EDIT:
                 return (
                     <TripForm existingTrip={tripToView}
-                              editMode={panelState === PANEL_ENUM.EDIT}
                               setForwardActionCallback={setForwardActionCallback}
                               getDayCountMessage={getDayCountMessage}
                               setFormValid={setFormValid}
-                              onSubmission={callForRefresh}
                     />
                 );
             case PANEL_ENUM.DETAILS:
                 return (
-                    <TripDetails existingTrip={tripToView}
+                    <TripDetails existingTrip={tripToView!}
                                  getDayCountMessage={getDayCountMessage}
                                  editDetailsCallback={() => setPanelState(PANEL_ENUM.EDIT)}
-                                 refreshRequested={refreshRequested}
-                                 callForRefresh={callForRefresh}
                     />
                 );
             default:
@@ -90,7 +94,7 @@ export default function TripsSlideInPanel({ tripToView, handlePanelClose, refres
             return () => setPanelState(PANEL_ENUM.DETAILS);
         }
 
-        return null;
+        return void 0;
     }
 
     return (

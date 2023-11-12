@@ -3,6 +3,7 @@ import styles from './Dashboard.module.css';
 import Spending from 'Containers/Spending/Spending';
 import MyMoney from 'Containers/MyMoney/MyMoney';
 import RecentTransactions from 'Containers/RecentTransactions/RecentTransactions';
+import Trips from 'Containers/Trips/Trips';
 
 export default function Dashboard() {
     const getContent = useContent('ACCESSIBLE_PAGE_TITLES');
@@ -15,6 +16,7 @@ export default function Dashboard() {
                 </h1>
                 <Spending />
                 <RecentTransactions />
+                <Trips />
                 <MyMoney />
             </div>
         </div>

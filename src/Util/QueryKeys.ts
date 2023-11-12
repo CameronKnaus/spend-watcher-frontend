@@ -22,6 +22,10 @@ export const recurringTransactionDependentQueryKeys = [
     recurringSpendingQueryKey
 ];
 
+export const tripDependentQueryKeys = [
+    tripManagerQueryKey
+];
+
 export const allDependentQueryKeys = [
     ...transactionDependentQueryKeys,
     ...myMoneyDependentQueryKeys

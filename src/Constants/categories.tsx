@@ -219,4 +219,4 @@ const CATEGORIES = {
 };
 export default CATEGORIES;
 
-export type AnyCategoryCode = SpendingCategoryType | AccountCategoryType;
+export type AnyCategoryCode = SpendingCategoryType | AccountCategoryType | 'TRIP';

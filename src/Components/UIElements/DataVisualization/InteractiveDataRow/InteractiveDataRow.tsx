@@ -22,7 +22,7 @@ type InteractiveDataRowPropTypes = {
     amount: number | String,
     amountDescription: string,
     isExpense?: boolean,
-    iconCategory: AccountCategoryType | SpendingCategoryType,
+    iconCategory: AccountCategoryType | SpendingCategoryType | 'TRIP',
     onClick: EmptyCallback,
     isLoading?: boolean,
     showRevolvingIcon?: boolean

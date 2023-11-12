@@ -1,5 +1,5 @@
 import styles from './TripDetails.module.css';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import useContent from 'CustomHooks/useContent';
 import formatCurrency from 'Util/Formatters/formatCurrency';
 import Link from 'Components/UIElements/Navigation/Link/Link';
@@ -7,33 +7,39 @@ import TransactionsList from 'Components/Transactions/TransactionsList/Transacti
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useFetch from 'CustomHooks/useFetch';
 import generateParamsForGET from 'Util/generateParamsForGET';
-import { useEffect } from 'react';
 import { IoTrashSharp } from 'react-icons/io5';
 import { useClosePanel } from 'Components/UIElements/Modal/SlideUpPanel/SlideUpPanel';
 import axios from 'axios';
+import { Trip } from 'Types/TripTypes';
+import { EmptyCallback } from 'Types/QoLTypes';
+import { useQueryClient } from '@tanstack/react-query';
+import { transactionDependentQueryKeys } from 'Util/QueryKeys';
 
-export default function TripDetails({ existingTrip, getDayCountMessage, editDetailsCallback, refreshRequested, callForRefresh  }) {
+type TripDetailsPropTypes = {
+    existingTrip: Trip,
+    getDayCountMessage: (start: Dayjs, end: Dayjs) => string,
+    editDetailsCallback: EmptyCallback,
+}
+
+export default function TripDetails({ existingTrip, getDayCountMessage, editDetailsCallback }: TripDetailsPropTypes) {
     const startDate = dayjs(existingTrip.startDate);
     const endDate = dayjs(existingTrip.endDate);
     const getContent = useContent('TRIPS');
     const closePanel = useClosePanel();
+    const queryClient = useQueryClient();
 
     const isPastTrip = dayjs().isAfter(endDate);
 
-    const { loading, response, fire } = useFetch(SERVICE_ROUTES.getExpensesLinkedToTrip + generateParamsForGET({
+    const { loading, response } = useFetch(SERVICE_ROUTES.getExpensesLinkedToTrip + generateParamsForGET({
         tripId: existingTrip.tripId
     }), true);
-
-    useEffect(() => {
-        if(refreshRequested) {
-            fire(true);
-        }
-    }, [fire, refreshRequested]);
 
     function handleDeletion() {
         return axios.post(SERVICE_ROUTES.deleteTrip, {
             tripId: existingTrip.tripId
-        }).then(callForRefresh);
+        }).then(() => {
+            queryClient.invalidateQueries(transactionDependentQueryKeys);
+        });
     }
 
     return (
@@ -62,7 +68,6 @@ export default function TripDetails({ existingTrip, getDayCountMessage, editDeta
             <TransactionsList transactionsList={response?.transactionList}
                               isLoading={loading}
                               skeletonLoaderCount={1}
-                              onEditCallback={callForRefresh}
             />
             <Link text={getContent('DELETE')}
                   CustomIcon={IoTrashSharp}
