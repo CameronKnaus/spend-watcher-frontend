@@ -3,6 +3,7 @@ import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/
 import useContent from 'CustomHooks/useContent';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { AccountCategoryType, SpendingCategoryType } from 'Constants/categories';
+import clsx from 'clsx';
 
 // TODO: Refactor all of this code.  To aid with converting to typescript I split one component into two with a lot of copy-paste
 
@@ -105,13 +106,14 @@ export function AccountCategoryInput({ id = 'category-input', textInputStyles, v
 
 type SpendingCategoryInputPropTypes = {
     id?: string,
+    defaultNoSelectionToOther?: boolean,
     textInputStyles: string,
     value: SpendingCategoryType | '',
     onChange: Dispatch<SetStateAction<SpendingCategoryType | ''>>,
 }
 
 // This is a controlled-only component.  State must be managed by the parent
-export function SpendingCategoryInputs({ id = 'category-input', textInputStyles, value, onChange }: SpendingCategoryInputPropTypes) {
+export function SpendingCategoryInputs({ id = 'category-input', defaultNoSelectionToOther = false, textInputStyles, value, onChange }: SpendingCategoryInputPropTypes) {
     const [open, setOpen] = useState(false);
     const [filterText, setFilterText] = useState('');
     const ref = useRef(null);
@@ -145,10 +147,10 @@ export function SpendingCategoryInputs({ id = 'category-input', textInputStyles,
         }
 
         if(value) {
-            return value || getContent('EMPTY');
+            return getCategoryContent(value);
         }
 
-        return getCategoryContent(SpendingCategoryType.OTHER) || getContent('EMPTY');
+        return defaultNoSelectionToOther ? getCategoryContent(SpendingCategoryType.OTHER) : getContent('EMPTY');
     }
 
     return (
@@ -157,13 +159,16 @@ export function SpendingCategoryInputs({ id = 'category-input', textInputStyles,
                 <div className={styles.textInput}>
                     <input ref={ref}
                            id={id}
-                           className={`${textInputStyles} ${value && value === 'OTHER' ? styles.otherText : ''}`}
+                           className={clsx([
+                                textInputStyles,
+                                { [styles.otherText]: document.activeElement !== ref.current && defaultNoSelectionToOther && value === 'OTHER' }
+                           ])}
                            maxLength={20}
                            value={currentSelectedValue()}
                            autoComplete='off'
                            onChange={(event) => {
                                 setFilterText(event.target.value);
-                                onChange(SpendingCategoryType.OTHER);
+                                onChange(defaultNoSelectionToOther ? SpendingCategoryType.OTHER : '');
                            }}
                            onClick={() => setOpen(prev => !prev)}
                     />
@@ -188,7 +193,6 @@ export function SpendingCategoryInputs({ id = 'category-input', textInputStyles,
                                                   containerSize='2rem'
                                                   iconSize='1.2rem'
                                     />
-                                    {/* @ts-ignore TODO: Revisit typescript conversion */}
                                     {getCategoryContent(category)}
                                 </div>
                             ))

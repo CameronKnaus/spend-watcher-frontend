@@ -162,7 +162,8 @@ export default function TransactionForm({
                                 <label htmlFor='category-input' style={{ width: 100 }}>
                                     {getContent('CATEGORY_LABEL')}
                                 </label>
-                                <SpendingCategoryInputs textInputStyles={styles.textInput}
+                                <SpendingCategoryInputs defaultNoSelectionToOther
+                                                        textInputStyles={styles.textInput}
                                                         value={category}
                                                         onChange={setCategory}
                                 />
