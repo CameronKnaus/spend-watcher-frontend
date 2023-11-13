@@ -28,8 +28,8 @@ export default function EditableTransactionListItem({ date,
     isNewTransaction = false,
     newTransactionLabel }: EditableTransactionListItemPropTypes) {
     const startingAmount = Number(amount?.toFixed(2)) ?? null;
-    const [expenseAmount, setExpenseAmount] = useState(isNewTransaction ? null : startingAmount);
-    const [initialExpenseAmount, setInitialExpenseAmount] = useState<number | null>(startingAmount ?? -1);
+    const [expenseAmount, setExpenseAmount] = useState<string | undefined>(isNewTransaction ? void 0 : `${startingAmount}`);
+    const [initialExpenseAmount, setInitialExpenseAmount] = useState<number | undefined>(startingAmount ?? -1);
     const [isNewTransactionMode, setIsNewTransactionMode] = useState(isNewTransaction);
 
     if(!showAsLoader && isNewTransactionMode) {
@@ -48,8 +48,8 @@ export default function EditableTransactionListItem({ date,
 
         // Reset initial expense amount to the new value.
         setIsNewTransactionMode(isNewTransaction);
-        setInitialExpenseAmount(isNewTransaction ? null : expenseAmount);
-        onConfirm(amountToLog!, transactionId, date, isNewTransaction);
+        setInitialExpenseAmount(isNewTransaction ? void 0 : Number(expenseAmount));
+        onConfirm(Number(amountToLog!), transactionId, date, isNewTransaction);
     }
 
     return (

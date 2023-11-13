@@ -58,7 +58,7 @@ export default function AccountForm({ onPanelClose, editMode, existingAccount = 
         // Default to checking
         return AccountCategoryType.CHECKING;
     });
-    const [accountValue, setAccountValue] = React.useState<number | null>(null);
+    const [accountValue, setAccountValue] = React.useState<string | undefined>();
     const [growthRate, setGrowthRate] = React.useState(existingAccount.growthRate);
     const [isVariable, setIsVariable] = React.useState(existingAccount.hasVariableGrowthRate);
     const [loading, setLoading] = React.useState(false);
@@ -76,7 +76,7 @@ export default function AccountForm({ onPanelClose, editMode, existingAccount = 
         const payload: MoneyAccountPayload = {
             accountName,
             accountCategory: category,
-            startingAccountValue: accountValue,
+            startingAccountValue: Number(accountValue),
             growthRate: Number(growthRate),
             hasVariableGrowthRate: isVariable
         };

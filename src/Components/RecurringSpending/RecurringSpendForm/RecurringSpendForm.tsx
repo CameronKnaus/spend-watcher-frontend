@@ -46,7 +46,13 @@ export default function RecurringSpendForm({ editMode,
     // State for form values
     const [expenseName, setExpenseName] = useState(existingTransaction.expenseName ?? '');
     const [isVariable, setIsVariable] = useState(Boolean(existingTransaction.isVariableRecurring ?? 0));
-    const [amount, setAmount] = useState(existingTransaction.estimatedAmount || null);
+    const [amount, setAmount] = useState<string | undefined>(() => {
+        if(existingTransaction.estimatedAmount) {
+            return `${existingTransaction.estimatedAmount}`;
+        }
+
+        return void 0;
+    });
     const [category, setCategory] = useState<SpendingCategoryType | ''>(existingTransaction.category || SpendingCategoryType.OTHER);
 
     useEffect(() => {
@@ -82,7 +88,7 @@ export default function RecurringSpendForm({ editMode,
 
     // Update form validity only based on amount having a positive value
     useEffect(() => {
-        formIsValidCallback((amount || 0) > 0 && expenseName.length > 0);
+        formIsValidCallback((Number(amount) || 0) > 0 && expenseName.length > 0);
     }, [amount, expenseName, formIsValidCallback]);
 
     const variableExpenseLabel = getContent('VARIABLE_EXPENSE_LABEL');

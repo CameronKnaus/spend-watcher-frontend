@@ -51,7 +51,7 @@ export default function TransactionForm({
 
     // State for form values
     const [formValid, setFormValid] = useState(Boolean(existingTransaction.amount)); // defaults false
-    const [amount, setAmount] = useState<number | null>(existingTransaction.amount ?? null);
+    const [amount, setAmount] = useState<string | undefined>(existingTransaction.amount ? `${existingTransaction.amount}` : void 0);
     const [category, setCategory] = useState<SpendingCategoryType | ''>(existingTransaction.category || SpendingCategoryType.OTHER);
     const [isUncommon, setIsUncommon] = useState(Boolean(existingTransaction.isUncommon));
     const [note, setNote] = useState(existingTransaction.note || '');
@@ -72,7 +72,7 @@ export default function TransactionForm({
 
     // Update form validity only based on amount having a positive value
     useEffect(() => {
-        setFormValid((amount ?? 0) > 0 && selectedDate.isValid());
+        setFormValid((Number(amount) ?? 0) > 0 && selectedDate.isValid());
     }, [amount, selectedDate]);
 
     function submit(submissionType: SubmissionType) {

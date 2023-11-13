@@ -7,8 +7,8 @@ type MoneyInputPropTypes = {
     id?: string,
     name: string,
     placeholder: string,
-    value: number | null,
-    stateUpdater: Dispatch<SetStateAction<number | null>>,
+    value?: string,
+    stateUpdater: Dispatch<SetStateAction<string | undefined>>,
     className: string
 }
 export default function MoneyInput({ id = 'currency-input', name, placeholder, value, stateUpdater = () => { /* NOOP*/ }, className }: MoneyInputPropTypes) {
@@ -24,8 +24,8 @@ export default function MoneyInput({ id = 'currency-input', name, placeholder, v
                        decimalScale={2}
                        maxLength={12}
                        autoComplete='off'
-                       value={value ? value : void 0}
-                       onValueChange={value => stateUpdater(Number(value))}
+                       value={value}
+                       onValueChange={value => stateUpdater(value ?? '')}
         />
     );
 }

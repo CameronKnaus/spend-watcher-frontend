@@ -24,10 +24,10 @@ export default function MonthlySpendUpdateForm({ onPanelClose, expenseToUpdate, 
     const queryClient = useQueryClient();
 
     // State for form values
-    const [spendAmount, setSpendAmount] = React.useState<number | null>(null);
+    const [spendAmount, setSpendAmount] = React.useState<string | undefined>();
 
     function submit() {
-        if(spendAmount == null) {
+        if(!spendAmount) {
             return;
         }
 
@@ -46,7 +46,7 @@ export default function MonthlySpendUpdateForm({ onPanelClose, expenseToUpdate, 
     }
 
     const estimatedMonthlyAmount = expenseToUpdate.estimatedAmount;
-    const amountDifference = (spendAmount || 0) - estimatedMonthlyAmount;
+    const amountDifference = (Number(spendAmount) || 0) - estimatedMonthlyAmount;
     const amountDifferencePercent = ((amountDifference / estimatedMonthlyAmount) * 100).toFixed(2);
     const spentMore = amountDifference > 0;
     const changeSign = spentMore ? '+' : '';
@@ -59,7 +59,7 @@ export default function MonthlySpendUpdateForm({ onPanelClose, expenseToUpdate, 
                       confirmText={getContent('SUBMIT')}
                       forwardActionCallback={submit}
                       tagColor='var(--theme-red-dark)'
-                      disableConfirmButton={spendAmount == null}
+                      disableConfirmButton={!spendAmount}
                       onPanelClose={onPanelClose}
         >
             <form className={styles.expenseUpdateForm}>

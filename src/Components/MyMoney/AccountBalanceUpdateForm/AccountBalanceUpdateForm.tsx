@@ -36,7 +36,7 @@ export default function AccountBalanceUpdateForm({ onPanelClose, accountToUpdate
     const queryClient = useQueryClient();
 
     // State for form values
-    const [accountValue, setAccountValue] = React.useState<number | null>(null);
+    const [accountValue, setAccountValue] = React.useState<string | undefined>('');
 
     function submit() {
         if(accountValue == null) {
@@ -55,7 +55,7 @@ export default function AccountBalanceUpdateForm({ onPanelClose, accountToUpdate
         });
     }
 
-    const valueChange = (accountValue || 0) - accountToUpdate.currentAccountValue;
+    const valueChange = (Number(accountValue) || 0) - accountToUpdate.currentAccountValue;
     const valueChangePercentage = ((valueChange / accountToUpdate.currentAccountValue) * 100).toFixed(2);
     const isGain = valueChange > 0;
     const changeSign = isGain ? '+' : '';
