@@ -54,21 +54,27 @@ export default function SpendingSummary({ spendingBreakdown, setCurrentTab, setF
                     </div>
                 </div>
             </div>
-            <div className={styles.topCategories}>
-                <TopSpendingCategories useDollarValues
-                                       label={getContent('CATEGORY_TOTAL_TITLE')}
-                                       categoryTotals={spendingBreakdown.categoryTotals}
-                                       setCurrentTab={setCurrentTab}
-                                       setFilterCategory={setFilterCategory}
-                />
-            </div>
-            <div className={styles.topCategories}>
-                <TopSpendingCategories label={getContent('CATEGORY_TOTAL_AMOUNT_TITLE')}
-                                       categoryTotals={totalTransactionsPerCategory}
-                                       setCurrentTab={setCurrentTab}
-                                       setFilterCategory={setFilterCategory}
-                />
-            </div>
+            {
+                spendingBreakdown.finalTotalTransactions > 0 && (
+                    <>
+                        <div className={styles.topCategories}>
+                            <TopSpendingCategories useDollarValues
+                                                   label={getContent('CATEGORY_TOTAL_TITLE')}
+                                                   categoryTotals={spendingBreakdown.categoryTotals}
+                                                   setCurrentTab={setCurrentTab}
+                                                   setFilterCategory={setFilterCategory}
+                            />
+                        </div>
+                        <div className={styles.topCategories}>
+                            <TopSpendingCategories label={getContent('CATEGORY_TOTAL_AMOUNT_TITLE')}
+                                                   categoryTotals={totalTransactionsPerCategory}
+                                                   setCurrentTab={setCurrentTab}
+                                                   setFilterCategory={setFilterCategory}
+                            />
+                        </div>
+                    </>
+                )
+            }
         </div>
     );
 }

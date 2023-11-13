@@ -6,7 +6,6 @@ import { AccountCategoryType, SpendingCategoryType } from 'Constants/categories'
 import clsx from 'clsx';
 
 // TODO: Refactor all of this code.  To aid with converting to typescript I split one component into two with a lot of copy-paste
-
 type AccountCategoryInputPropTypes = {
     id?: string,
     textInputStyles: string,
