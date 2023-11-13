@@ -6,4 +6,5 @@ export type Trip = {
     tripId: string;
     tripTotal: number;
     tripName: string;
+    tripIsActive: boolean
 }

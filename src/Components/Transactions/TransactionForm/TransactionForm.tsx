@@ -213,8 +213,10 @@ export default function TransactionForm({
                                                               textInputStyles={styles.textInput}
                                                               nothingSelectedText={getContent('NO_TRIPS')}
                                                               setValue={(selectedTrip) => {
-                                                                setTripSelected(true);
-                                                                setLinkedTripId(selectedTrip);
+                                                                if(typeof selectedTrip === 'string') {
+                                                                    setTripSelected(true);
+                                                                    setLinkedTripId(selectedTrip);
+                                                                }
                                                               }}
                                             />
                                             <div style={{ height: '1rem' }} />
