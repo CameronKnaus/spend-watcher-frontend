@@ -7,7 +7,7 @@ import InteractiveDataRow from 'Components/UIElements/DataVisualization/Interact
 import LoadingInteractiveRowList from 'Components/UIElements/Loading/LoadingInteractiveRowList';
 import RecurringSpendSlideInPanel from 'Components/RecurringSpending/RecurringSpendSlideInPanel/RecurringSpendSlideInPanel';
 import { SpendingCategoryType } from 'Constants/categories';
-import { FormattedTransaction, RecurringTransaction, TransactionList, TransactionListDiscretionary, TransactionListTransaction } from 'Types/TransactionTypes';
+import { FormattedTransaction, RecurringTransaction, SpendingBreakdownTransaction, TransactionList, TransactionListDiscretionary, TransactionListTransaction } from 'Types/TransactionTypes';
 import { DateType } from 'Types/DateTypes';
 
 /* TransactionsList prop should be transactions grouped by date with they date being the key:
@@ -17,15 +17,15 @@ import { DateType } from 'Types/DateTypes';
                 01/01/2022: [{ *transaction data* }, { *transaction data* }]
 * */
 type TransactionListPropTypes = {
-    transactionsList: TransactionList,
-    filteredCategory?: SpendingCategoryType,
+    transactionsList: TransactionList | Record<DateType, Array<SpendingBreakdownTransaction>>,
+    filteredCategory?: SpendingCategoryType | '',
     isLoading?: boolean,
     skeletonLoaderCount?: number
 }
 
 export default function TransactionsList({ transactionsList, filteredCategory, isLoading = false, skeletonLoaderCount = 5 }: TransactionListPropTypes) {
     const [transactionToEdit, setTransactionToEdit] = useState<FormattedTransaction | null>(null);
-    const [recurringTransactionToEdit, setRecurringTransactionToEdit] = useState<RecurringTransaction | null>(null);
+    const [recurringTransactionToEdit, setRecurringTransactionToEdit] = useState<RecurringTransaction | SpendingBreakdownTransaction | null>(null);
     const getContent = useContent('TRANSACTIONS');
     const getGeneralContent = useContent('GENERAL');
     const getCategoryContent = useContent('SPENDING_CATEGORIES');
@@ -55,7 +55,7 @@ export default function TransactionsList({ transactionsList, filteredCategory, i
     }
 
     // Maps out all transactions under a given grouping (i.e. under a single date)
-    function mapTransactionList(transactionList: Array<TransactionListTransaction>, header: string) {
+    function mapTransactionList(transactionList: Array<TransactionListTransaction | SpendingBreakdownTransaction>, header: string) {
         let sortedList = transactionList.sort((a, b) => {
             return a.transactionId! < b.transactionId! ? 1 : -1;
         });
@@ -155,7 +155,7 @@ export default function TransactionsList({ transactionsList, filteredCategory, i
             {
                 recurringTransactionToEdit && (
                     <RecurringSpendSlideInPanel editMode
-                                                existingTransaction={recurringTransactionToEdit}
+                                                existingTransaction={recurringTransactionToEdit as RecurringTransaction}
                                                 onPanelClose={() => setRecurringTransactionToEdit(null)}
                     />
                 )

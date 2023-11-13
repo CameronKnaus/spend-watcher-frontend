@@ -3,8 +3,19 @@ import styles from './SpendingSummary.module.css';
 import useContent from 'CustomHooks/useContent';
 import formatCurrency from 'Util/Formatters/formatCurrency';
 import clsx from 'clsx';
+import { SpendingCategoryType } from 'Constants/categories';
+import { Dispatch, SetStateAction } from 'react';
+import { RawSpendingBreakdownResponse } from 'CustomHooks/ServiceHooks/spendingBreakdownTransform';
+import { TAB_ENUM } from 'Pages/SpendingBreakdown/SpendingBreakdown';
 
-export default function SpendingSummary({ spendingBreakdown, setCurrentTab, setFilterCategory, totalTransactionsPerCategory }) {
+type SpendingSummaryPropTypes = {
+    spendingBreakdown: RawSpendingBreakdownResponse,
+    setCurrentTab: Dispatch<SetStateAction<TAB_ENUM>>,
+    setFilterCategory: (name: SpendingCategoryType) => void;
+    totalTransactionsPerCategory: Record<SpendingCategoryType, number>;
+}
+
+export default function SpendingSummary({ spendingBreakdown, setCurrentTab, setFilterCategory, totalTransactionsPerCategory }: SpendingSummaryPropTypes) {
     const getContent = useContent('SPENDING_BREAKDOWN');
 
     if(spendingBreakdown.noTransactions) {

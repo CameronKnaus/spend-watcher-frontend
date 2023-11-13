@@ -106,8 +106,8 @@ export function AccountCategoryInput({ id = 'category-input', textInputStyles, v
 type SpendingCategoryInputPropTypes = {
     id?: string,
     textInputStyles: string,
-    value: SpendingCategoryType,
-    onChange: Dispatch<SetStateAction<SpendingCategoryType>>,
+    value: SpendingCategoryType | '',
+    onChange: Dispatch<SetStateAction<SpendingCategoryType | ''>>,
 }
 
 // This is a controlled-only component.  State must be managed by the parent

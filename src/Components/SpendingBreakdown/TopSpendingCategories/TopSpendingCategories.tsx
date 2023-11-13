@@ -10,8 +10,8 @@ import CategoryAmountChart from '../../UIElements/DataVisualization/CategoryAmou
 type TopSpendingCategoriesPropTypes = {
     label: string;
     categoryTotals?: Record<SpendingCategoryType, number>;
-    setCurrentTab: Dispatch<SetStateAction<string>>;
-    setFilterCategory: any;
+    setCurrentTab: Dispatch<SetStateAction<TAB_ENUM>>;
+    setFilterCategory: (name: SpendingCategoryType) => void;
     useDollarValues?: boolean;
 }
 
@@ -62,7 +62,7 @@ export default function TopSpendingCategories({ label, categoryTotals, setCurren
                                 tabIndex={0}
                                 onClick={() => {
                                     setCurrentTab(TAB_ENUM.HISTORY_TAB);
-                                    setFilterCategory({ code: category, name: categoryLabel });
+                                    setFilterCategory(category);
                                 }}
                         >
                             <div className={styles.icon}>

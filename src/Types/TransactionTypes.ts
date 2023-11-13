@@ -1,6 +1,8 @@
 import { SpendingCategoryType } from 'Constants/categories';
 import { DateType, ISODateType } from './DateTypes';
 
+export type TransactionId = number | string;
+
 // TODO: Consolidate all transaction types if possible
 export type FormattedTransaction = {
     id: number | string;
@@ -49,7 +51,7 @@ export type TransactionListDiscretionary = {
     isUncommon: boolean;
     date: DateType;
     dateISO: ISODateType,
-    note: string;
+    note?: string;
     linkedTripId?: string;
     isRecurringTransaction: false
 }
@@ -63,3 +65,63 @@ export type TransactionListRecurring = RecurringTransaction & {
 export type TransactionListTransaction = TransactionListDiscretionary | TransactionListRecurring;
 
 export type TransactionList = Record<DateType, Array<TransactionListTransaction>>
+
+export type SpendingBreakdownDiscretionaryTransaction = {
+    transactionId: number,
+    category: SpendingCategoryType,
+    amount: number,
+    isUncommon: boolean,
+    isCustomCategory: boolean,
+    date: DateType,
+    dateISO: ISODateType,
+    note?: string,
+    linkedTripId?: string,
+    isRecurringTransaction: false
+}
+
+export type SpendingBreakdownRecurringTransaction = {
+    transactionId: number,
+    date: DateType,
+    amount: number,
+    isActive: boolean,
+    isVariableRecurring: boolean,
+    estimatedAmount: number,
+    expenseName: string,
+    category: SpendingCategoryType,
+    recurringSpendId: string,
+    isRecurringTransaction: true
+}
+
+export type SpendingBreakdownTransaction = SpendingBreakdownDiscretionaryTransaction | SpendingBreakdownRecurringTransaction;
+
+
+// TODO: Relocate these, perhaps after making chart components
+type DataPoint = {
+    date: DateType;
+    value: number;
+    valuesByCategory: Record<SpendingCategoryType, number>;
+    transactionIdList: Array<number>;
+    transactionIdListByCategory: Record<SpendingCategoryType, Array<number>>;
+
+}
+
+type MinMaxDataPoint = {
+    max: number;
+    min: number;
+    dateOfMax: DateType;
+    dateOfMin: DateType;
+}
+
+type DataPointsByCategory = MinMaxDataPoint & {
+    minMaxByCategory: Record<SpendingCategoryType, MinMaxDataPoint>;
+    dataPoints: Array<DataPoint>;
+}
+
+export type CategoryTotalDataPoints = {
+    totalTransactionCount: number;
+    totalSpent: number;
+    cumulativeTotals: DataPointsByCategory;
+    dailyTotals: DataPointsByCategory;
+    cumulativeTransactionAmounts: DataPointsByCategory;
+    dailyTransactionAmounts: DataPointsByCategory;
+}

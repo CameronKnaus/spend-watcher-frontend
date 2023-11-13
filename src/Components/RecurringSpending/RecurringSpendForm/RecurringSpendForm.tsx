@@ -47,7 +47,7 @@ export default function RecurringSpendForm({ editMode,
     const [expenseName, setExpenseName] = useState(existingTransaction.expenseName ?? '');
     const [isVariable, setIsVariable] = useState(Boolean(existingTransaction.isVariableRecurring ?? 0));
     const [amount, setAmount] = useState(existingTransaction.estimatedAmount || null);
-    const [category, setCategory] = useState(existingTransaction.category || SpendingCategoryType.OTHER);
+    const [category, setCategory] = useState<SpendingCategoryType | ''>(existingTransaction.category || SpendingCategoryType.OTHER);
 
     useEffect(() => {
         setForwardActionCallback(() => {

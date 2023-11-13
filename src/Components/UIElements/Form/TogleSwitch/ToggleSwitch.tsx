@@ -1,5 +1,5 @@
 import styles from './ToggleSwitch.module.css';
-import { Color, SizeValue } from 'Types/StyleTypes';
+import { Color } from 'Types/StyleTypes';
 import { EmptyCallback } from 'Types/QoLTypes';
 
 type ToggleSwitchPropTypes = {
@@ -7,10 +7,10 @@ type ToggleSwitchPropTypes = {
     labelText: string;
     toggleOnState: EmptyCallback;
     activeColor: Color;
-    spaceBetween: SizeValue;
+    spaceBetween?: boolean;
 }
 
-export default function ToggleSwitch({ onState, labelText, toggleOnState, activeColor, spaceBetween }: ToggleSwitchPropTypes) {
+export default function ToggleSwitch({ onState, labelText, toggleOnState, activeColor, spaceBetween = false }: ToggleSwitchPropTypes) {
     const height = 20;
     const width = 40;
 

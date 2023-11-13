@@ -13,19 +13,20 @@ import SpendingHistory from '../../Containers/SpendingHistory/SpendingHistory';
 import DateContextShifter from '../../Components/UIElements/Form/DateContextShifter/DateContextShifter';
 import { useIsMobile } from '../../Util/IsMobileContext';
 import clsx from 'clsx';
-import useTripDetails from 'CustomHooks/useTripDetails';
 import ToggleSwitch from 'Components/UIElements/Form/TogleSwitch/ToggleSwitch';
 import DateRangeType from 'Constants/DateRangeTypes';
 import DateRangeLabel from 'Components/UIElements/Informational/DateRangeLabel/DateRangeLabel';
 import useSpendingBreakdown from 'CustomHooks/ServiceHooks/useSpendingBreakdown';
 import dayjs from 'dayjs';
+import { DateType } from 'Types/DateTypes';
+import { SpendingCategoryType } from 'Constants/categories';
 
-export const TAB_ENUM = {
-    SUMMARY_TAB: 'SUMMARY_TAB',
-    HISTORY_TAB: 'HISTORY_TAB'
-};
+export enum TAB_ENUM {
+    SUMMARY_TAB = 'SUMMARY_TAB',
+    HISTORY_TAB = 'HISTORY_TAB'
+}
 
-const defaultTabMap = {
+const defaultTabMap: Record<string, TAB_ENUM> = {
     summary: TAB_ENUM.SUMMARY_TAB,
     history: TAB_ENUM.HISTORY_TAB
 };
@@ -42,15 +43,15 @@ export default function SpendingBreakdown() {
         shiftMonthInContext
     } = useDateRange();
     const urlParams = useParams();
-    const { refreshTrips } = useTripDetails();
 
-    const [currentTab, setCurrentTab] = useState(defaultTabMap[urlParams.defaultTab] || TAB_ENUM.SUMMARY_TAB);
+    const [currentTab, setCurrentTab] = useState(defaultTabMap[`${urlParams.defaultTab}`] || TAB_ENUM.SUMMARY_TAB);
     const [minSupportedDate, setMinSupportedDate] = useState(dayjs('01/01/0001'));
-    const [filterCategory, setFilterCategory] = useState({ name: '', code: '' });
+    const [filterCategory, setFilterCategory] = useState<SpendingCategoryType | ''>('');
     const [includeRecurringTransactions, setIncludeRecurringTransactions] = useState(false);
 
     // Get the earliest spending logged to set date range handler min range
     const { response: dateRangeResponse } = useFetch(SERVICE_ROUTES.transactionDateRange, true);
+
     useEffect(() => {
         if(!dateRangeResponse || !dateRangeResponse.minDate) {
             return;
@@ -60,8 +61,8 @@ export default function SpendingBreakdown() {
     }, [dateRangeResponse]);
 
     const serviceArgs = {
-        startDate: dateRange.startDate.format(),
-        endDate: dateRange.endDate.format(),
+        startDate: dateRange.startDate.format() as DateType,
+        endDate: dateRange.endDate.format() as DateType,
         includeRecurringTransactions,
         showAllData: dateRangeType === DateRangeType.MAX
     };
@@ -69,8 +70,7 @@ export default function SpendingBreakdown() {
     const {
         spendingDataErrorOccurred,
         spendingDataLoading,
-        spendingBreakdown,
-        refetchSpendingBreakdown
+        spendingBreakdown
     } = useSpendingBreakdown(serviceArgs);
 
     if(!dateRangeResponse || spendingDataLoading || !spendingBreakdown) {
@@ -116,7 +116,7 @@ export default function SpendingBreakdown() {
                 )
             }
             <div className={styles.toggleSwitchContainer}>
-                <ToggleSwitch spaceBetween labelText={getContent('INCLUDE_RECURRING')} setOnState={() => setIncludeRecurringTransactions(current => !current)} activeColor='var(--theme-queen-blue-pale)' onState={includeRecurringTransactions} />
+                <ToggleSwitch spaceBetween labelText={getContent('INCLUDE_RECURRING')} toggleOnState={() => setIncludeRecurringTransactions(current => !current)} activeColor='var(--theme-queen-blue-pale)' onState={includeRecurringTransactions} />
             </div>
         </div>
     );
@@ -136,10 +136,6 @@ export default function SpendingBreakdown() {
                          setFilterCategory={setFilterCategory}
                          totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
                          finalTotalTransactions={spendingBreakdown.finalTotalTransactions}
-                         refreshStats={() => {
-                            refetchSpendingBreakdown();
-                            refreshTrips(true);
-                         }}
         />
     );
 

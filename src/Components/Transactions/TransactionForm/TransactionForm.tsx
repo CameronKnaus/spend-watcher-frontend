@@ -52,7 +52,7 @@ export default function TransactionForm({
     // State for form values
     const [formValid, setFormValid] = useState(Boolean(existingTransaction.amount)); // defaults false
     const [amount, setAmount] = useState<number | null>(existingTransaction.amount ?? null);
-    const [category, setCategory] = useState(existingTransaction.category || SpendingCategoryType.OTHER);
+    const [category, setCategory] = useState<SpendingCategoryType | ''>(existingTransaction.category || SpendingCategoryType.OTHER);
     const [isUncommon, setIsUncommon] = useState(Boolean(existingTransaction.isUncommon));
     const [note, setNote] = useState(existingTransaction.note || '');
     const [selectedDate, setSelectedDate] = useState<Dayjs>(existingTransaction.date ? dayjs(existingTransaction.date) : dayjs()); // defaults to today

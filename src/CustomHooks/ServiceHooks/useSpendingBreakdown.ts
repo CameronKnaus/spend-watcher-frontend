@@ -4,18 +4,31 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import msMapper from 'Util/Time/TimeMapping';
 import { spendingBreakdownQueryKey } from '../../Util/QueryKeys';
 import { DateType } from 'Types/DateTypes';
+import spendingBreakdownTransform, { PopulatedSpendingBreakdownResponse } from './spendingBreakdownTransform';
 
 type UseSpendingBreakdownArgs = {
     startDate: DateType;
     endDate: DateType;
     includeRecurringTransactions: boolean;
-    showAllData: number;
+    showAllData: boolean;
 }
 
-export default function useSpendingBreakdown(args: UseSpendingBreakdownArgs) {
+type SpendingBreakdownReturnValue = {
+    spendingDataErrorOccurred: boolean;
+    spendingDataLoading: boolean;
+    spendingBreakdown?: PopulatedSpendingBreakdownResponse;
+    noTransactions: false;
+} | {
+    spendingDataErrorOccurred: boolean;
+    spendingDataLoading: boolean;
+    spendingBreakdown?: never;
+    noTransactions: true;
+};
+
+export default function useSpendingBreakdown(args: UseSpendingBreakdownArgs): SpendingBreakdownReturnValue {
     const { startDate, endDate, includeRecurringTransactions, showAllData } = args;
 
-    const { isLoading, isError, data, refetch } = useQuery({
+    const { isLoading, isError, data } = useQuery({
         queryKey: [
             spendingBreakdownQueryKey,
             startDate,
@@ -33,13 +46,22 @@ export default function useSpendingBreakdown(args: UseSpendingBreakdownArgs) {
                 includeRecurringTransactions,
                 showAllData
             });
-        }
+        },
+        select: spendingBreakdownTransform
     });
+
+    if(data?.noTransactions) {
+        return {
+            spendingDataErrorOccurred: isError,
+            spendingDataLoading: isLoading,
+            noTransactions: true
+        };
+    }
 
     return {
         spendingDataErrorOccurred: isError,
         spendingDataLoading: isLoading,
-        spendingBreakdown: data?.data,
-        refetchSpendingBreakdown: refetch
+        spendingBreakdown: data,
+        noTransactions: false
     };
 }

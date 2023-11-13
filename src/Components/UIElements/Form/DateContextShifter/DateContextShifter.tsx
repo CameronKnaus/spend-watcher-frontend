@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import useContent from 'CustomHooks/useContent';
 import DateRangeType from 'Constants/DateRangeTypes';
 import dayjs, { Dayjs } from 'dayjs';
-import { DateType } from 'Types/DateTypes';
 
 const { MONTH, YEAR } = DateRangeType;
 
@@ -14,7 +13,7 @@ type DateContextShifterPropTypes = {
     endDate: Dayjs;
     shiftMonthInContext: (isForward: boolean) => void;
     shiftYearInContext: (isForward: boolean) => void;
-    minAllowedDate: DateType;
+    minAllowedDate: Dayjs;
 }
 
 export default function DateContextShifter({ dateRangeType, startDate, endDate, shiftMonthInContext, shiftYearInContext, minAllowedDate }: DateContextShifterPropTypes) {
