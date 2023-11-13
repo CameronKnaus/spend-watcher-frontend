@@ -10,7 +10,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { Trip } from 'Types/TripTypes';
 import { EmptyCallback } from 'Types/QoLTypes';
 import { useQueryClient } from '@tanstack/react-query';
-import { tripDependentQueryKeys } from 'Util/QueryKeys';
+import { invalidateQueries, tripDependentQueryKeys } from 'Util/QueryKeys';
 
 type TripFromPropTypes = {
     existingTrip?: Trip;
@@ -41,6 +41,10 @@ export default function TripForm({ existingTrip, setForwardActionCallback, getDa
     });
 
     useEffect(() => {
+        function handleQueryInvalidation() {
+            invalidateQueries(queryClient, tripDependentQueryKeys);
+        }
+
         setForwardActionCallback(() => {
             if(hasExistingTrip) {
                 return () => {
@@ -49,9 +53,7 @@ export default function TripForm({ existingTrip, setForwardActionCallback, getDa
                         tripName,
                         startDate,
                         endDate
-                    }).then(() => {
-                        queryClient.invalidateQueries(tripDependentQueryKeys);
-                    });
+                    }).then(handleQueryInvalidation);
                 };
             }
 
@@ -61,9 +63,7 @@ export default function TripForm({ existingTrip, setForwardActionCallback, getDa
                     tripName,
                     startDate,
                     endDate
-                }).then(() => {
-                    queryClient.invalidateQueries(tripDependentQueryKeys);
-                });
+                }).then(handleQueryInvalidation);
             };
         });
     }, [endDate, existingTrip?.tripId, hasExistingTrip, queryClient, setForwardActionCallback, startDate, tripName]);

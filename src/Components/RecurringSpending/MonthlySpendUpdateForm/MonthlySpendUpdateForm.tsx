@@ -9,7 +9,7 @@ import formatCurrency from 'Util/Formatters/formatCurrency';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import dayjs from 'dayjs';
 import { useQueryClient } from '@tanstack/react-query';
-import { recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
+import { invalidateQueries, recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
 import { RecurringTransaction } from 'Types/TransactionTypes';
 import { EmptyCallback } from 'Types/QoLTypes';
 
@@ -41,7 +41,7 @@ export default function MonthlySpendUpdateForm({ onPanelClose, expenseToUpdate, 
 
         // Handle service call
         axios.post(SERVICE_ROUTES.updateRecurringExpense, payload).then(() => {
-            queryClient.invalidateQueries(recurringTransactionDependentQueryKeys);
+            invalidateQueries(queryClient, recurringTransactionDependentQueryKeys);
         });
     }
 

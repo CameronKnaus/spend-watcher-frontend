@@ -11,7 +11,7 @@ type MoneyInputPropTypes = {
     stateUpdater: Dispatch<SetStateAction<string | undefined>>,
     className: string
 }
-export default function MoneyInput({ id = 'currency-input', name, placeholder, value, stateUpdater = () => { /* NOOP*/ }, className }: MoneyInputPropTypes) {
+export default function MoneyInput({ id = 'currency-input', name, placeholder, value, stateUpdater, className }: MoneyInputPropTypes) {
 
     return (
         <CurrencyInput allowNegativeValue={false}

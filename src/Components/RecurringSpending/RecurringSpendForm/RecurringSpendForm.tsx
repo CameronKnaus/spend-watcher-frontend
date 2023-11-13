@@ -11,7 +11,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { EmptyCallback } from 'Types/QoLTypes';
 import { RecurringTransaction } from 'Types/TransactionTypes';
 import { SpendingCategoryType } from 'Constants/categories';
-import { recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
+import { invalidateQueries, recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
 
 type RecurringSpendFormPropTypes = {
     editMode: boolean,
@@ -58,7 +58,7 @@ export default function RecurringSpendForm({ editMode,
     useEffect(() => {
         setForwardActionCallback(() => {
             function onSubmission() {
-                queryClient.invalidateQueries(recurringTransactionDependentQueryKeys);
+                invalidateQueries(queryClient, recurringTransactionDependentQueryKeys);
             }
 
             if(editMode) {
@@ -67,7 +67,7 @@ export default function RecurringSpendForm({ editMode,
                     axios.post(SERVICE_ROUTES.editRecurringExpense, {
                         recurringSpendId: existingTransaction.recurringSpendId,
                         spendName: expenseName,
-                        amount: amount,
+                        amount: Number(amount),
                         spendCategory: category || 'OTHER',
                         isVariable
                     }).then(onSubmission);
@@ -78,7 +78,7 @@ export default function RecurringSpendForm({ editMode,
                 // Handle service call
                 axios.post(SERVICE_ROUTES.submitNewRecurringExpense, {
                     spendName: expenseName,
-                    amount: amount,
+                    amount: Number(amount),
                     spendCategory: category || 'OTHER',
                     isVariable
                 }).then(onSubmission);
@@ -113,7 +113,8 @@ export default function RecurringSpendForm({ editMode,
                 <label htmlFor='category-input' style={{ width: 100 }}>
                     {getContent('CATEGORY_LABEL')}
                 </label>
-                <SpendingCategoryInputs textInputStyles={styles.textInput}
+                <SpendingCategoryInputs defaultNoSelectionToOther
+                                        textInputStyles={styles.textInput}
                                         value={category}
                                         onChange={setCategory}
                 />

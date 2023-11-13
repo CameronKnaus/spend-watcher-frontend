@@ -3,7 +3,6 @@ import NavigationalBanner from '../../Components/UIElements/Navigation/Navigatio
 import React, { useEffect, useState } from 'react';
 import DateChangerTile from '../../Components/UIElements/Form/DateChangerTile/DateChangerTile';
 import styles from './SpendingBreakdown.module.css';
-import useFetch from '../../CustomHooks/useFetch';
 import SERVICE_ROUTES from '../../Constants/ServiceRoutes';
 import useDateRange from '../../CustomHooks/useDateRange';
 import TabBar from '../../Components/UIElements/Navigation/TabBar/TabBar';
@@ -20,6 +19,10 @@ import useSpendingBreakdown from 'CustomHooks/ServiceHooks/useSpendingBreakdown'
 import dayjs from 'dayjs';
 import { DateType } from 'Types/DateTypes';
 import { SpendingCategoryType } from 'Constants/categories';
+import msMapper from 'Util/Time/TimeMapping';
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { transactionsDateRangeQueryKey } from 'Util/QueryKeys';
 
 export enum TAB_ENUM {
     SUMMARY_TAB = 'SUMMARY_TAB',
@@ -50,7 +53,18 @@ export default function SpendingBreakdown() {
     const [includeRecurringTransactions, setIncludeRecurringTransactions] = useState(false);
 
     // Get the earliest spending logged to set date range handler min range
-    const { response: dateRangeResponse } = useFetch(SERVICE_ROUTES.transactionDateRange, true);
+    // TODO: Handle error scenario here
+    const { data: dateRangeResponse } = useQuery({
+        queryKey: [
+            transactionsDateRangeQueryKey
+        ],
+        staleTime: msMapper.day,
+        queryFn: () => {
+            return axios.get(SERVICE_ROUTES.transactionDateRange);
+        },
+        select: ({ data }) => ({ minDate: data.minDate, maxDate: data.maxDate })
+    });
+
 
     useEffect(() => {
         if(!dateRangeResponse || !dateRangeResponse.minDate) {

@@ -14,7 +14,7 @@ import { EmptyCallback } from 'Types/QoLTypes';
 import { MoneyAccount, MoneyAccountPayload } from 'Types/AccountTypes';
 import { AccountCategoryType } from 'Constants/categories';
 import { useQueryClient } from '@tanstack/react-query';
-import { myMoneyDependentQueryKeys } from 'Util/QueryKeys';
+import { invalidateQueries, myMoneyDependentQueryKeys } from 'Util/QueryKeys';
 
 type NewAccountFormProps = {
     onPanelClose: EmptyCallback;
@@ -69,7 +69,7 @@ export default function AccountForm({ onPanelClose, editMode, existingAccount = 
     }, [accountName]);
 
     function submit() {
-        if(loading || !formValid || accountValue == null) {
+        if(loading || !formValid) {
             return;
         }
 
@@ -90,7 +90,7 @@ export default function AccountForm({ onPanelClose, editMode, existingAccount = 
         // Handle service call
         axios.post(endpoint, payload)
             .then(() => {
-                queryClient.invalidateQueries(myMoneyDependentQueryKeys);
+                invalidateQueries(queryClient, myMoneyDependentQueryKeys);
             })
             .finally(() => setLoading(false));
     }

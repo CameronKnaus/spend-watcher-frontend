@@ -12,7 +12,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { MoneyAccount, UpdateAccountBalancePayload } from 'Types/AccountTypes';
 import { EmptyCallback } from 'Types/QoLTypes';
 import { AccountCategoryType } from 'Constants/categories';
-import { myMoneyDependentQueryKeys } from 'Util/QueryKeys';
+import { invalidateQueries, myMoneyDependentQueryKeys } from 'Util/QueryKeys';
 import { useQueryClient } from '@tanstack/react-query';
 
 type AccountBalanceUpdateFormPropTypes = {
@@ -51,7 +51,7 @@ export default function AccountBalanceUpdateForm({ onPanelClose, accountToUpdate
 
         // Handle service call
         axios.post(SERVICE_ROUTES.updateAccountBalance, payload).then(() => {
-            queryClient.invalidateQueries(myMoneyDependentQueryKeys);
+            invalidateQueries(queryClient, myMoneyDependentQueryKeys);
         });
     }
 

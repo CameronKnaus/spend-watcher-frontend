@@ -5,15 +5,16 @@ import formatCurrency from 'Util/Formatters/formatCurrency';
 import Link from 'Components/UIElements/Navigation/Link/Link';
 import TransactionsList from 'Components/Transactions/TransactionsList/TransactionsList';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
-import useFetch from 'CustomHooks/useFetch';
 import generateParamsForGET from 'Util/generateParamsForGET';
 import { IoTrashSharp } from 'react-icons/io5';
 import { useClosePanel } from 'Components/UIElements/Modal/SlideUpPanel/SlideUpPanel';
 import axios from 'axios';
 import { Trip } from 'Types/TripTypes';
 import { EmptyCallback } from 'Types/QoLTypes';
-import { useQueryClient } from '@tanstack/react-query';
-import { transactionDependentQueryKeys } from 'Util/QueryKeys';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { invalidateQueries, transactionDependentQueryKeys, tripDetailsQueryKey } from 'Util/QueryKeys';
+import msMapper from 'Util/Time/TimeMapping';
+import tripDetailsTransform from './tripDetailsTransform';
 
 type TripDetailsPropTypes = {
     existingTrip: Trip,
@@ -30,15 +31,26 @@ export default function TripDetails({ existingTrip, getDayCountMessage, editDeta
 
     const isPastTrip = dayjs().isAfter(endDate);
 
-    const { loading, response } = useFetch(SERVICE_ROUTES.getExpensesLinkedToTrip + generateParamsForGET({
-        tripId: existingTrip.tripId
-    }), true);
+    const { isLoading, data: transactionResponse } = useQuery({
+        queryKey: [
+            tripDetailsQueryKey
+        ],
+        staleTime: msMapper.day,
+        queryFn: () => {
+            const endpoint = SERVICE_ROUTES.getExpensesLinkedToTrip + generateParamsForGET({
+                tripId: existingTrip.tripId
+            });
+            return axios.get(endpoint);
+        },
+        select: tripDetailsTransform
+    });
+
 
     function handleDeletion() {
         return axios.post(SERVICE_ROUTES.deleteTrip, {
             tripId: existingTrip.tripId
         }).then(() => {
-            queryClient.invalidateQueries(transactionDependentQueryKeys);
+            invalidateQueries(queryClient, transactionDependentQueryKeys);
         });
     }
 
@@ -65,8 +77,8 @@ export default function TripDetails({ existingTrip, getDayCountMessage, editDeta
             <div className={styles.linkedTransactionHeader}>
                 {getContent('LINKED_TRANSACTIONS')}
             </div>
-            <TransactionsList transactionsList={response?.transactionList}
-                              isLoading={loading}
+            <TransactionsList transactionsList={transactionResponse?.transactionList}
+                              isLoading={isLoading}
                               skeletonLoaderCount={1}
             />
             <Link text={getContent('DELETE')}

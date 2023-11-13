@@ -17,7 +17,7 @@ import { DateType } from 'Types/DateTypes';
                 01/01/2022: [{ *transaction data* }, { *transaction data* }]
 * */
 type TransactionListPropTypes = {
-    transactionsList: TransactionList | Record<DateType, Array<SpendingBreakdownTransaction>>,
+    transactionsList?: TransactionList | Record<DateType, Array<SpendingBreakdownTransaction>>,
     filteredCategory?: SpendingCategoryType | '',
     isLoading?: boolean,
     skeletonLoaderCount?: number

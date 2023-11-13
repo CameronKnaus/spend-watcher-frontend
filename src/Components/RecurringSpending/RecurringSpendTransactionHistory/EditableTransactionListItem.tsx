@@ -78,7 +78,7 @@ export default function EditableTransactionListItem({ date,
                 </SkeletonLoader>
             </div>
             {
-                !showAsLoader && (expenseAmount !== initialExpenseAmount) && (
+                !showAsLoader && (Number(expenseAmount) !== initialExpenseAmount) && (
                     <button className={styles.confirmButton} onClick={handleConfirmation}>
                         {confirmButtonLabel}
                     </button>

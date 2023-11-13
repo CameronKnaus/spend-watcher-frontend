@@ -2,13 +2,26 @@ import React from 'react';
 import styles from './RecentTransactions.module.css';
 import useContent from 'CustomHooks/useContent';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
-import useFetch from 'CustomHooks/useFetch';
 import Link from 'Components/UIElements/Navigation/Link/Link';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import TransactionsList from '../../Components/Transactions/TransactionsList/TransactionsList';
+import msMapper from 'Util/Time/TimeMapping';
+import axios from 'axios';
+import { recentTransactionsQueryKey } from 'Util/QueryKeys';
+import { useQuery } from '@tanstack/react-query';
+import recentTransactionsTransform from './recentTransactionsTransform';
 
 export default function RecentTransactions() {
-    const service = useFetch(SERVICE_ROUTES.recentTransactions, true);
+    const { isLoading, isError, data: recentTransactionsResponse, error: serviceError } = useQuery({
+        queryKey: [
+            recentTransactionsQueryKey
+        ],
+        staleTime: msMapper.day,
+        queryFn: () => {
+            return axios.get(SERVICE_ROUTES.recentTransactions);
+        },
+        select: recentTransactionsTransform
+    });
     const getContent = useContent('TRANSACTIONS');
 
 
@@ -24,7 +37,7 @@ export default function RecentTransactions() {
         );
     }, [recentLabel]);
 
-    if(service.error) {
+    if(isError) {
         // TODO: Proper Error Handling
         return (
             <Container>
@@ -32,7 +45,7 @@ export default function RecentTransactions() {
                     {getContent('ERROR')}
                 </div>
                 <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
-                    {JSON.stringify(service.error, null, 2)}
+                    {JSON.stringify(serviceError, null, 2)}
                 </pre>
             </Container>
         );
@@ -40,8 +53,8 @@ export default function RecentTransactions() {
 
     return (
         <Container>
-            <TransactionsList isLoading={service.loading}
-                              transactionsList={service?.response?.transactions}
+            <TransactionsList isLoading={isLoading}
+                              transactionsList={recentTransactionsResponse?.transactions}
             />
             <Link useChevron
                   text={getContent('VIEW_ALL')}

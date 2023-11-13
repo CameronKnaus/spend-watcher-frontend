@@ -1,9 +1,14 @@
+import { QueryClient } from '@tanstack/react-query';
+
 export const spendingBreakdownQueryKey = 'spending-breakdown';
 export const spendingSummaryQueryKey = 'spending-summary';
 export const tripManagerQueryKey = 'trip-manangement';
 export const accountSummaryQueryKey = 'money-account-summary';
 export const recurringExpenseTransactionHistoryQueryKey = 'recurring-expense-transaction-history';
 export const recurringSpendingQueryKey = 'recurring-spending';
+export const recentTransactionsQueryKey = 'recent-transactions';
+export const transactionsDateRangeQueryKey = 'transaction-date-ranges';
+export const tripDetailsQueryKey = 'trip-detail-transaction-list';
 
 
 // Dependent query keys are all query keys that need to be invalidated when the user makes a modification.
@@ -11,7 +16,10 @@ export const recurringSpendingQueryKey = 'recurring-spending';
 export const transactionDependentQueryKeys = [
     spendingBreakdownQueryKey,
     spendingSummaryQueryKey,
-    tripManagerQueryKey
+    recentTransactionsQueryKey,
+    tripManagerQueryKey,
+    transactionsDateRangeQueryKey,
+    tripDetailsQueryKey
 ];
 
 export const myMoneyDependentQueryKeys = [
@@ -19,7 +27,9 @@ export const myMoneyDependentQueryKeys = [
 ];
 
 export const recurringTransactionDependentQueryKeys = [
-    recurringSpendingQueryKey
+    recurringSpendingQueryKey,
+    recurringExpenseTransactionHistoryQueryKey,
+    transactionsDateRangeQueryKey
 ];
 
 export const tripDependentQueryKeys = [
@@ -30,3 +40,9 @@ export const allDependentQueryKeys = [
     ...transactionDependentQueryKeys,
     ...myMoneyDependentQueryKeys
 ];
+
+export function invalidateQueries(queryClient: QueryClient, queryList: Array<string>) {
+    queryList.forEach(key => {
+        queryClient.invalidateQueries([key]);
+    });
+}

@@ -16,7 +16,7 @@ import { EmptyCallback } from 'Types/QoLTypes';
 import { SpendingCategoryType } from 'Constants/categories';
 import { FormattedTransaction } from 'Types/TransactionTypes';
 import { useEffect, useState } from 'react';
-import { transactionDependentQueryKeys } from 'Util/QueryKeys';
+import { invalidateQueries, transactionDependentQueryKeys } from 'Util/QueryKeys';
 import { useQueryClient } from '@tanstack/react-query';
 
 enum SubmissionType {
@@ -27,12 +27,10 @@ enum SubmissionType {
 
 type TransactionFormPropTypes = {
     onPanelClose: EmptyCallback,
-    onSubmission?: EmptyCallback,
     editMode: true,
     existingTransaction: FormattedTransaction
 } | {
     onPanelClose: EmptyCallback,
-    onSubmission?: EmptyCallback,
     editMode?: false,
     existingTransaction?: never
 }
@@ -40,7 +38,6 @@ type TransactionFormPropTypes = {
 // existingTransaction should be an object containing all transaction keys
 export default function TransactionForm({
     onPanelClose,
-    onSubmission = () => { /* NOOP */ },
     editMode = false,
     existingTransaction = {} as FormattedTransaction
 }: TransactionFormPropTypes) {
@@ -119,8 +116,7 @@ export default function TransactionForm({
         axios.post(endpoint, payload)
             .then(() => {
                 // Invalidate any queries that may be dependent on transactions
-                queryClient.invalidateQueries(transactionDependentQueryKeys);
-                onSubmission();
+                invalidateQueries(queryClient, transactionDependentQueryKeys);
             })
             .finally(() => setLoading(false));
     }

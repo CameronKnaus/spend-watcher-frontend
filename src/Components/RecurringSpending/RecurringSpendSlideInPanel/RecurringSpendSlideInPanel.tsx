@@ -10,7 +10,7 @@ import { SpendingCategoryType } from 'Constants/categories';
 import { RecurringTransaction } from 'Types/TransactionTypes';
 import { EmptyCallback } from 'Types/QoLTypes';
 import { useQueryClient } from '@tanstack/react-query';
-import { recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
+import { invalidateQueries, recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
 
 export enum RecurringPanelOptionsEnum {
     RECURRING = 'RECURRING',
@@ -53,7 +53,7 @@ export default function RecurringSpendSlideInPanel({ onPanelClose,
                     axios.post(SERVICE_ROUTES.deleteRecurringExpense, {
                         recurringSpendId: existingTransaction.recurringSpendId
                     }).then(() => {
-                        queryClient.invalidateQueries(recurringTransactionDependentQueryKeys);
+                        invalidateQueries(queryClient, recurringTransactionDependentQueryKeys);
                     });
                 };
             });
@@ -122,13 +122,13 @@ export default function RecurringSpendSlideInPanel({ onPanelClose,
     }
 
 
-    function getBackwardsActionCallback() {
+    function getBackwardsActionCallback(): EmptyCallback | undefined {
         const { RECURRING } = RecurringPanelOptionsEnum;
         if(activePanelContent !== RECURRING && !historyModified) {
             return () => setActivePanelContent(RECURRING);
         }
 
-        return () => { /* NOOP */ };
+        return void 0;
     }
 
     const deleteSpeedBumpActive = activePanelContent === RecurringPanelOptionsEnum.DELETE_SPEED_BUMP;
