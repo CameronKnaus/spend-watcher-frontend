@@ -10,10 +10,13 @@
 
 .listContainer {
     padding: 0.5rem;
+    margin-bottom: 12px;
+}
+
+.listContainerWithTotals {
+    border-bottom: 1px solid var(--theme-light-accent-border);
     box-shadow: 0 20px 18px -18px rgba(200, 200, 200, 0.3);
     border-radius: 0 0 8px 8px;
-    margin-bottom: 12px;
-    border-bottom: 1px solid var(--theme-light-accent-border);
 }
 
 .dateLabel {

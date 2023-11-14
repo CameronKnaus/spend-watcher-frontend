@@ -78,6 +78,7 @@ export default function TripDetails({ existingTrip, getDayCountMessage, editDeta
             <TransactionsList transactionsList={transactionResponse?.transactionList}
                               isLoading={isLoading}
                               skeletonLoaderCount={1}
+                              hasTotalsRow={false}
             />
             <Link text={getContent('DELETE')}
                   CustomIcon={IoTrashSharp}

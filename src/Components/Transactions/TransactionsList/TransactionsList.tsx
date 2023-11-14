@@ -9,6 +9,7 @@ import RecurringSpendSlideInPanel from 'Components/RecurringSpending/RecurringSp
 import { SpendingCategoryType } from 'Constants/categories';
 import { FormattedTransaction, RecurringTransaction, SpendingBreakdownTransaction, TransactionList, TransactionListDiscretionary, TransactionListTransaction } from 'Types/TransactionTypes';
 import { DateType } from 'Types/DateTypes';
+import clsx from 'clsx';
 
 /* TransactionsList prop should be transactions grouped by date with they date being the key:
     Example:
@@ -20,10 +21,11 @@ type TransactionListPropTypes = {
     transactionsList?: TransactionList | Record<DateType, Array<SpendingBreakdownTransaction>>,
     filteredCategory?: SpendingCategoryType | '',
     isLoading?: boolean,
-    skeletonLoaderCount?: number
+    skeletonLoaderCount?: number,
+    hasTotalsRow?: boolean
 }
 
-export default function TransactionsList({ transactionsList, filteredCategory, isLoading = false, skeletonLoaderCount = 5 }: TransactionListPropTypes) {
+export default function TransactionsList({ transactionsList, filteredCategory, isLoading = false, skeletonLoaderCount = 5, hasTotalsRow = true }: TransactionListPropTypes) {
     const [transactionToEdit, setTransactionToEdit] = useState<FormattedTransaction | null>(null);
     const [recurringTransactionToEdit, setRecurringTransactionToEdit] = useState<RecurringTransaction | SpendingBreakdownTransaction | null>(null);
     const getContent = useContent('TRANSACTIONS');
@@ -70,7 +72,11 @@ export default function TransactionsList({ transactionsList, filteredCategory, i
 
         let transactionDaysTotal = 0;
         return (
-            <div className={styles.listContainer}>
+            <div className={clsx({
+                [styles.listContainer]: true,
+                [styles.listContainerWithTotals]: hasTotalsRow
+            })}
+            >
                 <h3 className={styles.dateLabel}>
                     {header}
                 </h3>
@@ -107,9 +113,13 @@ export default function TransactionsList({ transactionsList, filteredCategory, i
                         );
                     })
                 }
-                <div className={styles.totalsRow}>
-                    {`-$${transactionDaysTotal.toFixed(2)}`}
-                </div>
+                {
+                    hasTotalsRow && (
+                        <div className={styles.totalsRow}>
+                            {`-$${transactionDaysTotal.toFixed(2)}`}
+                        </div>
+                    )
+                }
             </div>
         );
     }
