@@ -68,42 +68,49 @@ export default function TransactionsList({ transactionsList, filteredCategory, i
             return null;
         }
 
+        let transactionDaysTotal = 0;
         return (
-            <>
+            <div className={styles.listContainer}>
                 <h3 className={styles.dateLabel}>
                     {header}
                 </h3>
                 {
-                    sortedList.map((transaction) => (
-                        <div key={transaction.transactionId}
-                             className={styles.transactionWrapper}
-                        >
-                            {transaction.isRecurringTransaction ? (
-                                <InteractiveDataRow isExpense
-                                                    showRevolvingIcon
-                                                    title={getCategoryContent(transaction.category)}
-                                                    iconCategory={transaction.category}
-                                                    description={transaction.expenseName}
-                                                    amount={transaction.amount}
-                                                    amountDescription={dayjs(transaction.date).format('MMMM')}
-                                                    onClick={() => {
-                                                        setRecurringTransactionToEdit(transaction);
-                                                    }}
-                                />
-                            ) : (
-                                <InteractiveDataRow isExpense
-                                                    title={getCategoryContent(transaction.category)}
-                                                    iconCategory={transaction.category}
-                                                    description={transaction.note}
-                                                    amount={transaction.amount}
-                                                    amountDescription={transaction.date}
-                                                    onClick={() => setTransactionForEditing(transaction)}
-                                />
-                            )}
-                        </div>
-                    ))
+                    sortedList.map((transaction) => {
+                        transactionDaysTotal += transaction.amount;
+                        return (
+                            <div key={transaction.transactionId}
+                                 className={styles.transactionWrapper}
+                            >
+                                {transaction.isRecurringTransaction ? (
+                                    <InteractiveDataRow isExpense
+                                                        showRevolvingIcon
+                                                        title={getCategoryContent(transaction.category)}
+                                                        iconCategory={transaction.category}
+                                                        description={transaction.expenseName}
+                                                        amount={transaction.amount}
+                                                        amountDescription={dayjs(transaction.date).format('MMMM')}
+                                                        onClick={() => {
+                                                            setRecurringTransactionToEdit(transaction);
+                                                        }}
+                                    />
+                                ) : (
+                                    <InteractiveDataRow isExpense
+                                                        title={getCategoryContent(transaction.category)}
+                                                        iconCategory={transaction.category}
+                                                        description={transaction.note}
+                                                        amount={transaction.amount}
+                                                        amountDescription={transaction.date}
+                                                        onClick={() => setTransactionForEditing(transaction)}
+                                    />
+                                )}
+                            </div>
+                        );
+                    })
                 }
-            </>
+                <div className={styles.totalsRow}>
+                    {`-$${transactionDaysTotal.toFixed(2)}`}
+                </div>
+            </div>
         );
     }
 

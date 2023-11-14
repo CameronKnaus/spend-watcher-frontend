@@ -8,6 +8,14 @@
     padding-bottom: 0.75rem;
 }
 
+.listContainer {
+    padding: 0.5rem;
+    box-shadow: 0 20px 18px -18px rgba(200, 200, 200, 0.3);
+    border-radius: 0 0 8px 8px;
+    margin: 12px 0;
+    border-bottom: 1px solid var(--theme-light-accent-border);
+}
+
 .dateLabel {
     padding-bottom: 0.5rem;
     font-size: 10px;
@@ -21,4 +29,16 @@
     color: var(--theme-light-text-color);
     text-align: center;
     padding-top: 1rem;
+}
+
+.totalsRow {
+    font-size: var(--body-text-12);
+    font-weight: var(--fw-light);
+    color: var(--theme-light-text-color);
+    color: var(--theme-money-loss);
+    filter: brightness(0.9);
+    padding-top: 0.5rem;
+    padding-right: 30px;
+    border-top: 1px solid var(--theme-light-border);
+    text-align: right;
 }

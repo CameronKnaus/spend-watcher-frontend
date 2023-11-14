@@ -12,6 +12,9 @@
 
     --theme-link-blue: #0694db;
 
+    /* Shadows */
+    --theme-shadow-light: #CCCCCC;
+
     /* Text colors */
     --theme-standard-text: #333333;
     --theme-placeholder-text: #BFC6C7;
@@ -24,6 +27,7 @@
     --theme-light-border-blue-accent: #A9C0C1;
     --theme-accent-border: #BFC6C7;
     --theme-light-border: #EEEEEE;
+    --theme-light-accent-border: #E2E2E2;
     --theme-heavy-border: #555555;
 
     --theme-toggle-inactive: #EEEEEE;
