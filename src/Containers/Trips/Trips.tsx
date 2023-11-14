@@ -5,8 +5,8 @@ import Link from 'Components/UIElements/Navigation/Link/Link';
 import TripsList from 'Components/Trips/TripsList/TripsList';
 import { CgChevronDown, CgChevronUp } from 'react-icons/cg';
 import { MdAddCircleOutline } from 'react-icons/md';
-import useTripDetails from 'CustomHooks/useTripDetails';
 import TripsSlideInPanel from 'Components/Trips/TripsSlideInPanel/TripsSlideInPanel';
+import useTripList from 'CustomHooks/ServiceHooks/useTripList';
 
 export default function Trips() {
     const [listCollapsed, setListCollapsed] = useState(true);
@@ -16,7 +16,7 @@ export default function Trips() {
 
     const getContent = useContent('TRIPS');
 
-    const { tripDetailsError, tripDetailsLoading, tripsList } = useTripDetails();
+    const { tripDetailsError, tripDetailsLoading, tripsList } = useTripList();
 
     const Container = useCallback(({ children }: any) => {
         return (

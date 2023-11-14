@@ -8,7 +8,6 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import AccountsList from 'Components/Accounts/AccountsList/AccountsList';
 import formatCurrency from 'Util/Formatters/formatCurrency';
 import axios from 'axios';
-import msMapper from 'Util/Time/TimeMapping';
 import { useQuery } from '@tanstack/react-query';
 import { accountSummaryQueryKey } from 'Util/QueryKeys';
 import myMoneyTransform from './myMoneyTransform';
@@ -19,7 +18,6 @@ export default function MyMoney() {
 
     const { isLoading, isError, data: accountData, error: serviceError } = useQuery({
         queryKey: [accountSummaryQueryKey],
-        staleTime: msMapper.day,
         queryFn: () => {
             return axios.get(SERVICE_ROUTES.accountsSummary);
         },

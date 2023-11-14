@@ -13,7 +13,6 @@ import { Trip } from 'Types/TripTypes';
 import { EmptyCallback } from 'Types/QoLTypes';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { invalidateQueries, transactionDependentQueryKeys, tripDetailsQueryKey } from 'Util/QueryKeys';
-import msMapper from 'Util/Time/TimeMapping';
 import tripDetailsTransform from './tripDetailsTransform';
 
 type TripDetailsPropTypes = {
@@ -33,9 +32,8 @@ export default function TripDetails({ existingTrip, getDayCountMessage, editDeta
 
     const { isLoading, data: transactionResponse } = useQuery({
         queryKey: [
-            tripDetailsQueryKey
+            tripDetailsQueryKey, existingTrip.tripId
         ],
-        staleTime: msMapper.day,
         queryFn: () => {
             const endpoint = SERVICE_ROUTES.getExpensesLinkedToTrip + generateParamsForGET({
                 tripId: existingTrip.tripId

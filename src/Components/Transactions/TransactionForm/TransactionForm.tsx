@@ -9,7 +9,6 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import axios from 'axios';
 import Link from 'Components/UIElements/Navigation/Link/Link';
 import { IoTrashSharp } from 'react-icons/io5';
-import useTripDetails from 'CustomHooks/useTripDetails';
 import FilterableSelect from 'Components/UIElements/Form/FilterableSelect/FilterableSelect';
 import Alert from 'Components/UIElements/Informational/Alert/Alert';
 import { EmptyCallback } from 'Types/QoLTypes';
@@ -18,6 +17,7 @@ import { FormattedTransaction } from 'Types/TransactionTypes';
 import { useEffect, useState } from 'react';
 import { invalidateQueries, transactionDependentQueryKeys } from 'Util/QueryKeys';
 import { useQueryClient } from '@tanstack/react-query';
+import useTripList from 'CustomHooks/ServiceHooks/useTripList';
 
 enum SubmissionType {
     DELETE = 'DELETE',
@@ -44,7 +44,7 @@ export default function TransactionForm({
     const getContent = useContent('TRANSACTIONS');
     const queryClient = useQueryClient();
 
-    const { filterableSelectTripsList, activeTrip } = useTripDetails();
+    const { filterableSelectTripsList, activeTrip } = useTripList();
 
     // State for form values
     const [formValid, setFormValid] = useState(Boolean(existingTransaction.amount)); // defaults false

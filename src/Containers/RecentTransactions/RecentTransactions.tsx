@@ -5,7 +5,6 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import Link from 'Components/UIElements/Navigation/Link/Link';
 import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import TransactionsList from '../../Components/Transactions/TransactionsList/TransactionsList';
-import msMapper from 'Util/Time/TimeMapping';
 import axios from 'axios';
 import { recentTransactionsQueryKey } from 'Util/QueryKeys';
 import { useQuery } from '@tanstack/react-query';
@@ -16,7 +15,6 @@ export default function RecentTransactions() {
         queryKey: [
             recentTransactionsQueryKey
         ],
-        staleTime: msMapper.day,
         queryFn: () => {
             return axios.get(SERVICE_ROUTES.recentTransactions);
         },

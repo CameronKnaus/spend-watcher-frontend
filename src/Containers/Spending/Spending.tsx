@@ -3,7 +3,6 @@ import styles from './Spending.module.css';
 import useContent from 'CustomHooks/useContent';
 import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
-import msMapper from 'Util/Time/TimeMapping';
 import { useQuery } from '@tanstack/react-query';
 import { spendingSummaryQueryKey } from 'Util/QueryKeys';
 import formatCurrency from 'Util/Formatters/formatCurrency';
@@ -29,7 +28,6 @@ export default function Spending() {
         queryKey: [
             spendingSummaryQueryKey
         ],
-        staleTime: msMapper.day,
         queryFn: () => {
             return axios.get(SERVICE_ROUTES.spendingSummary);
         },

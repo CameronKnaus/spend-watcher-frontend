@@ -19,7 +19,6 @@ import useSpendingBreakdown from 'CustomHooks/ServiceHooks/useSpendingBreakdown'
 import dayjs from 'dayjs';
 import { DateType } from 'Types/DateTypes';
 import { SpendingCategoryType } from 'Constants/categories';
-import msMapper from 'Util/Time/TimeMapping';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { transactionsDateRangeQueryKey } from 'Util/QueryKeys';
@@ -58,7 +57,6 @@ export default function SpendingBreakdown() {
         queryKey: [
             transactionsDateRangeQueryKey
         ],
-        staleTime: msMapper.day,
         queryFn: () => {
             return axios.get(SERVICE_ROUTES.transactionDateRange);
         },

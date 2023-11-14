@@ -9,7 +9,6 @@ import formatCurrency from '../../Util/Formatters/formatCurrency';
 import Alert from '../../Components/UIElements/Informational/Alert/Alert';
 import { useQuery } from '@tanstack/react-query';
 import { recurringSpendingQueryKey } from 'Util/QueryKeys';
-import msMapper from 'Util/Time/TimeMapping';
 import axios from 'axios';
 import recurringSpendingTransform from './recurringSpendingTransform';
 import { RecurringTransaction } from 'Types/TransactionTypes';
@@ -30,7 +29,6 @@ export default function RecurringSpending() {
         queryKey: [
             recurringSpendingQueryKey
         ],
-        staleTime: msMapper.day,
         queryFn: () => {
             return axios.get(SERVICE_ROUTES.getAllRecurringExpenses);
         },

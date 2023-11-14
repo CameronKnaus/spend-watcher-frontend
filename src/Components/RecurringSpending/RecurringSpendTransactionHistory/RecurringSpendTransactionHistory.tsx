@@ -8,7 +8,6 @@ import formatCurrency from 'Util/Formatters/formatCurrency';
 import axios from 'axios';
 import { RecurringTransaction } from 'Types/TransactionTypes';
 import { invalidateQueries, recurringExpenseTransactionHistoryQueryKey, recurringTransactionDependentQueryKeys } from 'Util/QueryKeys';
-import msMapper from 'Util/Time/TimeMapping';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import recurringTransactionHistoryTransform from './recurringTransactionHistoryTransform';
 import EditableTransactionListItemLoader from './EditableTransactionListItemLoader';
@@ -30,7 +29,6 @@ export default function RecurringSpendTransactionHistory({ recurringExpense, set
         queryKey: [
             recurringExpenseTransactionHistoryQueryKey, recurringExpense.recurringSpendId, currentDate
         ],
-        staleTime: msMapper.day,
         queryFn: () => {
             return axios.get(SERVICE_ROUTES.getRecurringExpenseTransactionHistory + generateParamsForGET({
                 recurringSpendId: recurringExpense.recurringSpendId,
