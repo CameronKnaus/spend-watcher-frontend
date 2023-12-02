@@ -29,7 +29,8 @@ export const myMoneyDependentQueryKeys = [
 export const recurringTransactionDependentQueryKeys = [
     recurringSpendingQueryKey,
     recurringExpenseTransactionHistoryQueryKey,
-    transactionsDateRangeQueryKey
+    transactionsDateRangeQueryKey,
+    spendingSummaryQueryKey
 ];
 
 export const tripDependentQueryKeys = [
