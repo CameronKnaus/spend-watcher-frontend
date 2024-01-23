@@ -23,7 +23,8 @@ import { MdFastfood,
     MdShoppingBag,
     MdSavings,
     MdFitnessCenter,
-    MdContentCut } from 'react-icons/md';
+    MdContentCut,
+    MdHotel } from 'react-icons/md';
 
 import { IoGameController } from 'react-icons/io5';
 import { ReactElement } from 'react';
@@ -41,7 +42,8 @@ export enum SpendingCategoryType {
     GROOMING = 'GROOMING',
     BUSINESS = 'BUSINESS',
     MATERIAL_ITEMS = 'MATERIAL_ITEMS',
-    TRAVEL = 'TRAVEL',
+    AIRFARE = 'AIRFARE',
+    LODGING = 'LODGING',
     HEALTH = 'HEALTH',
     CLOTHING = 'CLOTHING',
     GIFTS = 'GIFTS',
@@ -112,9 +114,13 @@ export const SPENDING_CATEGORIES: SpendCategoryDefType = {
         icon: <MdShoppingBag />,
         color: 'var(--theme-red)'
     },
-    TRAVEL: {
+    AIRFARE: {
         icon: <IoIosAirplane />,
         color: 'var(--theme-jungle-green-pale)'
+    },
+    LODGING: {
+        icon: <MdHotel />,
+        color: '#A4433D' // TODO: To be changed with colorscheme overhaul
     },
     HEALTH: {
         icon: <MdHealthAndSafety />,
