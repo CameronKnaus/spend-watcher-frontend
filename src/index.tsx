@@ -1,5 +1,5 @@
 import './index.css';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { PAGE_ROUTES } from './Constants/RouteConstants';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from './Pages/Dashboard/Dashboard';
@@ -8,8 +8,8 @@ import Bootstrap from './Bootstrap';
 import SpendingBreakdown from './Pages/SpendingBreakdown/SpendingBreakdown';
 import RecurringSpending from 'Pages/RecurringSpending/RecurringSpending';
 
-
-ReactDOM.render(
+const root = createRoot(document.getElementById('root')!);
+root.render(
     <Bootstrap>
         <Routes>
             <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
@@ -18,5 +18,4 @@ ReactDOM.render(
             <Route path={PAGE_ROUTES.recurringSpending} element={<RecurringSpending />} />
         </Routes>
     </Bootstrap>,
-    document.getElementById('root')
 );

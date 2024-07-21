@@ -1,3 +1,5 @@
+// TODO: This needs rewritten.  I wrote this a long time ago
+
 // Utility for managing user's authentication state
 function authHandler() {
     let authenticated = false;
@@ -23,7 +25,7 @@ function authHandler() {
         isAuthenticated,
         setIsAuthenticated,
         getUsername,
-        setUsername
+        setUsername,
     };
 }
 

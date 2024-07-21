@@ -25,25 +25,19 @@ import { transactionsDateRangeQueryKey } from 'Util/QueryKeys';
 
 export enum TAB_ENUM {
     SUMMARY_TAB = 'SUMMARY_TAB',
-    HISTORY_TAB = 'HISTORY_TAB'
+    HISTORY_TAB = 'HISTORY_TAB',
 }
 
 const defaultTabMap: Record<string, TAB_ENUM> = {
     summary: TAB_ENUM.SUMMARY_TAB,
-    history: TAB_ENUM.HISTORY_TAB
+    history: TAB_ENUM.HISTORY_TAB,
 };
 
 export default function SpendingBreakdown() {
     const getContent = useContent('SPENDING_BREAKDOWN');
     const isMobile = useIsMobile();
 
-    const {
-        dateRange,
-        dateRangeType,
-        updateDateRange,
-        shiftYearInContext,
-        shiftMonthInContext
-    } = useDateRange();
+    const { dateRange, dateRangeType, updateDateRange, shiftYearInContext, shiftMonthInContext } = useDateRange();
     const urlParams = useParams();
 
     const [currentTab, setCurrentTab] = useState(defaultTabMap[`${urlParams.defaultTab}`] || TAB_ENUM.SUMMARY_TAB);
@@ -54,18 +48,15 @@ export default function SpendingBreakdown() {
     // Get the earliest spending logged to set date range handler min range
     // TODO: Handle error scenario here
     const { data: dateRangeResponse } = useQuery({
-        queryKey: [
-            transactionsDateRangeQueryKey
-        ],
+        queryKey: [transactionsDateRangeQueryKey],
         queryFn: () => {
             return axios.get(SERVICE_ROUTES.transactionDateRange);
         },
-        select: ({ data }) => ({ minDate: data.minDate, maxDate: data.maxDate })
+        select: ({ data }) => ({ minDate: data.minDate, maxDate: data.maxDate }),
     });
 
-
     useEffect(() => {
-        if(!dateRangeResponse || !dateRangeResponse.minDate) {
+        if (!dateRangeResponse || !dateRangeResponse.minDate) {
             return;
         }
 
@@ -76,99 +67,110 @@ export default function SpendingBreakdown() {
         startDate: dateRange.startDate.format() as DateType,
         endDate: dateRange.endDate.format() as DateType,
         includeRecurringTransactions,
-        showAllData: dateRangeType === DateRangeType.MAX
+        showAllData: dateRangeType === DateRangeType.MAX,
     };
 
-    const {
-        spendingDataErrorOccurred,
-        spendingDataLoading,
-        spendingBreakdown
-    } = useSpendingBreakdown(serviceArgs);
+    const { spendingDataErrorOccurred, spendingDataLoading, spendingBreakdown } = useSpendingBreakdown(serviceArgs);
 
-    if(!dateRangeResponse || spendingDataLoading || !spendingBreakdown) {
-        return (
-            <div>
-                loading...
-            </div>
-        );
+    if (!dateRangeResponse || spendingDataLoading || !spendingBreakdown) {
+        return <div>loading...</div>;
     }
 
     // TODO: Proper error handling
-    if(spendingDataErrorOccurred) {
-        return (
-            <div>
-                Error Occurred
-            </div>
-        );
+    if (spendingDataErrorOccurred) {
+        return <div>Error Occurred</div>;
     }
 
     const dateManagement = (
         <div className={clsx(styles.gutter, isMobile ? styles.mobileDateManager : styles.desktopDateManager)}>
-            <DateChangerTile resultsText={getContent('RESULTS_SHOWN')}
-                             updateDateRange={updateDateRange}
-                             endDate={dateRange.endDate}
-                             startDate={dateRange.startDate}
-                             minAllowedDate={minSupportedDate}
-                             dateRangeType={dateRangeType}
-                             minPossibleDate={dateRangeResponse.minDate}
-                             maxPossibleDate={dateRangeResponse.maxDate}
+            <DateChangerTile
+                resultsText={getContent('RESULTS_SHOWN')}
+                updateDateRange={updateDateRange}
+                //  endDate={dateRange.endDate}
+                startDate={dateRange.startDate}
+                minAllowedDate={minSupportedDate}
+                dateRangeType={dateRangeType}
+                minPossibleDate={dateRangeResponse.minDate}
+                maxPossibleDate={dateRangeResponse.maxDate}
             />
-            { !isMobile &&  <DateRangeLabel dateRangeType={dateRangeType} startDate={spendingBreakdown.startDate} endDate={spendingBreakdown.endDate} /> }
-            {
-                dateRangeType !== DateRangeType.MAX && (
-                    <div className={styles.dateContextShifterContainer}>
-                        <DateContextShifter dateRangeType={dateRangeType}
-                                            shiftYearInContext={shiftYearInContext}
-                                            shiftMonthInContext={shiftMonthInContext}
-                                            minAllowedDate={minSupportedDate}
-                                            endDate={dateRange.endDate}
-                                            startDate={dateRange.startDate}
-                        />
-                    </div>
-                )
-            }
+            {!isMobile && (
+                <DateRangeLabel
+                    dateRangeType={dateRangeType}
+                    startDate={spendingBreakdown.startDate}
+                    endDate={spendingBreakdown.endDate}
+                />
+            )}
+            {dateRangeType !== DateRangeType.MAX && (
+                <div className={styles.dateContextShifterContainer}>
+                    <DateContextShifter
+                        dateRangeType={dateRangeType}
+                        shiftYearInContext={shiftYearInContext}
+                        shiftMonthInContext={shiftMonthInContext}
+                        minAllowedDate={minSupportedDate}
+                        endDate={dateRange.endDate}
+                        startDate={dateRange.startDate}
+                    />
+                </div>
+            )}
             <div className={styles.toggleSwitchContainer}>
-                <ToggleSwitch spaceBetween labelText={getContent('INCLUDE_RECURRING')} toggleOnState={() => setIncludeRecurringTransactions(current => !current)} activeColor='var(--theme-queen-blue-pale)' onState={includeRecurringTransactions} />
+                <ToggleSwitch
+                    spaceBetween
+                    labelText={getContent('INCLUDE_RECURRING')}
+                    toggleOnState={() => setIncludeRecurringTransactions((current) => !current)}
+                    activeColor="var(--theme-queen-blue-pale)"
+                    onState={includeRecurringTransactions}
+                />
             </div>
         </div>
     );
 
     const summaryWithProps = (
-        <SpendingSummary spendingBreakdown={spendingBreakdown}
-                         setCurrentTab={setCurrentTab}
-                         setFilterCategory={setFilterCategory}
-                         totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
+        <SpendingSummary
+            spendingBreakdown={spendingBreakdown}
+            setCurrentTab={setCurrentTab}
+            setFilterCategory={setFilterCategory}
+            totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
         />
     );
 
     const historyWithProps = (
-        <SpendingHistory transactionsList={spendingBreakdown.transactionsGroupedByDate}
-                         noTransactions={spendingBreakdown.noTransactions}
-                         filterCategory={filterCategory}
-                         setFilterCategory={setFilterCategory}
-                         totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
-                         finalTotalTransactions={spendingBreakdown.finalTotalTransactions}
+        <SpendingHistory
+            transactionsList={spendingBreakdown.transactionsGroupedByDate}
+            noTransactions={spendingBreakdown.noTransactions}
+            filterCategory={filterCategory}
+            setFilterCategory={setFilterCategory}
+            totalTransactionsPerCategory={spendingBreakdown.totalTransactionsPerCategory}
+            finalTotalTransactions={spendingBreakdown.finalTotalTransactions}
         />
     );
 
-    if(isMobile) {
+    if (isMobile) {
         // XS Mobile experience
         return (
             <>
-                <NavigationalBanner title={getContent(currentTab === TAB_ENUM.SUMMARY_TAB ? 'SUMMARY_BANNER_TITLE' : 'HISTORY_BANNER_TITLE')} />
+                <NavigationalBanner
+                    title={getContent(
+                        currentTab === TAB_ENUM.SUMMARY_TAB ? 'SUMMARY_BANNER_TITLE' : 'HISTORY_BANNER_TITLE',
+                    )}
+                />
                 {dateManagement}
-                <DateRangeLabel dateRangeType={dateRangeType} startDate={spendingBreakdown.startDate} endDate={spendingBreakdown.endDate} />
+                <DateRangeLabel
+                    dateRangeType={dateRangeType}
+                    startDate={spendingBreakdown.startDate}
+                    endDate={spendingBreakdown.endDate}
+                />
                 <div className={styles.tabContainer}>
-                    <TabBar contentGroupKey='SPENDING_BREAKDOWN'
-                            labelContentKey='TAB_BAR_LABEL'
-                            tabMapping={Object.values(TAB_ENUM)}
-                            currentTab={currentTab}
-                            setCurrentTab={setCurrentTab}
-                            activeTabColor='var(--theme-celadon-blue)'
-                            inactiveTabColor='var(--theme-celadon-blue-dark)'
-                            tabTextColor='var(--theme-bright-text-color)'
-                            tabBorderColor='var(--theme-celadon-blue)'
-                            tabMargin='1.5rem'
+                    <TabBar
+                        contentGroupKey="SPENDING_BREAKDOWN"
+                        labelContentKey="TAB_BAR_LABEL"
+                        tabMapping={Object.values(TAB_ENUM)}
+                        currentTab={currentTab}
+                        setCurrentTab={setCurrentTab}
+                        activeTabColor="var(--theme-celadon-blue)"
+                        inactiveTabColor="var(--theme-celadon-blue-dark)"
+                        tabTextColor="var(--theme-bright-text-color)"
+                        tabBorderColor="var(--theme-celadon-blue)"
+                        tabMargin="1.5rem"
                     />
                 </div>
                 <div className={styles.softBackground}>
@@ -182,14 +184,16 @@ export default function SpendingBreakdown() {
     // Desktop experience
     return (
         <>
-            <NavigationalBanner title={getContent(currentTab === TAB_ENUM.SUMMARY_TAB ? 'SUMMARY_BANNER_TITLE' : 'HISTORY_BANNER_TITLE')} />
+            <NavigationalBanner
+                title={getContent(
+                    currentTab === TAB_ENUM.SUMMARY_TAB ? 'SUMMARY_BANNER_TITLE' : 'HISTORY_BANNER_TITLE',
+                )}
+            />
             <div className={`${styles.desktopSideBar} low-shadow`}>
                 {dateManagement}
                 {historyWithProps}
             </div>
-            <div className={styles.desktopSummaryContainer}>
-                {summaryWithProps}
-            </div>
+            <div className={styles.desktopSummaryContainer}>{summaryWithProps}</div>
         </>
     );
 }

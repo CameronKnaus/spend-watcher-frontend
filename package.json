@@ -1,81 +1,82 @@
 {
-  "name": "spend-watcher",
-  "version": "0.2.0",
-  "private": true,
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "npx eslint --fix --ext .ts,.tsx"
-  },
-  "dependencies": {
-    "@date-io/dayjs": "^2.16.0",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.14.2",
-    "@mui/x-date-pickers": "^6.9.2",
-    "@nivo/core": "^0.83.0",
-    "@nivo/line": "^0.83.0",
-    "@nivo/pie": "^0.83.0",
-    "@tanstack/react-query": "^4.29.19",
-    "@testing-library/jest-dom": "^6.4.6",
-    "@testing-library/react": "^16.0.0",
-    "@testing-library/user-event": "^14.5.2",
-    "@types/jest": "^29.5.3",
-    "@types/node": "^20.4.5",
-    "@types/react": "^18.2.17",
-    "@types/react-dom": "^18.2.7",
-    "axios": "^0.26.1",
-    "clsx": "^1.2.1",
-    "d3": "^7.8.5",
-    "dayjs": "^1.11.3",
-    "react": "^18.3.1",
-    "react-currency-input-field": "^3.6.4",
-    "react-dom": "^18.3.1",
-    "react-icons": "^4.3.1",
-    "react-router": "^6.25.1",
-    "react-router-dom": "^6.25.1",
-    "react-scripts": "^5.0.1",
-    "typescript": "^5.5.3",
-    "web-vitals": "^3.3.2"
-  },
-  "overrides": {
-    "react-scripts": {
-      "typescript": "^5.5.3"
+    "name": "spend-watcher",
+    "version": "0.2.0",
+    "private": true,
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
+        "lint:fix": "npx eslint --fix --ext .ts,.tsx"
+    },
+    "dependencies": {
+        "@date-io/dayjs": "^2.16.0",
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "@mui/material": "^5.14.2",
+        "@mui/x-date-pickers": "^6.9.2",
+        "@nivo/core": "^0.83.0",
+        "@nivo/line": "^0.83.0",
+        "@nivo/pie": "^0.83.0",
+        "@tanstack/react-query": "^5.51.11",
+        "@testing-library/jest-dom": "^6.4.6",
+        "@testing-library/react": "^16.0.0",
+        "@testing-library/user-event": "^14.5.2",
+        "@types/jest": "^29.5.3",
+        "@types/node": "^20.4.5",
+        "@types/react": "^18.2.17",
+        "@types/react-dom": "^18.2.7",
+        "axios": "^0.26.1",
+        "clsx": "^1.2.1",
+        "d3": "^7.8.5",
+        "dayjs": "^1.11.3",
+        "react": "^18.3.1",
+        "react-currency-input-field": "^3.6.4",
+        "react-dom": "^18.3.1",
+        "react-icons": "^4.3.1",
+        "react-router": "^6.25.1",
+        "react-router-dom": "^6.25.1",
+        "react-scripts": "^5.0.1",
+        "typescript": "^5.5.3",
+        "web-vitals": "^3.3.2"
+    },
+    "overrides": {
+        "react-scripts": {
+            "typescript": "^5.5.3"
+        }
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+        "@eslint/js": "^9.7.0",
+        "@tanstack/eslint-plugin-query": "^4.29.9",
+        "@typescript-eslint/eslint-plugin": "^7.16.1",
+        "@typescript-eslint/parser": "^7.16.1",
+        "eslint": "^8.57.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-import-resolver-typescript": "^3.6.1",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-json": "^4.0.0",
+        "eslint-plugin-jsx-a11y": "^6.9.0",
+        "eslint-plugin-prettier": "^5.2.1",
+        "eslint-plugin-react": "^7.35.0",
+        "eslint-plugin-react-hooks": "^4.6.2",
+        "globals": "^15.8.0",
+        "prettier": "^3.3.3",
+        "typescript-eslint": "^7.16.1",
+        "typescript-plugin-css-modules": "^5.1.0"
     }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@eslint/js": "^9.7.0",
-    "@tanstack/eslint-plugin-query": "^4.29.9",
-    "@typescript-eslint/eslint-plugin": "^7.16.1",
-    "@typescript-eslint/parser": "^7.16.1",
-    "eslint": "^8.57.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-json": "^4.0.0",
-    "eslint-plugin-jsx-a11y": "^6.9.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react": "^7.35.0",
-    "globals": "^15.8.0",
-    "prettier": "^3.3.3",
-    "typescript-eslint": "^7.16.1",
-    "typescript-plugin-css-modules": "^5.1.0"
-  }
 }

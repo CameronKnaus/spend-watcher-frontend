@@ -10,7 +10,6 @@ export const recentTransactionsQueryKey = 'recent-transactions';
 export const transactionsDateRangeQueryKey = 'transaction-date-ranges';
 export const tripDetailsQueryKey = 'trip-detail-transaction-list';
 
-
 // Dependent query keys are all query keys that need to be invalidated when the user makes a modification.
 // Ex. The user updates or adds a transaction, so spending breakdown queries should be invalidated
 export const transactionDependentQueryKeys = [
@@ -19,31 +18,24 @@ export const transactionDependentQueryKeys = [
     recentTransactionsQueryKey,
     tripManagerQueryKey,
     transactionsDateRangeQueryKey,
-    tripDetailsQueryKey
+    tripDetailsQueryKey,
 ];
 
-export const myMoneyDependentQueryKeys = [
-    accountSummaryQueryKey
-];
+export const myMoneyDependentQueryKeys = [accountSummaryQueryKey];
 
 export const recurringTransactionDependentQueryKeys = [
     recurringSpendingQueryKey,
     recurringExpenseTransactionHistoryQueryKey,
     transactionsDateRangeQueryKey,
-    spendingSummaryQueryKey
+    spendingSummaryQueryKey,
 ];
 
-export const tripDependentQueryKeys = [
-    tripManagerQueryKey
-];
+export const tripDependentQueryKeys = [tripManagerQueryKey];
 
-export const allDependentQueryKeys = [
-    ...transactionDependentQueryKeys,
-    ...myMoneyDependentQueryKeys
-];
+export const allDependentQueryKeys = [...transactionDependentQueryKeys, ...myMoneyDependentQueryKeys];
 
 export function invalidateQueries(queryClient: QueryClient, queryList: Array<string>) {
-    queryList.forEach(key => {
-        queryClient.invalidateQueries([key]);
+    queryList.forEach((key) => {
+        queryClient.invalidateQueries({ queryKey: [key] });
     });
 }
