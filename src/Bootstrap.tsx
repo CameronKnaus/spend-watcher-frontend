@@ -17,10 +17,12 @@ const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             refetchOnWindowFocus: false,
-            staleTime: msMapper.day
-        }
-    }
+            staleTime: msMapper.day,
+        },
+    },
 });
+
+// TODO: DELETE ME
 
 export default function Bootstrap({ children }: { children: ReactElement }) {
     return (
@@ -29,9 +31,7 @@ export default function Bootstrap({ children }: { children: ReactElement }) {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <IsMobileContextProvider>
                         <BrowserRouter>
-                            <SessionChecker>
-                                {children}
-                            </SessionChecker>
+                            <SessionChecker>{children}</SessionChecker>
                         </BrowserRouter>
                     </IsMobileContextProvider>
                 </LocalizationProvider>

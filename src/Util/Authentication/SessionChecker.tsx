@@ -3,8 +3,8 @@ import AuthHandler from './AuthHandler';
 import axios from 'axios';
 import ServiceRoutes from 'Constants/ServiceRoutes';
 import { useLocation, useNavigate } from 'react-router';
-import { PAGE_ROUTES } from 'Constants/RouteConstants';
 import { useQuery } from '@tanstack/react-query';
+import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
 
 // The purpose of this component is to check if the user is authenticated. If not, redirect to the auth page
 export default function SessionChecker({ children }: { children: JSX.Element }) {
