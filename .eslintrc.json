@@ -1,0 +1,38 @@
+{
+  "overrides": [
+    {
+      "files": [
+        "**/*.{js,mjs,cjs,ts,jsx,tsx}"
+      ],
+      "parserOptions": {
+        "ecmaFeatures": {
+          "jsx": true
+        }
+      },
+      "env": {
+        "browser": true
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "react/jsx-uses-react": "off",
+        "react/react-in-jsx-scope": "off",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "no-console": "warn"
+      }
+    }
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "react"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

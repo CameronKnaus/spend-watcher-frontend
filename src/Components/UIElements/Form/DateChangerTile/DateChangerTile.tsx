@@ -9,43 +9,43 @@ import { DateType } from 'Types/DateTypes';
 
 type DateChangerTilePropTypes = {
     startDate: Dayjs;
-    endDate: Dayjs;
     minPossibleDate: DateType;
     maxPossibleDate: DateType;
     updateDateRange: (startDate: Dayjs, endDate: Dayjs, dateRangeType: DateRangeType) => void;
     minAllowedDate: Dayjs;
-    dateRangeType: DateRangeType,
+    dateRangeType: DateRangeType;
     resultsText: string;
-}
+};
 
-export default function DateChangerTile(
-    { startDate,
-        endDate,
-        minPossibleDate,
-        maxPossibleDate,
-        updateDateRange = () => { /* NOOP */ },
-        minAllowedDate,
-        dateRangeType = DateRangeType.MONTH,
-        resultsText }: DateChangerTilePropTypes
-) {
+export default function DateChangerTile({
+    startDate,
+    minPossibleDate,
+    maxPossibleDate,
+    updateDateRange = () => {
+        /* NOOP */
+    },
+    minAllowedDate,
+    dateRangeType = DateRangeType.MONTH,
+    resultsText,
+}: DateChangerTilePropTypes) {
     const [editMode, setEditMode] = useState(false);
     const getContent = useContent('DATE_CONTEXT_CHANGER');
 
     function getRangeText() {
-        if(dateRangeType === DateRangeType.MONTH) {
+        if (dateRangeType === DateRangeType.MONTH) {
             return `${MONTH_NAMES[startDate.month()]}, ${startDate.year()}`;
         }
 
-        if(dateRangeType === DateRangeType.YEAR) {
+        if (dateRangeType === DateRangeType.YEAR) {
             const currentYear = dayjs().year();
-            if(startDate.year() === currentYear) {
+            if (startDate.year() === currentYear) {
                 return getContent('YTD_SELECTED_LABEL', [currentYear]);
             }
 
             return startDate.year();
         }
 
-        if(dateRangeType === DateRangeType.MAX) {
+        if (dateRangeType === DateRangeType.MAX) {
             return getContent('MAX_SELECTED_LABEL');
         }
 
@@ -55,30 +55,28 @@ export default function DateChangerTile(
     const dateContextTitle = (
         <>
             {resultsText}
-            <br />
-            {' '}
-            <div style={{ fontWeight: 'var(--fw-regular)', paddingTop: 4 }}>
-                {getRangeText()}
-            </div>
+            <br /> <div style={{ fontWeight: 'var(--fw-regular)', paddingTop: 4 }}>{getRangeText()}</div>
         </>
     );
 
     return (
         <>
-            <ActionTile useShadow
-                        isInactive
-                        title={dateContextTitle}
-                        fallbackActionPrompt={getContent('CHANGE_CONTEXT')}
-                        callback={() => setEditMode(current => !current)}
-                        options={{ paddingBelow: 0 }}
+            <ActionTile
+                useShadow
+                isInactive
+                title={dateContextTitle}
+                fallbackActionPrompt={getContent('CHANGE_CONTEXT')}
+                callback={() => setEditMode((current) => !current)}
+                options={{ paddingBelow: 0 }}
             />
-            <DateContextChanger expanded={editMode}
-                                setExpanded={setEditMode}
-                                updateDateRange={updateDateRange}
-                                startingRangeOption={dateRangeType}
-                                minAllowedDate={minAllowedDate}
-                                minPossibleDate={minPossibleDate}
-                                maxPossibleDate={maxPossibleDate}
+            <DateContextChanger
+                expanded={editMode}
+                setExpanded={setEditMode}
+                updateDateRange={updateDateRange}
+                startingRangeOption={dateRangeType}
+                minAllowedDate={minAllowedDate}
+                minPossibleDate={minPossibleDate}
+                maxPossibleDate={maxPossibleDate}
             />
         </>
     );

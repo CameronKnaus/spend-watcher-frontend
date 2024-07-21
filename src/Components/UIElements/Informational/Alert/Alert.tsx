@@ -5,24 +5,24 @@ import { Color } from 'Types/StyleTypes';
 const SIZE_CONFIG = {
     base: {
         container: styles.baseContainer,
-        icon: styles.baseIcon
+        icon: styles.baseIcon,
     },
     small: {
         container: styles.smallContainer,
-        icon: styles.smallIcon
-    }
+        icon: styles.smallIcon,
+    },
 };
 
 type AlertPropTypes = {
-    alertText: String,
-    size?: 'base' | 'small',
-    color?: Color
-}
+    alertText: string;
+    size?: 'base' | 'small';
+    color?: Color;
+};
 
 export default function Alert({ alertText, size = 'base', color = 'var(--theme-red)' }: AlertPropTypes) {
     const containerSize = SIZE_CONFIG[size];
 
-    if(!containerSize) {
+    if (!containerSize) {
         return null;
     }
 

@@ -10,22 +10,24 @@ import useContent from 'CustomHooks/useContent';
 const PANEL_ENUM = {
     NEW: 'NEW',
     EDIT: 'EDIT',
-    DETAILS: 'DETAILS'
+    DETAILS: 'DETAILS',
 };
 
 type TripsSlideInPanelPropTypes = {
     tripToView?: Trip;
     handlePanelClose: EmptyCallback;
-}
+};
 
 export default function TripsSlideInPanel({ tripToView, handlePanelClose }: TripsSlideInPanelPropTypes) {
     const [formValid, setFormValid] = useState(false);
     const [panelState, setPanelState] = useState(tripToView ? PANEL_ENUM.DETAILS : PANEL_ENUM.NEW);
-    const [forwardActionCallback, setForwardActionCallback] = useState<EmptyCallback>(() => { /* NOOP */ });
+    const [forwardActionCallback, setForwardActionCallback] = useState<EmptyCallback>(() => {
+        /* NOOP */
+    });
     const getContent = useContent('TRIPS');
 
     function getDayCountMessage(startDate: Dayjs, endDate: Dayjs) {
-        if(!startDate || !endDate) {
+        if (!startDate || !endDate) {
             return '';
         }
 
@@ -33,11 +35,11 @@ export default function TripsSlideInPanel({ tripToView, handlePanelClose }: Trip
         const daysDiff = endDate.diff(startDate.format('YYYY-MM-DD'), 'day') + 1;
         let key = isPast ? 'DAY_COUNT_PAST' : 'DAY_COUNT';
 
-        if(daysDiff > 1) {
+        if (daysDiff > 1) {
             key += '_PLURAL';
         }
 
-        // @ts-expect-error
+        // @ts-expect-error <description-needed>
         return getContent(key, [daysDiff]);
     }
 
@@ -46,17 +48,19 @@ export default function TripsSlideInPanel({ tripToView, handlePanelClose }: Trip
             case PANEL_ENUM.NEW:
             case PANEL_ENUM.EDIT:
                 return (
-                    <TripForm existingTrip={tripToView}
-                              setForwardActionCallback={setForwardActionCallback}
-                              getDayCountMessage={getDayCountMessage}
-                              setFormValid={setFormValid}
+                    <TripForm
+                        existingTrip={tripToView}
+                        setForwardActionCallback={setForwardActionCallback}
+                        getDayCountMessage={getDayCountMessage}
+                        setFormValid={setFormValid}
                     />
                 );
             case PANEL_ENUM.DETAILS:
                 return (
-                    <TripDetails existingTrip={tripToView!}
-                                 getDayCountMessage={getDayCountMessage}
-                                 editDetailsCallback={() => setPanelState(PANEL_ENUM.EDIT)}
+                    <TripDetails
+                        existingTrip={tripToView!}
+                        getDayCountMessage={getDayCountMessage}
+                        editDetailsCallback={() => setPanelState(PANEL_ENUM.EDIT)}
                     />
                 );
             default:
@@ -90,7 +94,7 @@ export default function TripsSlideInPanel({ tripToView, handlePanelClose }: Trip
     }
 
     function getBackwardsActionCallback() {
-        if(panelState === PANEL_ENUM.EDIT) {
+        if (panelState === PANEL_ENUM.EDIT) {
             return () => setPanelState(PANEL_ENUM.DETAILS);
         }
 
@@ -98,14 +102,15 @@ export default function TripsSlideInPanel({ tripToView, handlePanelClose }: Trip
     }
 
     return (
-        <SlideUpPanel title={getPanelTitle()}
-                      closeText={getContent(panelState === PANEL_ENUM.EDIT ? 'CANCEL' : 'CLOSE')}
-                      confirmText={getConfirmText()}
-                      disableConfirmButton={!formValid}
-                      forwardActionCallback={forwardActionCallback}
-                      backwardsActionCallback={getBackwardsActionCallback()}
-                      tagColor='var(--theme-jungle-green-pale)'
-                      onPanelClose={handlePanelClose}
+        <SlideUpPanel
+            title={getPanelTitle()}
+            closeText={getContent(panelState === PANEL_ENUM.EDIT ? 'CANCEL' : 'CLOSE')}
+            confirmText={getConfirmText()}
+            disableConfirmButton={!formValid}
+            forwardActionCallback={forwardActionCallback}
+            backwardsActionCallback={getBackwardsActionCallback()}
+            tagColor="var(--theme-jungle-green-pale)"
+            onPanelClose={handlePanelClose}
         >
             {renderSlideInPanelContents()}
         </SlideUpPanel>
