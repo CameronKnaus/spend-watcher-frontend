@@ -1,4 +1,5 @@
-import { FaCannabis,
+import {
+    FaCannabis,
     FaCar,
     FaGasPump,
     FaGift,
@@ -9,9 +10,11 @@ import { FaCannabis,
     FaPlaneDeparture,
     FaLandmark,
     FaCookieBite,
-    FaRegMoneyBillAlt } from 'react-icons/fa';
+    FaRegMoneyBillAlt,
+} from 'react-icons/fa';
 import { IoIosBeer, IoIosCart, IoIosAirplane, IoMdBrush, IoIosTrendingUp } from 'react-icons/io';
-import { MdFastfood,
+import {
+    MdFastfood,
     MdMovieFilter,
     MdTrain,
     MdBusinessCenter,
@@ -24,7 +27,8 @@ import { MdFastfood,
     MdSavings,
     MdFitnessCenter,
     MdContentCut,
-    MdHotel } from 'react-icons/md';
+    MdHotel,
+} from 'react-icons/md';
 
 import { IoGameController } from 'react-icons/io5';
 import { ReactElement } from 'react';
@@ -63,121 +67,121 @@ export enum SpendingCategoryType {
 export type CategoryDefinitionType = {
     icon: ReactElement;
     color: Color;
-}
+};
 
 type SpendCategoryDefType = {
-    [key in SpendingCategoryType]: CategoryDefinitionType
-}
+    [key in SpendingCategoryType]: CategoryDefinitionType;
+};
 
 export const SPENDING_CATEGORIES: SpendCategoryDefType = {
     RESTAURANTS: {
         icon: <MdFastfood />,
-        color: 'var(--theme-mango)'
+        color: 'var(--theme-mango)',
     },
     DRINKS: {
         icon: <IoIosBeer />,
-        color: 'var(--theme-queen-blue-dark)'
+        color: 'var(--theme-queen-blue-dark)',
     },
     GROCERIES: {
         icon: <IoIosCart />,
-        color: 'var(--theme-pistachio)'
+        color: 'var(--theme-pistachio)',
     },
     ENTERTAINMENT: {
         icon: <MdMovieFilter />,
-        color: 'var(--theme-jungle-green-dark)'
+        color: 'var(--theme-jungle-green-dark)',
     },
     TRANSPORTATION: {
         icon: <MdTrain />,
-        color: 'var(--theme-maize-crayola-dark)'
+        color: 'var(--theme-maize-crayola-dark)',
     },
     VEHICLE: {
         icon: <FaCar />,
-        color: 'var(--theme-orange)'
+        color: 'var(--theme-orange)',
     },
     FUEL: {
         icon: <FaGasPump />,
-        color: 'var(--theme-orange-dark)'
+        color: 'var(--theme-orange-dark)',
     },
     FITNESS: {
         icon: <MdFitnessCenter />,
-        color: 'var(--theme-queen-blue-pale)'
+        color: 'var(--theme-queen-blue-pale)',
     },
     GROOMING: {
         icon: <MdContentCut />,
-        color: 'var(--theme-pistachio-pale)'
+        color: 'var(--theme-pistachio-pale)',
     },
     BUSINESS: {
         icon: <MdBusinessCenter />,
-        color: 'var(--theme-maize-crayola)'
+        color: 'var(--theme-maize-crayola)',
     },
     MATERIAL_ITEMS: {
         icon: <MdShoppingBag />,
-        color: 'var(--theme-red)'
+        color: 'var(--theme-red)',
     },
     AIRFARE: {
         icon: <IoIosAirplane />,
-        color: 'var(--theme-jungle-green-pale)'
+        color: 'var(--theme-jungle-green-pale)',
     },
     LODGING: {
         icon: <MdHotel />,
-        color: '#A4433D' // TODO: To be changed with colorscheme overhaul
+        color: '#A4433D', // TODO: To be changed with colorscheme overhaul
     },
     HEALTH: {
         icon: <MdHealthAndSafety />,
-        color: 'var(--theme-red-dark)'
+        color: 'var(--theme-red-dark)',
     },
     CLOTHING: {
         icon: <FaTshirt />,
-        color: 'var(--theme-mango-dark)'
+        color: 'var(--theme-mango-dark)',
     },
     GIFTS: {
         icon: <FaGift />,
-        color: 'var(--theme-yellow-pale)'
+        color: 'var(--theme-yellow-pale)',
     },
     EDUCATION: {
         icon: <MdSchool />,
-        color: 'var(--theme-celadon-blue)'
+        color: 'var(--theme-celadon-blue)',
     },
     UTILITIES: {
         icon: <MdWaterDrop />,
-        color: 'var(--theme-celadon-blue-pale)'
+        color: 'var(--theme-celadon-blue-pale)',
     },
     HOUSING: {
         icon: <FaHome />,
-        color: 'var(--theme-queen-blue)'
+        color: 'var(--theme-queen-blue)',
     },
     CANNABIS: {
         icon: <FaCannabis />,
-        color: 'var(--theme-pistachio-dark)'
+        color: 'var(--theme-pistachio-dark)',
     },
     PETS: {
         icon: <MdPets />,
-        color: 'var(--theme-yellow-orange)'
+        color: 'var(--theme-yellow-orange)',
     },
     INSURANCE: {
         icon: <MdShield />,
-        color: 'var(--theme-celadon-blue-dark)'
+        color: 'var(--theme-celadon-blue-dark)',
     },
     GAMES: {
         icon: <IoGameController />,
-        color: 'var(--theme-jungle-green)'
+        color: 'var(--theme-jungle-green)',
     },
     HOBBY: {
         icon: <IoMdBrush />,
-        color: 'var(--theme-orange-pale)'
+        color: 'var(--theme-orange-pale)',
     },
     TREATS: {
         icon: <FaCookieBite />,
-        color: 'var(--theme-dark-pink)'
+        color: 'var(--theme-dark-pink)',
     },
     TAXES: {
         icon: <FaRegMoneyBillAlt />,
-        color: 'var(--theme-red-pale)'
+        color: 'var(--theme-red-pale)',
     },
     OTHER: {
         icon: <FaDollarSign />,
-        color: 'var(--theme-steel-teal)'
-    }
+        color: 'var(--theme-steel-teal)',
+    },
 };
 
 export enum AccountCategoryType {
@@ -188,32 +192,32 @@ export enum AccountCategoryType {
 }
 
 type AccountCategoryDefType = {
-    [key in AccountCategoryType]: CategoryDefinitionType
-}
+    [key in AccountCategoryType]: CategoryDefinitionType;
+};
 
 export const ACCOUNT_CATEGORIES: AccountCategoryDefType = {
     CHECKING: {
         icon: <FaMoneyBillWave />,
-        color: 'var(--theme-celadon-blue)'
+        color: 'var(--theme-celadon-blue)',
     },
     SAVINGS: {
         icon: <MdSavings />,
-        color: 'var(--theme-red-pale)'
+        color: 'var(--theme-red-pale)',
     },
     INVESTING: {
         icon: <IoIosTrendingUp />,
-        color: 'var(--theme-jungle-green)'
+        color: 'var(--theme-jungle-green)',
     },
     BONDS: {
         icon: <FaLandmark />,
-        color: 'var(--theme-yellow-orange)'
-    }
+        color: 'var(--theme-yellow-orange)',
+    },
 };
 
 export interface CategoryBundleType {
-    SPENDING_CATEGORIES: SpendCategoryDefType,
-    ACCOUNT_CATEGORIES: AccountCategoryDefType,
-    TRIP: CategoryDefinitionType,
+    SPENDING_CATEGORIES: SpendCategoryDefType;
+    ACCOUNT_CATEGORIES: AccountCategoryDefType;
+    TRIP: CategoryDefinitionType;
 }
 
 const CATEGORIES = {
@@ -221,8 +225,8 @@ const CATEGORIES = {
     ...ACCOUNT_CATEGORIES,
     TRIP: {
         icon: <FaPlaneDeparture />,
-        color: 'var(--theme-jungle-green-pale)'
-    }
+        color: 'var(--theme-jungle-green-pale)',
+    },
 };
 export default CATEGORIES;
 

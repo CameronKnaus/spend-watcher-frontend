@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import styles from './TopSpendingCategories.module.css';
-import { SPENDING_CATEGORIES, SpendingCategoryType } from 'Constants/categories';
+import { SPENDING_CATEGORIES, SpendingCategoryType } from 'Constants/categories_deprecated';
 import useContent from '../../../CustomHooks/useContent';
 import Link from '../../UIElements/Navigation/Link/Link';
 import clsx from 'clsx';
@@ -13,29 +13,37 @@ type TopSpendingCategoriesPropTypes = {
     setCurrentTab: Dispatch<SetStateAction<TAB_ENUM>>;
     setFilterCategory: (name: SpendingCategoryType) => void;
     useDollarValues?: boolean;
-}
+};
 
-export default function TopSpendingCategories({ label, categoryTotals, setCurrentTab, setFilterCategory, useDollarValues = false }: TopSpendingCategoriesPropTypes) {
+export default function TopSpendingCategories({
+    label,
+    categoryTotals,
+    setCurrentTab,
+    setFilterCategory,
+    useDollarValues = false,
+}: TopSpendingCategoriesPropTypes) {
     const [viewAll, setViewAll] = useState(false);
     const getSpendingCategoryContent = useContent('SPENDING_CATEGORIES');
     const getSpendingContent = useContent('SPENDING_BREAKDOWN');
 
-    if(!categoryTotals) {
+    if (!categoryTotals) {
         // TODO: Actual loading animation
         return 'Loading...';
     }
 
     const categoryTotalList = Object.keys(categoryTotals);
-    let sortedList = categoryTotalList.map(key => {
-        return {
-            category: key as SpendingCategoryType,
-            amount: categoryTotals[key as SpendingCategoryType]
-        };
-    }).sort((a, b) => a.amount < b.amount ? 1 : -1);
+    let sortedList = categoryTotalList
+        .map((key) => {
+            return {
+                category: key as SpendingCategoryType,
+                amount: categoryTotals[key as SpendingCategoryType],
+            };
+        })
+        .sort((a, b) => (a.amount < b.amount ? 1 : -1));
 
     const listForPieChart = sortedList;
 
-    if(!viewAll) {
+    if (!viewAll) {
         sortedList = sortedList.filter((_, index) => index < 3);
     }
 
@@ -43,49 +51,43 @@ export default function TopSpendingCategories({ label, categoryTotals, setCurren
     const hideLabel = getSpendingContent('HIDE');
     return (
         <div>
-            <div className={styles.label}>
-                {label}
-            </div>
+            <div className={styles.label}>{label}</div>
             <CategoryAmountChart amountList={listForPieChart} useDollarValues={useDollarValues} />
-            {
-                sortedList.map(({ category, amount }, index) => {
-                    const categoryData = SPENDING_CATEGORIES[category as SpendingCategoryType];
-                    const backgroundColor = categoryData.color;
-                    const Icon = categoryData.icon;
-                    const categoryLabel = getSpendingCategoryContent(category);
-                    const displayedValue = useDollarValues ? `-$${amount.toFixed(2)}` : `x${amount}`;
-                    return (
-                        <button key={category}
-                                className={clsx(styles.totalsPill, index > 2 && styles.fadeInAnimation)}
-                                style={{ backgroundColor }}
-                                aria-label={getSpendingContent('TOTAL_CATEGORY_ARIA_LABEL', [amount, categoryLabel, categoryLabel])}
-                                tabIndex={0}
-                                onClick={() => {
-                                    setCurrentTab(TAB_ENUM.HISTORY_TAB);
-                                    setFilterCategory(category);
-                                }}
-                        >
-                            <div className={styles.icon}>
-                                { Icon }
-                            </div>
-                            <div className={styles.categoryName}>
-                                {categoryLabel}
-                            </div>
-                            <div className={styles.amount}>
-                                {displayedValue}
-                            </div>
-                        </button>
-                    );
-                })
-            }
-            {
-                categoryTotalList.length > 2 && (
-                    <Link text={viewAll ? hideLabel : showAllLabel}
-                          customClass={styles.showAllLink}
-                          onClickCallback={() => setViewAll(!viewAll)}
-                    />
-                )
-            }
+            {sortedList.map(({ category, amount }, index) => {
+                const categoryData = SPENDING_CATEGORIES[category as SpendingCategoryType];
+                const backgroundColor = categoryData.color;
+                const Icon = categoryData.icon;
+                const categoryLabel = getSpendingCategoryContent(category);
+                const displayedValue = useDollarValues ? `-$${amount.toFixed(2)}` : `x${amount}`;
+                return (
+                    <button
+                        key={category}
+                        className={clsx(styles.totalsPill, index > 2 && styles.fadeInAnimation)}
+                        style={{ backgroundColor }}
+                        aria-label={getSpendingContent('TOTAL_CATEGORY_ARIA_LABEL', [
+                            amount,
+                            categoryLabel,
+                            categoryLabel,
+                        ])}
+                        tabIndex={0}
+                        onClick={() => {
+                            setCurrentTab(TAB_ENUM.HISTORY_TAB);
+                            setFilterCategory(category);
+                        }}
+                    >
+                        <div className={styles.icon}>{Icon}</div>
+                        <div className={styles.categoryName}>{categoryLabel}</div>
+                        <div className={styles.amount}>{displayedValue}</div>
+                    </button>
+                );
+            })}
+            {categoryTotalList.length > 2 && (
+                <Link
+                    text={viewAll ? hideLabel : showAllLabel}
+                    customClass={styles.showAllLink}
+                    onClickCallback={() => setViewAll(!viewAll)}
+                />
+            )}
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import { SpendingCategoryType } from 'Constants/categories';
+import { SpendingCategoryType } from 'Constants/categories_deprecated';
 import { DateType } from 'Types/DateTypes';
 import { CategoryTotalDataPoints, SpendingBreakdownTransaction, TransactionId } from 'Types/TransactionTypes';
 
@@ -15,15 +15,18 @@ export type PopulatedSpendingBreakdownResponse = {
     categoryTotals: Record<SpendingCategoryType, number>;
     totalTransactionsPerCategory: Record<SpendingCategoryType, number>;
     categoryTotalDataPoints: CategoryTotalDataPoints;
-}
+};
 
 type NoTransactionResponse = {
     noTransactions: true;
-}
-
+};
 
 export type RawSpendingBreakdownResponse = PopulatedSpendingBreakdownResponse | NoTransactionResponse;
 
-export default function spendingBreakdownTransform({ data }: { data: RawSpendingBreakdownResponse | NoTransactionResponse }): RawSpendingBreakdownResponse | NoTransactionResponse {
+export default function spendingBreakdownTransform({
+    data,
+}: {
+    data: RawSpendingBreakdownResponse | NoTransactionResponse;
+}): RawSpendingBreakdownResponse | NoTransactionResponse {
     return data;
 }

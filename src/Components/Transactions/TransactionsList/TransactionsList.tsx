@@ -6,8 +6,15 @@ import dayjs from 'dayjs';
 import InteractiveDataRow from 'Components/UIElements/DataVisualization/InteractiveDataRow/InteractiveDataRow';
 import LoadingInteractiveRowList from 'Components/UIElements/Loading/LoadingInteractiveRowList';
 import RecurringSpendSlideInPanel from 'Components/RecurringSpending/RecurringSpendSlideInPanel/RecurringSpendSlideInPanel';
-import { SpendingCategoryType } from 'Constants/categories';
-import { FormattedTransaction, RecurringTransaction, SpendingBreakdownTransaction, TransactionList, TransactionListDiscretionary, TransactionListTransaction } from 'Types/TransactionTypes';
+import { SpendingCategoryType } from 'Constants/categories_deprecated';
+import {
+    FormattedTransaction,
+    RecurringTransaction,
+    SpendingBreakdownTransaction,
+    TransactionList,
+    TransactionListDiscretionary,
+    TransactionListTransaction,
+} from 'Types/TransactionTypes';
 import { DateType } from 'Types/DateTypes';
 import clsx from 'clsx';
 
@@ -18,30 +25,34 @@ import clsx from 'clsx';
                 01/01/2022: [{ *transaction data* }, { *transaction data* }]
 * */
 type TransactionListPropTypes = {
-    transactionsList?: TransactionList | Record<DateType, Array<SpendingBreakdownTransaction>>,
-    filteredCategory?: SpendingCategoryType | '',
-    isLoading?: boolean,
-    skeletonLoaderCount?: number,
-    hasTotalsRow?: boolean
-}
+    transactionsList?: TransactionList | Record<DateType, Array<SpendingBreakdownTransaction>>;
+    filteredCategory?: SpendingCategoryType | '';
+    isLoading?: boolean;
+    skeletonLoaderCount?: number;
+    hasTotalsRow?: boolean;
+};
 
-export default function TransactionsList({ transactionsList, filteredCategory, isLoading = false, skeletonLoaderCount = 5, hasTotalsRow = true }: TransactionListPropTypes) {
+export default function TransactionsList({
+    transactionsList,
+    filteredCategory,
+    isLoading = false,
+    skeletonLoaderCount = 5,
+    hasTotalsRow = true,
+}: TransactionListPropTypes) {
     const [transactionToEdit, setTransactionToEdit] = useState<FormattedTransaction | null>(null);
-    const [recurringTransactionToEdit, setRecurringTransactionToEdit] = useState<RecurringTransaction | SpendingBreakdownTransaction | null>(null);
+    const [recurringTransactionToEdit, setRecurringTransactionToEdit] = useState<
+        RecurringTransaction | SpendingBreakdownTransaction | null
+    >(null);
     const getContent = useContent('TRANSACTIONS');
     const getGeneralContent = useContent('GENERAL');
     const getCategoryContent = useContent('SPENDING_CATEGORIES');
 
-    if(isLoading) {
-        return <LoadingInteractiveRowList id='loading-transaction' rowCount={skeletonLoaderCount} rowSpacing={12} />;
+    if (isLoading) {
+        return <LoadingInteractiveRowList id="loading-transaction" rowCount={skeletonLoaderCount} rowSpacing={12} />;
     }
 
-    if(!transactionsList) {
-        return (
-            <div className={styles.issueMessage}>
-                {getContent('NO_TRANSACTIONS')}
-            </div>
-        );
+    if (!transactionsList) {
+        return <div className={styles.issueMessage}>{getContent('NO_TRANSACTIONS')}</div>;
     }
 
     function setTransactionForEditing(transaction: TransactionListDiscretionary) {
@@ -52,107 +63,93 @@ export default function TransactionsList({ transactionsList, filteredCategory, i
             category: transaction.category,
             isUncommon: transaction.isUncommon,
             date: transaction.date,
-            linkedTripId: transaction.linkedTripId
+            linkedTripId: transaction.linkedTripId,
         });
     }
 
     // Maps out all transactions under a given grouping (i.e. under a single date)
-    function mapTransactionList(transactionList: Array<TransactionListTransaction | SpendingBreakdownTransaction>, header: string) {
+    function mapTransactionList(
+        transactionList: Array<TransactionListTransaction | SpendingBreakdownTransaction>,
+        header: string,
+    ) {
         let sortedList = transactionList.sort((a, b) => {
             return a.transactionId! < b.transactionId! ? 1 : -1;
         });
 
-        if(filteredCategory) {
-            sortedList = sortedList.filter(transaction => transaction.category === filteredCategory);
+        if (filteredCategory) {
+            sortedList = sortedList.filter((transaction) => transaction.category === filteredCategory);
         }
 
-        if(!sortedList.length) {
+        if (!sortedList.length) {
             return null;
         }
 
         let transactionDaysTotal = 0;
         return (
-            <div className={clsx({
-                [styles.listContainer]: true,
-                [styles.listContainerWithTotals]: hasTotalsRow
-            })}
+            <div
+                className={clsx({
+                    [styles.listContainer]: true,
+                    [styles.listContainerWithTotals]: hasTotalsRow,
+                })}
             >
-                <h3 className={styles.dateLabel}>
-                    {header}
-                </h3>
-                {
-                    sortedList.map((transaction) => {
-                        transactionDaysTotal += transaction.amount;
-                        return (
-                            <div key={transaction.transactionId}
-                                 className={styles.transactionWrapper}
-                            >
-                                {transaction.isRecurringTransaction ? (
-                                    <InteractiveDataRow isExpense
-                                                        showRevolvingIcon
-                                                        title={getCategoryContent(transaction.category)}
-                                                        iconCategory={transaction.category}
-                                                        description={transaction.expenseName}
-                                                        amount={transaction.amount}
-                                                        amountDescription={dayjs(transaction.date).format('MMMM')}
-                                                        onClick={() => {
-                                                            setRecurringTransactionToEdit(transaction);
-                                                        }}
-                                    />
-                                ) : (
-                                    <InteractiveDataRow isExpense
-                                                        title={getCategoryContent(transaction.category)}
-                                                        iconCategory={transaction.category}
-                                                        description={transaction.note}
-                                                        amount={transaction.amount}
-                                                        amountDescription={transaction.date}
-                                                        onClick={() => setTransactionForEditing(transaction)}
-                                    />
-                                )}
-                            </div>
-                        );
-                    })
-                }
-                {
-                    hasTotalsRow && (
-                        <div className={styles.totalsRow}>
-                            {`-$${transactionDaysTotal.toFixed(2)}`}
+                <h3 className={styles.dateLabel}>{header}</h3>
+                {sortedList.map((transaction) => {
+                    transactionDaysTotal += transaction.amount;
+                    return (
+                        <div key={transaction.transactionId} className={styles.transactionWrapper}>
+                            {transaction.isRecurringTransaction ? (
+                                <InteractiveDataRow
+                                    isExpense
+                                    showRevolvingIcon
+                                    title={getCategoryContent(transaction.category)}
+                                    iconCategory={transaction.category}
+                                    description={transaction.expenseName}
+                                    amount={transaction.amount}
+                                    amountDescription={dayjs(transaction.date).format('MMMM')}
+                                    onClick={() => {
+                                        setRecurringTransactionToEdit(transaction);
+                                    }}
+                                />
+                            ) : (
+                                <InteractiveDataRow
+                                    isExpense
+                                    title={getCategoryContent(transaction.category)}
+                                    iconCategory={transaction.category}
+                                    description={transaction.note}
+                                    amount={transaction.amount}
+                                    amountDescription={transaction.date}
+                                    onClick={() => setTransactionForEditing(transaction)}
+                                />
+                            )}
                         </div>
-                    )
-                }
+                    );
+                })}
+                {hasTotalsRow && <div className={styles.totalsRow}>{`-$${transactionDaysTotal.toFixed(2)}`}</div>}
             </div>
         );
     }
 
     function transactionGroupings() {
         const renderList = [];
-        for(const dateKey in transactionsList) {
+        for (const dateKey in transactionsList) {
             const isToday = dateKey === dayjs().format('MM/DD/YY');
             const isYesterday = dateKey === dayjs().add(-1, 'day').format('MM/DD/YY');
 
             let groupLabel = dateKey;
-            if(isToday) {
+            if (isToday) {
                 groupLabel = getGeneralContent('TODAY');
-            } else if(isYesterday) {
+            } else if (isYesterday) {
                 groupLabel = getGeneralContent('YESTERDAY');
             }
 
             const mappedTransactionList = mapTransactionList(transactionsList[dateKey as DateType], groupLabel);
-            if(mappedTransactionList) {
-                renderList.push(
-                    <div key={dateKey}>
-                        { mappedTransactionList }
-                    </div>
-                );
+            if (mappedTransactionList) {
+                renderList.push(<div key={dateKey}>{mappedTransactionList}</div>);
             }
         }
 
-        if(!renderList.length) {
-            return (
-                <div className={styles.noTransactions}>
-                    {getContent('NO_TRANSACTIONS_FOUND')}
-                </div>
-            );
+        if (!renderList.length) {
+            return <div className={styles.noTransactions}>{getContent('NO_TRANSACTIONS_FOUND')}</div>;
         }
 
         return renderList;
@@ -160,23 +157,21 @@ export default function TransactionsList({ transactionsList, filteredCategory, i
 
     return (
         <>
-            { transactionsList && transactionGroupings() }
-            {
-                transactionToEdit && (
-                    <TransactionForm editMode
-                                     existingTransaction={transactionToEdit}
-                                     onPanelClose={() => setTransactionToEdit(null)}
-                    />
-                )
-            }
-            {
-                recurringTransactionToEdit && (
-                    <RecurringSpendSlideInPanel editMode
-                                                existingTransaction={recurringTransactionToEdit as RecurringTransaction}
-                                                onPanelClose={() => setRecurringTransactionToEdit(null)}
-                    />
-                )
-            }
+            {transactionsList && transactionGroupings()}
+            {transactionToEdit && (
+                <TransactionForm
+                    editMode
+                    existingTransaction={transactionToEdit}
+                    onPanelClose={() => setTransactionToEdit(null)}
+                />
+            )}
+            {recurringTransactionToEdit && (
+                <RecurringSpendSlideInPanel
+                    editMode
+                    existingTransaction={recurringTransactionToEdit as RecurringTransaction}
+                    onPanelClose={() => setRecurringTransactionToEdit(null)}
+                />
+            )}
         </>
     );
 }

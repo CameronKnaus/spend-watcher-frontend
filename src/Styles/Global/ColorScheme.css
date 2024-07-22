@@ -1,76 +1,95 @@
 :root {
-    --theme-content-background: #FFFFFF;
-    --theme-soft-background: #F7FAFC;
-    --theme-darker-background: #ecf4f9;
-    --theme-strong-background: #FFFFFF;
+    /* PRIMATIVES */
+    /* Neutral Colors */
+    --theme-color-neutral-100: #465053;
+    --theme-color-neutral-200: #64767d;
+    --theme-color-neutral-300: #778e97;
+    --theme-color-neutral-400: #a6b8bf;
+    --theme-color-neutral-500: #c3d4da;
+    --theme-color-neutral-600: #d4e2e8;
+    --theme-color-neutral-700: #e2eef3;
+    --theme-color-neutral-800: #f0f7f9;
+    --theme-color-neutral-900: #f8fbfc;
+    --theme-color-neutral-black: #333333;
+    --theme-color-neutral-white: #ffffff;
 
-    --theme-money-gain: #08DC67;
-    --theme-money-loss: #FF2F5E;
+    /* Primary Colors */
+    --theme-color-primary-100: #24322e;
+    --theme-color-primary-200: #34554b;
+    --theme-color-primary-300: #3d7664;
+    --theme-color-primary-400: #419b80;
+    --theme-color-primary-500: #43a875;
+    --theme-color-primary-600: #4ec68a;
+    --theme-color-primary-700: #67daa1;
+    --theme-color-primary-800: #b6f6e3;
+    --theme-color-primary-900: #d4fcf0;
 
-    --theme-success: #76B041;
-    --theme-failure: #DF2935;
+    /* Secondary Colors */
+    --theme-color-secondary-100: #1a2f38;
+    --theme-color-secondary-200: #204555;
+    --theme-color-secondary-300: #255d74;
+    --theme-color-secondary-400: #277596;
+    --theme-color-secondary-500: #268fba;
+    --theme-color-secondary-600: #35addf;
+    --theme-color-secondary-700: #71caef;
+    --theme-color-secondary-800: #a0def8;
+    --theme-color-secondary-900: #d1f1ff;
 
-    --theme-link-blue: #0694db;
+    /* Tertiary Colors */
+    --theme-color-tertiary-100: #3b1c20;
+    --theme-color-tertiary-200: #5b252c;
+    --theme-color-tertiary-300: #7e2a35;
+    --theme-color-tertiary-400: #bf1239;
+    --theme-color-tertiary-500: #ed0c3f;
+    --theme-color-tertiary-600: #fa3360;
+    --theme-color-tertiary-700: #fd5d82;
+    --theme-color-tertiary-800: #ffadc0;
+    --theme-color-tertiary-900: #ffe5eb;
 
-    /* Shadows */
-    --theme-shadow-light: #CCCCCC;
+    /* Spend Category Colors */
+    --theme-color-spend-category-AIRFARE: #50ce6d;
+    --theme-color-spend-category-BUSINESS: #ae9209;
+    --theme-color-spend-category-CANNABIS: #4c8d1b;
+    --theme-color-spend-category-CLOTHING: #cebe79;
+    --theme-color-spend-category-DRINKS: #5948bc;
+    --theme-color-spend-category-EDUCATION: #48bcb0;
+    --theme-color-spend-category-ENTERTAINMENT: #de2682;
+    --theme-color-spend-category-FITNESS: #333333;
+    --theme-color-spend-category-FUEL: #b77b43;
+    --theme-color-spend-category-GAMES: #4884bc;
+    --theme-color-spend-category-GIFTS: #b191ff;
+    --theme-color-spend-category-GROCERIES: #82aa46;
+    --theme-color-spend-category-GROOMING: #972acf;
+    --theme-color-spend-category-HEALTH: #a30015;
+    --theme-color-spend-category-HOBBY: #df81c1;
+    --theme-color-spend-category-HOUSING: #99c8fa;
+    --theme-color-spend-category-INSURANCE: #bc4848;
+    --theme-color-spend-category-MATERIAL_ITEMS: #f20d2b;
+    --theme-color-spend-category-OTHER: #776871;
+    --theme-color-spend-category-PETS: #888d53;
+    --theme-color-spend-category-RESTAURANTS: #ff8442;
+    --theme-color-spend-category-TAXES: #f15f62;
+    --theme-color-spend-category-TRANSPORTATION: #f0c808;
+    --theme-color-spend-category-TREATS: #f1b7df;
+    --theme-color-spend-category-UTILITIES: #2ba1d4;
+    --theme-color-spend-category-VEHICLE: #fc440f;
 
-    /* Text colors */
-    --theme-standard-text: #333333;
-    --theme-placeholder-text: #BFC6C7;
-    --theme-bright-text-color: #FFFFFF;
-    --theme-light-text-color: #777777;
-    --theme-subdued-text-color: #555555;
-    --theme-faint-text-color: #656565;
+    /* Account Category Colors */
+    --theme-color-account-category-BONDS: #e87217;
+    --theme-color-account-category-CHECKING: #4884bc;
+    --theme-color-account-category-INVESTING: #84b63a;
+    --theme-color-account-category-SAVINGS: #f20d2b;
 
-    /* Border colors */
-    --theme-light-border-blue-accent: #A9C0C1;
-    --theme-accent-border: #BFC6C7;
-    --theme-light-border: #EEEEEE;
-    --theme-light-accent-border: #E2E2E2;
-    --theme-heavy-border: #555555;
+    /* TOKENS */
+    /* Background Colors */
+    --token-background-primary: var(--theme-color-neutral-900);
 
-    --theme-toggle-inactive: #EEEEEE;
-    --theme-tab-inactive: #CFCFCF;
+    /* Category Colors */
+    --token-color-category-icon: var(--theme-color-neutral-white);
 
-    --theme-disabled-button: #A7A7A7;
-
-    /* Main Theme Colors */
-    --theme-red: #f94144;
-    --theme-pink: #EEAAD9;
-    --theme-orange: #f3722c;
-    --theme-yellow-orange: #f8961e;
-    --theme-mango: #f9844a;
-    --theme-maize-crayola: #f9c74f;
-    --theme-pistachio: #90be6d;
-    --theme-jungle-green: #43aa8b;
-    --theme-steel-teal: #4d908e;
-    --theme-queen-blue: #577590;
-    --theme-celadon-blue: #277da1;
-
-    /* Pale Version of Main Theme Colors */
-    --theme-red-pale: #fa5659;
-    --theme-orange-pale: #f47f40;
-    --theme-yellow-pale: #f9a137;
-    --theme-mango-pale: #fa8f5a;
-    --theme-maize-crayola-pale: #f9cb60;
-    --theme-pistachio-pale: #9cc57d;
-    --theme-jungle-green-pale: #4eb898;
-    --theme-steel-teal-pale: #57a19f;
-    --theme-queen-blue-pale: #6183a0;
-    --theme-celadon-blue-pale: #2d8fb9;
-    --theme-pale-pink: #F5CCE8;
-
-    /* Darker Version of Main Theme Colors */
-    --theme-red-dark: #db344a;
-    --theme-orange-dark: #d15b30;
-    --theme-yellow-dark: #d47e28;
-    --theme-mango-dark: #db6c47;
-    --theme-maize-crayola-dark: #dbab4a;
-    --theme-pistachio-dark: #7fa867;
-    --theme-jungle-green-dark: #41897b;
-    --theme-steel-teal-dark: #49797c;
-    --theme-queen-blue-dark: #50667f;
-    --theme-celadon-blue-dark: #28658b;
-    --theme-dark-pink: #E477C1;
+    --token-color-background-light: var(--theme-color-neutral-900);
+    --token-color-background-standard: var(--theme-color-neutral-800);
+    --token-color-semantic-gain: var(--theme-color-primary-500);
+    --token-color-semantic-loss: var(--theme-color-tertiary-600);
+    --token-color-text-standard: var(--theme-color-neutral-100);
 }

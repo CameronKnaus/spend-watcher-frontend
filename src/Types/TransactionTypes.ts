@@ -1,4 +1,4 @@
-import { SpendingCategoryType } from 'Constants/categories';
+import { SpendingCategoryType } from 'Constants/categories_deprecated';
 import { DateType, ISODateType } from './DateTypes';
 
 export type TransactionId = number | string;
@@ -6,13 +6,13 @@ export type TransactionId = number | string;
 // TODO: Consolidate all transaction types if possible
 export type FormattedTransaction = {
     id: number | string;
-    amount: number,
-    category: SpendingCategoryType,
+    amount: number;
+    category: SpendingCategoryType;
     date: string;
     isUncommon: boolean;
     note?: string;
     linkedTripId?: string;
-}
+};
 
 export type Transaction = {
     amount: string;
@@ -24,25 +24,25 @@ export type Transaction = {
     transaction_id: number;
     uncommon: number; // TODO: Make boolean on backend,
     username: string; // TODO: Remove this on backend?
-}
+};
 
 export type RecurringTransaction = {
-    actualAmount: number,
-    category: SpendingCategoryType,
-    estimatedAmount: number,
-    expenseName: string,
-    isActive: boolean,
-    isVariableRecurring: boolean,
-    recurringSpendId: string,
-    transactionId?: string,
+    actualAmount: number;
+    category: SpendingCategoryType;
+    estimatedAmount: number;
+    expenseName: string;
+    isActive: boolean;
+    isVariableRecurring: boolean;
+    recurringSpendId: string;
+    transactionId?: string;
     requiresUpdate: boolean;
-}
+};
 
 export type RecurringTransactionDetail = {
     transactionId: string;
     date: string;
     transactionAmount: number;
-}
+};
 
 export type TransactionListDiscretionary = {
     transactionId: number;
@@ -50,50 +50,51 @@ export type TransactionListDiscretionary = {
     amount: number;
     isUncommon: boolean;
     date: DateType;
-    dateISO: ISODateType,
+    dateISO: ISODateType;
     note?: string;
     linkedTripId?: string;
-    isRecurringTransaction: false
-}
+    isRecurringTransaction: false;
+};
 
 export type TransactionListRecurring = RecurringTransaction & {
-    amount: number,
+    amount: number;
     date: DateType;
-    isRecurringTransaction: true
-}
+    isRecurringTransaction: true;
+};
 
 export type TransactionListTransaction = TransactionListDiscretionary | TransactionListRecurring;
 
-export type TransactionList = Record<DateType, Array<TransactionListTransaction>>
+export type TransactionList = Record<DateType, Array<TransactionListTransaction>>;
 
 export type SpendingBreakdownDiscretionaryTransaction = {
-    transactionId: number,
-    category: SpendingCategoryType,
-    amount: number,
-    isUncommon: boolean,
-    isCustomCategory: boolean,
-    date: DateType,
-    dateISO: ISODateType,
-    note?: string,
-    linkedTripId?: string,
-    isRecurringTransaction: false
-}
+    transactionId: number;
+    category: SpendingCategoryType;
+    amount: number;
+    isUncommon: boolean;
+    isCustomCategory: boolean;
+    date: DateType;
+    dateISO: ISODateType;
+    note?: string;
+    linkedTripId?: string;
+    isRecurringTransaction: false;
+};
 
 export type SpendingBreakdownRecurringTransaction = {
-    transactionId: number,
-    date: DateType,
-    amount: number,
-    isActive: boolean,
-    isVariableRecurring: boolean,
-    estimatedAmount: number,
-    expenseName: string,
-    category: SpendingCategoryType,
-    recurringSpendId: string,
-    isRecurringTransaction: true
-}
+    transactionId: number;
+    date: DateType;
+    amount: number;
+    isActive: boolean;
+    isVariableRecurring: boolean;
+    estimatedAmount: number;
+    expenseName: string;
+    category: SpendingCategoryType;
+    recurringSpendId: string;
+    isRecurringTransaction: true;
+};
 
-export type SpendingBreakdownTransaction = SpendingBreakdownDiscretionaryTransaction | SpendingBreakdownRecurringTransaction;
-
+export type SpendingBreakdownTransaction =
+    | SpendingBreakdownDiscretionaryTransaction
+    | SpendingBreakdownRecurringTransaction;
 
 // TODO: Relocate these, perhaps after making chart components
 type DataPoint = {
@@ -102,20 +103,19 @@ type DataPoint = {
     valuesByCategory: Record<SpendingCategoryType, number>;
     transactionIdList: Array<number>;
     transactionIdListByCategory: Record<SpendingCategoryType, Array<number>>;
-
-}
+};
 
 type MinMaxDataPoint = {
     max: number;
     min: number;
     dateOfMax: DateType;
     dateOfMin: DateType;
-}
+};
 
 type DataPointsByCategory = MinMaxDataPoint & {
     minMaxByCategory: Record<SpendingCategoryType, MinMaxDataPoint>;
     dataPoints: Array<DataPoint>;
-}
+};
 
 export type CategoryTotalDataPoints = {
     totalTransactionCount: number;
@@ -124,4 +124,4 @@ export type CategoryTotalDataPoints = {
     dailyTotals: DataPointsByCategory;
     cumulativeTransactionAmounts: DataPointsByCategory;
     dailyTransactionAmounts: DataPointsByCategory;
-}
+};

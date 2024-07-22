@@ -18,7 +18,7 @@ import DateRangeLabel from 'Components/UIElements/Informational/DateRangeLabel/D
 import useSpendingBreakdown from 'CustomHooks/ServiceHooks/useSpendingBreakdown';
 import dayjs from 'dayjs';
 import { DateType } from 'Types/DateTypes';
-import { SpendingCategoryType } from 'Constants/categories';
+import { SpendingCategoryType } from 'Constants/categories_deprecated';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { transactionsDateRangeQueryKey } from 'Util/QueryKeys';

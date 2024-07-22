@@ -11,7 +11,7 @@ import formatCurrency from 'Util/Formatters/formatCurrency';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { MoneyAccount, UpdateAccountBalancePayload } from 'Types/AccountTypes';
 import { EmptyCallback } from 'Types/QoLTypes';
-import { AccountCategoryType } from 'Constants/categories';
+import { AccountCategoryType } from 'Constants/categories_deprecated';
 import { invalidateQueries, myMoneyDependentQueryKeys } from 'Util/QueryKeys';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -28,10 +28,14 @@ const defaultAccountToUpdate: MoneyAccount = {
     currentAccountValue: 0,
     accountType: AccountCategoryType.CHECKING,
     growthRate: '',
-    requiresNewUpdate: false
+    requiresNewUpdate: false,
 };
 
-export default function AccountBalanceUpdateForm({ onPanelClose, accountToUpdate = defaultAccountToUpdate, editMode }: AccountBalanceUpdateFormPropTypes) {
+export default function AccountBalanceUpdateForm({
+    onPanelClose,
+    accountToUpdate = defaultAccountToUpdate,
+    editMode,
+}: AccountBalanceUpdateFormPropTypes) {
     const getContent = useContent('MY_MONEY');
     const queryClient = useQueryClient();
 
@@ -39,14 +43,14 @@ export default function AccountBalanceUpdateForm({ onPanelClose, accountToUpdate
     const [accountValue, setAccountValue] = React.useState<string | undefined>('');
 
     function submit() {
-        if(accountValue == null) {
+        if (accountValue == null) {
             return;
         }
 
         const payload: UpdateAccountBalancePayload = {
             accountId: accountToUpdate.accountId,
             accountValue: Number(accountValue),
-            isRevision: Boolean(editMode)
+            isRevision: Boolean(editMode),
         };
 
         // Handle service call
@@ -60,28 +64,30 @@ export default function AccountBalanceUpdateForm({ onPanelClose, accountToUpdate
     const isGain = valueChange > 0;
     const changeSign = isGain ? '+' : '';
     const valueMatchesOriginal = !accountValue || Number(accountValue) === accountToUpdate.currentAccountValue;
-    const valueChangeStyle = valueMatchesOriginal ? {} : { color: isGain ? 'var(--theme-money-gain)' : 'var(--theme-money-loss)' };
+    const valueChangeStyle = valueMatchesOriginal
+        ? {}
+        : { color: isGain ? 'var(--theme-money-gain)' : 'var(--theme-money-loss)' };
 
     return (
-        <SlideUpPanel title={getContent('UPDATE_BALANCE')}
-                      closeText={getContent('CANCEL')}
-                      confirmText={getContent('SUBMIT')}
-                      forwardActionCallback={submit}
-                      tagColor='var(--theme-jungle-green)'
-                      disableConfirmButton={accountValue == null}
-                      onPanelClose={onPanelClose}
+        <SlideUpPanel
+            title={getContent('UPDATE_BALANCE')}
+            closeText={getContent('CANCEL')}
+            confirmText={getContent('SUBMIT')}
+            forwardActionCallback={submit}
+            tagColor="var(--theme-jungle-green)"
+            disableConfirmButton={accountValue == null}
+            onPanelClose={onPanelClose}
         >
             <form className={styles.balanceUpdateForm}>
                 <div className={styles.accountSummary}>
-                    <CategoryIcon categoryCode={accountToUpdate.accountType}
-                                  containerSize='56px'
-                                  iconSize='33px'
-                                  customClasses={styles.iconContainer}
+                    <CategoryIcon
+                        categoryCode={accountToUpdate.accountType}
+                        containerSize="56px"
+                        iconSize="33px"
+                        customClasses={styles.iconContainer}
                     />
                     <div className={styles.accountDetailsContainer}>
-                        <div className={styles.accountNameLabel}>
-                            {accountToUpdate.accountName}
-                        </div>
+                        <div className={styles.accountNameLabel}>{accountToUpdate.accountName}</div>
                         <div className={styles.accountValueLabel}>
                             {formatCurrency(accountToUpdate.currentAccountValue)}
                         </div>
@@ -90,28 +96,22 @@ export default function AccountBalanceUpdateForm({ onPanelClose, accountToUpdate
                         </div>
                     </div>
                 </div>
-                <label>
-                    {getContent('VALUE_CHANGE_LABEL')}
-                </label>
+                <label>{getContent('VALUE_CHANGE_LABEL')}</label>
                 <div style={valueChangeStyle} className={styles.valueChange}>
-                    {
-                        valueMatchesOriginal ?
-                            '$0.00 (0.00%)'
-                         :
-                            changeSign + formatCurrency(valueChange) + ` (${changeSign + valueChangePercentage}%)`
-
-                    }
-
+                    {valueMatchesOriginal
+                        ? '$0.00 (0.00%)'
+                        : changeSign + formatCurrency(valueChange) + ` (${changeSign + valueChangePercentage}%)`}
                 </div>
                 <label>
                     <div className={styles.updateLabel}>
                         {getContent('ACCOUNT_VALUE_UPDATE_LABEL', [MONTH_NAMES[dayjs().month()]])}
                     </div>
-                    <MoneyInput name='account-value-spent-field'
-                                placeholder={getContent('ACCOUNT_VALUE_PLACEHOLDER')}
-                                className={styles.textInput}
-                                stateUpdater={setAccountValue}
-                                value={accountValue}
+                    <MoneyInput
+                        name="account-value-spent-field"
+                        placeholder={getContent('ACCOUNT_VALUE_PLACEHOLDER')}
+                        className={styles.textInput}
+                        stateUpdater={setAccountValue}
+                        value={accountValue}
                     />
                 </label>
             </form>

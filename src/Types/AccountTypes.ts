@@ -1,4 +1,4 @@
-import { AccountCategoryType } from 'Constants/categories';
+import { AccountCategoryType } from 'Constants/categories_deprecated';
 
 export type MoneyAccount = {
     accountId: string;
@@ -9,7 +9,7 @@ export type MoneyAccount = {
     growthRate: string;
     lastUpdated?: string;
     requiresNewUpdate: boolean;
-}
+};
 
 // For the services used in editing and adding money accounts
 export type MoneyAccountPayload = {
@@ -19,10 +19,10 @@ export type MoneyAccountPayload = {
     growthRate: number;
     hasVariableGrowthRate: boolean;
     accountId?: string;
-}
+};
 
 export type UpdateAccountBalancePayload = {
     accountId: string;
     accountValue: number;
     isRevision: boolean;
-}
+};

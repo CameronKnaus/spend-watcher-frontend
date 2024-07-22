@@ -4,7 +4,7 @@ import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/
 import formatCurrency from 'Util/Formatters/formatCurrency';
 import SkeletonLoader from 'Components/UIElements/Loading/SkeletonLoader/SkeletonLoader';
 import { EmptyCallback } from 'Types/QoLTypes';
-import { AccountCategoryType, SpendingCategoryType } from 'Constants/categories';
+import { AccountCategoryType, SpendingCategoryType } from 'Constants/categories_deprecated';
 
 function parseAmount(amount: number, isExpense: boolean) {
     const formattedAmount = formatCurrency(amount);

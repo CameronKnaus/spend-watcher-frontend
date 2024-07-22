@@ -2,7 +2,7 @@ import styles from './CategoryInput.module.css';
 import CategoryIcon from 'Components/UIElements/VisualOnlyElements/CategoryIcon/CategoryIcon';
 import useContent from 'CustomHooks/useContent';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { AccountCategoryType, SpendingCategoryType } from 'Constants/categories';
+import { AccountCategoryType, SpendingCategoryType } from 'Constants/categories_deprecated';
 import clsx from 'clsx';
 
 // TODO: Refactor all of this code.  To aid with converting to typescript I split one component into two with a lot of copy-paste

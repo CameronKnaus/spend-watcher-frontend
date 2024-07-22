@@ -9,7 +9,9 @@
 }
 
 /* Overwrite default button styling */
-button, input[type="submit"], input[type="reset"] {
+button,
+input[type='submit'],
+input[type='reset'] {
     background: none;
     color: inherit;
     border: none;
@@ -21,12 +23,20 @@ button, input[type="submit"], input[type="reset"] {
 }
 
 /* Remove auto margin from text tags */
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     margin: 0;
 }
 
 /* Outline for accessibility */
-button:focus, input[type="submit"]:focus, input[type="reset"]:focus {
+button:focus,
+input[type='submit']:focus,
+input[type='reset']:focus {
     outline: 1px dotted #333333;
 }
 
