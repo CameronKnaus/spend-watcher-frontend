@@ -10,10 +10,19 @@ type DesktopNavItemPropTypes = {
         opacity: number;
     }>;
     openMenu: () => void;
+    onBlur: () => void;
     closeMenu: () => void;
 };
 
-export default function DesktopNavItem({ to, icon, text, textSprings, openMenu, closeMenu }: DesktopNavItemPropTypes) {
+export default function DesktopNavItem({
+    to,
+    icon,
+    text,
+    textSprings,
+    openMenu,
+    onBlur,
+    closeMenu,
+}: DesktopNavItemPropTypes) {
     const isCurrentRoute = useLocation().pathname === to;
 
     const iconSprings = useSpring({
@@ -50,7 +59,7 @@ export default function DesktopNavItem({ to, icon, text, textSprings, openMenu, 
     });
 
     return (
-        <NavLink to={to} className={styles.menuItem} onFocus={openMenu} onBlur={closeMenu} onClick={closeMenu}>
+        <NavLink to={to} className={styles.menuItem} onFocus={openMenu} onBlur={onBlur} onClick={closeMenu}>
             <div className={styles.icon}>
                 <animated.div className={styles.selectionBackground} style={selectionSprings} />
                 <animated.span style={iconSprings}>{icon}</animated.span>

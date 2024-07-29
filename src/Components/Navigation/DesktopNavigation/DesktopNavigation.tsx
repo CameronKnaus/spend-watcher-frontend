@@ -55,6 +55,18 @@ export default function DesktopNavigation() {
         menuExpanded ? 500 : 100,
     );
 
+    function handleOnBlur() {
+        if (delayHandler) {
+            clearTimeout(delayHandler);
+        }
+
+        setTimeout(() => {
+            if (!menuListRef.current?.contains(document.activeElement)) {
+                closeMenu();
+            }
+        }, 100);
+    }
+
     function closeMenu() {
         setMenuExpanded(false);
         if (delayHandler) {
@@ -85,6 +97,7 @@ export default function DesktopNavigation() {
                     icon={<FaHome />}
                     text="Dashboard"
                     openMenu={openMenu}
+                    onBlur={handleOnBlur}
                     closeMenu={closeMenu}
                     textSprings={textSprings}
                 />
@@ -93,6 +106,7 @@ export default function DesktopNavigation() {
                     icon={<FaReceipt />}
                     text="Transactions"
                     openMenu={openMenu}
+                    onBlur={handleOnBlur}
                     closeMenu={closeMenu}
                     textSprings={textSprings}
                 />
@@ -101,6 +115,7 @@ export default function DesktopNavigation() {
                     icon={<FaHistory />}
                     text="Recurring Spending"
                     openMenu={openMenu}
+                    onBlur={handleOnBlur}
                     closeMenu={closeMenu}
                     textSprings={textSprings}
                 />
@@ -109,6 +124,7 @@ export default function DesktopNavigation() {
                     icon={<FaChartPie />}
                     text="Trends"
                     openMenu={openMenu}
+                    onBlur={handleOnBlur}
                     closeMenu={closeMenu}
                     textSprings={textSprings}
                 />
@@ -117,6 +133,7 @@ export default function DesktopNavigation() {
                     icon={<FaPlaneDeparture />}
                     text="Trips"
                     openMenu={openMenu}
+                    onBlur={handleOnBlur}
                     closeMenu={closeMenu}
                     textSprings={textSprings}
                 />
