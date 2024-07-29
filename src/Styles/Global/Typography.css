@@ -1,7 +1,9 @@
 @font-face {
     font-family: 'Inter';
     font-display: swap;
-    src: local('Inter'), url(../Fonts/Inter.ttf) format('truetype');
+    src:
+        local('Inter'),
+        url(../Fonts/Inter.ttf) format('truetype');
     /* font weight allows for the variable weight provided by Inter font */
     font-weight: 1 999;
 }
@@ -9,95 +11,60 @@
 /* FONT SIZING AS VARIABLES */
 :root {
     /* Font Weights */
-    --fw-thin: 100;
-    --fw-extra-light: 200;
-    --fw-light: 300;
-    --fw-regular: 400;
-    --fw-medium: 500;
-    --fw-semi-bold: 600;
-    --fw-bold: 700;
-    --fw-extra-bold: 800;
-    --fw-black: 900;
+    --font-weight-thin: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semi-bold: 600;
 
-    --body-text-12: 12px;
-    --body-text-12-line-height: 16px;
-
-    --body-text-14: 14px;
-    --body-text-14-line-height: 20px;
-
-    --body-text-16: 16px;
-    --body-text-16-line-height: 24px;
-
-    --header-text-18: 18px;
-    --header-text-18-line-height: 28px;
-
-    --header-text-24: 24px;
-    --header-text-24-line-height: 28px;
-
-    --header-text-28: 28px;
-    --header-text-28-line-height: 36px;
-
-    --header-text-32: 32px;
-    --header-text-32-line-height: 46px;
-
-    --title-text-40: 40px;
-    --title-text-40-line-height: 52px;
-
-    --title-text-48: 48px;
-    --title-text-48-line-height: 72px;
-
-    --title-text-64: 64px;
-    --title-text-64-line-height: 88px;
+    /* Font sizes */
+    --font-display-large: 60px;
+    --font-display-small: 48px;
+    --font-heading-extra-large: 40px;
+    --font-heading-large: 32px;
+    --font-heading-medium: 24px;
+    --font-heading-small: 20px;
+    --font-body-large: 18px;
+    --font-body-regular: 16px;
+    --font-body-small: 14px;
+    --font-caption: 12px;
 }
 
-/* FONT SIZING */
-.reduced-body-text {
-    font-size: var(--body-text-12);
-    line-height: var(--body-text-12-line-height);
+.font-display-large {
+    font-size: var(--font-display-large);
 }
 
-.body-text {
-    font-size: var(--body-text-14);
-    line-height: var(--body-text-14-line-height);
+.font-display-small {
+    font-size: var(--font-display-small);
 }
 
-.enlarged-body-text {
-    font-size: var(--body-text-16);
-    line-height: var(--body-text-16-line-height);
+.font-heading-extra-large {
+    font-size: var(--font-heading-extra-large);
 }
 
-.small-header-text {
-    font-size: var(--header-text-18);
-    line-height: var(--header-text-18-line-height);
+.font-heading-large {
+    font-size: var(--font-heading-large);
 }
 
-.header-text {
-    font-size: var(--header-text-24);
-    line-height: var(--header-text-24-line-height);
-    font-weight: var(--fw-medium);
+.font-heading-medium {
+    font-size: var(--font-heading-medium);
 }
 
-.large-header-text {
-    font-size: var(--header-text-28);
-    line-height: var(--header-text-28-line-height);
+.font-heading-small {
+    font-size: var(--font-heading-small);
 }
 
-.extra-large-header-text {
-    font-size: var(--header-text-32);
-    line-height: var(--header-text-32-line-height);
+.font-body-large {
+    font-size: var(--font-body-large);
 }
 
-.small-title-text {
-    font-size: var(--title-text-40);
-    line-height: var(--title-text-40-line-height);
+.font-body-regular {
+    font-size: var(--font-body-regular);
 }
 
-.title-text {
-    font-size: var(--title-text-48);
-    line-height: var(--title-text-48-line-height);
+.font-body-small {
+    font-size: var(--font-body-small);
 }
 
-.large-title-text {
-    font-size: var(--title-text-64);
-    line-height: var(--title-text-64-line-height);
+.font-caption {
+    font-size: var(--font-caption);
 }

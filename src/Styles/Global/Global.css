@@ -4,10 +4,6 @@
 @import './ColorScheme.css';
 @import './utilities.css';
 
-.link {
-    color: var(--theme-link-blue);
-}
-
 /* Overwrite default button styling */
 button,
 input[type='submit'],
@@ -22,17 +18,6 @@ input[type='reset'] {
     margin: 0;
 }
 
-/* Remove auto margin from text tags */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-    margin: 0;
-}
-
 /* Outline for accessibility */
 button:focus,
 input[type='submit']:focus,
@@ -40,18 +25,74 @@ input[type='reset']:focus {
     outline: 1px dotted #333333;
 }
 
-.high-shadow {
-    box-shadow: 0 15px 80px rgba(43, 37, 37, 0.12);
+/* 1. Use a more-intuitive box-sizing model. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-.low-shadow {
-    box-shadow: 0 11px 22px rgba(122, 122, 122, 0.2);
+/* 2. Remove default margin */
+* {
+    margin: 0;
 }
 
-.light-shadow {
-    box-shadow: 0 11px 22px rgba(218, 218, 218, 0.2);
+/*
+    3. Allow percentage-based heights in the application
+  */
+html,
+body {
+    height: 100%;
 }
 
-.rounded-borders {
-    border-radius: 1.5rem;
+/*
+    Typographic tweaks!
+    4. Add accessible line-height
+    5. Improve text rendering
+  */
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/*
+    6. Improve media defaults
+  */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/*
+    7. Remove built-in form typography styles
+  */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/*
+    8. Avoid text overflows
+  */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/*
+    9. Create a root stacking context
+  */
+#root {
+    isolation: isolate;
 }

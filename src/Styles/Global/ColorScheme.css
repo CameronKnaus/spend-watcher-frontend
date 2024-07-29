@@ -1,5 +1,5 @@
 :root {
-    /* PRIMATIVES */
+    /* ------------------- PRIMITIVES ------------------- */
     /* Neutral Colors */
     --theme-color-neutral-100: #465053;
     --theme-color-neutral-200: #64767d;
@@ -80,16 +80,27 @@
     --theme-color-account-category-INVESTING: #84b63a;
     --theme-color-account-category-SAVINGS: #f20d2b;
 
-    /* TOKENS */
+    /* ------------------- TOKENS ------------------- */
     /* Background Colors */
-    --token-background-primary: var(--theme-color-neutral-900);
+    --token-color-background-primary: var(--theme-color-neutral-900);
+    --token-color-background-secondary: var(--theme-color-neutral-800);
 
     /* Category Colors */
     --token-color-category-icon: var(--theme-color-neutral-white);
 
+    /* Border Colors */
+    --token-color-border-tertiary: var(--theme-color-neutral-700);
+
     --token-color-background-light: var(--theme-color-neutral-900);
-    --token-color-background-standard: var(--theme-color-neutral-800);
+
+    /* Semantic colors */
     --token-color-semantic-gain: var(--theme-color-primary-500);
     --token-color-semantic-loss: var(--theme-color-tertiary-600);
+    --token-selected-primary: var(--theme-color-primary-700);
+
+    /* Text Colors */
     --token-color-text-standard: var(--theme-color-neutral-100);
+
+    --token-navigation-color: var(--theme-color-neutral-100);
+    --token-navigation-selected: var(--theme-color-primary-600);
 }
