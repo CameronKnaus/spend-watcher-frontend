@@ -3,7 +3,8 @@ import { FaChartPie, FaHistory, FaHome, FaPlaneDeparture, FaReceipt } from 'reac
 import { animated, useChain, useSpring, useSpringRef } from '@react-spring/web';
 import { useEffect, useRef, useState } from 'react';
 import DesktopNavItem from './DesktopNavItem';
-import { useLocation } from 'react-router';
+import { Outlet, useLocation } from 'react-router-dom';
+import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
 
 // This component turned out rough
 export default function DesktopNavigation() {
@@ -84,60 +85,65 @@ export default function DesktopNavigation() {
 
     // TODO: Determine new content process, replace hardcoded text
     return (
-        <div className={styles.desktopNav}>
-            <animated.nav
-                ref={menuListRef}
-                className={styles.menuList}
-                style={containerSprings}
-                onMouseEnter={openMenu}
-                onMouseLeave={closeMenu}
-            >
-                <DesktopNavItem
-                    to="/dashboard"
-                    icon={<FaHome />}
-                    text="Dashboard"
-                    openMenu={openMenu}
-                    onBlur={handleOnBlur}
-                    closeMenu={closeMenu}
-                    textSprings={textSprings}
-                />
-                <DesktopNavItem
-                    to="/transactions"
-                    icon={<FaReceipt />}
-                    text="Transactions"
-                    openMenu={openMenu}
-                    onBlur={handleOnBlur}
-                    closeMenu={closeMenu}
-                    textSprings={textSprings}
-                />
-                <DesktopNavItem
-                    to="/recurring-spending"
-                    icon={<FaHistory />}
-                    text="Recurring Spending"
-                    openMenu={openMenu}
-                    onBlur={handleOnBlur}
-                    closeMenu={closeMenu}
-                    textSprings={textSprings}
-                />
-                <DesktopNavItem
-                    to="/trends"
-                    icon={<FaChartPie />}
-                    text="Trends"
-                    openMenu={openMenu}
-                    onBlur={handleOnBlur}
-                    closeMenu={closeMenu}
-                    textSprings={textSprings}
-                />
-                <DesktopNavItem
-                    to="/trips"
-                    icon={<FaPlaneDeparture />}
-                    text="Trips"
-                    openMenu={openMenu}
-                    onBlur={handleOnBlur}
-                    closeMenu={closeMenu}
-                    textSprings={textSprings}
-                />
-            </animated.nav>
-        </div>
+        <>
+            <div className={styles.desktopNav}>
+                <animated.nav
+                    ref={menuListRef}
+                    className={styles.menuList}
+                    style={containerSprings}
+                    onMouseEnter={openMenu}
+                    onMouseLeave={closeMenu}
+                >
+                    <DesktopNavItem
+                        to={PAGE_ROUTES.dashboard}
+                        icon={<FaHome />}
+                        text="Dashboard"
+                        openMenu={openMenu}
+                        onBlur={handleOnBlur}
+                        closeMenu={closeMenu}
+                        textSprings={textSprings}
+                    />
+                    <DesktopNavItem
+                        to={PAGE_ROUTES.transactions}
+                        icon={<FaReceipt />}
+                        text="Transactions"
+                        openMenu={openMenu}
+                        onBlur={handleOnBlur}
+                        closeMenu={closeMenu}
+                        textSprings={textSprings}
+                    />
+                    <DesktopNavItem
+                        to={PAGE_ROUTES.recurring_spending}
+                        icon={<FaHistory />}
+                        text="Recurring Spending"
+                        openMenu={openMenu}
+                        onBlur={handleOnBlur}
+                        closeMenu={closeMenu}
+                        textSprings={textSprings}
+                    />
+                    <DesktopNavItem
+                        to={PAGE_ROUTES.spending_trends}
+                        icon={<FaChartPie />}
+                        text="Trends"
+                        openMenu={openMenu}
+                        onBlur={handleOnBlur}
+                        closeMenu={closeMenu}
+                        textSprings={textSprings}
+                    />
+                    <DesktopNavItem
+                        to={PAGE_ROUTES.trips}
+                        icon={<FaPlaneDeparture />}
+                        text="Trips"
+                        openMenu={openMenu}
+                        onBlur={handleOnBlur}
+                        closeMenu={closeMenu}
+                        textSprings={textSprings}
+                    />
+                </animated.nav>
+            </div>
+            <div style={{ paddingLeft: DEFAULT_WIDTH }}>
+                <Outlet />
+            </div>
+        </>
     );
 }

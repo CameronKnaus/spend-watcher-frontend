@@ -90,7 +90,6 @@
 
     /* Border Colors */
     --token-color-border-tertiary: var(--theme-color-neutral-700);
-
     --token-color-background-light: var(--theme-color-neutral-900);
 
     /* Semantic colors */
@@ -100,6 +99,7 @@
 
     /* Text Colors */
     --token-color-text-standard: var(--theme-color-neutral-100);
+    --token-color-text-subdued: var(--theme-color-neutral-300);
 
     --token-navigation-color: var(--theme-color-neutral-100);
     --token-navigation-selected: var(--theme-color-primary-600);
