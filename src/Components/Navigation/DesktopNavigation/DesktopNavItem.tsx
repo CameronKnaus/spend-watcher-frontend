@@ -12,23 +12,14 @@ type DesktopNavItemPropTypes = {
     }>;
     openMenu: () => void;
     onBlur: () => void;
-    closeMenu: () => void;
 };
 
-export default function DesktopNavItem({
-    to,
-    icon,
-    text,
-    textSprings,
-    openMenu,
-    onBlur,
-    closeMenu,
-}: DesktopNavItemPropTypes) {
+export default function DesktopNavItem({ to, icon, text, textSprings, openMenu, onBlur }: DesktopNavItemPropTypes) {
     const isCurrentRoute = useLocation().pathname === to;
     const selectionSprings = useNavSelectionSpring(isCurrentRoute);
 
     return (
-        <NavLink to={to} className={styles.menuItem} onFocus={openMenu} onBlur={onBlur} onClick={closeMenu}>
+        <NavLink to={to} className={styles.menuItem} onFocus={openMenu} onBlur={onBlur}>
             <div className={styles.icon}>
                 <animated.div
                     data-testid={`${text}-icon-selection`}
