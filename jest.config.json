@@ -1,0 +1,21 @@
+{
+    "preset": "ts-jest",
+    "verbose": true,
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": ["<rootDir>/jest-setup.ts"],
+    "moduleNameMapper": {
+        "^.+\\.(css)$": "identity-obj-proxy",
+        "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "bail": 1,
+    "transform": {
+        "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testPathIgnorePatterns": ["/node_modules/", "/build/"],
+    "globals": {
+        "ts-jest": {
+            "tsconfig": "tsconfig.json"
+        }
+    },
+    "restoreMocks": true
+}

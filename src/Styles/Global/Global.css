@@ -95,4 +95,6 @@ h6 {
   */
 #root {
     isolation: isolate;
+    /* Default all text color to standard */
+    color: var(--token-color-text-standard);
 }

@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --theme-content-background: #FFFFFF;
     --theme-soft-background: #F7FAFC;
     --theme-darker-background: #ecf4f9;
@@ -13,30 +13,30 @@
     --theme-link-blue: #0694db;
 
     /* Shadows */
-    --theme-shadow-light: #CCCCCC;
+/* --theme-shadow-light: #CCCCCC; */
 
-    /* Text colors */
-    --theme-standard-text: #333333;
+/* Text colors */
+/* --theme-standard-text: #333333;
     --theme-placeholder-text: #BFC6C7;
     --theme-bright-text-color: #FFFFFF;
     --theme-light-text-color: #777777;
     --theme-subdued-text-color: #555555;
-    --theme-faint-text-color: #656565;
+    --theme-faint-text-color: #656565; */
 
-    /* Border colors */
-    --theme-light-border-blue-accent: #A9C0C1;
+/* Border colors */
+/* --theme-light-border-blue-accent: #A9C0C1;
     --theme-accent-border: #BFC6C7;
     --theme-light-border: #EEEEEE;
     --theme-light-accent-border: #E2E2E2;
-    --theme-heavy-border: #555555;
+    --theme-heavy-border: #555555; */
 
-    --theme-toggle-inactive: #EEEEEE;
+/* --theme-toggle-inactive: #EEEEEE;
     --theme-tab-inactive: #CFCFCF;
 
-    --theme-disabled-button: #A7A7A7;
+    --theme-disabled-button: #A7A7A7; */
 
-    /* Main Theme Colors */
-    --theme-red: #f94144;
+/* Main Theme Colors */
+/* --theme-red: #f94144;
     --theme-pink: #EEAAD9;
     --theme-orange: #f3722c;
     --theme-yellow-orange: #f8961e;
@@ -46,10 +46,10 @@
     --theme-jungle-green: #43aa8b;
     --theme-steel-teal: #4d908e;
     --theme-queen-blue: #577590;
-    --theme-celadon-blue: #277da1;
+    --theme-celadon-blue: #277da1; */
 
-    /* Pale Version of Main Theme Colors */
-    --theme-red-pale: #fa5659;
+/* Pale Version of Main Theme Colors */
+/* --theme-red-pale: #fa5659;
     --theme-orange-pale: #f47f40;
     --theme-yellow-pale: #f9a137;
     --theme-mango-pale: #fa8f5a;
@@ -59,10 +59,10 @@
     --theme-steel-teal-pale: #57a19f;
     --theme-queen-blue-pale: #6183a0;
     --theme-celadon-blue-pale: #2d8fb9;
-    --theme-pale-pink: #F5CCE8;
+    --theme-pale-pink: #F5CCE8; */
 
-    /* Darker Version of Main Theme Colors */
-    --theme-red-dark: #db344a;
+/* Darker Version of Main Theme Colors */
+/* --theme-red-dark: #db344a;
     --theme-orange-dark: #d15b30;
     --theme-yellow-dark: #d47e28;
     --theme-mango-dark: #db6c47;
@@ -73,4 +73,4 @@
     --theme-queen-blue-dark: #50667f;
     --theme-celadon-blue-dark: #28658b;
     --theme-dark-pink: #E477C1;
-}
+} */

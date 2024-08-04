@@ -31,7 +31,11 @@ export default function PageRoutes() {
     return (
         <Routes>
             <Route element={isMobile ? <MobileNavigation /> : <DesktopNavigation />}>
-                <Route path={PAGE_ROUTES.dashboard} element={<h1>Hello</h1>} />
+                <Route path={PAGE_ROUTES.dashboard} element={<h1>Dashboard</h1>} />
+                <Route path={PAGE_ROUTES.transactions} element={<h1>Transactions</h1>} />
+                <Route path={PAGE_ROUTES.spending_trends} element={<h1>Spending trends</h1>} />
+                <Route path={PAGE_ROUTES.recurring_spending} element={<h1>Recurring spending</h1>} />
+                <Route path={PAGE_ROUTES.trips} element={<h1>Trips</h1>} />
             </Route>
             <Route path={PAGE_ROUTES.auth} element={<AuthScreen />} />
 

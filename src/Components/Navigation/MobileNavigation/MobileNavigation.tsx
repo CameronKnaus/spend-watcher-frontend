@@ -15,7 +15,7 @@ export default function MobileNavigation() {
                 <MobileNavItem to={PAGE_ROUTES.trips} icon={<FaPlaneDeparture />} text="Trips" />
             </nav>
             <div style={{ paddingBottom: 68 }}>
-                <Outlet />
+                <Outlet data-testid="outlet-container" />
             </div>
         </>
     );

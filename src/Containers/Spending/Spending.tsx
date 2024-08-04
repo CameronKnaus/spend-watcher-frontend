@@ -69,7 +69,7 @@ export default function Spending() {
                 ariaValue={getContent('SPENT_ARIA_LABEL', [spendingTotal, currentMonth])}
                 actionPrompt={getContent('SEE_TRENDS')}
                 options={{ valueColor: 'var(--theme-money-loss)' }}
-                callback={() => navigate(PAGE_ROUTES.spendingSummary)}
+                callback={() => navigate(PAGE_ROUTES.spending_trends)}
                 isLoading={isLoading}
             />
             <ActionTile
@@ -81,7 +81,7 @@ export default function Spending() {
                 ariaValue={getContent('RECURRING_ARIA_LABEL', [monthlyTotal])}
                 actionPrompt={getContent('ADJUST_RECURRING')}
                 options={{ valueColor: 'var(--theme-money-loss)' }}
-                callback={() => navigate(PAGE_ROUTES.recurringSpending)}
+                callback={() => navigate(PAGE_ROUTES.recurring_spending)}
                 isLoading={isLoading}
             />
             <ThickActionButton

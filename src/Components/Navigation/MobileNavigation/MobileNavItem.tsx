@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styles from './MobileNavigation.module.css';
-import { animated, useSpring } from '@react-spring/web';
+import { animated } from '@react-spring/web';
+import useNavSelectionSpring from '../useNavSelectionSpring';
 
 type MobileNavItemPropTypes = {
     to: string;
@@ -10,45 +11,27 @@ type MobileNavItemPropTypes = {
 
 export default function MobileNavItem({ to, icon, text }: MobileNavItemPropTypes) {
     const isCurrentRoute = useLocation().pathname === to;
-
-    const iconSprings = useSpring({
-        from: {
-            color: 'rgb(70, 80, 83)', // --token-navigation-color
-        },
-        to: isCurrentRoute
-            ? {
-                  color: 'rgb(255, 255, 255)',
-              }
-            : {
-                  color: 'rgb(70, 80, 83)', // --token-navigation-color
-              },
-    });
-
-    const selectionState = isCurrentRoute
-        ? {
-              width: '100%',
-              height: '100%',
-          }
-        : {
-              width: '0%',
-              height: '0%',
-          };
-
-    const selectionSprings = useSpring({
-        from: selectionState,
-        to: selectionState,
-        config: {
-            mass: 1,
-            friction: 15,
-            tension: 80,
-        },
-    });
+    const selectionSprings = useNavSelectionSpring(isCurrentRoute);
 
     return (
         <NavLink to={to} className={styles.menuItem}>
             <div className={styles.icon}>
-                <animated.div className={styles.selectionBackground} style={selectionSprings} />
-                <animated.span style={iconSprings}>{icon}</animated.span>
+                <animated.div
+                    data-testid={`${text}-icon-selection`}
+                    className={styles.selectionBackground}
+                    style={selectionSprings}
+                />
+                <span
+                    data-testid={`${text}-icon`}
+                    style={{
+                        color: isCurrentRoute
+                            ? 'var(--token-color-background-primary)'
+                            : 'var(--token-navigation-color)',
+                        transitionDuration: '0.3s',
+                    }}
+                >
+                    {icon}
+                </span>
             </div>
             <div className={styles.navLabel}>{text}</div>
         </NavLink>

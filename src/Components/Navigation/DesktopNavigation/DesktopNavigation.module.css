@@ -48,6 +48,8 @@ body {
 }
 
 .menuItem:hover .navTextContainer {
+    /* Should probably find the right color token for this rather than using a filter */
+    /* TODO: Token for selected / hovered text */
     filter: brightness(0.6);
 }
 

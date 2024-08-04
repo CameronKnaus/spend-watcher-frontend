@@ -56,7 +56,7 @@ export default function RecentTransactions() {
             <Link
                 useChevron
                 text={getContent('VIEW_ALL')}
-                route={PAGE_ROUTES.spendingHistory}
+                route={PAGE_ROUTES.transactions}
                 customClass={styles.linkContainer}
                 textAlign="center"
             />

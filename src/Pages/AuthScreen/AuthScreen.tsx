@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './AuthScreen.module.css';
-import AuthHandler from 'Util/Authentication/AuthHandler';
 import ServiceRoutes from 'Constants/ServiceRoutes';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
@@ -20,12 +19,6 @@ export default function AuthScreen() {
     const [password, setPassword] = React.useState('');
     const [errorMessage, setErrorMessage] = React.useState('');
 
-    React.useEffect(() => {
-        if (AuthHandler.isAuthenticated()) {
-            navigate(PAGE_ROUTES.dashboard);
-        }
-    }, [navigate]);
-
     function submitRequest(requestType: REQUEST_TYPES) {
         if (loading) {
             return;
@@ -41,9 +34,7 @@ export default function AuthScreen() {
                 email: email.toLowerCase(),
                 password,
             })
-            .then((response) => {
-                AuthHandler.setIsAuthenticated(true);
-                AuthHandler.setUsername(response.data.username);
+            .then(() => {
                 navigate(PAGE_ROUTES.dashboard);
             })
             .catch((error) => {

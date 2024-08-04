@@ -1,15 +1,26 @@
 import styles from './DesktopNavigation.module.css';
 import { FaChartPie, FaHistory, FaHome, FaPlaneDeparture, FaReceipt } from 'react-icons/fa';
 import { animated, useChain, useSpring, useSpringRef } from '@react-spring/web';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import DesktopNavItem from './DesktopNavItem';
 import { Outlet, useLocation } from 'react-router-dom';
 import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
 
+// Time user needs to hover on menu before it expands
+const MENU_OPEN_DELAY = 1500;
+const DEFAULT_WIDTH = 68;
+
+function getScrollWidth(menuListRef: React.RefObject<HTMLDivElement>) {
+    if (menuListRef.current) {
+        const padding = 40;
+        return menuListRef.current.scrollWidth + padding;
+    }
+
+    return DEFAULT_WIDTH;
+}
+
 // This component turned out rough
 export default function DesktopNavigation() {
-    const DEFAULT_WIDTH = 68;
-    const [potentialWidth, setPotentialWidth] = useState(DEFAULT_WIDTH);
     const [menuExpanded, setMenuExpanded] = useState(false);
     const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout | null | undefined>(null);
     const menuListRef = useRef<HTMLDivElement>(null);
@@ -22,7 +33,7 @@ export default function DesktopNavigation() {
             width: DEFAULT_WIDTH,
         },
         to: {
-            width: menuExpanded ? potentialWidth : DEFAULT_WIDTH,
+            width: menuExpanded ? getScrollWidth(menuListRef) : DEFAULT_WIDTH,
         },
         config: {
             mass: 1.1,
@@ -38,13 +49,6 @@ export default function DesktopNavigation() {
         opacity: menuExpanded ? 1 : 0,
     });
 
-    useEffect(() => {
-        if (menuListRef.current) {
-            const padding = 40;
-            setPotentialWidth(menuListRef.current.scrollWidth + padding);
-        }
-    }, []);
-
     // Close menu if the routing changes
     useEffect(() => {
         setMenuExpanded(false);
@@ -53,7 +57,7 @@ export default function DesktopNavigation() {
     useChain(
         menuExpanded ? [containerSpringRef, textSpringRef] : [textSpringRef, containerSpringRef],
         [0, 1],
-        menuExpanded ? 500 : 100,
+        menuExpanded ? 300 : 50,
     );
 
     function handleOnBlur() {
@@ -79,7 +83,7 @@ export default function DesktopNavigation() {
         setDelayHandler(
             setTimeout(() => {
                 setMenuExpanded(true);
-            }, 1000),
+            }, MENU_OPEN_DELAY),
         );
     }
 
@@ -91,8 +95,10 @@ export default function DesktopNavigation() {
                     ref={menuListRef}
                     className={styles.menuList}
                     style={containerSprings}
-                    onMouseEnter={openMenu}
                     onMouseLeave={closeMenu}
+                    // Ensure any clicks removes the menu
+                    onClick={closeMenu}
+                    onMouseEnter={openMenu}
                 >
                     <DesktopNavItem
                         to={PAGE_ROUTES.dashboard}
