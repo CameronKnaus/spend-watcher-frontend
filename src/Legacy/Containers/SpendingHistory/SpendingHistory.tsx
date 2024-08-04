@@ -2,7 +2,7 @@ import styles from './SpendingHistory.module.css';
 import TransactionsList from '../../Components/Transactions/TransactionsList/TransactionsList';
 import SpendCategoryFilter from '../../Components/SpendingHistory/SpendCategoryFilter/SpendCategoryFilter';
 import useContent from '../../CustomHooks/useContent';
-import { useIsMobile } from '../../Util/IsMobileContext';
+import { useIsMobile } from '../../../Util/IsMobileContext';
 import { DateType } from 'Types/DateTypes';
 import { SpendingBreakdownTransaction } from 'Types/TransactionTypes';
 import { SpendingCategoryType } from 'Constants/categories_deprecated';

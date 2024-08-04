@@ -1,7 +1,7 @@
 import styles from './DesktopNavigation.module.css';
 import { FaChartPie, FaHistory, FaHome, FaPlaneDeparture, FaReceipt } from 'react-icons/fa';
 import { animated, useChain, useSpring, useSpringRef } from '@react-spring/web';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import DesktopNavItem from './DesktopNavItem';
 import { Outlet, useLocation } from 'react-router-dom';
 import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';

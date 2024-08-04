@@ -3,14 +3,14 @@ import NavigationalBanner from '../../Components/UIElements/Navigation/Navigatio
 import React, { useEffect, useState } from 'react';
 import DateChangerTile from '../../Components/UIElements/Form/DateChangerTile/DateChangerTile';
 import styles from './SpendingBreakdown.module.css';
-import SERVICE_ROUTES from '../../Constants/ServiceRoutes';
+import SERVICE_ROUTES from '../../../Components/Constants/ServiceRoutes';
 import useDateRange from '../../CustomHooks/useDateRange';
 import TabBar from '../../Components/UIElements/Navigation/TabBar/TabBar';
 import { useParams } from 'react-router';
 import SpendingSummary from '../../Containers/SpendingSummary/SpendingSummary';
 import SpendingHistory from '../../Containers/SpendingHistory/SpendingHistory';
 import DateContextShifter from '../../Components/UIElements/Form/DateContextShifter/DateContextShifter';
-import { useIsMobile } from '../../Util/IsMobileContext';
+import { useIsMobile } from '../../../Util/IsMobileContext';
 import clsx from 'clsx';
 import ToggleSwitch from 'Components/UIElements/Form/TogleSwitch/ToggleSwitch';
 import DateRangeType from 'Constants/DateRangeTypes';

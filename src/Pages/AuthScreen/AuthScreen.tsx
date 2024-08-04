@@ -49,11 +49,8 @@ export default function AuthScreen() {
     return (
         <>
             <p style={{ color: '#333' }}>
-                This is a personal project for self improvement and front-end skill showcasing, so please ignore the
+                This is a personal project for self improvement and front-end skill showcasing, but please ignore the
                 poor quality of this authentication screen.
-            </p>
-            <p style={{ color: '#777' }}>
-                Do not use a password you use elsewhere as security is not production-ready on this site.
             </p>
             <div className={styles.authContainer}>
                 <div className={styles.authHeader}>Login or Register</div>
