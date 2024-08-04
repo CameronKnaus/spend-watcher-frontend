@@ -1,6 +1,6 @@
 {
-  "devMode": false,
-  "prodAPI": "https://www.spendwatcher.com/api",
-  "localAPI": "http://localhost:4000/api",
-  "version": "0.0.1"
+    "devMode": true,
+    "prodAPI": "https://www.spendwatcher.com/api",
+    "localAPI": "http://localhost:4000/api",
+    "version": "0.0.1"
 }

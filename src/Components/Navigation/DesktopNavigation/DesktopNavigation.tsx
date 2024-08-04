@@ -145,8 +145,11 @@ export default function DesktopNavigation() {
                     />
                 </animated.nav>
             </div>
+            {/* Padding left for the nav bar space */}
             <div style={{ paddingLeft: DEFAULT_WIDTH }}>
-                <Outlet />
+                <div className={styles.outletContainer}>
+                    <Outlet />
+                </div>
             </div>
         </>
     );

@@ -4,6 +4,7 @@ import AuthScreen from 'Pages/AuthScreen/AuthScreen';
 import { useIsMobile } from 'Util/IsMobileContext';
 import MobileNavigation from 'Components/Navigation/MobileNavigation/MobileNavigation';
 import DesktopNavigation from 'Components/Navigation/DesktopNavigation/DesktopNavigation';
+import Dashboard from 'Pages/Dashboard/Dashboard';
 // import SpendingBreakdown from 'Pages/SpendingBreakdown/SpendingBreakdown';
 // import RecurringSpending from 'Pages/RecurringSpending/RecurringSpending';
 
@@ -31,7 +32,7 @@ export default function PageRoutes() {
     return (
         <Routes>
             <Route element={isMobile ? <MobileNavigation /> : <DesktopNavigation />}>
-                <Route path={PAGE_ROUTES.dashboard} element={<h1>Dashboard</h1>} />
+                <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
                 <Route path={PAGE_ROUTES.transactions} element={<h1>Transactions</h1>} />
                 <Route path={PAGE_ROUTES.spending_trends} element={<h1>Spending trends</h1>} />
                 <Route path={PAGE_ROUTES.recurring_spending} element={<h1>Recurring spending</h1>} />

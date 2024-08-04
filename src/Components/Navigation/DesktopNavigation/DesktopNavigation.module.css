@@ -11,7 +11,7 @@ body {
     height: 100%;
     color: var(--token-navigation-color);
     background-color: var(--token-color-background-primary);
-    padding: 32px 0;
+    padding: 16px 0;
     border-right: var(--token-color-border-tertiary) 1px solid;
     width: 'fit-content';
 }
@@ -75,4 +75,11 @@ body {
     border-radius: 50%;
     transition-duration: 0.4s;
     z-index: -1;
+}
+
+.outletContainer {
+    --page-side-padding: 24px;
+    padding-top: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
 }

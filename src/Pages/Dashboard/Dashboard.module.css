@@ -1,0 +1,7 @@
+.dashboard {
+    padding: 0px var(--page-side-padding);
+}
+
+.pageTitle {
+    font-size: var(--font-heading-large);
+}

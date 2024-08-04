@@ -1,7 +1,7 @@
 .navContainer {
     display: flex;
     justify-content: space-around;
-    padding: 8px 16px;
+    padding: 8px 16px; /* Should have the same side padding as --page-side-padding */
     background-color: var(--token-color-background-primary);
     border-top: 1px solid var(--token-color-border-tertiary);
     position: fixed;
@@ -50,4 +50,10 @@
     text-align: center;
     text-decoration: none;
     text-wrap: wrap;
+}
+
+.outletContainer {
+    --page-side-padding: 16px;
+
+    padding-top: 24px;
 }
