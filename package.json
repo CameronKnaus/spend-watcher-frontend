@@ -31,7 +31,7 @@
         "axios": "^0.26.1",
         "clsx": "^1.2.1",
         "d3": "^7.8.5",
-        "dayjs": "^1.11.3",
+        "date-fns": "^2.30.0",
         "react": "^18.3.1",
         "react-currency-input-field": "^3.6.4",
         "react-dom": "^18.3.1",

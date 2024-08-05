@@ -1,7 +1,36 @@
 .dashboard {
     padding: 0px var(--page-side-padding);
+
+    /* Shared tile designs */
+    --tile-background: var(--token-color-background-primary);
+    --tile-border-radius: 12px;
+    --tile-padding: 16px;
 }
 
-.pageTitle {
+.spendingSectionTitle {
     font-size: var(--font-heading-large);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 24px;
+}
+
+.spendingGrid {
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+}
+
+.summaryTile {
+    flex-basis: 33%;
+    flex-grow: 1;
+    flex-shrink: 0;
+    min-width: 240px;
+    flex-wrap: wrap;
+    background-color: var(--tile-background);
+    border-radius: var(--tile-border-radius);
+    padding: var(--tile-padding);
+}
+
+.summaryTile > h3 {
+    font-size: var(--font-body-large);
+    margin-bottom: 16px;
 }

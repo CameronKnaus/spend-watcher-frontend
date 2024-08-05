@@ -68,3 +68,19 @@
 .font-caption {
     font-size: var(--font-caption);
 }
+
+.font-thin {
+    font-weight: var(--font-weight-thin);
+}
+
+.font-regular {
+    font-weight: var(--font-weight-regular);
+}
+
+.font-medium {
+    font-weight: var(--font-weight-medium);
+}
+
+.font-semi-bold {
+    font-weight: var(--font-weight-semi-bold);
+}

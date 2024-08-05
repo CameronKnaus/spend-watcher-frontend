@@ -2,6 +2,7 @@
 @import './Typography.css';
 @import './ColorScheme.css';
 @import './utilities.css';
+@import './Shadows.css';
 
 /* Overwrite default button styling */
 button,

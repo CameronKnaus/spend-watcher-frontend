@@ -26,7 +26,7 @@ describe('DesktopNavigation', () => {
         const user = userEvent.setup({ delay: null });
 
         render(
-            <MemoryRouter initialEntries={[{ pathname: '' }]}>
+            <MemoryRouter initialEntries={[{ pathname: '/' }]}>
                 <DesktopNavigation />
             </MemoryRouter>,
         );
