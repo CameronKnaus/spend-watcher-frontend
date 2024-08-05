@@ -13,6 +13,25 @@
     margin-bottom: 24px;
 }
 
+.contentContainer {
+    display: flex;
+    gap: 24px;
+}
+
+.leftSection {
+    flex-grow: 1;
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 24px;
+}
+
+.rightSection {
+    min-width: 340px;
+    flex-shrink: 1;
+    flex-grow: 0;
+}
+
 .spendingGrid {
     display: flex;
     gap: 24px;
@@ -23,7 +42,7 @@
     flex-basis: 33%;
     flex-grow: 1;
     flex-shrink: 0;
-    min-width: 240px;
+    min-width: 200px;
     flex-wrap: wrap;
     background-color: var(--tile-background);
     border-radius: var(--tile-border-radius);
@@ -33,4 +52,12 @@
 .summaryTile > h3 {
     font-size: var(--font-body-large);
     margin-bottom: 16px;
+}
+
+.expenseButton {
+    background-color: var(--token-button-tertiary-color);
+}
+
+.expenseButton:hover {
+    background-color: var(--token-button-tertiary-hover-color);
 }

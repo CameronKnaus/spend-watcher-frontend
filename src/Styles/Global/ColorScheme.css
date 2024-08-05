@@ -97,6 +97,18 @@
     --token-color-semantic-loss: var(--theme-color-tertiary-600);
     --token-selected-primary: var(--theme-color-primary-700);
 
+    /* Button Colors */
+    --token-disable-button-background: var(--theme-color-neutral-400);
+
+    --token-button-primary-color: var(--theme-color-primary-500);
+    --token-button-primary-hover-color: var(--theme-color-primary-400);
+
+    --token-button-secondary-color: var(--theme-color-secondary-500);
+    --token-button-secondary-hover-color: var(--theme-color-secondary-400);
+
+    --token-button-tertiary-color: var(--theme-color-tertiary-500);
+    --token-button-tertiary-hover-color: var(--theme-color-tertiary-400);
+
     /* Text Colors */
     --token-color-text-standard: var(--theme-color-neutral-100);
     --token-color-text-subdued: var(--theme-color-neutral-300);
