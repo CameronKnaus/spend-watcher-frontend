@@ -9,6 +9,7 @@ type CustomButtonPropTypes = {
     className?: string;
 };
 
+// Background color must be provided by the parent component
 export default function CustomButton({
     text,
     onClick,

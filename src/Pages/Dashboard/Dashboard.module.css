@@ -5,6 +5,7 @@
     --tile-background: var(--token-color-background-primary);
     --tile-border-radius: 12px;
     --tile-padding: 16px;
+    --dashboard-column-gap: 24px;
 }
 
 .spendingSectionTitle {
@@ -15,31 +16,37 @@
 
 .contentContainer {
     display: flex;
-    gap: 24px;
+    flex-wrap: wrap;
+
+    --section-min-width: 360px;
 }
 
 .leftSection {
     flex-grow: 1;
-    flex-basis: 100%;
+    min-width: var(--section-min-width);
+    /* -24px for gap */
+    max-width: calc(100% - var(--section-min-width));
     display: flex;
-    flex-wrap: nowrap;
-    column-gap: 24px;
-}
-
-.rightSection {
-    min-width: 340px;
-    flex-shrink: 1;
-    flex-grow: 0;
+    flex-wrap: wrap;
 }
 
 .spendingGrid {
+    flex-grow: 1;
     display: flex;
-    gap: 24px;
+    flex-wrap: wrap;
     justify-content: space-between;
+    gap: var(--dashboard-column-gap);
+}
+
+.rightSection {
+    min-width: var(--section-min-width);
+    flex-shrink: 1;
+    flex-grow: 0;
+    padding-left: var(--dashboard-column-gap);
 }
 
 .summaryTile {
-    flex-basis: 33%;
+    flex-basis: calc(33% - var(--dashboard-column-gap));
     flex-grow: 1;
     flex-shrink: 0;
     min-width: 200px;

@@ -37,7 +37,7 @@
     position: absolute;
     width: 50%;
     height: 50%;
-    background-color: var(--token-selected-primary);
+    background-color: var(--token-button-primary-color);
     border-radius: 50%;
     transition-duration: 0.4s;
     z-index: -1;

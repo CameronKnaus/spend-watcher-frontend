@@ -48,9 +48,7 @@ body {
 }
 
 .menuItem:hover .navTextContainer {
-    /* Should probably find the right color token for this rather than using a filter */
-    /* TODO: Token for selected / hovered text */
-    filter: brightness(0.6);
+    color: var(--token-color-text-dark);
 }
 
 .icon {
@@ -71,7 +69,7 @@ body {
     position: absolute;
     width: 50%;
     height: 50%;
-    background-color: var(--token-selected-primary);
+    background-color: var(--token-button-primary-color);
     border-radius: 50%;
     transition-duration: 0.4s;
     z-index: -1;
@@ -80,6 +78,6 @@ body {
 .outletContainer {
     --page-side-padding: 24px;
     padding-top: 32px;
-    max-width: 1200px;
+    max-width: var(--breakpoint-max-page-width);
     margin: 0 auto;
 }

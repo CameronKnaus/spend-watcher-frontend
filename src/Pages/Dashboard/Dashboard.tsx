@@ -18,7 +18,7 @@ export default function Dashboard() {
                     <CustomButton
                         className={styles.expenseButton}
                         text="Log Expense"
-                        layout={'full-width'}
+                        layout="full-width"
                         onClick={() => {}}
                     />
                 </div>

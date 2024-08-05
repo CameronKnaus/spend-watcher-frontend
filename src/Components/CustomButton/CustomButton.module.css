@@ -4,8 +4,6 @@
     padding: 16px;
     border-radius: 12px;
     font-weight: var(--fw-regular);
-    /* Default to button primary color */
-    background-color: var(--token-button-primary-color);
     color: #fff;
     transition-duration: 0.3s;
 }
