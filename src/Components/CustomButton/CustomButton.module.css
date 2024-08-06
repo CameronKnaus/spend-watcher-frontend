@@ -11,3 +11,28 @@
 .disabled {
     background-color: var(--token-disable-button-background);
 }
+
+/* Variants based on variant prop, so name of these classes matters */
+.primary {
+    background-color: var(--token-button-primary-color);
+}
+
+.primary:hover {
+    background-color: var(--token-button-primary-hover-color);
+}
+
+.secondary {
+    background-color: var(--token-button-secondary-color);
+}
+
+.secondary:hover {
+    background-color: var(--token-button-secondary-hover-color);
+}
+
+.tertiary {
+    background-color: var(--token-button-tertiary-color);
+}
+
+.tertiary:hover {
+    background-color: var(--token-button-tertiary-hover-color);
+}

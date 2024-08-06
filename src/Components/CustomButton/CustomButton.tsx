@@ -1,18 +1,22 @@
+import { is } from 'date-fns/locale';
 import styles from './CustomButton.module.css';
 import { clsx } from 'clsx';
 
 type CustomButtonPropTypes = {
     text: string;
     onClick: () => void;
+    variant: 'primary' | 'secondary' | 'tertiary';
     isDisabled?: boolean;
     layout?: 'fit-content' | 'full-width';
     className?: string;
+    backgroundColor?: string;
 };
 
 // Background color must be provided by the parent component
 export default function CustomButton({
     text,
     onClick,
+    variant,
     isDisabled = false,
     layout = 'fit-content',
     className = '',
@@ -24,12 +28,7 @@ export default function CustomButton({
 
         onClick();
     }
-
-    const classList = clsx({
-        [styles.defaultButton]: true,
-        [className]: Boolean(className),
-        [styles.disabled]: isDisabled,
-    });
+    const classList = clsx([styles.defaultButton, className, isDisabled && styles.disabled, styles[variant]]);
 
     return (
         <button

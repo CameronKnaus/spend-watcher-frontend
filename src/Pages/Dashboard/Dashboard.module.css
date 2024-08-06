@@ -60,11 +60,3 @@
     font-size: var(--font-body-large);
     margin-bottom: 16px;
 }
-
-.expenseButton {
-    background-color: var(--token-button-tertiary-color);
-}
-
-.expenseButton:hover {
-    background-color: var(--token-button-tertiary-hover-color);
-}
