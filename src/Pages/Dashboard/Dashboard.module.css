@@ -2,10 +2,7 @@
     padding: 0px var(--page-side-padding);
 
     /* Shared tile designs */
-    --tile-background: var(--token-color-background-primary);
-    --tile-border-radius: 12px;
-    --tile-padding: 16px;
-    --dashboard-column-gap: 24px;
+    --dashboard-column-gap: 16px;
 }
 
 .spendingSectionTitle {
@@ -24,7 +21,6 @@
 .leftSection {
     flex-grow: 1;
     min-width: var(--section-min-width);
-    /* -24px for gap */
     max-width: calc(100% - var(--section-min-width));
     display: flex;
     flex-wrap: wrap;
@@ -51,12 +47,4 @@
     flex-shrink: 0;
     min-width: 200px;
     flex-wrap: wrap;
-    background-color: var(--tile-background);
-    border-radius: var(--tile-border-radius);
-    padding: var(--tile-padding);
-}
-
-.summaryTile > h3 {
-    font-size: var(--font-body-large);
-    margin-bottom: 16px;
 }

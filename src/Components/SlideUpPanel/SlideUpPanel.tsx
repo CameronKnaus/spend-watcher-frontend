@@ -27,28 +27,29 @@ export default function SlideUpPanel({
     onBackButtonClick,
     children,
 }: SlideUpPanelPropTypes) {
-    // TODO: Also transition background fade here
     const slideInTransition = useTransition(isOpen, {
-        config: isOpen
-            ? {
-                  mass: 1,
-                  tension: 300,
-                  friction: 30,
-              }
-            : { duration: 300 },
-        from: { transform: 'translate(-50%, 100vh)' },
-        enter: { transform: 'translate(-50%, 0vh)' },
-        leave: { transform: 'translate(-50%, 100vh)' },
+        config: {
+            mass: 1,
+            tension: 300,
+            friction: 30,
+        },
+        from: { transform: 'translate(-50%, 100vh)', opacity: 0 },
+        enter: { transform: 'translate(-50%, 0vh)', opacity: 1 },
+        leave: { transform: 'translate(-50%, 100vh)', opacity: 0 },
     });
 
-    // TODO: Ensure focus is set on h2 when panel is opened
     return slideInTransition(
         (animatedStyles, isOpen) =>
             isOpen && (
                 <div className={styles.container}>
-                    <div className={styles.lockedBackground} />
+                    <animated.div className={styles.lockedBackground} style={{ opacity: animatedStyles.opacity }} />
                     <FocusLock returnFocus>
-                        <animated.div aria-modal role="dialog" className={styles.panelContainer} style={animatedStyles}>
+                        <animated.div
+                            aria-modal
+                            role="dialog"
+                            className={styles.panelContainer}
+                            style={{ transform: animatedStyles.transform }}
+                        >
                             <div className={styles.titleTag} style={{ backgroundColor: tagColor }}>
                                 <h2 tabIndex={0} className={styles.title}>
                                     {title}

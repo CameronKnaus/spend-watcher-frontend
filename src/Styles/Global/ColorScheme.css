@@ -90,7 +90,7 @@
 
     /* Border Colors */
     --token-color-border-tertiary: var(--theme-color-neutral-700);
-    --token-color-background-light: var(--theme-color-neutral-900);
+    --token-color-border-light: var(--theme-color-neutral-900);
 
     /* Semantic colors */
     --token-color-semantic-gain: var(--theme-color-primary-500);

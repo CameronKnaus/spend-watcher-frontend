@@ -22,9 +22,9 @@ function getScrollWidth(menuListRef: React.RefObject<HTMLDivElement>) {
 // This component turned out rough
 export default function DesktopNavigation() {
     const [menuExpanded, setMenuExpanded] = useState(false);
-    const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout | null | undefined>(null);
+    const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout | null>(null);
     const menuListRef = useRef<HTMLDivElement>(null);
-    // If not momoized, the scrollWidth will grow on each additional render
+    // If not memoized, the scrollWidth will grow on each additional render
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const expandedWidth = useMemo(() => getScrollWidth(menuListRef), [menuListRef.current]);
     const location = useLocation();
@@ -104,8 +104,6 @@ export default function DesktopNavigation() {
                     className={styles.menuList}
                     style={containerSprings}
                     onMouseLeave={closeMenu}
-                    // Ensure any clicks removes the menu
-                    // onClick={closeMenu}
                     onMouseEnter={openMenu}
                 >
                     <DesktopNavItem
@@ -127,7 +125,7 @@ export default function DesktopNavigation() {
                     <DesktopNavItem
                         to={PAGE_ROUTES.recurring_spending}
                         icon={<FaHistory />}
-                        text="Recurring Spending"
+                        text="Recurring spending"
                         openMenu={openMenu}
                         onBlur={handleOnBlur}
                         textSprings={textSprings}

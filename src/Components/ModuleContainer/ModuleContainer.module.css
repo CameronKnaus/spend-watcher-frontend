@@ -1,0 +1,10 @@
+.defaultContainer {
+    padding: 10px 16px;
+    background-color: var(--token-color-background-primary);
+    border-radius: 12px;
+}
+
+.defaultContainer > h3 {
+    font-size: var(--font-body-large);
+    margin-bottom: 16px;
+}
