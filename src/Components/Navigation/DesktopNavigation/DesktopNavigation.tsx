@@ -79,10 +79,15 @@ export default function DesktopNavigation() {
         setMenuExpanded(false);
         if (delayHandler) {
             clearTimeout(delayHandler);
+            setDelayHandler(null);
         }
     }
 
     function openMenu() {
+        if (delayHandler) {
+            return;
+        }
+
         setDelayHandler(
             setTimeout(() => {
                 setMenuExpanded(true);
