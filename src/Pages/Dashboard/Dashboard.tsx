@@ -1,9 +1,11 @@
 import styles from './Dashboard.module.css';
 import { format } from 'date-fns';
-import MonthsSpendingHighlights from './MonthsSpendingHighlights/MonthsSpendingHighlights';
 import CustomButton from 'Components/CustomButton/CustomButton';
 import { useState } from 'react';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
+import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
+import { clsx } from 'clsx';
+import Currency from 'Components/Currency/Currency';
 
 export default function Dashboard() {
     const [expanded, setExpanded] = useState(false);
@@ -15,7 +17,24 @@ export default function Dashboard() {
             <div className={styles.contentContainer}>
                 <div className={styles.leftSection}>
                     <div className={styles.spendingGrid}>
-                        <MonthsSpendingHighlights />
+                        <ModuleContainer
+                            heading="Total spent"
+                            className={clsx([styles.summaryTile, 'background-secondary-elevation-medium'])}
+                        >
+                            <Currency className="font-heading-medium font-thin" value={-5432.13} isGainLoss />
+                        </ModuleContainer>
+                        <ModuleContainer
+                            heading="Discretionary total"
+                            className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
+                        >
+                            <Currency className="font-heading-medium font-thin" value={-5432.13} isGainLoss />
+                        </ModuleContainer>
+                        <ModuleContainer
+                            heading="Recurring total"
+                            className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
+                        >
+                            <Currency className="font-heading-medium font-thin" value={-5432.13} isGainLoss />
+                        </ModuleContainer>
                     </div>
                 </div>
                 <div className={styles.rightSection}>
