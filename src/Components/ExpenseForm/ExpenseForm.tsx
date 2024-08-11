@@ -1,13 +1,16 @@
 import useContent from 'Hooks/useContent';
 import styles from './ExpenseForm.module.css';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
-import { DatePicker } from '@mui/x-date-pickers';
-import FilterableSelect from 'Components/FormInputs/FilterableSelect/FilterableSelect';
+import DatePicker from 'Components/FormInputs/DatePickerController/DatePickerController';
+import FilterableSelect from 'Components/FormInputs/FilterableSelect/FilterableSelectController';
+import { SpendingCategory } from 'Constants/SpendCategories';
+import { FilterableSelectOptionType } from 'Components/FormInputs/FilterableSelect/FilterableSelect';
+import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 
 interface ExpenseFormInputs {
     amount: number;
-    category: string;
+    category: SpendingCategory;
     note: string;
     date: Date;
     linkedTripId: string;
@@ -18,6 +21,7 @@ export default function ExpenseForm() {
     const { register, control, handleSubmit } = useForm<ExpenseFormInputs>();
     const getGeneralContent = useContent('GENERAL');
     const getContent = useContent('TRANSACTIONS');
+    const getSpendCategoryLabel = useContent('SPENDING_CATEGORIES');
 
     return (
         <form className={styles.transactionForm}>
@@ -28,15 +32,22 @@ export default function ExpenseForm() {
                 className={styles.textInput}
                 {...register('amount', { required: true })}
             />
-            {/* <label htmlFor="category-input" style={{ width: 100 }}>
-                    {getContent('CATEGORY_LABEL')}
-                </label>
-                <SpendingCategoryInputs
-                    defaultNoSelectionToOther
-                    textInputStyles={styles.textInput}
-                    value={category}
-                    onChange={setCategory}
-                /> */}
+
+            <label style={{ width: 100 }}>{getContent('CATEGORY_LABEL')}</label>
+            {/* <SpendingCategoryInputs
+                defaultNoSelectionToOther
+                textInputStyles={styles.textInput}
+                value={category}
+                onChange={setCategory}
+            /> */}
+            <FilterableSelect
+                control={control}
+                name="category"
+                className={styles.textInput}
+                noSelectionText={getGeneralContent('EMPTY')}
+                optionsList={generateSpendCategoryList(getSpendCategoryLabel)}
+            />
+
             {/* A short note about the transaction */}
             <label>{getContent('NOTES_LABEL')}</label>
             <input
@@ -45,46 +56,52 @@ export default function ExpenseForm() {
                 autoComplete="off"
                 {...register('note', { maxLength: 60 })}
             />
+
             {/* Date of the transaction */}
             <label>{getContent('DATE_LABEL')}</label>
-            <Controller
+            <DatePicker
                 control={control}
                 name="date"
-                render={({ field }) => (
-                    <DatePicker
-                        disableFuture
-                        views={['year', 'month', 'day']}
-                        format="MMMM D, YYYY"
-                        defaultValue={field.value}
-                        className={styles.textInput}
-                        onChange={field.onChange}
-                        onAccept={field.onChange}
-                    />
-                )}
+                disableFuture
+                views={['year', 'month', 'day']}
+                format="MMMM do, yyyy"
+                className={styles.textInput}
             />
+
             {/* Trip the transaction is linked to */}
-            <label htmlFor="trip-input">{getContent('TRIP_LABEL')}</label>
-            <Controller
+            <label>{getContent('TRIP_LABEL')}</label>
+            <FilterableSelect
                 control={control}
                 name="linkedTripId"
-                render={({ field: { value, onBlur, onChange, ref } }) => (
-                    <FilterableSelect
-                        ref={ref}
-                        opens="up"
-                        className={styles.textInput}
-                        value={value}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        noSelectionText={getGeneralContent('EMPTY')}
-                        optionsList={[
-                            { value: '1', optionName: 'America Trip 1' },
-                            { value: '2', optionName: 'Japan Trip 2' },
-                            { value: '3', optionName: 'Germany Trip 3' },
-                        ]}
-                        clearLabel={getGeneralContent('CLEAR_SELECTION')}
-                    />
-                )}
+                opens="up"
+                className={styles.textInput}
+                noSelectionText={getGeneralContent('EMPTY')}
+                optionsList={[
+                    { value: '1', optionName: 'America Trip 1' },
+                    { value: '2', optionName: 'Japan Trip 2' },
+                    { value: '3', optionName: 'Germany Trip 3' },
+                ]}
+                clearLabel={getGeneralContent('CLEAR_SELECTION')}
             />
         </form>
     );
+}
+
+function generateSpendCategoryList(
+    getContent: ReturnType<typeof useContent<'SPENDING_CATEGORIES'>>,
+): FilterableSelectOptionType<SpendingCategory>[] {
+    const { RESTAURANTS, GROCERIES, DRINKS, OTHER, ...rest } = SpendingCategory;
+
+    const newOrder = [RESTAURANTS, GROCERIES, DRINKS, ...Object.values(rest), OTHER];
+
+    return newOrder.map((category) => ({
+        value: category,
+        optionName: getContent(category),
+        customRender: (optionName: string, value: SpendingCategory) => (
+            <div className={styles.spendCategoryOption}>
+                <SpendingCategoryIcon className={styles.spendCategoryIcon} categoryCode={value} size={32} />
+                <div>{optionName}</div>
+            </div>
+        ),
+    }));
 }

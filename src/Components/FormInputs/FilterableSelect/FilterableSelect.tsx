@@ -3,21 +3,21 @@ import styles from './FilterableSelect.module.css';
 import useContent from 'Hooks/useContent';
 import syntheticChangeEvent from 'Util/Events/syntheticChangeEvent';
 
-type FilterableSelectOptionType<T> = {
-    value: string;
-    optionName: T;
-    customRender?: (optionName: T) => ReactNode;
+export type FilterableSelectOptionType<T> = {
+    value: T;
+    optionName: string;
+    customRender?: (optionName: string, value: T) => ReactNode;
 };
 
-type FilterableSelectPropTypes<T> = {
-    opens: 'up' | 'down';
+export type FilterableSelectPropTypes<T> = {
+    opens?: 'up' | 'down';
     noSelectionText: string;
     clearLabel?: string;
     optionsList: FilterableSelectOptionType<T>[];
 } & ComponentProps<'input'>;
 
 function FilterableSelectComponent<T extends string>(
-    { opens, clearLabel, noSelectionText, optionsList, ...props }: FilterableSelectPropTypes<T>,
+    { opens = 'down', clearLabel, noSelectionText, optionsList, ...props }: FilterableSelectPropTypes<T>,
     ref: React.ForwardedRef<HTMLInputElement>,
 ) {
     const [selectedValue, setSelectedValue] = useState<FilterableSelectOptionType<T> | null>(null);
@@ -93,7 +93,7 @@ function FilterableSelectComponent<T extends string>(
                                 setIsOpen(false);
                             }}
                         >
-                            {option.optionName}
+                            {option.customRender?.(option.optionName, option.value) ?? option.optionName}
                         </div>
                     ))}
                     {clearLabel && (

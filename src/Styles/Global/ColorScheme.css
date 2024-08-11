@@ -51,10 +51,11 @@
     --theme-color-spend-category-BUSINESS: #ae9209;
     --theme-color-spend-category-CANNABIS: #4c8d1b;
     --theme-color-spend-category-CLOTHING: #cebe79;
-    --theme-color-spend-category-DRINKS: #5948bc;
+    --theme-color-spend-category-DRINKS: #50667f;
     --theme-color-spend-category-EDUCATION: #48bcb0;
     --theme-color-spend-category-ENTERTAINMENT: #de2682;
-    --theme-color-spend-category-FITNESS: #333333;
+    --theme-color-spend-category-FITNESS: #3f3f3f;
+    --theme-color-spend-category-LODGING: #a4433d;
     --theme-color-spend-category-FUEL: #b77b43;
     --theme-color-spend-category-GAMES: #4884bc;
     --theme-color-spend-category-GIFTS: #b191ff;
@@ -62,7 +63,7 @@
     --theme-color-spend-category-GROOMING: #972acf;
     --theme-color-spend-category-HEALTH: #a30015;
     --theme-color-spend-category-HOBBY: #df81c1;
-    --theme-color-spend-category-HOUSING: #99c8fa;
+    --theme-color-spend-category-HOUSING: #577590;
     --theme-color-spend-category-INSURANCE: #bc4848;
     --theme-color-spend-category-MATERIAL_ITEMS: #f20d2b;
     --theme-color-spend-category-OTHER: #776871;
@@ -86,7 +87,7 @@
     --token-color-background-secondary: var(--theme-color-neutral-800);
 
     /* Category Colors */
-    --token-color-category-icon: var(--theme-color-neutral-white);
+    --token-color-category-icon: var(--theme-color-neutral-900);
 
     /* Border Colors */
     --token-color-border-secondary: var(--theme-color-neutral-500);

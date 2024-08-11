@@ -6,7 +6,6 @@ import { MdRefresh } from 'react-icons/md';
 type SpendingCategoryIconPropTypes = {
     categoryCode: SpendingCategory;
     size: number;
-    roundedCorners?: boolean;
     className?: string;
     showRevolvingIcon?: boolean;
 };
@@ -14,7 +13,6 @@ type SpendingCategoryIconPropTypes = {
 export default function SpendingCategoryIcon({
     categoryCode,
     size = 32,
-    roundedCorners = true,
     className,
     showRevolvingIcon = false,
 }: SpendingCategoryIconPropTypes) {
@@ -22,9 +20,7 @@ export default function SpendingCategoryIcon({
         height: size,
         width: size,
         backgroundColor: `var(--theme-color-spend-category-${categoryCode})`,
-        fontSize: size * 0.75,
-        // radius 1/8th the size
-        borderRadius: roundedCorners ? size * (1 / 8) : 0,
+        fontSize: size * 0.7, // Size of the icon inside is based on font-size
     };
 
     return (

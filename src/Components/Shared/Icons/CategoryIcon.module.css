@@ -1,21 +1,13 @@
-.iconContainer {
+.icon {
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    margin-right: 12px;
-    color: #FFFFFF;
     flex-shrink: 0;
     /* The background color here is used as a default */
-    background-color: #333333;
+    background-color: var(--token-background-primary);
     position: relative;
-}
-
-.iconPlacement {
-    left: 5px;
-    bottom: 2px;
-    position: absolute;
-    font-size: 20px;
+    color: var(--token-color-category-icon);
 }
 
 .revolvingIcon {
@@ -23,7 +15,7 @@
     right: 3px;
     position: absolute;
     font-size: 14px;
-    color: #F9F9F9;
+    color: #f9f9f9;
     height: 14px;
     transform: rotate(0deg);
     animation-name: rotating;
@@ -42,7 +34,8 @@
     11% {
         transform: rotate(735deg);
     }
-    14%, 100% {
+    14%,
+    100% {
         transform: rotate(720deg);
     }
 }

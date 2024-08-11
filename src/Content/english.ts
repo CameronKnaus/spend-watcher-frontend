@@ -1,4 +1,6 @@
-const locale = {
+type ContentStructureShell = Record<string, Record<string, string>>;
+
+const locale: ContentStructureShell = {
     ACCESSIBLE_LABELS: {
         SPENT_MONTHLY: '<<arg0:amount>> spent monthly.',
     },
@@ -245,6 +247,6 @@ const locale = {
         NEXT_MONTH: 'Next Month',
         LAST_MONTH: 'Last Month',
     },
-};
+} as const;
 
 export default locale;
