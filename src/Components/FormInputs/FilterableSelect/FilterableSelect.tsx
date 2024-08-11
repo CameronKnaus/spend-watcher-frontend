@@ -115,4 +115,5 @@ function FilterableSelectComponent<T extends string>(
     );
 }
 
-export const FilterableSelect = forwardRef(FilterableSelectComponent);
+const FilterableSelect = forwardRef(FilterableSelectComponent);
+export default FilterableSelect;
