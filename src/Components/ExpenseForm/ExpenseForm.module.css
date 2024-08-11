@@ -1,5 +1,5 @@
 .transactionForm {
-    --space-between-form-items: 32px;
+    --space-between-form-items: 40px;
 }
 
 .transactionForm > label {
@@ -33,11 +33,4 @@
 
 .alertContainer {
     padding-bottom: 1.5rem;
-}
-
-.noTripMessage {
-    padding: 0.25rem 0;
-    color: var(--theme-subdued-text-color);
-    font-size: var(--body-text-14);
-    font-weight: var(--fw-light);
 }

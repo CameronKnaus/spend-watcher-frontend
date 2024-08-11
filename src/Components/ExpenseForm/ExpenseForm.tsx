@@ -15,10 +15,9 @@ interface ExpenseFormInputs {
 }
 
 export default function ExpenseForm() {
-    const { register, control, handleSubmit, watch } = useForm<ExpenseFormInputs>();
+    const { register, control, handleSubmit } = useForm<ExpenseFormInputs>();
+    const getGeneralContent = useContent('GENERAL');
     const getContent = useContent('TRANSACTIONS');
-
-    console.log(watch());
 
     return (
         <form className={styles.transactionForm}>
@@ -71,38 +70,21 @@ export default function ExpenseForm() {
                 render={({ field: { value, onBlur, onChange, ref } }) => (
                     <FilterableSelect
                         ref={ref}
-                        selectedValue={value}
-                        setSelectedValue={onChange}
+                        opens="up"
+                        className={styles.textInput}
+                        value={value}
                         onChange={onChange}
                         onBlur={onBlur}
+                        noSelectionText={getGeneralContent('EMPTY')}
                         optionsList={[
                             { value: '1', optionName: 'America Trip 1' },
                             { value: '2', optionName: 'Japan Trip 2' },
-                            { value: '3', optionName: 'Germany Grip 3' },
+                            { value: '3', optionName: 'Germany Trip 3' },
                         ]}
+                        clearLabel={getGeneralContent('CLEAR_SELECTION')}
                     />
                 )}
             />
-            {/* {filterableSelectTripsList.length ? (
-                <>
-                    <FilterableSelect
-                        value={linkedTripId}
-                        optionsList={filterableSelectTripsList}
-                        id="trip-selector"
-                        textInputStyles={styles.textInput}
-                        nothingSelectedText={getContent('NO_TRIPS')}
-                        setValue={(selectedTrip) => {
-                            if (typeof selectedTrip === 'string') {
-                                setTripSelected(true);
-                                setLinkedTripId(selectedTrip);
-                            }
-                        }}
-                    />
-                    <div style={{ height: '1rem' }} />
-                </>
-            ) : (
-                <div className={styles.noTripMessage}>{getContent('NO_TRIPS_AVAILABLE')}</div>
-            )} */}
         </form>
     );
 }

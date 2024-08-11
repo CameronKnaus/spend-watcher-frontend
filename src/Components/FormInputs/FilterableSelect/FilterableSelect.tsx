@@ -1,4 +1,4 @@
-import { ComponentProps, Dispatch, forwardRef, SetStateAction, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, ComponentProps, forwardRef, useEffect, useRef, useState } from 'react';
 import styles from './FilterableSelect.module.css';
 import useContent from 'Hooks/useContent';
 
@@ -8,17 +8,19 @@ type FilterableSelectOptionType = {
 };
 
 type FilterableSelectPropTypes = {
-    selectedValue: string;
-    setSelectedValue: Dispatch<SetStateAction<string>>;
+    opens: 'up' | 'down';
+    noSelectionText: string;
+    clearLabel?: string;
     optionsList: FilterableSelectOptionType[];
 } & ComponentProps<'input'>;
 
 // eslint-disable-next-line react/display-name
 const FilterableSelect = forwardRef(
     (
-        { selectedValue, setSelectedValue, optionsList, ...props }: FilterableSelectPropTypes,
+        { opens, clearLabel, noSelectionText, optionsList, ...props }: FilterableSelectPropTypes,
         ref: React.ForwardedRef<HTMLInputElement>,
     ) => {
+        const [selectedValue, setSelectedValue] = useState<FilterableSelectOptionType | null>(null);
         const containerRef = useRef<HTMLDivElement | null>(null);
         const popOverMenuRef = useRef<HTMLDivElement | null>(null);
         const getContent = useContent('GENERAL');
@@ -48,40 +50,65 @@ const FilterableSelect = forwardRef(
             return optionText.includes(targetText);
         }
 
+        function currentSelectedValue() {
+            // If the text input is still in focus only show filter text
+            if (containerRef.current?.contains(document.activeElement)) {
+                return filterText;
+            }
+
+            if (props.value) {
+                return optionsList.find((option) => option.value === props.value)?.optionName || getContent('EMPTY');
+            }
+
+            return '';
+        }
+
         return (
             <div ref={containerRef} className={styles.selectContainer}>
                 <input
                     ref={ref}
                     type="text"
                     {...props}
+                    value={currentSelectedValue()}
+                    placeholder={noSelectionText}
                     onChange={(event) => {
                         setFilterText(event.target.value);
                     }}
                 />
+                <div className={`${styles.arrow} ${isOpen ? styles.open : ''}`} />
                 {isOpen && (
-                    <div ref={popOverMenuRef} className={styles.options}>
+                    <div
+                        ref={popOverMenuRef}
+                        className={styles.options}
+                        style={opens === 'down' ? { top: '100%' } : { bottom: '100%' }}
+                    >
                         {optionsList.filter(filter).map((option) => (
                             <div
                                 key={option.value}
-                                className={`${styles.option} ${selectedValue === option.value ? styles.selected : ''}`}
+                                className={`${styles.option} ${selectedValue?.value === option.value ? styles.selected : ''}`}
                                 onClick={() => {
-                                    setSelectedValue(option.value);
+                                    props.onChange?.(fakeChangeEvent(option.value));
+                                    setSelectedValue(option);
                                     setFilterText('');
                                     setIsOpen(false);
                                 }}
                             >
-                                {/* <div
-                                className={styles.iconContainer}
-                                style={{ backgroundColor: option.iconBackgroundColor }}
-                            >
-                                {option.icon}
-                            </div> */}
                                 {option.optionName}
                             </div>
                         ))}
-                        <div className={styles.option} onClick={() => setSelectedValue('')}>
-                            <div className={styles.clearLabel}>{getContent('CLEAR_SELECTION')}</div>
-                        </div>
+                        {clearLabel && (
+                            <div
+                                className={styles.option}
+                                onClick={() => {
+                                    props.onChange?.(fakeChangeEvent(''));
+                                    setSelectedValue(null);
+                                    setFilterText('');
+                                    setIsOpen(false);
+                                }}
+                            >
+                                <div className={styles.clearLabel}>{clearLabel}</div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
@@ -90,3 +117,12 @@ const FilterableSelect = forwardRef(
 );
 
 export default FilterableSelect;
+
+function fakeChangeEvent(value: string): ChangeEvent<HTMLInputElement> {
+    return {
+        // @ts-expect-error - This is a synthetic event
+        target: {
+            value: value,
+        },
+    };
+}
