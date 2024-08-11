@@ -7,6 +7,8 @@ import { StrictMode } from 'react';
 import SessionChecker from 'Util/Authentication/SessionChecker';
 import { IsMobileContextProvider } from 'Util/IsMobileContext';
 import { BrowserRouter } from 'react-router-dom';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -20,14 +22,16 @@ const queryClient = new QueryClient({
 const root = createRoot(document.getElementById('root')!);
 root.render(
     <StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <IsMobileContextProvider>
-                <BrowserRouter>
-                    <SessionChecker>
-                        <PageRoutes />
-                    </SessionChecker>
-                </BrowserRouter>
-            </IsMobileContextProvider>
-        </QueryClientProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <QueryClientProvider client={queryClient}>
+                <IsMobileContextProvider>
+                    <BrowserRouter>
+                        <SessionChecker>
+                            <PageRoutes />
+                        </SessionChecker>
+                    </BrowserRouter>
+                </IsMobileContextProvider>
+            </QueryClientProvider>
+        </LocalizationProvider>
     </StrictMode>,
 );

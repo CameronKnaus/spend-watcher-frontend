@@ -89,6 +89,7 @@
     --token-color-category-icon: var(--theme-color-neutral-white);
 
     /* Border Colors */
+    --token-color-border-secondary: var(--theme-color-neutral-500);
     --token-color-border-tertiary: var(--theme-color-neutral-700);
     --token-color-border-light: var(--theme-color-neutral-900);
 
@@ -110,6 +111,7 @@
     --token-color-text-standard: var(--theme-color-neutral-100);
     --token-color-text-subdued: var(--theme-color-neutral-300);
     --token-color-text-dark: var(--theme-color-neutral-000);
+    --token-color-text-placeholder: var(--theme-color-neutral-400);
 
     --token-navigation-color: var(--theme-color-neutral-100);
     --token-navigation-selected: var(--theme-color-primary-600);

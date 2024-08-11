@@ -6,7 +6,7 @@
 }
 
 .balanceUpdateForm > label > input::placeholder {
-    color: var(--theme-placeholder-text);
+    color: var(--token-color-text-placeholder);
 }
 
 .textInput {

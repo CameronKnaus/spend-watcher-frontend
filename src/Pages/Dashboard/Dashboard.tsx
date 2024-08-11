@@ -6,9 +6,10 @@ import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import { clsx } from 'clsx';
 import Currency from 'Components/Currency/Currency';
+import ExpenseForm from 'Components/ExpenseForm/ExpenseForm';
 
 export default function Dashboard() {
-    const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState(true);
     const currentMonth = format(new Date(), 'LLLL');
 
     return (
@@ -53,19 +54,7 @@ export default function Dashboard() {
                         tagColor="var(--token-color-semantic-expense)"
                         onPanelClose={() => setExpanded(false)}
                     >
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST</h1>
-                        <h1>TEST ASd</h1>
+                        <ExpenseForm />
                     </SlideUpPanel>
                 </div>
             </div>
