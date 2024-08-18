@@ -1,7 +1,8 @@
 import styles from './CategoryIcon.module.css';
 import { clsx } from 'clsx';
-import { SpendCategoryIconMapper, SpendingCategory } from 'Constants/SpendCategories';
+import spendCategoryIconMapper from 'Components/Shared/Icons/spendCategoryIconMapper';
 import { MdRefresh } from 'react-icons/md';
+import { SpendingCategory } from 'Types/spendTransactionTypes';
 
 type SpendingCategoryIconPropTypes = {
     categoryCode: SpendingCategory;
@@ -27,7 +28,7 @@ export default function SpendingCategoryIcon({
         <div className={clsx(styles.icon, className)} style={containerStyle}>
             {showRevolvingIcon ? (
                 <>
-                    {SpendCategoryIconMapper[categoryCode]}
+                    {spendCategoryIconMapper[categoryCode]}
                     <div
                         className={styles.revolvingIcon}
                         style={{ animationDelay: `${(Math.random() * 8).toFixed(2)}s` }}
@@ -36,7 +37,7 @@ export default function SpendingCategoryIcon({
                     </div>
                 </>
             ) : (
-                SpendCategoryIconMapper[categoryCode]
+                spendCategoryIconMapper[categoryCode]
             )}
         </div>
     );

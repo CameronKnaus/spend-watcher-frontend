@@ -8,9 +8,11 @@ const domainName = devMode ? localAPI : prodAPI;
 // const tripsApi = (routeName: string) => domainName + '/trips' + routeName;
 
 const SERVICE_ROUTES: Record<string, string> = {
-    login: domainName + '/user/v1/login', // POST
-    register: domainName + '/user/v1/register', // POST
-    checkAuthentication: domainName + '/user/v1/verify', // GET
+    postLogin: domainName + '/user/v1/login',
+    postRegister: domainName + '/user/v1/register',
+    getCheckAuthentication: domainName + '/user/v1/verify',
+    getSpendingDetails: domainName + '/spending/v1/details',
+
     // transactionDateRange: spendApi('/available-range'), // GET
     // spendingSummary: spendApi('/summary'), // GET
     // recentTransactions: spendApi('/recent'), // GET

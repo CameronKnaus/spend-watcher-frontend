@@ -7,14 +7,23 @@ import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import { clsx } from 'clsx';
 import Currency from 'Components/Currency/Currency';
 import ExpenseForm from 'Components/ExpenseForm/ExpenseForm';
+import useSpendingDetailsService from 'Hooks/useSpendingService';
+import useContent from 'Hooks/useContent';
 
 export default function Dashboard() {
-    const [expanded, setExpanded] = useState(true);
+    const getContent = useContent('DASHBOARD');
+    const [expanded, setExpanded] = useState(false);
     const currentMonth = format(new Date(), 'LLLL');
+
+    const { isLoading, isFetching, data: spendingData } = useSpendingDetailsService();
+
+    if (isLoading || isFetching || !spendingData) {
+        return <h1>Placeholder loading</h1>;
+    }
 
     return (
         <div className={styles.dashboard}>
-            <h2 className={styles.spendingSectionTitle}>{`${currentMonth} overview`}</h2>
+            <h2 className={styles.spendingSectionTitle}>{getContent('MONTH_OVERVIEW', [currentMonth])}</h2>
             <div className={styles.contentContainer}>
                 <div className={styles.leftSection}>
                     <div className={styles.spendingGrid}>
@@ -22,19 +31,31 @@ export default function Dashboard() {
                             heading="Total spent"
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-medium'])}
                         >
-                            <Currency className="font-heading-medium font-thin" value={-5432.13} isGainLoss />
+                            <Currency
+                                className="font-heading-medium font-thin"
+                                value={-spendingData.summary.total.amount}
+                                isGainLoss
+                            />
                         </ModuleContainer>
                         <ModuleContainer
                             heading="Discretionary total"
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
                         >
-                            <Currency className="font-heading-medium font-thin" value={-5432.13} isGainLoss />
+                            <Currency
+                                className="font-heading-medium font-thin"
+                                value={-spendingData.summary.discretionaryTotal.amount}
+                                isGainLoss
+                            />
                         </ModuleContainer>
                         <ModuleContainer
                             heading="Recurring total"
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
                         >
-                            <Currency className="font-heading-medium font-thin" value={-5432.13} isGainLoss />
+                            <Currency
+                                className="font-heading-medium font-thin"
+                                value={-spendingData.summary.recurringTotal.amount}
+                                isGainLoss
+                            />
                         </ModuleContainer>
                     </div>
                 </div>

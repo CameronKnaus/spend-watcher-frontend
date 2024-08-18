@@ -30,38 +30,9 @@ import {
     MdVideogameAsset,
     MdWaterDrop,
 } from 'react-icons/md';
+import { SpendingCategory } from 'Types/spendTransactionTypes';
 
-export enum SpendingCategory {
-    AIRFARE = 'AIRFARE',
-    BUSINESS = 'BUSINESS',
-    CANNABIS = 'CANNABIS',
-    CLOTHING = 'CLOTHING',
-    DRINKS = 'DRINKS',
-    EDUCATION = 'EDUCATION',
-    ENTERTAINMENT = 'ENTERTAINMENT',
-    FITNESS = 'FITNESS',
-    FUEL = 'FUEL',
-    GAMES = 'GAMES',
-    GIFTS = 'GIFTS',
-    GROOMING = 'GROOMING',
-    GROCERIES = 'GROCERIES',
-    HEALTH = 'HEALTH',
-    HOBBY = 'HOBBY',
-    HOUSING = 'HOUSING',
-    INSURANCE = 'INSURANCE',
-    LODGING = 'LODGING',
-    MATERIAL_ITEMS = 'MATERIAL_ITEMS',
-    OTHER = 'OTHER',
-    PETS = 'PETS',
-    RESTAURANTS = 'RESTAURANTS',
-    TAXES = 'TAXES',
-    TRANSPORTATION = 'TRANSPORTATION',
-    TREATS = 'TREATS',
-    UTILITIES = 'UTILITIES',
-    VEHICLE = 'VEHICLE',
-}
-
-export const SpendCategoryIconMapper: Record<SpendingCategory, ReactElement> = {
+const spendCategoryIconMapper: Record<SpendingCategory, ReactElement> = {
     AIRFARE: <MdLocalAirport />,
     BUSINESS: <MdBusinessCenter />,
     CANNABIS: <FaCannabis />,
@@ -90,3 +61,5 @@ export const SpendCategoryIconMapper: Record<SpendingCategory, ReactElement> = {
     UTILITIES: <MdWaterDrop />,
     VEHICLE: <FaCar />,
 } as const;
+
+export default spendCategoryIconMapper;

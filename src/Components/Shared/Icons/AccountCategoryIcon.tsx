@@ -1,6 +1,7 @@
 import styles from './CategoryIcon.module.css';
 import { clsx } from 'clsx';
-import { AccountCategory, AccountCategoryIconMapper } from 'Constants/AccountCategories';
+import accountCategoryIconMapper from './accountCategoryIconMapper';
+import { AccountCategory } from 'Types/accountTypes';
 
 type AccountCategoryIconPropTypes = {
     categoryCode: AccountCategory;
@@ -26,7 +27,7 @@ export default function AccountCategoryIcon({
 
     return (
         <div className={clsx(styles.icon, className)} style={containerStyle}>
-            {AccountCategoryIconMapper[categoryCode]}
+            {accountCategoryIconMapper[categoryCode]}
         </div>
     );
 }

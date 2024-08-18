@@ -7,8 +7,8 @@ import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
 axios.defaults.withCredentials = true;
 
 enum REQUEST_TYPES {
-    register = 'register',
-    login = 'login',
+    register = 'postRegister',
+    login = 'postLogin',
 }
 
 export default function AuthScreen() {

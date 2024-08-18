@@ -1,11 +1,12 @@
-type ContentStructureShell = Record<string, Record<string, string>>;
-
-const locale: ContentStructureShell = {
+const locale = {
     ACCESSIBLE_LABELS: {
         SPENT_MONTHLY: '<<arg0:amount>> spent monthly.',
     },
     ACCESSIBLE_PAGE_TITLES: {
         DASHBOARD: 'Spend Watcher Dashboard',
+    },
+    DASHBOARD: {
+        MONTH_OVERVIEW: '{{0}} overview',
     },
     SPENDING: {
         MY_SPENDING: 'My Spending',

@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
 import DatePicker from 'Components/FormInputs/DatePickerController/DatePickerController';
 import FilterableSelect from 'Components/FormInputs/FilterableSelect/FilterableSelectController';
-import { SpendingCategory } from 'Constants/SpendCategories';
 import { FilterableSelectOptionType } from 'Components/FormInputs/FilterableSelect/FilterableSelect';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
+import { SpendingCategory } from 'Types/spendTransactionTypes';
 
 interface ExpenseFormInputs {
     amount: number;
