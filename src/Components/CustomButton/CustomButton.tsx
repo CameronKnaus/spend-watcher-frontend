@@ -1,6 +1,7 @@
 import { is } from 'date-fns/locale';
 import styles from './CustomButton.module.css';
 import { clsx } from 'clsx';
+import { ComponentProps } from 'react';
 
 type CustomButtonPropTypes = {
     text: string;
@@ -20,7 +21,7 @@ export default function CustomButton({
     isDisabled = false,
     layout = 'fit-content',
     className = '',
-}: CustomButtonPropTypes) {
+}: CustomButtonPropTypes & ComponentProps<'button'>) {
     function handleClick() {
         if (isDisabled) {
             return;

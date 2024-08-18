@@ -1,0 +1,17 @@
+.recentTransactions > h3 {
+    font-size: var(--font-heading-medium);
+}
+
+.dateHeader {
+    font-size: var(--font-body-small);
+    color: var(--token-color-text-subdued);
+    font-weight: var(--font-weight-regular);
+    margin-bottom: 8px;
+}
+
+.transactionGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+}

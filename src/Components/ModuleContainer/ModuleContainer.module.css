@@ -5,6 +5,7 @@
 }
 
 .defaultContainer > h3 {
-    font-size: var(--font-body-large);
+    font-size: var(--font-heading-small);
+    font-weight: var(--fw-medium);
     margin-bottom: 8px;
 }

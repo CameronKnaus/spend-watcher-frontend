@@ -1,0 +1,36 @@
+.transactionsRow {
+    display: flex;
+    width: 100%;
+    min-width: 320px;
+    column-gap: 8px;
+    align-items: center;
+}
+
+.transactionsRow:hover {
+    cursor: pointer;
+}
+
+.transactionDetails {
+    flex-basis: 100%;
+}
+
+.dataRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-body-regular);
+}
+
+.noteRow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    color: var(--token-color-text-subdued);
+    font-size: var(--font-caption);
+}
+
+.chevron {
+    font-size: 20px;
+    flex-shrink: 0;
+}

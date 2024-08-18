@@ -19,21 +19,20 @@ interface ExpenseFormInputs {
 
 export default function ExpenseForm() {
     const { register, control, handleSubmit } = useForm<ExpenseFormInputs>();
-    const getGeneralContent = useContent('GENERAL');
-    const getContent = useContent('TRANSACTIONS');
+    const getContent = useContent('transactions');
     const getSpendCategoryLabel = useContent('SPENDING_CATEGORIES');
 
     return (
         <form className={styles.transactionForm}>
             {/* Amount spent */}
-            <label>{getContent('AMOUNT_LABEL')} </label>
+            <label>{getContent('amountLabel')} </label>
             <MoneyInput
-                placeholder={getContent('AMOUNT_PLACEHOLDER')}
+                placeholder={getContent('amountPlaceholder')}
                 className={styles.textInput}
                 {...register('amount', { required: true })}
             />
 
-            <label style={{ width: 100 }}>{getContent('CATEGORY_LABEL')}</label>
+            <label style={{ width: 100 }}>{getContent('categoryLabel')}</label>
             {/* <SpendingCategoryInputs
                 defaultNoSelectionToOther
                 textInputStyles={styles.textInput}
@@ -44,21 +43,21 @@ export default function ExpenseForm() {
                 control={control}
                 name="category"
                 className={styles.textInput}
-                noSelectionText={getGeneralContent('EMPTY')}
+                noSelectionText={getContent('emptyPlaceholder')}
                 optionsList={generateSpendCategoryList(getSpendCategoryLabel)}
             />
 
             {/* A short note about the transaction */}
-            <label>{getContent('NOTES_LABEL')}</label>
+            <label>{getContent('notesLabel')}</label>
             <input
                 className={styles.textInput}
-                placeholder={getContent('NOTES_PLACEHOLDER')}
+                placeholder={getContent('notesPlaceholder')}
                 autoComplete="off"
                 {...register('note', { maxLength: 60 })}
             />
 
             {/* Date of the transaction */}
-            <label>{getContent('DATE_LABEL')}</label>
+            <label>{getContent('dateLabel')}</label>
             <DatePicker
                 control={control}
                 name="date"
@@ -69,19 +68,19 @@ export default function ExpenseForm() {
             />
 
             {/* Trip the transaction is linked to */}
-            <label>{getContent('TRIP_LABEL')}</label>
+            <label>{getContent('tripLabel')}</label>
             <FilterableSelect
                 control={control}
                 name="linkedTripId"
                 opens="up"
                 className={styles.textInput}
-                noSelectionText={getGeneralContent('EMPTY')}
+                noSelectionText={getContent('emptyPlaceholder')}
                 optionsList={[
                     { value: '1', optionName: 'America Trip 1' },
                     { value: '2', optionName: 'Japan Trip 2' },
                     { value: '3', optionName: 'Germany Trip 3' },
                 ]}
-                clearLabel={getGeneralContent('CLEAR_SELECTION')}
+                clearLabel={getContent('clearSelection')}
             />
         </form>
     );
@@ -99,7 +98,7 @@ function generateSpendCategoryList(
         optionName: getContent(category),
         customRender: (optionName: string, value: SpendingCategory) => (
             <div className={styles.spendCategoryOption}>
-                <SpendingCategoryIcon className={styles.spendCategoryIcon} categoryCode={value} size={32} />
+                <SpendingCategoryIcon className={styles.spendCategoryIcon} category={value} size={32} />
                 <div>{optionName}</div>
             </div>
         ),

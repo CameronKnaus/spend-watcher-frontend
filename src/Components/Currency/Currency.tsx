@@ -2,7 +2,7 @@ import formatCurrency from 'Util/Formatters/formatCurrency/formatCurrency';
 import { ReactNode } from 'react';
 
 type CurrencyPropTypes = {
-    value?: number;
+    amount?: number;
     isGainLoss?: boolean;
     defaultValue?: ReactNode;
     className?: string;
@@ -20,19 +20,19 @@ function getColor(value: number) {
     return 'var(--token-color-text-standard)';
 }
 
-export default function Currency({ value, isGainLoss = false, defaultValue = '', className = '' }: CurrencyPropTypes) {
-    if (value === undefined) {
+export default function Currency({ amount, isGainLoss = false, defaultValue = '', className = '' }: CurrencyPropTypes) {
+    if (amount === undefined) {
         return defaultValue;
     }
 
     return (
-        <div
+        <span
             className={className}
             style={{
-                color: isGainLoss ? getColor(value) : 'inherit',
+                color: isGainLoss ? getColor(amount) : 'inherit',
             }}
         >
-            {formatCurrency(value, isGainLoss)}
-        </div>
+            {formatCurrency(amount, isGainLoss)}
+        </span>
     );
 }

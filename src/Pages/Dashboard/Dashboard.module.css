@@ -20,10 +20,12 @@
 
 .leftSection {
     flex-grow: 1;
+    flex-shrink: 0;
     min-width: var(--section-min-width);
     max-width: calc(100% - var(--section-min-width));
     display: flex;
     flex-wrap: wrap;
+    align-items: start;
 }
 
 .spendingGrid {
@@ -35,9 +37,12 @@
 }
 
 .rightSection {
-    min-width: var(--section-min-width);
+    display: flex;
+    flex-direction: column;
+    gap: var(--dashboard-column-gap);
     flex-shrink: 1;
     flex-grow: 0;
+    max-width: var(--section-min-width);
     padding-left: var(--dashboard-column-gap);
 }
 

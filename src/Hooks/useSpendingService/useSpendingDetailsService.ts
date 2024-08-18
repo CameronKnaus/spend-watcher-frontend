@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
+import { DbDate } from 'Types/dateTypes';
 import {
     SpendGroupSummary,
     SpendingCategory,
     TransactionDictionary,
-    TransactionId,
     TransactionIdLists,
     TransactionTotal,
 } from 'Types/spendTransactionTypes';
@@ -17,6 +17,9 @@ type CategoryTrends = {
 
 type SummaryData = Omit<SpendGroupSummary, 'includedTransactions'>;
 
+// Mapped by date in a way that allows sorting by string
+export type TransactionsByDate = Record<DbDate, SpendGroupSummary>;
+
 // Full response type
 export type SpendingDetailsResponse = {
     categoryTrends: CategoryTrends;
@@ -27,7 +30,7 @@ export type SpendingDetailsResponse = {
     };
     summary: SummaryData;
     transactionIdLists: TransactionIdLists;
-    transactionsByDate: TransactionId;
+    transactionsByDate: TransactionsByDate;
 };
 
 export default function useSpendingDetailsService() {

@@ -4,14 +4,14 @@ import accountCategoryIconMapper from './accountCategoryIconMapper';
 import { AccountCategory } from 'Types/accountTypes';
 
 type AccountCategoryIconPropTypes = {
-    categoryCode: AccountCategory;
+    category: AccountCategory;
     size: number;
     roundedCorners?: boolean;
     className?: string;
 };
 
 export default function AccountCategoryIcon({
-    categoryCode,
+    category,
     size = 32,
     roundedCorners = true,
     className,
@@ -19,7 +19,7 @@ export default function AccountCategoryIcon({
     const containerStyle = {
         height: size,
         width: size,
-        backgroundColor: `var(--theme-color-account-category-${categoryCode})`,
+        backgroundColor: `var(--theme-color-account-category-${category})`,
         fontSize: size * 0.75,
         // radius 1/8th the size
         borderRadius: roundedCorners ? size * (1 / 8) : 0,
@@ -27,7 +27,7 @@ export default function AccountCategoryIcon({
 
     return (
         <div className={clsx(styles.icon, className)} style={containerStyle}>
-            {accountCategoryIconMapper[categoryCode]}
+            {accountCategoryIconMapper[category]}
         </div>
     );
 }

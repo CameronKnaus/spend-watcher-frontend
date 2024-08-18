@@ -42,7 +42,14 @@ export type TransactionTotal = {
     count: number;
 };
 
-export type TransactionDictionary = Map<TransactionId, SpendTransaction>;
+// If given a discretionary transactionID, type of value will be casted to DiscretionarySpendTransaction and vice versa
+export type TransactionDictionary = {
+    [T in TransactionId]: T extends RecurringTransactionId
+        ? RecurringSpendTransaction
+        : T extends DiscretionaryTransactionId
+          ? DiscretionarySpendTransaction
+          : never;
+};
 
 export type TransactionIdLists = {
     allTransactions: TransactionId[];
@@ -69,8 +76,8 @@ export type BaseSpendTransaction = {
 export type DiscretionarySpendTransaction = {
     transactionId: DiscretionaryTransactionId;
     isRecurring: false;
-    note: string | null;
-    linkedTripId: string | null;
+    note?: string;
+    linkedTripId?: string;
 } & BaseSpendTransaction;
 
 // Recurring spend transaction specific attributes

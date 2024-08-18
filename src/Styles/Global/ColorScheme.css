@@ -110,7 +110,7 @@
 
     /* Text Colors */
     --token-color-text-standard: var(--theme-color-neutral-100);
-    --token-color-text-subdued: var(--theme-color-neutral-300);
+    --token-color-text-subdued: var(--theme-color-neutral-200);
     --token-color-text-dark: var(--theme-color-neutral-000);
     --token-color-text-placeholder: var(--theme-color-neutral-400);
 

@@ -5,14 +5,14 @@ import { MdRefresh } from 'react-icons/md';
 import { SpendingCategory } from 'Types/spendTransactionTypes';
 
 type SpendingCategoryIconPropTypes = {
-    categoryCode: SpendingCategory;
+    category: SpendingCategory;
     size: number;
     className?: string;
     showRevolvingIcon?: boolean;
 };
 
 export default function SpendingCategoryIcon({
-    categoryCode,
+    category,
     size = 32,
     className,
     showRevolvingIcon = false,
@@ -20,7 +20,7 @@ export default function SpendingCategoryIcon({
     const containerStyle = {
         height: size,
         width: size,
-        backgroundColor: `var(--theme-color-spend-category-${categoryCode})`,
+        backgroundColor: `var(--theme-color-spend-category-${category})`,
         fontSize: size * 0.7, // Size of the icon inside is based on font-size
     };
 
@@ -28,7 +28,7 @@ export default function SpendingCategoryIcon({
         <div className={clsx(styles.icon, className)} style={containerStyle}>
             {showRevolvingIcon ? (
                 <>
-                    {spendCategoryIconMapper[categoryCode]}
+                    {spendCategoryIconMapper[category]}
                     <div
                         className={styles.revolvingIcon}
                         style={{ animationDelay: `${(Math.random() * 8).toFixed(2)}s` }}
@@ -37,7 +37,7 @@ export default function SpendingCategoryIcon({
                     </div>
                 </>
             ) : (
-                spendCategoryIconMapper[categoryCode]
+                spendCategoryIconMapper[category]
             )}
         </div>
     );

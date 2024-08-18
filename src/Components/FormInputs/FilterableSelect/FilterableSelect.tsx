@@ -23,7 +23,7 @@ function FilterableSelectComponent<T extends string>(
     const [selectedValue, setSelectedValue] = useState<FilterableSelectOptionType<T> | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const popOverMenuRef = useRef<HTMLDivElement | null>(null);
-    const getContent = useContent('GENERAL');
+    const getContent = useContent('general');
     const [isOpen, setIsOpen] = useState(false);
     const [filterText, setFilterText] = useState('');
 
@@ -57,7 +57,7 @@ function FilterableSelectComponent<T extends string>(
         }
 
         if (props.value) {
-            return optionsList.find((option) => option.value === props.value)?.optionName || getContent('EMPTY');
+            return optionsList.find((option) => option.value === props.value)?.optionName || getContent('empty');
         }
 
         return '';

@@ -9,10 +9,13 @@ import Currency from 'Components/Currency/Currency';
 import ExpenseForm from 'Components/ExpenseForm/ExpenseForm';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
 import useContent from 'Hooks/useContent';
+import RecentTransactions from './RecentTransactions';
 
 export default function Dashboard() {
-    const getContent = useContent('DASHBOARD');
+    // TODO: Rename expand here to something more pertinent to log expense panel
     const [expanded, setExpanded] = useState(false);
+    const getContent = useContent('dashboard');
+    const getTransactionContent = useContent('transactions');
     const currentMonth = format(new Date(), 'LLLL');
 
     const { isLoading, isFetching, data: spendingData } = useSpendingDetailsService();
@@ -23,7 +26,7 @@ export default function Dashboard() {
 
     return (
         <div className={styles.dashboard}>
-            <h2 className={styles.spendingSectionTitle}>{getContent('MONTH_OVERVIEW', [currentMonth])}</h2>
+            <h2 className={styles.spendingSectionTitle}>{getContent('monthOverview', [currentMonth])}</h2>
             <div className={styles.contentContainer}>
                 <div className={styles.leftSection}>
                     <div className={styles.spendingGrid}>
@@ -33,7 +36,7 @@ export default function Dashboard() {
                         >
                             <Currency
                                 className="font-heading-medium font-thin"
-                                value={-spendingData.summary.total.amount}
+                                amount={-spendingData.summary.total.amount}
                                 isGainLoss
                             />
                         </ModuleContainer>
@@ -43,7 +46,7 @@ export default function Dashboard() {
                         >
                             <Currency
                                 className="font-heading-medium font-thin"
-                                value={-spendingData.summary.discretionaryTotal.amount}
+                                amount={-spendingData.summary.discretionaryTotal.amount}
                                 isGainLoss
                             />
                         </ModuleContainer>
@@ -53,30 +56,34 @@ export default function Dashboard() {
                         >
                             <Currency
                                 className="font-heading-medium font-thin"
-                                value={-spendingData.summary.recurringTotal.amount}
+                                amount={-spendingData.summary.recurringTotal.amount}
                                 isGainLoss
                             />
                         </ModuleContainer>
                     </div>
                 </div>
                 <div className={styles.rightSection}>
+                    {/* Log Expense button */}
                     <CustomButton
                         variant="tertiary"
-                        text="Log Expense"
+                        text={getTransactionContent('logExpense')}
                         layout="full-width"
                         onClick={() => {
                             setExpanded(!expanded);
                         }}
                     />
+
+                    {/* Log expense slide up panel */}
                     <SlideUpPanel
                         isOpen={expanded}
                         onBackButtonClick={() => setExpanded(false)}
-                        title="New expense"
+                        title={getTransactionContent('newExpense')}
                         tagColor="var(--token-color-semantic-expense)"
                         onPanelClose={() => setExpanded(false)}
                     >
                         <ExpenseForm />
                     </SlideUpPanel>
+                    <RecentTransactions />
                 </div>
             </div>
         </div>
