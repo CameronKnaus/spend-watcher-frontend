@@ -1,9 +1,0 @@
-.issueMessage {
-    font-size: var(--body-text-14);
-    color: var(--theme-subdued-text-color);
-    padding-bottom: 1rem;
-}
-
-.transactionWrapper {
-    padding-bottom: 0.75rem;
-}
