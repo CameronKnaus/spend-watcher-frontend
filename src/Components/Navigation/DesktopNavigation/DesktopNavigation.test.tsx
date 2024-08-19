@@ -17,7 +17,7 @@ describe('DesktopNavigation', () => {
 
         expect(screen.getByText('Dashboard')).toBeInTheDocument();
         expect(screen.getByText('Transactions')).toBeInTheDocument();
-        expect(screen.getByText('Recurring Spending')).toBeInTheDocument();
+        expect(screen.getByText('Recurring spending')).toBeInTheDocument();
         expect(screen.getByText('Trends')).toBeInTheDocument();
         expect(screen.getByText('Trips')).toBeInTheDocument();
     });

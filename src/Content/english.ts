@@ -1,6 +1,11 @@
 const locale = {
     dashboard: {
         monthOverview: '{{0}} overview',
+        totalSpent: 'Total spent',
+        discretionaryTotal: 'Discretionary total',
+        recurringTotal: 'Recurring total',
+        spendRatio: 'Discretionary ratio',
+        topCategories: 'Top discretionary categories',
     },
     general: {
         empty: '--',

@@ -10,6 +10,7 @@ import ExpenseForm from 'Components/ExpenseForm/ExpenseForm';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
 import useContent from 'Hooks/useContent';
 import RecentTransactions from './RecentTransactions';
+import TopDiscretionaryCategories from './TopDiscretionaryCategories';
 
 export default function Dashboard() {
     // TODO: Rename expand here to something more pertinent to log expense panel
@@ -31,7 +32,7 @@ export default function Dashboard() {
                 <div className={styles.leftSection}>
                     <div className={styles.spendingGrid}>
                         <ModuleContainer
-                            heading="Total spent"
+                            heading={getContent('totalSpent')}
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-medium'])}
                         >
                             <Currency
@@ -41,7 +42,7 @@ export default function Dashboard() {
                             />
                         </ModuleContainer>
                         <ModuleContainer
-                            heading="Discretionary total"
+                            heading={getContent('discretionaryTotal')}
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
                         >
                             <Currency
@@ -51,7 +52,7 @@ export default function Dashboard() {
                             />
                         </ModuleContainer>
                         <ModuleContainer
-                            heading="Recurring total"
+                            heading={getContent('recurringTotal')}
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
                         >
                             <Currency
@@ -59,6 +60,18 @@ export default function Dashboard() {
                                 amount={-spendingData.summary.recurringTotal.amount}
                                 isGainLoss
                             />
+                        </ModuleContainer>
+                        <ModuleContainer
+                            heading={getContent('spendRatio')}
+                            className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
+                        >
+                            Placeholder dummy
+                        </ModuleContainer>
+                        <ModuleContainer
+                            heading={getContent('topCategories')}
+                            className={clsx([styles.topCategoriesTile, 'background-secondary-elevation-low'])}
+                        >
+                            <TopDiscretionaryCategories />
                         </ModuleContainer>
                     </div>
                 </div>

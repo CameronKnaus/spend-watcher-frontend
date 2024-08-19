@@ -53,3 +53,10 @@
     min-width: 200px;
     flex-wrap: wrap;
 }
+
+.topCategoriesTile {
+    flex-basis: calc(66% - var(--dashboard-column-gap));
+    flex-grow: 1;
+    flex-shrink: 0;
+    min-width: 375px;
+}
