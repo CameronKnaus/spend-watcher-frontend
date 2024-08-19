@@ -13,16 +13,6 @@ export type TransactionTotal = {
     count: number;
 };
 
-export type TransactionIdLists = {
-    allTransactions: TransactionId[];
-    discretionaryTransactions: DiscretionaryTransactionId[];
-    recurringTransactions: RecurringTransactionId[];
-};
-
-export type TotalsByCategory = {
-    [category in SpendingCategory]?: TransactionTotal;
-};
-
 // Summary data for a given list of transactions (includedTransactions)
 export type SpendGroupSummary = {
     total: TransactionTotal;
@@ -31,7 +21,7 @@ export type SpendGroupSummary = {
     includedTransactions: TransactionId[];
 };
 
-export type SummaryData = Omit<SpendGroupSummary, 'includedTransactions'>;
+export type SummaryTotals = Omit<SpendGroupSummary, 'includedTransactions'>;
 
 // Mapped by date in a way that allows sorting by string
 export type TransactionsByDate = Record<DbDate, SpendGroupSummary>;
@@ -56,8 +46,8 @@ export type BaseSpendTransaction = {
 export type DiscretionarySpendTransaction = {
     transactionId: DiscretionaryTransactionId;
     isRecurring: false;
-    note: string | null;
-    linkedTripId: string | null;
+    note?: string;
+    linkedTripId?: string;
 } & BaseSpendTransaction;
 
 // Recurring spend transaction specific attributes
@@ -81,23 +71,28 @@ export interface SpendingDetailsRequestParams {
     endDate: DbDate;
 }
 
-export type CategoryDetails = TransactionTotal & {
+export type CategoryDetails = {
     category: SpendingCategory;
+    amount: number;
+    count: number;
+    percentageOfTotalSpend: number;
+    percentageOfTotalTransactions: number;
     percentageOfDiscretionarySpend: number;
+    percentageOfDiscretionaryTransactions: number;
+    percentageOfRecurringSpend: number;
+    percentageOfRecurringTransactions: number;
 };
 
 export type SpendingDetailsResponse = {
-    categoryTrends: {
-        totalsByCategory: TotalsByCategory;
-        categoryList: CategoryDetails[];
-    };
+    categoryDetailsList: CategoryDetails[];
     transactionDictionary: TransactionDictionary;
     spendTypeRatio: {
         discretionary: number;
         recurring: number;
     };
-    summary: SummaryData;
-    transactionIdLists: TransactionIdLists;
+    summary: SummaryTotals;
+    discretionaryTransactionIdList: DiscretionaryTransactionId[];
+    recurringTransactionIdList: RecurringTransactionId[];
     transactionsByDate: TransactionsByDate;
 };
 // END SPENDING DETAILS API

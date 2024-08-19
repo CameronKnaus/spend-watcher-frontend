@@ -1,18 +1,50 @@
 .topDiscretionaryCategories {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 20px;
+    gap: 8px;
 }
 
 .percentageBar {
+    display: flex;
     flex-basis: 100%;
     flex-grow: 0;
     flex-shrink: 0;
-    height: 8px;
     border-radius: 16px;
+    overflow: clip;
+
+    --percentage-bar-height: 8px;
+    height: var(--percentage-bar-height);
 }
 
 .percentageBarGroup {
-    display: inline-block;
-    height: 100%;
+    height: var(--percentage-bar-height);
+}
+
+.categoryIcon {
+    border-radius: 4px;
+}
+
+.categoryList {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    font-size: var(--font-body-small);
+
+    --category-list-item-gap: 8px;
+    gap: var(--category-list-item-gap);
+}
+
+.categoryListItem {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: start;
+    gap: 8px;
+    justify-self: stretch;
+}
+
+.amountContainer {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 4px;
 }

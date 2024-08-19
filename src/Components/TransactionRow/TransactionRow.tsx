@@ -1,4 +1,4 @@
-import { SpendingCategory, TransactionId } from 'Types/spendTransactionTypes';
+import { SpendingCategory } from 'Types/spendTransactionTypes';
 import styles from './TransactionRow.module.css';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import { ComponentProps } from 'react';
@@ -6,6 +6,7 @@ import { clsx } from 'clsx';
 import useContent from 'Hooks/useContent';
 import Currency from 'Components/Currency/Currency';
 import { FaChevronRight } from 'react-icons/fa';
+import { TransactionId } from 'Types/Services/spending.model';
 
 type TransactionRowPropTypes<T extends TransactionId> = {
     transactionId: T;

@@ -4,9 +4,9 @@ import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
 import { format, isToday, isYesterday, parseISO } from 'date-fns';
 import { useMemo } from 'react';
-import { TransactionsByDate } from 'Hooks/useSpendingService/useSpendingDetailsService';
 import { DbDate } from 'Types/dateTypes';
 import TransactionRow from 'Components/TransactionRow';
+import { TransactionsByDate } from 'Types/Services/spending.model';
 
 export default function RecentTransactions() {
     const getContent = useContent('transactions');
