@@ -1,7 +1,7 @@
 .topDiscretionaryCategories {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 16px;
 }
 
 .percentageBar {
@@ -27,18 +27,20 @@
 .categoryList {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     width: 100%;
     font-size: var(--font-body-small);
 
-    --category-list-item-gap: 8px;
-    gap: var(--category-list-item-gap);
+    --category-list-item-gap: 16px;
+    column-gap: var(--category-list-item-gap);
+    row-gap: 12px;
 }
 
 .categoryListItem {
     display: flex;
     flex-wrap: nowrap;
-    align-items: start;
-    gap: 8px;
+    align-items: space-between;
+    gap: 4px;
     justify-self: stretch;
 }
 
@@ -47,4 +49,17 @@
     align-items: center;
     margin-left: auto;
     gap: 4px;
+}
+
+.percentageValue {
+    font-size: var(--font-caption);
+    color: var(--token-color-text-subdued);
+}
+
+.moreButton {
+    padding: 4px 16px;
+    border-radius: 8px;
+    font-size: var(--font-body-small);
+    margin-left: auto;
+    margin-bottom: 4px;
 }

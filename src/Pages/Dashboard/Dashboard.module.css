@@ -60,3 +60,7 @@
     flex-shrink: 0;
     min-width: 375px;
 }
+
+.logExpenseButton {
+    padding: 16px;
+}

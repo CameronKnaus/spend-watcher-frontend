@@ -34,7 +34,7 @@ export default function TransactionRow<T extends TransactionId>({
             className={clsx(styles.transactionsRow, className)}
             {...attributes}
         >
-            <SpendingCategoryIcon category={category} size={42} />
+            <SpendingCategoryIcon category={category} size={40} />
             <div className={styles.transactionDetails}>
                 <div className={styles.dataRow}>
                     <span>{getCategoryLabel(category)}</span>

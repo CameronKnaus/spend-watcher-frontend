@@ -8,7 +8,6 @@ type SlideUpPanelPropTypes = {
     title: string;
     tagColor: string;
     isOpen: boolean;
-    onPanelClose: () => void;
     forwardButtonText?: string;
     onForwardButtonClick?: () => void;
     backButtonText?: string;
@@ -19,7 +18,6 @@ type SlideUpPanelPropTypes = {
 export default function SlideUpPanel({
     title,
     isOpen,
-    onPanelClose,
     tagColor,
     forwardButtonText,
     onForwardButtonClick,
@@ -60,17 +58,21 @@ export default function SlideUpPanel({
                                 <div className={styles.buttonRow}>
                                     <CustomButton
                                         variant="secondary"
-                                        text={backButtonText ?? 'Cancel'}
                                         layout="full-width"
                                         onClick={onBackButtonClick}
-                                    />
+                                        className={styles.button}
+                                    >
+                                        {backButtonText ?? 'Cancel'}
+                                    </CustomButton>
                                     {onForwardButtonClick && (
                                         <CustomButton
                                             variant="primary"
-                                            text={forwardButtonText ?? 'Confirm'}
                                             layout="full-width"
                                             onClick={onForwardButtonClick}
-                                        />
+                                            className={styles.button}
+                                        >
+                                            {forwardButtonText ?? 'Confirm'}
+                                        </CustomButton>
                                     )}
                                 </div>
                             </div>

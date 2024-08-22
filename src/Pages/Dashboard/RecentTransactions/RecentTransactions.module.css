@@ -1,7 +1,3 @@
-.recentTransactions > h3 {
-    font-size: var(--font-heading-medium);
-}
-
 .dateHeader {
     font-size: var(--font-body-small);
     color: var(--token-color-text-subdued);

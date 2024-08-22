@@ -4,11 +4,13 @@ import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import useContent from 'Hooks/useContent';
 import Currency from 'Components/Currency/Currency';
 import { useEffect, useRef, useState } from 'react';
+import CustomButton from 'Components/CustomButton/CustomButton';
 
 export default function TopDiscretionaryCategories() {
     const containerRef = useRef<HTMLDivElement>(null);
     const { data: spendingData } = useSpendingDetailsService();
     const getCategoryLabel = useContent('SPENDING_CATEGORIES');
+    const getContent = useContent('dashboard');
     const [isVerticalList, setIsVerticalList] = useState(false);
 
     useEffect(() => {
@@ -20,7 +22,6 @@ export default function TopDiscretionaryCategories() {
         function handleResize() {
             if (categoryContainer) {
                 setIsVerticalList(categoryContainer.clientWidth < 550);
-                console.log(containerRef.current?.clientWidth);
             }
         }
 
@@ -69,17 +70,24 @@ export default function TopDiscretionaryCategories() {
                     <div
                         key={`${details.category}-description`}
                         className={styles.categoryListItem}
-                        style={{ flexBasis: isVerticalList ? '100%' : 'calc(50% - var(--category-list-item-gap))' }}
+                        style={{
+                            flexBasis: isVerticalList ? '100%' : 'calc(50% - (var(--category-list-item-gap)) / 2)',
+                        }}
                     >
                         <SpendingCategoryIcon category={details.category} size={20} className={styles.categoryIcon} />
                         <span>{getCategoryLabel(details.category)}</span>
                         <div className={styles.amountContainer}>
                             <Currency amount={-details.amount} isGainLoss />
-                            <span>{`| ${details.percentageOfDiscretionarySpend}%`}</span>
+                            <span
+                                className={styles.percentageValue}
+                            >{`(${details.percentageOfDiscretionarySpend}%)`}</span>
                         </div>
                     </div>
                 ))}
             </div>
+            <CustomButton variant="secondary" onClick={() => {}} className={styles.moreButton}>
+                {getContent('moreLabel')}
+            </CustomButton>
         </div>
     );
 }

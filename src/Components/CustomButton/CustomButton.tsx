@@ -1,11 +1,10 @@
-import { is } from 'date-fns/locale';
 import styles from './CustomButton.module.css';
 import { clsx } from 'clsx';
-import { ComponentProps } from 'react';
+import { ComponentProps, ReactNode } from 'react';
 
 type CustomButtonPropTypes = {
-    text: string;
     onClick: () => void;
+    children: ReactNode;
     variant: 'primary' | 'secondary' | 'tertiary';
     isDisabled?: boolean;
     layout?: 'fit-content' | 'full-width';
@@ -15,12 +14,12 @@ type CustomButtonPropTypes = {
 
 // Background color must be provided by the parent component
 export default function CustomButton({
-    text,
     onClick,
     variant,
     isDisabled = false,
     layout = 'fit-content',
     className = '',
+    children,
 }: CustomButtonPropTypes & ComponentProps<'button'>) {
     function handleClick() {
         if (isDisabled) {
@@ -39,7 +38,7 @@ export default function CustomButton({
             }}
             onClick={handleClick}
         >
-            {text}
+            {children}
         </button>
     );
 }

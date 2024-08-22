@@ -79,12 +79,14 @@ export default function Dashboard() {
                     {/* Log Expense button */}
                     <CustomButton
                         variant="tertiary"
-                        text={getTransactionContent('logExpense')}
                         layout="full-width"
                         onClick={() => {
                             setExpanded(!expanded);
                         }}
-                    />
+                        className={styles.logExpenseButton}
+                    >
+                        {getTransactionContent('logExpense')}
+                    </CustomButton>
 
                     {/* Log expense slide up panel */}
                     <SlideUpPanel
@@ -92,7 +94,6 @@ export default function Dashboard() {
                         onBackButtonClick={() => setExpanded(false)}
                         title={getTransactionContent('newExpense')}
                         tagColor="var(--token-color-semantic-expense)"
-                        onPanelClose={() => setExpanded(false)}
                     >
                         <ExpenseForm />
                     </SlideUpPanel>

@@ -6,6 +6,7 @@ const locale = {
         recurringTotal: 'Recurring total',
         spendRatio: 'Discretionary ratio',
         topCategories: 'Top discretionary categories',
+        moreLabel: 'See more',
     },
     general: {
         empty: '--',
