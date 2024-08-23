@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 import {
     FaCannabis,
     FaCar,
+    FaChargingStation,
     FaCookieBite,
     FaDollarSign,
     FaGasPump,
@@ -40,6 +41,7 @@ const spendCategoryIconMapper: Record<SpendingCategory, ReactElement> = {
     DRINKS: <MdSportsBar />,
     EDUCATION: <MdSchool />,
     ENTERTAINMENT: <MdMovieFilter />,
+    EV_CHARGING: <FaChargingStation />,
     FITNESS: <MdFitnessCenter />,
     FUEL: <FaGasPump />,
     GAMES: <MdVideogameAsset />,

@@ -47,13 +47,14 @@
     --theme-color-tertiary-900: #ffe5eb;
 
     /* Spend Category Colors */
-    --theme-color-spend-category-AIRFARE: #50ce6d;
+    --theme-color-spend-category-AIRFARE: #49c165;
     --theme-color-spend-category-BUSINESS: #ae9209;
     --theme-color-spend-category-CANNABIS: #4c8d1b;
     --theme-color-spend-category-CLOTHING: #cebe79;
     --theme-color-spend-category-DRINKS: #50667f;
     --theme-color-spend-category-EDUCATION: #48bcb0;
     --theme-color-spend-category-ENTERTAINMENT: #de2682;
+    --theme-color-spend-category-EV_CHARGING: #0dcd1d;
     --theme-color-spend-category-FITNESS: #3f3f3f;
     --theme-color-spend-category-LODGING: #a4433d;
     --theme-color-spend-category-FUEL: #b77b43;

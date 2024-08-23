@@ -6,6 +6,7 @@ export enum SpendingCategory {
     DRINKS = 'DRINKS',
     EDUCATION = 'EDUCATION',
     ENTERTAINMENT = 'ENTERTAINMENT',
+    EV_CHARGING = 'EV_CHARGING',
     FITNESS = 'FITNESS',
     FUEL = 'FUEL',
     GAMES = 'GAMES',

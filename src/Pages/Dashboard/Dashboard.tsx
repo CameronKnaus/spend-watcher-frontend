@@ -31,6 +31,7 @@ export default function Dashboard() {
             <div className={styles.contentContainer}>
                 <div className={styles.leftSection}>
                     <div className={styles.spendingGrid}>
+                        {/* Total spent */}
                         <ModuleContainer
                             heading={getContent('totalSpent')}
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-medium'])}
@@ -41,6 +42,8 @@ export default function Dashboard() {
                                 isGainLoss
                             />
                         </ModuleContainer>
+
+                        {/* Discretionary total */}
                         <ModuleContainer
                             heading={getContent('discretionaryTotal')}
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
@@ -51,6 +54,8 @@ export default function Dashboard() {
                                 isGainLoss
                             />
                         </ModuleContainer>
+
+                        {/* Recurring total */}
                         <ModuleContainer
                             heading={getContent('recurringTotal')}
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
@@ -61,12 +66,16 @@ export default function Dashboard() {
                                 isGainLoss
                             />
                         </ModuleContainer>
+
+                        {/* Spend ratio */}
                         <ModuleContainer
                             heading={getContent('spendRatio')}
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
                         >
                             Placeholder dummy
                         </ModuleContainer>
+
+                        {/* Top categories */}
                         <ModuleContainer
                             heading={getContent('topCategories')}
                             className={clsx([styles.topCategoriesTile, 'background-secondary-elevation-low'])}
