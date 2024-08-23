@@ -20,10 +20,6 @@
     height: var(--percentage-bar-height);
 }
 
-.categoryIcon {
-    border-radius: 4px;
-}
-
 .categoryList {
     display: flex;
     flex-wrap: wrap;
@@ -34,26 +30,6 @@
     --category-list-item-gap: 16px;
     column-gap: var(--category-list-item-gap);
     row-gap: 12px;
-}
-
-.categoryListItem {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: space-between;
-    gap: 4px;
-    justify-self: stretch;
-}
-
-.amountContainer {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    gap: 4px;
-}
-
-.percentageValue {
-    font-size: var(--font-caption);
-    color: var(--token-color-text-subdued);
 }
 
 .moreButton {

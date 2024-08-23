@@ -1,16 +1,17 @@
 import useSpendingDetailsService from 'Hooks/useSpendingService/useSpendingDetailsService';
 import styles from './TopDiscretionaryCategories.module.css';
-import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import useContent from 'Hooks/useContent';
-import Currency from 'Components/Currency/Currency';
 import { useEffect, useRef, useState } from 'react';
 import CustomButton from 'Components/CustomButton/CustomButton';
+import { SpendingCategory } from 'Types/spendTransactionTypes';
+import TopCategoryLabel from './TopCategoryLabel/TopCategoryLabel';
+import roundNumber from 'Util/Calculations/roundNumber';
 
 export default function TopDiscretionaryCategories() {
     const containerRef = useRef<HTMLDivElement>(null);
     const { data: spendingData } = useSpendingDetailsService();
     const getCategoryLabel = useContent('SPENDING_CATEGORIES');
-    const getContent = useContent('dashboard');
+    const getContent = useContent('spendingData');
     const [isVerticalList, setIsVerticalList] = useState(false);
 
     useEffect(() => {
@@ -40,6 +41,15 @@ export default function TopDiscretionaryCategories() {
     }
 
     const list = spendingData.categoryDetailsList.slice(0, 4);
+    const topFourTotalAmount = roundNumber(list.reduce((acc, details) => acc + details.amount, 0));
+    const topFourTotalPercentage = roundNumber(
+        list.reduce((acc, details) => acc + details.percentageOfDiscretionarySpend, 0),
+    );
+
+    const otherCategoriesTotalAmount = roundNumber(spendingData.summary.discretionaryTotal.amount - topFourTotalAmount);
+    const otherCategoriesTotalPercentage = roundNumber(100 - topFourTotalPercentage);
+
+    const otherCategoriesColor = 'var(--theme-color-neutral-500)';
 
     return (
         <div ref={containerRef} className={styles.topDiscretionaryCategories}>
@@ -61,29 +71,41 @@ export default function TopDiscretionaryCategories() {
                     style={{
                         flexBasis: 0,
                         flexGrow: 1,
-                        backgroundColor: 'var(--theme-color-neutral-500)',
+                        backgroundColor: otherCategoriesColor,
                     }}
                 />
             </div>
             <div className={styles.categoryList}>
                 {list.map((details) => (
-                    <div
+                    <TopCategoryLabel
                         key={`${details.category}-description`}
-                        className={styles.categoryListItem}
-                        style={{
-                            flexBasis: isVerticalList ? '100%' : 'calc(50% - (var(--category-list-item-gap)) / 2)',
-                        }}
-                    >
-                        <SpendingCategoryIcon category={details.category} size={20} className={styles.categoryIcon} />
-                        <span>{getCategoryLabel(details.category)}</span>
-                        <div className={styles.amountContainer}>
-                            <Currency amount={-details.amount} isGainLoss />
-                            <span
-                                className={styles.percentageValue}
-                            >{`(${details.percentageOfDiscretionarySpend}%)`}</span>
-                        </div>
-                    </div>
+                        label={getCategoryLabel(details.category)}
+                        isVerticalList={isVerticalList}
+                        amount={-details.amount}
+                        percentage={details.percentageOfDiscretionarySpend}
+                        category={details.category}
+                    />
                 ))}
+                <TopCategoryLabel
+                    label={getContent('topFour')}
+                    isVerticalList={isVerticalList}
+                    amount={-topFourTotalAmount}
+                    percentage={topFourTotalPercentage}
+                    category={SpendingCategory.OTHER}
+                    customIconStyles={{
+                        background: `linear-gradient(to right, ${list.map((details) => `var(--theme-color-spend-category-${details.category})`).join(', ')})`,
+                    }}
+                />
+                <TopCategoryLabel
+                    label={getContent('other')}
+                    isVerticalList={isVerticalList}
+                    amount={-otherCategoriesTotalAmount}
+                    percentage={otherCategoriesTotalPercentage}
+                    category={SpendingCategory.OTHER}
+                    customIconStyles={{
+                        backgroundColor: otherCategoriesColor,
+                    }}
+                />
             </div>
             <CustomButton variant="secondary" onClick={() => {}} className={styles.moreButton}>
                 {getContent('moreLabel')}

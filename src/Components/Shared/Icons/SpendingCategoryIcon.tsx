@@ -1,6 +1,7 @@
 import styles from './CategoryIcon.module.css';
 import { clsx } from 'clsx';
 import spendCategoryIconMapper from 'Components/Shared/Icons/spendCategoryIconMapper';
+import { CSSProperties } from 'react';
 import { MdRefresh } from 'react-icons/md';
 import { SpendingCategory } from 'Types/spendTransactionTypes';
 
@@ -9,6 +10,7 @@ type SpendingCategoryIconPropTypes = {
     size: number;
     className?: string;
     showRevolvingIcon?: boolean;
+    style?: CSSProperties;
 };
 
 export default function SpendingCategoryIcon({
@@ -16,16 +18,18 @@ export default function SpendingCategoryIcon({
     size = 32,
     className,
     showRevolvingIcon = false,
+    style,
 }: SpendingCategoryIconPropTypes) {
     const containerStyle = {
         height: size,
         width: size,
         backgroundColor: `var(--theme-color-spend-category-${category})`,
-        fontSize: size * 0.7, // Size of the icon inside is based on font-size
+        fontSize: size * 0.65, // Size of the icon inside is based on font-size
+        ...(style ?? {}),
     };
 
     return (
-        <div className={clsx(styles.icon, className)} style={containerStyle}>
+        <div style={containerStyle} className={clsx(styles.icon, className)}>
             {showRevolvingIcon ? (
                 <>
                     {spendCategoryIconMapper[category]}
