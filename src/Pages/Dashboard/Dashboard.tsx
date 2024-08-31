@@ -11,6 +11,7 @@ import useSpendingDetailsService from 'Hooks/useSpendingService';
 import useContent from 'Hooks/useContent';
 import RecentTransactions from './RecentTransactions';
 import TopDiscretionaryCategories from './TopDiscretionaryCategories';
+import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 
 export default function Dashboard() {
     // TODO: Rename expand here to something more pertinent to log expense panel
@@ -20,10 +21,7 @@ export default function Dashboard() {
     const currentMonth = format(new Date(), 'LLLL');
 
     const { isLoading, isFetching, data: spendingData } = useSpendingDetailsService();
-
-    if (isLoading || isFetching || !spendingData) {
-        return <h1>Placeholder loading</h1>;
-    }
+    const pageLoading = !spendingData || isLoading || isFetching;
 
     return (
         <div className={styles.dashboard}>
@@ -36,11 +34,15 @@ export default function Dashboard() {
                             heading={getContent('totalSpent')}
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-medium'])}
                         >
-                            <Currency
-                                className="font-heading-medium font-thin"
-                                amount={-spendingData.summary.total.amount}
-                                isGainLoss
-                            />
+                            {pageLoading ? (
+                                <SkeletonLoader style={{ height: 30, maxWidth: 130 }} />
+                            ) : (
+                                <Currency
+                                    className="font-heading-medium font-thin"
+                                    amount={-spendingData.summary.total.amount}
+                                    isGainLoss
+                                />
+                            )}
                         </ModuleContainer>
 
                         {/* Discretionary total */}
@@ -48,11 +50,15 @@ export default function Dashboard() {
                             heading={getContent('discretionaryTotal')}
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
                         >
-                            <Currency
-                                className="font-heading-medium font-thin"
-                                amount={-spendingData.summary.discretionaryTotal.amount}
-                                isGainLoss
-                            />
+                            {pageLoading ? (
+                                <SkeletonLoader style={{ height: 30, maxWidth: 130 }} />
+                            ) : (
+                                <Currency
+                                    className="font-heading-medium font-thin"
+                                    amount={-spendingData.summary.discretionaryTotal.amount}
+                                    isGainLoss
+                                />
+                            )}
                         </ModuleContainer>
 
                         {/* Recurring total */}
@@ -60,11 +66,15 @@ export default function Dashboard() {
                             heading={getContent('recurringTotal')}
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
                         >
-                            <Currency
-                                className="font-heading-medium font-thin"
-                                amount={-spendingData.summary.recurringTotal.amount}
-                                isGainLoss
-                            />
+                            {pageLoading ? (
+                                <SkeletonLoader style={{ height: 30, maxWidth: 130 }} />
+                            ) : (
+                                <Currency
+                                    className="font-heading-medium font-thin"
+                                    amount={-spendingData.summary.recurringTotal.amount}
+                                    isGainLoss
+                                />
+                            )}
                         </ModuleContainer>
 
                         {/* Spend ratio */}

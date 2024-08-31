@@ -6,10 +6,12 @@ import CustomButton from 'Components/CustomButton/CustomButton';
 import { SpendingCategory } from 'Types/spendTransactionTypes';
 import TopCategoryLabel from './TopCategoryLabel/TopCategoryLabel';
 import roundNumber from 'Util/Calculations/roundNumber';
+import SkeletonLoader from 'Components/Shared/SkeletonLoader';
+import TopCategoryLabelLoader from './TopCategoryLabel/TopCategoryLabelLoader';
 
 export default function TopDiscretionaryCategories() {
     const containerRef = useRef<HTMLDivElement>(null);
-    const { data: spendingData } = useSpendingDetailsService();
+    const { data: spendingData, isLoading } = useSpendingDetailsService();
     const getCategoryLabel = useContent('SPENDING_CATEGORIES');
     const getContent = useContent('spendingData');
     const [isVerticalList, setIsVerticalList] = useState(false);
@@ -36,8 +38,26 @@ export default function TopDiscretionaryCategories() {
         };
     }, []);
 
-    if (!spendingData) {
-        return null;
+    // Loaders
+    if (!spendingData || isLoading) {
+        return (
+            <div ref={containerRef} className={styles.topDiscretionaryCategories}>
+                <div className={styles.percentageBar}>
+                    <SkeletonLoader />
+                </div>
+                <div className={styles.categoryList}>
+                    <TopCategoryLabelLoader isVerticalList={isVerticalList} />
+                    <TopCategoryLabelLoader isVerticalList={isVerticalList} />
+                    <TopCategoryLabelLoader isVerticalList={isVerticalList} />
+                    <TopCategoryLabelLoader isVerticalList={isVerticalList} />
+                    <TopCategoryLabelLoader isVerticalList={isVerticalList} />
+                    <TopCategoryLabelLoader isVerticalList={isVerticalList} />
+                </div>
+                <CustomButton variant="secondary" className={styles.moreButton} isDisabled>
+                    {getContent('moreLabel')}
+                </CustomButton>
+            </div>
+        );
     }
 
     const list = spendingData.categoryDetailsList.slice(0, 4);

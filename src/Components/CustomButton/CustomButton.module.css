@@ -8,7 +8,7 @@
 }
 
 .disabled {
-    background-color: var(--token-disable-button-background);
+    background-color: var(--token-disable-button-background) !important;
 }
 
 /* Variants based on variant prop, so name of these classes matters */

@@ -21,17 +21,16 @@ export default function TopCategoryLabel({
     percentage,
     customIconStyles,
 }: TopCategoryLabelPropTypes) {
+    const iconSize = 20;
+    const containerStyle = {
+        flexBasis: isVerticalList ? '100%' : 'calc(50% - (var(--category-list-item-gap)) / 2)',
+    };
+
     return (
-        <div
-            key={`${category}-description`}
-            className={styles.categoryListItem}
-            style={{
-                flexBasis: isVerticalList ? '100%' : 'calc(50% - (var(--category-list-item-gap)) / 2)',
-            }}
-        >
+        <div className={styles.categoryListItem} style={containerStyle}>
             <SpendingCategoryIcon
                 category={category}
-                size={20}
+                size={iconSize}
                 className={styles.categoryIcon}
                 style={customIconStyles}
             />

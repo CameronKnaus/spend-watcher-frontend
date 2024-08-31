@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { ComponentProps, ReactNode } from 'react';
 
 type CustomButtonPropTypes = {
-    onClick: () => void;
+    onClick?: () => void;
     children: ReactNode;
     variant: 'primary' | 'secondary' | 'tertiary';
     isDisabled?: boolean;
@@ -26,7 +26,7 @@ export default function CustomButton({
             return;
         }
 
-        onClick();
+        onClick?.();
     }
     const classList = clsx([styles.defaultButton, className, isDisabled && styles.disabled, styles[variant]]);
 

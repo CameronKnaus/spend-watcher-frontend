@@ -117,4 +117,6 @@
 
     --token-navigation-color: var(--theme-color-neutral-100);
     --token-navigation-selected: var(--theme-color-primary-600);
+
+    --token-color-skeleton-loader: var(--theme-color-neutral-700);
 }
