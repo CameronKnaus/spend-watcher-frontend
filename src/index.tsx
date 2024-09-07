@@ -1,14 +1,14 @@
-import './index.css';
-import { createRoot } from 'react-dom/client';
-import PageRoutes from 'Components/PageRoutes/PageRoutes';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import msMapper from 'Util/Time/TimeMapping';
-import { StrictMode } from 'react';
-import SessionChecker from 'Util/Authentication/SessionChecker';
-import { IsMobileContextProvider } from 'Util/IsMobileContext';
-import { BrowserRouter } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import PageRoutes from 'Components/PageRoutes/PageRoutes';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import SessionChecker from 'Util/Authentication/SessionChecker';
+import { IsMobileContextProvider } from 'Util/IsMobileContext';
+import msMapper from 'Util/Time/TimeMapping';
+import './index.css';
 
 const queryClient = new QueryClient({
     defaultOptions: {

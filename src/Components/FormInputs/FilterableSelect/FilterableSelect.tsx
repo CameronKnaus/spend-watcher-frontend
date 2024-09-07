@@ -1,7 +1,7 @@
-import { ComponentProps, forwardRef, ReactNode, useEffect, useRef, useState } from 'react';
-import styles from './FilterableSelect.module.css';
 import useContent from 'Hooks/useContent';
 import syntheticChangeEvent from 'Util/Events/syntheticChangeEvent';
+import { ComponentProps, forwardRef, ReactNode, useEffect, useRef, useState } from 'react';
+import styles from './FilterableSelect.module.css';
 
 export type FilterableSelectOptionType<T> = {
     value: T;

@@ -19,6 +19,7 @@ export enum SpendingCategory {
     INSURANCE = 'INSURANCE',
     LODGING = 'LODGING',
     MATERIAL_ITEMS = 'MATERIAL_ITEMS',
+    NICOTINE = 'NICOTINE',
     OTHER = 'OTHER',
     PETS = 'PETS',
     RESTAURANTS = 'RESTAURANTS',

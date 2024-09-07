@@ -1,5 +1,5 @@
 import { DbDate } from 'Types/dateTypes';
-import { SpendingCategory } from 'Types/spendTransactionTypes';
+import { SpendingCategory } from 'Types/SpendingCategory';
 
 // SPEND RELATED TYPES BEGIN --------------------------------------------
 export type RecurringTransactionId = `${'Recurring-'}${number}`;
@@ -11,6 +11,10 @@ export type TransactionTotal = {
     amount: number;
     // Total number of transactions
     count: number;
+};
+
+export type TotalsByCategory = {
+    [category in SpendingCategory]?: SummaryTotals;
 };
 
 // Summary data for a given list of transactions (includedTransactions)
@@ -95,4 +99,5 @@ export type SpendingDetailsResponse = {
     recurringTransactionIdList: RecurringTransactionId[];
     transactionsByDate: TransactionsByDate;
 };
+
 // END SPENDING DETAILS API

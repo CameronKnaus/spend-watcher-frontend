@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import ServiceRoutes from 'Constants/ServiceRoutes';
 import { useLocation, useNavigate } from 'react-router';
-import { useQuery } from '@tanstack/react-query';
-import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
 
 // TODO: Needs fixed
 // The purpose of this component is to check if the user is authenticated. If not, redirect to the auth page

@@ -1,14 +1,14 @@
-import useContent from 'Hooks/useContent';
-import styles from './ExpenseForm.module.css';
-import { useForm } from 'react-hook-form';
-import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
 import DatePicker from 'Components/FormInputs/DatePickerController/DatePickerController';
-import FilterableSelect from 'Components/FormInputs/FilterableSelect/FilterableSelectController';
 import { FilterableSelectOptionType } from 'Components/FormInputs/FilterableSelect/FilterableSelect';
+import FilterableSelect from 'Components/FormInputs/FilterableSelect/FilterableSelectController';
+import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
-import { SpendingCategory } from 'Types/spendTransactionTypes';
+import useContent from 'Hooks/useContent';
+import { useForm } from 'react-hook-form';
+import { SpendingCategory } from 'Types/SpendingCategory';
+import styles from './ExpenseForm.module.css';
 
-interface ExpenseFormInputs {
+export interface ExpenseFormInputs {
     amount: number;
     category: SpendingCategory;
     note: string;
@@ -17,33 +17,33 @@ interface ExpenseFormInputs {
     selectedTrip: boolean;
 }
 
-export default function ExpenseForm() {
-    const { register, control, handleSubmit } = useForm<ExpenseFormInputs>();
+type ExpenseFormPropTypes = {
+    onSubmit: (data: ExpenseFormInputs) => void;
+} & ReturnType<typeof useForm<ExpenseFormInputs>>;
+
+export default function ExpenseForm({ onSubmit, ...hookForm }: ExpenseFormPropTypes) {
     const getContent = useContent('transactions');
     const getSpendCategoryLabel = useContent('SPENDING_CATEGORIES');
 
     return (
-        <form className={styles.transactionForm}>
+        <form className={styles.transactionForm} onSubmit={hookForm.handleSubmit(onSubmit)}>
             {/* Amount spent */}
-            <label>{getContent('amountLabel')} </label>
+            <label>{getContent('amountLabel')}</label>
             <MoneyInput
+                isRequired
+                control={hookForm.control}
+                name="amount"
                 placeholder={getContent('amountPlaceholder')}
+                hookFormSetValue={hookForm.setValue}
                 className={styles.textInput}
-                {...register('amount', { required: true })}
             />
 
             <label style={{ width: 100 }}>{getContent('categoryLabel')}</label>
-            {/* <SpendingCategoryInputs
-                defaultNoSelectionToOther
-                textInputStyles={styles.textInput}
-                value={category}
-                onChange={setCategory}
-            /> */}
             <FilterableSelect
-                control={control}
+                control={hookForm.control}
                 name="category"
                 className={styles.textInput}
-                noSelectionText={getContent('emptyPlaceholder')}
+                noSelectionText={getSpendCategoryLabel(SpendingCategory.OTHER)}
                 optionsList={generateSpendCategoryList(getSpendCategoryLabel)}
             />
 
@@ -53,13 +53,13 @@ export default function ExpenseForm() {
                 className={styles.textInput}
                 placeholder={getContent('notesPlaceholder')}
                 autoComplete="off"
-                {...register('note', { maxLength: 60 })}
+                {...hookForm.register('note', { maxLength: 60 })}
             />
 
             {/* Date of the transaction */}
             <label>{getContent('dateLabel')}</label>
             <DatePicker
-                control={control}
+                control={hookForm.control}
                 name="date"
                 disableFuture
                 views={['year', 'month', 'day']}
@@ -70,7 +70,7 @@ export default function ExpenseForm() {
             {/* Trip the transaction is linked to */}
             <label>{getContent('tripLabel')}</label>
             <FilterableSelect
-                control={control}
+                control={hookForm.control}
                 name="linkedTripId"
                 opens="up"
                 className={styles.textInput}

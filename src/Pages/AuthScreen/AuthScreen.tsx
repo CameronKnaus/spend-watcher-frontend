@@ -1,9 +1,9 @@
-import React from 'react';
-import styles from './AuthScreen.module.css';
-import ServiceRoutes from 'Constants/ServiceRoutes';
 import axios from 'axios';
-import { useNavigate } from 'react-router';
 import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
+import ServiceRoutes from 'Constants/ServiceRoutes';
+import React from 'react';
+import { useNavigate } from 'react-router';
+import styles from './AuthScreen.module.css';
 axios.defaults.withCredentials = true;
 
 enum REQUEST_TYPES {

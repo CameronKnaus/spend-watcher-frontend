@@ -1,8 +1,8 @@
+import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
+import { FaChartPie, FaHistory, FaHome, FaPlaneDeparture, FaReceipt } from 'react-icons/fa';
 import { Outlet } from 'react-router-dom';
 import styles from './MobileNavigation.module.css';
 import MobileNavItem from './MobileNavItem';
-import { FaChartPie, FaHistory, FaHome, FaPlaneDeparture, FaReceipt } from 'react-icons/fa';
-import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
 
 export default function MobileNavigation() {
     return (

@@ -1,9 +1,8 @@
-import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
 import { MemoryRouter, BrowserRouter as Router } from 'react-router-dom';
 import DesktopNavigation from './DesktopNavigation';
-import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
-import userEvent from '@testing-library/user-event';
 
 const ANIMATION_WAIT_DURATION = 2500;
 

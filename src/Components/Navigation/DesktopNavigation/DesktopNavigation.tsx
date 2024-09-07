@@ -1,10 +1,10 @@
-import styles from './DesktopNavigation.module.css';
-import { FaChartPie, FaHistory, FaHome, FaPlaneDeparture, FaReceipt } from 'react-icons/fa';
 import { animated, useChain, useSpring, useSpringRef } from '@react-spring/web';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import DesktopNavItem from './DesktopNavItem';
-import { Outlet, useLocation } from 'react-router-dom';
 import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { FaChartPie, FaHistory, FaHome, FaPlaneDeparture, FaReceipt } from 'react-icons/fa';
+import { Outlet, useLocation } from 'react-router-dom';
+import styles from './DesktopNavigation.module.css';
+import DesktopNavItem from './DesktopNavItem';
 
 // Time user needs to hover on menu before it expands
 const MENU_OPEN_DELAY = 1500;

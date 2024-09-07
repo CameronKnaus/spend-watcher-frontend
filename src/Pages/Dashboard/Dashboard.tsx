@@ -1,17 +1,16 @@
-import styles from './Dashboard.module.css';
-import { format } from 'date-fns';
-import CustomButton from 'Components/CustomButton/CustomButton';
-import { useState } from 'react';
-import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
-import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import { clsx } from 'clsx';
 import Currency from 'Components/Currency/Currency';
-import ExpenseForm from 'Components/ExpenseForm/ExpenseForm';
-import useSpendingDetailsService from 'Hooks/useSpendingService';
+import CustomButton from 'Components/CustomButton/CustomButton';
+import ExpenseFormPanel from 'Components/ExpenseForm/ExpenseFormPanel';
+import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
+import SkeletonLoader from 'Components/Shared/SkeletonLoader';
+import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
+import useSpendingDetailsService from 'Hooks/useSpendingService';
+import { useState } from 'react';
+import styles from './Dashboard.module.css';
 import RecentTransactions from './RecentTransactions';
 import TopDiscretionaryCategories from './TopDiscretionaryCategories';
-import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 
 export default function Dashboard() {
     // TODO: Rename expand here to something more pertinent to log expense panel
@@ -108,14 +107,7 @@ export default function Dashboard() {
                     </CustomButton>
 
                     {/* Log expense slide up panel */}
-                    <SlideUpPanel
-                        isOpen={expanded}
-                        onBackButtonClick={() => setExpanded(false)}
-                        title={getTransactionContent('newExpense')}
-                        tagColor="var(--token-color-semantic-expense)"
-                    >
-                        <ExpenseForm />
-                    </SlideUpPanel>
+                    <ExpenseFormPanel setExpanded={setExpanded} expanded={expanded} />
                     <RecentTransactions />
                 </div>
             </div>

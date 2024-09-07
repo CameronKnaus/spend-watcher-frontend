@@ -1,7 +1,7 @@
-import styles from './CategoryIcon.module.css';
 import { clsx } from 'clsx';
-import accountCategoryIconMapper from './accountCategoryIconMapper';
 import { AccountCategory } from 'Types/accountTypes';
+import accountCategoryIconMapper from './accountCategoryIconMapper';
+import styles from './CategoryIcon.module.css';
 
 type AccountCategoryIconPropTypes = {
     category: AccountCategory;

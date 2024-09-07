@@ -54,7 +54,7 @@
     overflow-y: scroll;
 }
 
-.buttonRow {
+.bottomSheet {
     background-color: var(--token-color-background-primary);
     border-top: 2px solid var(--token-color-border-light);
     padding: 16px;
@@ -66,6 +66,6 @@
     right: 0;
 }
 
-.button {
+.bottomSheet > button {
     padding: 16px;
 }

@@ -5,7 +5,7 @@ import { SpendingDetailsResponse } from 'Types/Services/spending.model';
 
 export default function useSpendingDetailsService() {
     const startDate = '2024-08-01';
-    const endDate = '2024-08-22';
+    const endDate = '2024-08-31';
 
     return useQuery<SpendingDetailsResponse>({
         queryKey: ['spending', startDate, endDate],

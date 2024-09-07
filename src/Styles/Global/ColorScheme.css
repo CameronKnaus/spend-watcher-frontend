@@ -67,11 +67,12 @@
     --theme-color-spend-category-HOUSING: #577590;
     --theme-color-spend-category-INSURANCE: #bc4848;
     --theme-color-spend-category-MATERIAL_ITEMS: #f20d2b;
+    --theme-color-spend-category-NICOTINE: #707670;
     --theme-color-spend-category-OTHER: #776871;
     --theme-color-spend-category-PETS: #888d53;
     --theme-color-spend-category-RESTAURANTS: #ff8442;
     --theme-color-spend-category-TAXES: #f15f62;
-    --theme-color-spend-category-TRANSPORTATION: #f0c808;
+    --theme-color-spend-category-TRANSPORTATION: #e5ad04;
     --theme-color-spend-category-TREATS: #f1b7df;
     --theme-color-spend-category-UTILITIES: #2ba1d4;
     --theme-color-spend-category-VEHICLE: #fc440f;
@@ -102,8 +103,8 @@
 
     /* Button Colors */
     --token-disable-button-background: var(--theme-color-neutral-400);
-    --token-button-primary-color: var(--theme-color-primary-600);
-    --token-button-primary-hover-color: var(--theme-color-primary-500);
+    --token-button-primary-color: var(--theme-color-primary-500);
+    --token-button-primary-hover-color: var(--theme-color-primary-400);
     --token-button-secondary-color: var(--theme-color-secondary-200);
     --token-button-secondary-hover-color: var(--theme-color-secondary-100);
     --token-button-tertiary-color: var(--theme-color-tertiary-500);

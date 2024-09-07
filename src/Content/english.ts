@@ -30,6 +30,7 @@ const locale = {
         tripLabel: 'Linked Trip',
         notesPlaceholder: 'About your expense',
         amountPlaceholder: '$0.00',
+        submit: 'Submit',
     },
     ACCOUNT_CATEGORIES: {
         CHECKING: 'Checking',
@@ -61,6 +62,7 @@ const locale = {
         CANNABIS: 'Cannabis',
         PETS: 'Pets',
         INSURANCE: 'Insurance',
+        NICOTINE: 'Nicotine',
         GAMES: 'Games',
         HOBBY: 'Hobbies',
         TREATS: 'Treats',

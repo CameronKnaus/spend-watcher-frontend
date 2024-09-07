@@ -1,13 +1,13 @@
-import useSpendingDetailsService from 'Hooks/useSpendingService/useSpendingDetailsService';
-import styles from './TopDiscretionaryCategories.module.css';
-import useContent from 'Hooks/useContent';
-import { useEffect, useRef, useState } from 'react';
 import CustomButton from 'Components/CustomButton/CustomButton';
-import { SpendingCategory } from 'Types/spendTransactionTypes';
-import TopCategoryLabel from './TopCategoryLabel/TopCategoryLabel';
-import roundNumber from 'Util/Calculations/roundNumber';
 import SkeletonLoader from 'Components/Shared/SkeletonLoader';
+import useContent from 'Hooks/useContent';
+import useSpendingDetailsService from 'Hooks/useSpendingService/useSpendingDetailsService';
+import { useEffect, useRef, useState } from 'react';
+import { SpendingCategory } from 'Types/SpendingCategory';
+import roundNumber from 'Util/Calculations/roundNumber';
+import TopCategoryLabel from './TopCategoryLabel/TopCategoryLabel';
 import TopCategoryLabelLoader from './TopCategoryLabel/TopCategoryLabelLoader';
+import styles from './TopDiscretionaryCategories.module.css';
 
 export default function TopDiscretionaryCategories() {
     const containerRef = useRef<HTMLDivElement>(null);

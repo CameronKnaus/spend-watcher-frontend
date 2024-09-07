@@ -1,3 +1,4 @@
+import { SpendingCategory } from 'Types/SpendingCategory';
 import { ReactElement } from 'react';
 import {
     FaCannabis,
@@ -9,6 +10,7 @@ import {
     FaGift,
     FaHome,
     FaMoneyBillAlt,
+    FaSmoking,
     FaTshirt,
 } from 'react-icons/fa';
 import {
@@ -31,7 +33,6 @@ import {
     MdVideogameAsset,
     MdWaterDrop,
 } from 'react-icons/md';
-import { SpendingCategory } from 'Types/spendTransactionTypes';
 
 const spendCategoryIconMapper: Record<SpendingCategory, ReactElement> = {
     AIRFARE: <MdLocalAirport />,
@@ -54,6 +55,7 @@ const spendCategoryIconMapper: Record<SpendingCategory, ReactElement> = {
     INSURANCE: <MdShield />,
     LODGING: <MdHotel />,
     MATERIAL_ITEMS: <MdShoppingBag />,
+    NICOTINE: <FaSmoking />,
     OTHER: <FaDollarSign />,
     PETS: <MdPets />,
     RESTAURANTS: <MdFastfood />,

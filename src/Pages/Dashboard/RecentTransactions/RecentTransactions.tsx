@@ -1,12 +1,12 @@
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
-import styles from './RecentTransactions.module.css';
+import TransactionRow from 'Components/TransactionRow';
+import { format, isToday, isYesterday, parseISO } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
-import { format, isToday, isYesterday, parseISO } from 'date-fns';
 import { useMemo } from 'react';
 import { DbDate } from 'Types/dateTypes';
-import TransactionRow from 'Components/TransactionRow';
 import { TransactionsByDate } from 'Types/Services/spending.model';
+import styles from './RecentTransactions.module.css';
 
 export default function RecentTransactions() {
     const getContent = useContent('transactions');

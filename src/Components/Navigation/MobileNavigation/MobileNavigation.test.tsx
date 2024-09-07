@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import MobileNavigation from './MobileNavigation';
 
 // Mock useLocation from react-router-dom

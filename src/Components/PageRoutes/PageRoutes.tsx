@@ -1,12 +1,9 @@
-// import Dashboard from 'Pages/Dashboard/Dashboard';
-import { Routes, Route } from 'react-router-dom';
-import AuthScreen from 'Pages/AuthScreen/AuthScreen';
-import { useIsMobile } from 'Util/IsMobileContext';
-import MobileNavigation from 'Components/Navigation/MobileNavigation/MobileNavigation';
 import DesktopNavigation from 'Components/Navigation/DesktopNavigation/DesktopNavigation';
+import MobileNavigation from 'Components/Navigation/MobileNavigation/MobileNavigation';
+import AuthScreen from 'Pages/AuthScreen/AuthScreen';
 import Dashboard from 'Pages/Dashboard/Dashboard';
-// import SpendingBreakdown from 'Pages/SpendingBreakdown/SpendingBreakdown';
-// import RecurringSpending from 'Pages/RecurringSpending/RecurringSpending';
+import { Route, Routes } from 'react-router-dom';
+import { useIsMobile } from 'Util/IsMobileContext';
 
 export enum PageName {
     dashboard = 'dashboard',
@@ -39,9 +36,6 @@ export default function PageRoutes() {
                 <Route path={PAGE_ROUTES.trips} element={<h1>Trips</h1>} />
             </Route>
             <Route path={PAGE_ROUTES.auth} element={<AuthScreen />} />
-
-            {/* <Route path={PAGE_ROUTES.spendingBreakdown} element={<SpendingBreakdown />} />
-                <Route path={PAGE_ROUTES.recurringSpending} element={<RecurringSpending />} /> */}
         </Routes>
     );
 }

@@ -1,9 +1,9 @@
-import styles from './CategoryIcon.module.css';
 import { clsx } from 'clsx';
 import spendCategoryIconMapper from 'Components/Shared/Icons/spendCategoryIconMapper';
 import { CSSProperties } from 'react';
 import { MdRefresh } from 'react-icons/md';
-import { SpendingCategory } from 'Types/spendTransactionTypes';
+import { SpendingCategory } from 'Types/SpendingCategory';
+import styles from './CategoryIcon.module.css';
 
 type SpendingCategoryIconPropTypes = {
     category: SpendingCategory;

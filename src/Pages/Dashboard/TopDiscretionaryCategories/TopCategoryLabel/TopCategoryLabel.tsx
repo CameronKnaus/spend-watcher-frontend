@@ -1,8 +1,8 @@
 import Currency from 'Components/Currency/Currency';
-import styles from './TopCategoryLabel.module.css';
-import { SpendingCategory } from 'Types/spendTransactionTypes';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import { CSSProperties } from 'react';
+import { SpendingCategory } from 'Types/SpendingCategory';
+import styles from './TopCategoryLabel.module.css';
 
 type TopCategoryLabelPropTypes = {
     label: string;

@@ -24,7 +24,17 @@
         "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
         "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
         "strict": true /* Enable all strict type-checking options. */,
-        "skipLibCheck": true /* Skip type checking all .d.ts files. */
+        "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+        "paths": {
+            // TODO: Revisit and use these aliases after ejecting Create React App
+            "@type/*": ["src/Types/*"],
+            "@components/*": ["src/Components/*"],
+            "@pages/*": ["src/Pages/*"],
+            "@utils/*": ["src/Util/*"],
+            "@hooks/*": ["src/Hooks/*"],
+            "@constants/*": ["src/Constants/*"],
+            "@content/*": ["src/Content/*"]
+        }
     },
     "include": ["./src", "./custom.d.ts"],
     "exclude": ["./src/Legacy"]

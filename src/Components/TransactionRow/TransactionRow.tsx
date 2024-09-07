@@ -1,12 +1,12 @@
-import { SpendingCategory } from 'Types/spendTransactionTypes';
-import styles from './TransactionRow.module.css';
-import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
-import { ComponentProps } from 'react';
 import { clsx } from 'clsx';
-import useContent from 'Hooks/useContent';
 import Currency from 'Components/Currency/Currency';
+import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
+import useContent from 'Hooks/useContent';
+import { ComponentProps } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import { TransactionId } from 'Types/Services/spending.model';
+import { SpendingCategory } from 'Types/SpendingCategory';
+import styles from './TransactionRow.module.css';
 
 type TransactionRowPropTypes<T extends TransactionId> = {
     transactionId: T;
