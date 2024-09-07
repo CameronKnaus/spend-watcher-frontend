@@ -54,6 +54,9 @@ body {
 body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+
+    /* default background color */
+    background-color: var(--token-color-background-secondary);
 }
 
 /*

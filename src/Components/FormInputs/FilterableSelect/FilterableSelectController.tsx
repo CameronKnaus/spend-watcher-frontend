@@ -21,9 +21,7 @@ export default function FilterableSelectController<TOptionName extends string, K
         <Controller
             control={control}
             name={name}
-            render={({ field: { value, onBlur, onChange, ref } }) => (
-                <FilterableSelect {...filterSelectProps} ref={ref} value={value} onChange={onChange} onBlur={onBlur} />
-            )}
+            render={({ field }) => <FilterableSelect {...field} {...filterSelectProps} />}
         />
     );
 }

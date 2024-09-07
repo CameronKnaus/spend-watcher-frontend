@@ -12,6 +12,7 @@ const SERVICE_ROUTES: Record<string, string> = {
     postRegister: domainName + '/user/v1/register',
     getCheckAuthentication: domainName + '/user/v1/verify',
     getSpendingDetails: domainName + '/spending/v1/details',
+    postDiscretionarySpending: domainName + '/spending/v1/discretionary/add',
 
     // transactionDateRange: spendApi('/available-range'), // GET
     // spendingSummary: spendApi('/summary'), // GET

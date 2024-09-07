@@ -1,8 +1,3 @@
-/* TODO: REMOVE BODY TAG TARGET */
-body {
-    background-color: var(--token-color-background-secondary);
-}
-
 .desktopNav {
     position: fixed;
     top: 0;
@@ -14,6 +9,8 @@ body {
     padding: 16px 0;
     border-right: var(--token-color-border-tertiary) 1px solid;
     width: 'fit-content';
+    isolation: 'isolate';
+    z-index: 1;
 }
 
 .menuList {

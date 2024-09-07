@@ -5,21 +5,13 @@ import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import useContent from 'Hooks/useContent';
 import { useForm } from 'react-hook-form';
+import { DiscretionaryAddRequestParams } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './ExpenseForm.module.css';
 
-export interface ExpenseFormInputs {
-    amount: number;
-    category: SpendingCategory;
-    note: string;
-    date: Date;
-    linkedTripId: string;
-    selectedTrip: boolean;
-}
-
 type ExpenseFormPropTypes = {
-    onSubmit: (data: ExpenseFormInputs) => void;
-} & ReturnType<typeof useForm<ExpenseFormInputs>>;
+    onSubmit: (data: DiscretionaryAddRequestParams) => void;
+} & ReturnType<typeof useForm<DiscretionaryAddRequestParams>>;
 
 export default function ExpenseForm({ onSubmit, ...hookForm }: ExpenseFormPropTypes) {
     const getContent = useContent('transactions');
@@ -32,13 +24,13 @@ export default function ExpenseForm({ onSubmit, ...hookForm }: ExpenseFormPropTy
             <MoneyInput
                 isRequired
                 control={hookForm.control}
-                name="amount"
+                name="amountSpent"
                 placeholder={getContent('amountPlaceholder')}
                 hookFormSetValue={hookForm.setValue}
                 className={styles.textInput}
             />
 
-            <label style={{ width: 100 }}>{getContent('categoryLabel')}</label>
+            <label>{getContent('categoryLabel')}</label>
             <FilterableSelect
                 control={hookForm.control}
                 name="category"
@@ -59,8 +51,9 @@ export default function ExpenseForm({ onSubmit, ...hookForm }: ExpenseFormPropTy
             {/* Date of the transaction */}
             <label>{getContent('dateLabel')}</label>
             <DatePicker
+                isRequired
                 control={hookForm.control}
-                name="date"
+                name="spentDate"
                 disableFuture
                 views={['year', 'month', 'day']}
                 format="MMMM do, yyyy"

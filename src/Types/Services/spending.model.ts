@@ -99,5 +99,8 @@ export type SpendingDetailsResponse = {
     recurringTransactionIdList: RecurringTransactionId[];
     transactionsByDate: TransactionsByDate;
 };
-
 // END SPENDING DETAILS API
+
+// LOG DISCRETIONARY API --- /api/spending/v1/discretionary/add
+export type DiscretionaryAddRequestParams = Omit<DiscretionarySpendTransaction, 'transactionId' | 'isRecurring'>;
+// END LOG DISCRETIONARY API

@@ -23,7 +23,7 @@ export default function MoneyInput<T extends FieldValues>({
             control={control}
             name={name}
             rules={{ required: isRequired }}
-            render={({ field: { ref, ...rest } }) => (
+            render={({ field: { ref, onChange, ...rest } }) => (
                 <NumericFormat
                     thousandSeparator=","
                     decimalSeparator="."
@@ -31,6 +31,7 @@ export default function MoneyInput<T extends FieldValues>({
                     decimalScale={2}
                     getInputRef={ref}
                     onValueChange={({ floatValue }) => {
+                        onChange();
                         // @ts-expect-error I should figure out the proper typing of this but it works for now
                         hookFormSetValue(name, floatValue);
                     }}

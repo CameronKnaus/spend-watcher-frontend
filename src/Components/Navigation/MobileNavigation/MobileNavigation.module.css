@@ -9,6 +9,8 @@
     left: 0;
     right: 0;
     min-width: var(--breakpoint-min-supported-width);
+    isolation: isolate;
+    z-index: 1;
 }
 
 .menuItem {

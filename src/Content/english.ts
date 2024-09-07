@@ -14,6 +14,8 @@ const locale = {
     },
     general: {
         empty: '--',
+        submit: 'Submit',
+        cancel: 'Cancel',
     },
     transactions: {
         recent: 'Recent transactions',
@@ -30,7 +32,6 @@ const locale = {
         tripLabel: 'Linked Trip',
         notesPlaceholder: 'About your expense',
         amountPlaceholder: '$0.00',
-        submit: 'Submit',
     },
     ACCOUNT_CATEGORIES: {
         CHECKING: 'Checking',

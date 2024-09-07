@@ -10,15 +10,6 @@ import DesktopNavItem from './DesktopNavItem';
 const MENU_OPEN_DELAY = 1500;
 const DEFAULT_WIDTH = 68;
 
-function getScrollWidth(menuListRef: React.RefObject<HTMLDivElement>) {
-    if (menuListRef.current) {
-        const padding = 40;
-        return menuListRef.current.scrollWidth + padding;
-    }
-
-    return DEFAULT_WIDTH;
-}
-
 // This component turned out rough
 export default function DesktopNavigation() {
     const [menuExpanded, setMenuExpanded] = useState(false);
@@ -26,7 +17,15 @@ export default function DesktopNavigation() {
     const menuListRef = useRef<HTMLDivElement>(null);
     // If not memoized, the scrollWidth will grow on each additional render
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const expandedWidth = useMemo(() => getScrollWidth(menuListRef), [menuListRef.current]);
+    const expandedWidth = useMemo(() => {
+        // get scroll width
+        if (menuListRef.current) {
+            const padding = 40;
+            return menuListRef.current.scrollWidth + padding;
+        }
+
+        return DEFAULT_WIDTH;
+    }, []);
     const location = useLocation();
 
     const containerSpringRef = useSpringRef();
