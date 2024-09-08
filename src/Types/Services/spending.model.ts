@@ -1,5 +1,6 @@
 import { DbDate } from 'Types/dateTypes';
 import { SpendingCategory } from 'Types/SpendingCategory';
+import { z as zod } from 'zod';
 
 // SPEND RELATED TYPES BEGIN --------------------------------------------
 export type RecurringTransactionId = `${'Recurring-'}${number}`;
@@ -70,10 +71,12 @@ export type SpendTransaction = RecurringSpendTransaction | DiscretionarySpendTra
 // SPEND RELATED TYPES END --------------------------------------------
 
 // SPENDING DETAILS API --- /api/spending/v1/details
-export type SpendingDetailsRequestParams = {
-    startDate: DbDate;
-    endDate: DbDate;
-};
+export const v1DetailsSchema = zod.object({
+    startDate: zod.string().date(),
+    endDate: zod.string().date(),
+});
+
+export type SpendingDetailsRequestParams = zod.infer<typeof v1DetailsSchema>;
 
 export type CategoryDetails = {
     category: SpendingCategory;
@@ -102,5 +105,12 @@ export type SpendingDetailsResponse = {
 // END SPENDING DETAILS API
 
 // LOG DISCRETIONARY API --- /api/spending/v1/discretionary/add
-export type DiscretionaryAddRequestParams = Omit<DiscretionarySpendTransaction, 'transactionId' | 'isRecurring'>;
+export const v1DiscretionaryAddSchema = zod.object({
+    category: zod.nativeEnum(SpendingCategory),
+    amountSpent: zod.number().safe().positive(),
+    spentDate: zod.string().date(),
+    note: zod.string().trim().max(255),
+    linkedTripId: zod.string().uuid().optional(),
+});
+export type DiscretionaryAddRequestParams = zod.infer<typeof v1DiscretionaryAddSchema>;
 // END LOG DISCRETIONARY API

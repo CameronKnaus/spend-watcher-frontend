@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import CustomButton from 'Components/CustomButton/CustomButton';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
@@ -6,7 +7,7 @@ import useContent from 'Hooks/useContent';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaTrashAlt } from 'react-icons/fa';
-import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
+import { DiscretionarySpendTransaction, v1DiscretionaryAddSchema } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import ExpenseForm, { ExpenseFormAttributes } from './DiscretionaryExpenseForm';
 import styles from './DiscretionaryExpenseForm.module.css';
@@ -26,7 +27,13 @@ export default function DiscretionarySpendPanel({
     const editMode = Boolean(transactionToEdit);
     const getContent = useContent('transactions');
     const getGeneralContent = useContent('general');
-    const form = useForm<ExpenseFormAttributes>();
+    const form = useForm<ExpenseFormAttributes>({
+        resolver: zodResolver(v1DiscretionaryAddSchema),
+        mode: 'onChange', // Least performant but not a concern here
+        defaultValues: {
+            category: SpendingCategory.OTHER,
+        },
+    });
 
     useEffect(() => {
         form.reset(transactionToEdit);
@@ -50,8 +57,6 @@ export default function DiscretionarySpendPanel({
             // New transaction
             const payload = {
                 ...submission,
-                // New transactions can have categories undefined if not selected (defaulting to OTHER)
-                category: submission.category ?? SpendingCategory.OTHER,
             };
 
             axios.post(SERVICE_ROUTES.postAddDiscretionarySpending, payload);
@@ -71,7 +76,7 @@ export default function DiscretionarySpendPanel({
                         {getGeneralContent('cancel')}
                     </CustomButton>
                     <CustomButton
-                        isDisabled={form.validationStatus === 'invalid'}
+                        isDisabled={!form.formState.isValid}
                         variant="primary"
                         onClick={form.handleSubmit(onSubmit)}
                         layout="full-width"

@@ -56,7 +56,7 @@ export default function DiscretionaryExpenseForm({ onSubmit, ...hookForm }: Disc
                 control={hookForm.control}
                 name="category"
                 className={styles.textInput}
-                noSelectionText={getSpendCategoryLabel(SpendingCategory.OTHER)}
+                defaultValue={SpendingCategory.OTHER}
                 optionsList={generateSpendCategoryList(getSpendCategoryLabel)}
             />
 

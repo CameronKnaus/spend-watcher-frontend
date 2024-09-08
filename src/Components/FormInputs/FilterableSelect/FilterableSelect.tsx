@@ -11,13 +11,13 @@ export type FilterableSelectOptionType<T> = {
 
 export type FilterableSelectPropTypes<T> = {
     opens?: 'up' | 'down';
-    noSelectionText: string;
+    noSelectionText?: string;
     clearLabel?: string;
     optionsList: FilterableSelectOptionType<T>[];
 } & ComponentProps<'input'>;
 
 function FilterableSelectComponent<T extends string>(
-    { opens = 'down', clearLabel, noSelectionText, optionsList, ...props }: FilterableSelectPropTypes<T>,
+    { opens = 'down', clearLabel, noSelectionText = '', optionsList, ...props }: FilterableSelectPropTypes<T>,
     ref: React.ForwardedRef<HTMLInputElement>,
 ) {
     const [selectedValue, setSelectedValue] = useState<FilterableSelectOptionType<T> | null>(null);
