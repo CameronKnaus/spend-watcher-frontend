@@ -100,6 +100,7 @@
     --token-color-semantic-gain: var(--theme-color-primary-500);
     --token-color-semantic-loss: var(--theme-color-tertiary-600);
     --token-color-semantic-expense: var(--theme-color-tertiary-500);
+    --token-color-semantic-danger: var(--theme-color-tertiary-600);
 
     /* Button Colors */
     --token-disable-button-background: var(--theme-color-neutral-400);

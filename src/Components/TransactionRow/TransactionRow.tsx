@@ -4,11 +4,11 @@ import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import useContent from 'Hooks/useContent';
 import { ComponentProps } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
-import { TransactionId } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './TransactionRow.module.css';
+import { TransactionId } from 'Types/Services/spending.model';
 
-type TransactionRowPropTypes<T extends TransactionId> = {
+type TransactionRowPropTypes<T> = {
     transactionId: T;
     category: SpendingCategory;
     amountSpent: number;

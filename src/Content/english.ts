@@ -25,6 +25,8 @@ const locale = {
         clearSelection: 'Clear selection',
         logExpense: 'Log expense',
         newExpense: 'New expense',
+        editExpense: 'Edit expense',
+        deleteExpense: 'Permanently delete this expense',
         amountLabel: 'Amount',
         categoryLabel: 'Category',
         notesLabel: 'Notes',

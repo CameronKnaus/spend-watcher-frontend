@@ -5,17 +5,38 @@ import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import useContent from 'Hooks/useContent';
 import { useForm } from 'react-hook-form';
-import { DiscretionaryAddRequestParams } from 'Types/Services/spending.model';
+import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
-import styles from './ExpenseForm.module.css';
+import styles from './DiscretionaryExpenseForm.module.css';
 
-type ExpenseFormPropTypes = {
-    onSubmit: (data: DiscretionaryAddRequestParams) => void;
-} & ReturnType<typeof useForm<DiscretionaryAddRequestParams>>;
+export type ExpenseFormAttributes = Omit<DiscretionarySpendTransaction, 'transactionId' | 'isRecurring'>;
 
-export default function ExpenseForm({ onSubmit, ...hookForm }: ExpenseFormPropTypes) {
+type DiscretionaryExpenseFormPropTypes = {
+    onSubmit: (data: ExpenseFormAttributes) => void;
+} & ReturnType<typeof useForm<ExpenseFormAttributes>>;
+
+export default function DiscretionaryExpenseForm({ onSubmit, ...hookForm }: DiscretionaryExpenseFormPropTypes) {
     const getContent = useContent('transactions');
     const getSpendCategoryLabel = useContent('SPENDING_CATEGORIES');
+
+    function generateSpendCategoryList(
+        getContent: ReturnType<typeof useContent<'SPENDING_CATEGORIES'>>,
+    ): FilterableSelectOptionType<SpendingCategory>[] {
+        const { RESTAURANTS, GROCERIES, DRINKS, OTHER, ...rest } = SpendingCategory;
+
+        const newOrder = [RESTAURANTS, GROCERIES, DRINKS, ...Object.values(rest), OTHER];
+
+        return newOrder.map((category) => ({
+            value: category,
+            optionName: getContent(category),
+            customRender: (optionName: string, value: SpendingCategory) => (
+                <div className={styles.spendCategoryOption}>
+                    <SpendingCategoryIcon className={styles.spendCategoryIcon} category={value} size={32} />
+                    <div>{optionName}</div>
+                </div>
+            ),
+        }));
+    }
 
     return (
         <form className={styles.transactionForm} onSubmit={hookForm.handleSubmit(onSubmit)}>
@@ -77,23 +98,4 @@ export default function ExpenseForm({ onSubmit, ...hookForm }: ExpenseFormPropTy
             />
         </form>
     );
-}
-
-function generateSpendCategoryList(
-    getContent: ReturnType<typeof useContent<'SPENDING_CATEGORIES'>>,
-): FilterableSelectOptionType<SpendingCategory>[] {
-    const { RESTAURANTS, GROCERIES, DRINKS, OTHER, ...rest } = SpendingCategory;
-
-    const newOrder = [RESTAURANTS, GROCERIES, DRINKS, ...Object.values(rest), OTHER];
-
-    return newOrder.map((category) => ({
-        value: category,
-        optionName: getContent(category),
-        customRender: (optionName: string, value: SpendingCategory) => (
-            <div className={styles.spendCategoryOption}>
-                <SpendingCategoryIcon className={styles.spendCategoryIcon} category={value} size={32} />
-                <div>{optionName}</div>
-            </div>
-        ),
-    }));
 }

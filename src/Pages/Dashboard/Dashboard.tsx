@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import Currency from 'Components/Currency/Currency';
 import CustomButton from 'Components/CustomButton/CustomButton';
-import ExpenseFormPanel from 'Components/ExpenseForm/ExpenseFormPanel';
+import DiscretionarySpendPanel from 'Components/ExpenseForm/DiscretionarySpendPanel';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 import { format } from 'date-fns';
@@ -13,8 +13,7 @@ import RecentTransactions from './RecentTransactions';
 import TopDiscretionaryCategories from './TopDiscretionaryCategories';
 
 export default function Dashboard() {
-    // TODO: Rename expand here to something more pertinent to log expense panel
-    const [expanded, setExpanded] = useState(false);
+    const [logExpensePanelOpen, setLogExpensePanelOpen] = useState(false);
     const getContent = useContent('dashboard');
     const getTransactionContent = useContent('transactions');
     const currentMonth = format(new Date(), 'LLLL');
@@ -22,6 +21,7 @@ export default function Dashboard() {
     const { isLoading, isFetching, data: spendingData } = useSpendingDetailsService();
     const pageLoading = !spendingData || isLoading || isFetching;
 
+    const totalsSkeletonLoaderStyle = { height: 30, maxWidth: 130 };
     return (
         <div className={styles.dashboard}>
             <h2 className={styles.spendingSectionTitle}>{getContent('monthOverview', [currentMonth])}</h2>
@@ -34,7 +34,7 @@ export default function Dashboard() {
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-medium'])}
                         >
                             {pageLoading ? (
-                                <SkeletonLoader style={{ height: 30, maxWidth: 130 }} />
+                                <SkeletonLoader style={totalsSkeletonLoaderStyle} />
                             ) : (
                                 <Currency
                                     className="font-heading-medium font-thin"
@@ -50,7 +50,7 @@ export default function Dashboard() {
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
                         >
                             {pageLoading ? (
-                                <SkeletonLoader style={{ height: 30, maxWidth: 130 }} />
+                                <SkeletonLoader style={totalsSkeletonLoaderStyle} />
                             ) : (
                                 <Currency
                                     className="font-heading-medium font-thin"
@@ -66,7 +66,7 @@ export default function Dashboard() {
                             className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
                         >
                             {pageLoading ? (
-                                <SkeletonLoader style={{ height: 30, maxWidth: 130 }} />
+                                <SkeletonLoader style={totalsSkeletonLoaderStyle} />
                             ) : (
                                 <Currency
                                     className="font-heading-medium font-thin"
@@ -99,18 +99,18 @@ export default function Dashboard() {
                         variant="tertiary"
                         layout="full-width"
                         onClick={() => {
-                            setExpanded(!expanded);
+                            setLogExpensePanelOpen(true);
                         }}
                         className={styles.logExpenseButton}
                     >
                         {getTransactionContent('logExpense')}
                     </CustomButton>
-
-                    {/* Log expense slide up panel */}
-                    <ExpenseFormPanel setExpanded={setExpanded} expanded={expanded} />
                     <RecentTransactions />
                 </div>
             </div>
+
+            {/* Log expense slide up panel */}
+            <DiscretionarySpendPanel onPanelClose={() => setLogExpensePanelOpen(false)} isOpen={logExpensePanelOpen} />
         </div>
     );
 }

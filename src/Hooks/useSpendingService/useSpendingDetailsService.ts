@@ -4,6 +4,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { SpendingDetailsResponse } from 'Types/Services/spending.model';
 
 export default function useSpendingDetailsService() {
+    // TODO: Implement dynamic date range
     const startDate = '2024-08-01';
     const endDate = '2024-08-31';
 

@@ -50,7 +50,7 @@ export type BaseSpendTransaction = {
 export type DiscretionarySpendTransaction = {
     transactionId: DiscretionaryTransactionId;
     isRecurring: false;
-    note?: string;
+    note: string;
     linkedTripId?: string;
 } & BaseSpendTransaction;
 
@@ -70,10 +70,10 @@ export type SpendTransaction = RecurringSpendTransaction | DiscretionarySpendTra
 // SPEND RELATED TYPES END --------------------------------------------
 
 // SPENDING DETAILS API --- /api/spending/v1/details
-export interface SpendingDetailsRequestParams {
+export type SpendingDetailsRequestParams = {
     startDate: DbDate;
     endDate: DbDate;
-}
+};
 
 export type CategoryDetails = {
     category: SpendingCategory;

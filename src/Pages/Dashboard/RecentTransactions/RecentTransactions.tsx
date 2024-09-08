@@ -1,16 +1,19 @@
+import DiscretionarySpendPanel from 'Components/ExpenseForm/DiscretionarySpendPanel';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import TransactionRow from 'Components/TransactionRow';
 import { format, isToday, isYesterday, parseISO } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { DbDate } from 'Types/dateTypes';
-import { TransactionsByDate } from 'Types/Services/spending.model';
+import { DiscretionarySpendTransaction, TransactionsByDate } from 'Types/Services/spending.model';
+import { isDiscretionaryTransactionId } from 'Util/SpendTransactionUtils/narrowIdType';
 import styles from './RecentTransactions.module.css';
 
 export default function RecentTransactions() {
     const getContent = useContent('transactions');
     const { data: spendingData } = useSpendingDetailsService();
+    const [transactionToEdit, setTransactionToEdit] = useState<DiscretionarySpendTransaction>();
 
     // Aim to show 5 recent transactions. However, ensures that all transactions for a given day are shown.
     const applicableTransactionsByDate = useMemo(() => {
@@ -53,50 +56,54 @@ export default function RecentTransactions() {
     }, [spendingData]);
 
     if (!spendingData) {
+        // TODO: Add a skeleton loader here
         return <h2>Placeholder loading</h2>;
     }
 
-    const lookup = spendingData.transactionDictionary;
-
     return (
-        <ModuleContainer heading={getContent('recent')} className={styles.recentTransactions}>
-            {/* Loop through each date group */}
-            {Object.entries(applicableTransactionsByDate).map(([dateString, dateSpendSummary]) => {
-                const date = parseISO(dateString);
-                let dateLabel = format(date, 'MMM do');
-                if (isToday(date)) {
-                    dateLabel = getContent('todayLabel', [dateLabel]);
-                } else if (isYesterday(date)) {
-                    dateLabel = getContent('yesterdayLabel', [dateLabel]);
-                }
+        <>
+            <ModuleContainer heading={getContent('recent')} className={styles.recentTransactions}>
+                {/* Loop through each date group */}
+                {Object.entries(applicableTransactionsByDate).map(([dateString, dateSpendSummary]) => {
+                    const date = parseISO(dateString);
+                    let dateLabel = format(date, 'MMM do');
+                    if (isToday(date)) {
+                        dateLabel = getContent('todayLabel', [dateLabel]);
+                    } else if (isYesterday(date)) {
+                        dateLabel = getContent('yesterdayLabel', [dateLabel]);
+                    }
 
-                return (
-                    <div key={dateLabel}>
-                        <h3 className={styles.dateHeader}>{dateLabel}</h3>
-                        <div className={styles.transactionGroup}>
-                            {/* Loop through each transaction associated with the given date */}
-                            {dateSpendSummary.includedTransactions.map((transactionId) => {
-                                const transaction = lookup[transactionId];
-                                if (transaction.isRecurring) {
-                                    // Don't show recurring transactions in this list
-                                    return null;
-                                }
+                    return (
+                        <div key={dateLabel}>
+                            <h3 className={styles.dateHeader}>{dateLabel}</h3>
+                            <div className={styles.transactionGroup}>
+                                {/* Loop through each transaction associated with the given date */}
+                                {dateSpendSummary.includedTransactions
+                                    .filter(isDiscretionaryTransactionId)
+                                    .map((transactionId) => {
+                                        const transaction = spendingData.transactionDictionary[transactionId];
 
-                                return (
-                                    <TransactionRow
-                                        key={transactionId}
-                                        transactionId={transactionId}
-                                        onClick={() => {}}
-                                        category={transaction.category}
-                                        amountSpent={transaction.amountSpent}
-                                        note={transaction.note}
-                                    />
-                                );
-                            })}
+                                        return (
+                                            <TransactionRow
+                                                key={transactionId}
+                                                transactionId={transaction.transactionId}
+                                                category={transaction.category}
+                                                onClick={() => setTransactionToEdit(transaction)}
+                                                amountSpent={transaction.amountSpent}
+                                                note={transaction.note}
+                                            />
+                                        );
+                                    })}
+                            </div>
                         </div>
-                    </div>
-                );
-            })}
-        </ModuleContainer>
+                    );
+                })}
+            </ModuleContainer>
+            <DiscretionarySpendPanel
+                isOpen={Boolean(transactionToEdit)}
+                transactionToEdit={transactionToEdit}
+                onPanelClose={() => setTransactionToEdit(undefined)}
+            />
+        </>
     );
 }

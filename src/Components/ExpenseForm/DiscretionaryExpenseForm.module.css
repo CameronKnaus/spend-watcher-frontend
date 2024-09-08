@@ -25,12 +25,6 @@
     margin-bottom: var(--space-between-form-items) !important;
 }
 
-.deleteLink {
-    color: var(--theme-red) !important;
-    margin: 1.5rem auto 0;
-    text-align: center;
-}
-
 .alertContainer {
     padding-bottom: 1.5rem;
 }
@@ -42,7 +36,12 @@
     align-items: center;
 }
 
-/* .spendCategoryIcon {
-    border-radius: 12px;
-    padding: 6px;
-} */
+.deleteLink {
+    color: var(--token-color-semantic-danger) !important;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 80px auto 20px;
+}
