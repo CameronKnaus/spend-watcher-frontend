@@ -70,6 +70,21 @@ export type SpendTransaction = RecurringSpendTransaction | DiscretionarySpendTra
 
 // SPEND RELATED TYPES END --------------------------------------------
 
+// ZOD CUSTOM VALIDATORS BEGIN --------------------------------------------
+const zodValidateDiscretionaryId = zod.custom<DiscretionaryTransactionId>(
+    (givenValue): givenValue is DiscretionaryTransactionId => {
+        if (typeof givenValue === 'string' && /^Discretionary-\d+$/.test(givenValue)) {
+            return true; // Valid format
+        }
+        return false; // Invalid format
+    },
+    {
+        message: 'Invalid DiscretionaryTransactionId format. Expected format: "Discretionary-<number>".',
+    },
+);
+
+// ZOD CUSTOM VALIDATORS END --------------------------------------------
+
 // SPENDING DETAILS API --- /api/spending/v1/details
 export const v1DetailsSchema = zod.object({
     startDate: zod.string().date(),
@@ -112,5 +127,15 @@ export const v1DiscretionaryAddSchema = zod.object({
     note: zod.string().trim().max(255),
     linkedTripId: zod.string().uuid().optional(),
 });
+
 export type DiscretionaryAddRequestParams = zod.infer<typeof v1DiscretionaryAddSchema>;
 // END LOG DISCRETIONARY API
+
+// EDIT DISCRETIONARY API --- /api/spending/v1/discretionary/add
+export const v1DiscretionaryEditSchema = v1DiscretionaryAddSchema.extend({
+    // Add the transactionId field
+    transactionId: zodValidateDiscretionaryId,
+});
+
+export type DiscretionaryEditRequestParams = zod.infer<typeof v1DiscretionaryEditSchema>;
+// END EDIT DISCRETIONARY API
