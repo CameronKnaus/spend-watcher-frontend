@@ -7,15 +7,15 @@ import useContent from 'Hooks/useContent';
 import { useForm } from 'react-hook-form';
 import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
-import styles from './DiscretionaryExpenseForm.module.css';
+import styles from './DiscretionarySpendForm.module.css';
 
-export type ExpenseFormAttributes = Omit<DiscretionarySpendTransaction, 'transactionId' | 'isRecurring'>;
+export type DiscretionarySpendFormAttributes = Omit<DiscretionarySpendTransaction, 'transactionId' | 'isRecurring'>;
 
-type DiscretionaryExpenseFormPropTypes = {
-    onSubmit: (data: ExpenseFormAttributes) => void;
-} & ReturnType<typeof useForm<ExpenseFormAttributes>>;
+type DiscretionarySpendFormPropTypes = {
+    onSubmit: (data: DiscretionarySpendFormAttributes) => void;
+} & ReturnType<typeof useForm<DiscretionarySpendFormAttributes>>;
 
-export default function DiscretionaryExpenseForm({ onSubmit, ...hookForm }: DiscretionaryExpenseFormPropTypes) {
+export default function DiscretionarySpendForm({ onSubmit, ...hookForm }: DiscretionarySpendFormPropTypes) {
     const getContent = useContent('transactions');
     const getSpendCategoryLabel = useContent('SPENDING_CATEGORIES');
 

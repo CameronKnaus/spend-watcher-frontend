@@ -9,8 +9,8 @@ import { useForm } from 'react-hook-form';
 import { FaTrashAlt } from 'react-icons/fa';
 import { DiscretionarySpendTransaction, v1DiscretionaryAddSchema } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
-import ExpenseForm, { ExpenseFormAttributes } from './DiscretionaryExpenseForm';
-import styles from './DiscretionaryExpenseForm.module.css';
+import DiscretionarySpendForm, { DiscretionarySpendFormAttributes } from './DiscretionarySpendForm';
+import styles from './DiscretionarySpendForm.module.css';
 
 type DiscretionarySpendPanelPropTypes = {
     isOpen: boolean;
@@ -27,7 +27,7 @@ export default function DiscretionarySpendPanel({
     const editMode = Boolean(transactionToEdit);
     const getContent = useContent('transactions');
     const getGeneralContent = useContent('general');
-    const form = useForm<ExpenseFormAttributes>({
+    const form = useForm<DiscretionarySpendFormAttributes>({
         resolver: zodResolver(v1DiscretionaryAddSchema),
         mode: 'onChange', // Least performant but not a concern here
         defaultValues: {
@@ -44,7 +44,18 @@ export default function DiscretionarySpendPanel({
         onPanelClose();
     }
 
-    function onSubmit(submission: ExpenseFormAttributes) {
+    function handleDelete() {
+        if (!transactionToEdit) {
+            return;
+        }
+
+        axios.post(SERVICE_ROUTES.postDeleteDiscretionarySpending, {
+            transactionId: transactionToEdit.transactionId,
+        });
+        closePanel();
+    }
+
+    function onSubmit(submission: DiscretionarySpendFormAttributes) {
         if (editMode) {
             // Editing existing transaction
             const payload = {
@@ -87,9 +98,9 @@ export default function DiscretionarySpendPanel({
             }
         >
             <>
-                <ExpenseForm onSubmit={onSubmit} {...form} />
+                <DiscretionarySpendForm onSubmit={onSubmit} {...form} />
                 {editMode && (
-                    <button className={styles.deleteLink} onClick={() => {}}>
+                    <button className={styles.deleteLink} onClick={handleDelete}>
                         {getContent('deleteExpense')}
                         <FaTrashAlt />
                     </button>

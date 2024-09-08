@@ -5,8 +5,8 @@ import { SpendingDetailsResponse } from 'Types/Services/spending.model';
 
 export default function useSpendingDetailsService() {
     // TODO: Implement dynamic date range
-    const startDate = '2024-08-01';
-    const endDate = '2024-08-31';
+    const startDate = '2024-09-01';
+    const endDate = '2024-09-08';
 
     return useQuery<SpendingDetailsResponse>({
         queryKey: ['spending', startDate, endDate],
