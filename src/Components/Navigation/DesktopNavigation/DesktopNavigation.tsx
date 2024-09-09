@@ -1,6 +1,6 @@
 import { animated, useChain, useSpring, useSpringRef } from '@react-spring/web';
 import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FaChartPie, FaHistory, FaHome, FaPlaneDeparture, FaReceipt } from 'react-icons/fa';
 import { Outlet, useLocation } from 'react-router-dom';
 import styles from './DesktopNavigation.module.css';
@@ -15,17 +15,8 @@ export default function DesktopNavigation() {
     const [menuExpanded, setMenuExpanded] = useState(false);
     const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout | null>(null);
     const menuListRef = useRef<HTMLDivElement>(null);
-    // If not memoized, the scrollWidth will grow on each additional render
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const expandedWidth = useMemo(() => {
-        // get scroll width
-        if (menuListRef.current) {
-            const padding = 40;
-            return menuListRef.current.scrollWidth + padding;
-        }
-
-        return DEFAULT_WIDTH;
-    }, []);
+    const paddingOffset = 40;
+    const expandedWidth = menuListRef.current ? menuListRef.current.scrollWidth + paddingOffset : DEFAULT_WIDTH;
     const location = useLocation();
 
     const containerSpringRef = useSpringRef();

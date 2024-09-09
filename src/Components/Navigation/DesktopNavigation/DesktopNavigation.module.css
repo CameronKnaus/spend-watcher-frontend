@@ -8,8 +8,8 @@
     background-color: var(--token-color-background-primary);
     padding: 16px 0;
     border-right: var(--token-color-border-tertiary) 1px solid;
-    width: 'fit-content';
-    isolation: 'isolate';
+    width: fit-content;
+    isolation: isolate;
     z-index: 1;
 }
 
