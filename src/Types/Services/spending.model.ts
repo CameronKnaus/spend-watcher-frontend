@@ -79,7 +79,7 @@ const zodValidateDiscretionaryId = zod.custom<DiscretionaryTransactionId>(
         return false; // Invalid format
     },
     {
-        message: 'Invalid DiscretionaryTransactionId format. Expected format: "Discretionary-<number>".',
+        message: 'Invalid transactionId format. Expected format: "Discretionary-<number>".',
     },
 );
 
@@ -105,7 +105,7 @@ export type CategoryDetails = {
     percentageOfRecurringTransactions: number;
 };
 
-export type SpendingDetailsResponse = {
+export type SpendingDetailsV1Response = {
     categoryDetailsList: CategoryDetails[];
     transactionDictionary: TransactionDictionary;
     spendTypeRatio: {
@@ -117,7 +117,7 @@ export type SpendingDetailsResponse = {
     recurringTransactionIdList: RecurringTransactionId[];
     transactionsByDate: TransactionsByDate;
 };
-// END SPENDING DETAILS API
+// END SPENDING DETAILS API --------------------------------------------
 
 // LOG DISCRETIONARY API --- /api/spending/v1/discretionary/add
 export const v1DiscretionaryAddSchema = zod.object({
@@ -131,11 +131,28 @@ export const v1DiscretionaryAddSchema = zod.object({
 export type DiscretionaryAddRequestParams = zod.infer<typeof v1DiscretionaryAddSchema>;
 // END LOG DISCRETIONARY API
 
-// EDIT DISCRETIONARY API --- /api/spending/v1/discretionary/add
+// EDIT DISCRETIONARY API --- /api/spending/v1/discretionary/edit
 export const v1DiscretionaryEditSchema = v1DiscretionaryAddSchema.extend({
     // Add the transactionId field
     transactionId: zodValidateDiscretionaryId,
 });
 
 export type DiscretionaryEditRequestParams = zod.infer<typeof v1DiscretionaryEditSchema>;
-// END EDIT DISCRETIONARY API
+// END EDIT DISCRETIONARY API --------------------------------------------
+
+// DELETE DISCRETIONARY API --- /api/spending/v1/discretionary/delete
+export const v1DiscretionaryDeleteSchema = zod.object({
+    transactionId: zodValidateDiscretionaryId,
+});
+
+export type DiscretionaryDeleteRequestParams = zod.infer<typeof v1DiscretionaryDeleteSchema>;
+// EMD DELETE DISCRETIONARY API --------------------------------------------
+
+// RECURRING SUMMARY API --- /api/spending/v1/recurring/summary
+export type RecurringSummaryV1Response = {
+    activeRecurringTransactions: RecurringSpendTransaction[];
+    inactiveRecurringTransactions: RecurringSpendTransaction[];
+    averageEstimatedMonthlyTotal: number;
+    actualMonthlyTotal: number;
+};
+// END RECURRING SUMMARY API --------------------------------------------

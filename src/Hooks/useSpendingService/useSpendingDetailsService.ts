@@ -1,14 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
-import { SpendingDetailsResponse } from 'Types/Services/spending.model';
+import { SpendingDetailsV1Response } from 'Types/Services/spending.model';
 
 export default function useSpendingDetailsService() {
     // TODO: Implement dynamic date range
     const startDate = '2024-09-01';
     const endDate = '2024-09-08';
 
-    return useQuery<SpendingDetailsResponse>({
+    return useQuery<SpendingDetailsV1Response>({
         queryKey: ['spending', startDate, endDate],
         queryFn: async () => {
             const response = await axios.get(SERVICE_ROUTES.getSpendingDetails, {

@@ -24,7 +24,7 @@ export default function Dashboard() {
     const totalsSkeletonLoaderStyle = { height: 30, maxWidth: 130 };
     return (
         <div className={styles.dashboard}>
-            <h2 className={styles.spendingSectionTitle}>{getContent('monthOverview', [currentMonth])}</h2>
+            <h1 className={styles.spendingSectionTitle}>{getContent('monthOverview', [currentMonth])}</h1>
             <div className={styles.contentContainer}>
                 <div className={styles.leftSection}>
                     <div className={styles.spendingGrid}>

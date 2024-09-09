@@ -6,10 +6,6 @@
     align-items: center;
 }
 
-.transactionsRow:hover {
-    cursor: pointer;
-}
-
 .transactionDetails {
     flex-basis: 100%;
 }

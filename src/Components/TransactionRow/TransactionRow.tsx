@@ -4,20 +4,20 @@ import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import useContent from 'Hooks/useContent';
 import { ComponentProps } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
+import { DiscretionaryTransactionId } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './TransactionRow.module.css';
-import { TransactionId } from 'Types/Services/spending.model';
 
-type TransactionRowPropTypes<T> = {
-    transactionId: T;
+type TransactionRowPropTypes = {
+    transactionId: DiscretionaryTransactionId;
     category: SpendingCategory;
     amountSpent: number;
     note?: string;
     className?: string;
-    onClick: (transactionId: T) => void;
+    onClick: (transactionId: DiscretionaryTransactionId) => void;
 };
 
-export default function TransactionRow<T extends TransactionId>({
+export default function TransactionRow({
     transactionId,
     category,
     amountSpent,
@@ -25,7 +25,7 @@ export default function TransactionRow<T extends TransactionId>({
     className,
     onClick,
     ...attributes
-}: TransactionRowPropTypes<T> & Omit<ComponentProps<'button'>, 'onClick' | 'className'>) {
+}: TransactionRowPropTypes & Omit<ComponentProps<'button'>, 'onClick' | 'className'>) {
     const getCategoryLabel = useContent('SPENDING_CATEGORIES');
 
     return (

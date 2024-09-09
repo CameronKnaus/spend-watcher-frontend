@@ -2,6 +2,7 @@ import DesktopNavigation from 'Components/Navigation/DesktopNavigation/DesktopNa
 import MobileNavigation from 'Components/Navigation/MobileNavigation/MobileNavigation';
 import AuthScreen from 'Pages/AuthScreen/AuthScreen';
 import Dashboard from 'Pages/Dashboard/Dashboard';
+import RecurringSpending from 'Pages/RecurringSpending/RecurringSpending';
 import { Route, Routes } from 'react-router-dom';
 import { useIsMobile } from 'Util/IsMobileContext';
 
@@ -32,7 +33,7 @@ export default function PageRoutes() {
                 <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
                 <Route path={PAGE_ROUTES.transactions} element={<h1>Transactions</h1>} />
                 <Route path={PAGE_ROUTES.spending_trends} element={<h1>Spending trends</h1>} />
-                <Route path={PAGE_ROUTES.recurring_spending} element={<h1>Recurring spending</h1>} />
+                <Route path={PAGE_ROUTES.recurring_spending} element={<RecurringSpending />} />
                 <Route path={PAGE_ROUTES.trips} element={<h1>Trips</h1>} />
             </Route>
             <Route path={PAGE_ROUTES.auth} element={<AuthScreen />} />

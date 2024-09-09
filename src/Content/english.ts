@@ -35,6 +35,16 @@ const locale = {
         notesPlaceholder: 'About your expense',
         amountPlaceholder: '$0.00',
     },
+    recurringSpending: {
+        pageTitle: 'Recurring spending',
+        createNew: 'Create recurring expense',
+        monthlyTransactions: 'Monthly transactions',
+        inactiveTransactions: 'Inactive transactions',
+        averageMonthlyTotal: 'Average monthly total',
+        monthActualTotal: `{{0}} actual total`,
+        averageLabel: 'Average: {{0}}',
+        fixedLabel: 'Fixed',
+    },
     ACCOUNT_CATEGORIES: {
         CHECKING: 'Checking',
         SAVINGS: 'Savings',
