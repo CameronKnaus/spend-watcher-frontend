@@ -11,3 +11,9 @@
     gap: 12px;
     margin-bottom: 16px;
 }
+
+.daysTotalAmount {
+    display: inline-block;
+    padding-left: 8px;
+    font-size: var(--font-caption);
+}

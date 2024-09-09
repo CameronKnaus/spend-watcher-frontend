@@ -1,3 +1,4 @@
+import Currency from 'Components/Currency/Currency';
 import DiscretionarySpendPanel from 'Components/ExpenseForm/DiscretionarySpendPanel';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import TransactionRow from 'Components/TransactionRow';
@@ -75,7 +76,12 @@ export default function RecentTransactions() {
 
                     return (
                         <div key={dateLabel}>
-                            <h3 className={styles.dateHeader}>{dateLabel}</h3>
+                            <h3 className={styles.dateHeader}>
+                                {dateLabel}
+                                <div className={styles.daysTotalAmount}>
+                                    (<Currency amount={-dateSpendSummary.discretionaryTotal.amount} isGainLoss />)
+                                </div>
+                            </h3>
                             <div className={styles.transactionGroup}>
                                 {/* Loop through each transaction associated with the given date */}
                                 {dateSpendSummary.includedTransactions
