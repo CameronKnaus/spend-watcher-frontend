@@ -177,3 +177,11 @@ export const v1EditRecurringSpendSchema = v1AddRecurringSpendSchema.extend({
 export type EditRecurringSpendRequestParams = zod.infer<typeof v1EditRecurringSpendSchema>;
 
 // END RECURRING EDIT API --------------------------------------------
+
+// RECURRING DELETE API --- /api/spending/v1/recurring/delete
+export const v1DeleteRecurringSpendSchema = zod.object({
+    recurringSpendId: zod.string().uuid(),
+});
+
+export type DeleteRecurringSpendRequestParams = zod.infer<typeof v1DeleteRecurringSpendSchema>;
+// END RECURRING DELETE API --------------------------------------------
