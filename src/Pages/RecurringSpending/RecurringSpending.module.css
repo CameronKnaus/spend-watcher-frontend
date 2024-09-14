@@ -56,5 +56,8 @@
 
 .cardContainer {
     flex: 1;
-    min-width: max(340px, calc(50% - (var(--recurring-transactions-column-gap) / 2)));
+
+    --card-container-half-width: calc(50% - (var(--recurring-transactions-column-gap) / 2));
+    min-width: max(340px, var(--card-container-half-width));
+    max-width: var(--card-container-half-width);
 }

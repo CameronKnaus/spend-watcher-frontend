@@ -30,6 +30,7 @@ export default function MoneyInput<T extends FieldValues>({
                     prefix="$"
                     decimalScale={2}
                     getInputRef={ref}
+                    autoComplete="off"
                     onValueChange={({ floatValue }) => {
                         onChange();
                         // @ts-expect-error I should figure out the proper typing of this but it works for now

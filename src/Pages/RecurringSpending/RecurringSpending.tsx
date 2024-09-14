@@ -1,16 +1,19 @@
 import Currency from 'Components/Currency/Currency';
 import CustomButton from 'Components/CustomButton/CustomButton';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
-import NewRecurringExpenseForm from 'Components/NewRecurringExpenseForm/NewRecurringExpenseForm';
+import RecurringExpenseForm from 'Components/RecurringExpenseForm/RecurringExpenseForm';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useRecurringSummaryService from 'Hooks/useRecurringSummaryService';
 import { useState } from 'react';
+import { RecurringSpendTransaction } from 'Types/Services/spending.model';
+import ManageRecurringSpendPanel from './ManageRecurringSpendPanel/ManageRecurringSpendPanel';
 import styles from './RecurringSpending.module.css';
 import RecurringTransactionCard from './RecurringTransactionCard/RecurringTransactionCard';
 
 export default function RecurringSpending() {
+    const [recurringSpendToEdit, setRecurringSpendToEdit] = useState<RecurringSpendTransaction>();
     const [newSpendFormOpen, setNewSpendFormOpen] = useState(false);
     const getContent = useContent('recurringSpending');
     const currentMonth = format(new Date(), 'LLLL');
@@ -38,7 +41,7 @@ export default function RecurringSpending() {
                             {getContent('createNew')}
                         </CustomButton>
                         <ModuleContainer className={styles.totalsContainer}>
-                            <span>{getContent('averageMonthlyTotal')}</span>
+                            <span>{getContent('estimatedMonthlyTotal')}</span>
                             <Currency amount={-summaryData.averageEstimatedMonthlyTotal} isGainLoss />
                             <span>{getContent('monthActualTotal', [currentMonth])}</span>
                             <Currency amount={-summaryData.actualMonthlyTotal} isGainLoss />
@@ -49,7 +52,10 @@ export default function RecurringSpending() {
                         <div className={styles.transactionsContainer}>
                             {activeList.map((transaction) => (
                                 <div key={transaction.transactionId} className={styles.cardContainer}>
-                                    <RecurringTransactionCard transaction={transaction} />
+                                    <RecurringTransactionCard
+                                        transaction={transaction}
+                                        onClick={(transaction) => setRecurringSpendToEdit(transaction)}
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -58,7 +64,10 @@ export default function RecurringSpending() {
                                 <h2 className={styles.contentTitle}>{getContent('inactiveTransactions')}</h2>
                                 {inactiveList.map((transaction) => (
                                     <div key={transaction.transactionId} className={styles.cardContainer}>
-                                        <RecurringTransactionCard transaction={transaction} />
+                                        <RecurringTransactionCard
+                                            transaction={transaction}
+                                            onClick={(transaction) => setRecurringSpendToEdit(transaction)}
+                                        />
                                     </div>
                                 ))}
                             </>
@@ -72,8 +81,12 @@ export default function RecurringSpending() {
                 tagColor="var(--token-color-semantic-expense)"
                 onPanelClose={() => setNewSpendFormOpen(false)}
             >
-                <NewRecurringExpenseForm onCancel={() => setNewSpendFormOpen(false)} />
+                <RecurringExpenseForm onCancel={() => setNewSpendFormOpen(false)} />
             </SlideUpPanel>
+            <ManageRecurringSpendPanel
+                recurringSpendTransaction={recurringSpendToEdit}
+                onPanelClose={() => setRecurringSpendToEdit(undefined)}
+            />
         </>
     );
 }

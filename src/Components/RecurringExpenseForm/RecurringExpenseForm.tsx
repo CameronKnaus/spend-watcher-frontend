@@ -7,16 +7,23 @@ import useSpendCategoryList from 'Components/FormInputs/FilterableSelect/presetL
 import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { AddRecurringSpendRequestParams, v1AddRecurringSpendSchema } from 'Types/Services/spending.model';
+import {
+    AddRecurringSpendRequestParams,
+    RecurringSpendTransaction,
+    v1AddRecurringSpendSchema,
+} from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
-import styles from './NewRecurringExpenseForm.module.css';
+import styles from './RecurringExpenseForm.module.css';
 
-type NewRecurringExpenseFormPropTypes = {
+type RecurringExpenseFormPropTypes = {
     onCancel: () => void;
+    expenseToEdit?: RecurringSpendTransaction;
 };
 
-export default function NewRecurringExpenseForm({ onCancel }: NewRecurringExpenseFormPropTypes) {
+export default function RecurringExpenseForm({ onCancel, expenseToEdit }: RecurringExpenseFormPropTypes) {
+    const editMode = Boolean(expenseToEdit);
     const getContent = useContent('recurringSpending');
     const getGeneralContent = useContent('general');
     const spendingCategoryList = useSpendCategoryList();
@@ -24,9 +31,14 @@ export default function NewRecurringExpenseForm({ onCancel }: NewRecurringExpens
     const form = useForm<AddRecurringSpendRequestParams>({
         resolver: zodResolver(v1AddRecurringSpendSchema),
         defaultValues: {
+            isVariableRecurring: false,
             category: SpendingCategory.OTHER,
         },
     });
+
+    useEffect(() => {
+        form.reset(expenseToEdit);
+    }, [expenseToEdit, form]);
 
     function handleCancel() {
         form.reset();
@@ -34,7 +46,13 @@ export default function NewRecurringExpenseForm({ onCancel }: NewRecurringExpens
     }
 
     function onSubmit(submission: AddRecurringSpendRequestParams) {
-        axios.post(SERVICE_ROUTES.postAddRecurringSpend, submission);
+        if (editMode) {
+            const payload = { ...submission, recurringSpendId: expenseToEdit?.recurringSpendId };
+            axios.post(SERVICE_ROUTES.postEditRecurringSpend, payload);
+        } else {
+            axios.post(SERVICE_ROUTES.postAddRecurringSpend, submission);
+        }
+
         handleCancel();
     }
 

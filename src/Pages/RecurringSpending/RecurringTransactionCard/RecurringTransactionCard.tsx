@@ -11,18 +11,20 @@ import styles from './RecurringTransactionCard.module.css';
 type RecurringTransactionCardPropTypes = {
     transaction: RecurringSpendTransaction;
     className?: string;
+    onClick: (transaction: RecurringSpendTransaction) => void;
 };
 
 export default function RecurringTransactionCard({
     transaction,
     className,
+    onClick,
     ...attributes
-}: RecurringTransactionCardPropTypes & Omit<ComponentProps<'button'>, 'className'>) {
+}: RecurringTransactionCardPropTypes & Omit<ComponentProps<'button'>, 'className' | 'onClick'>) {
     const getCategoryLabel = useContent('SPENDING_CATEGORIES');
     const getContent = useContent('recurringSpending');
 
     return (
-        <button className={clsx(styles.card, className)} {...attributes}>
+        <button className={clsx(styles.card, className)} {...attributes} onClick={() => onClick(transaction)}>
             <SpendingCategoryIcon category={transaction.category} size={42} />
             <div className={styles.transactionDetails}>
                 <div className={styles.dataRow}>
@@ -36,7 +38,7 @@ export default function RecurringTransactionCard({
                     <span>
                         {transaction.isVariableRecurring ? (
                             <span>
-                                {getContent('averageLabel', [formatCurrency(-transaction.expectedMonthlyAmount)])}
+                                {getContent('estimatedLabel', [formatCurrency(-transaction.expectedMonthlyAmount)])}
                             </span>
                         ) : (
                             <div className={styles.fixedTag}>{getContent('fixedLabel')}</div>

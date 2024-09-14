@@ -64,6 +64,7 @@ export default function AuthScreen() {
                             <input
                                 className={styles.inputFields}
                                 placeholder="Username"
+                                autoComplete="username"
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -73,6 +74,7 @@ export default function AuthScreen() {
                                 className={styles.inputFields}
                                 placeholder="Email Address"
                                 type="email"
+                                autoComplete="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -82,6 +84,7 @@ export default function AuthScreen() {
                                 id="loginPassword"
                                 placeholder="Password"
                                 type="password"
+                                autoComplete="current-password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />

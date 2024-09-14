@@ -16,6 +16,7 @@ const locale = {
         empty: '--',
         submit: 'Submit',
         cancel: 'Cancel',
+        delete: 'Delete',
     },
     transactions: {
         recent: 'Recent transactions',
@@ -40,9 +41,9 @@ const locale = {
         createNew: 'Create recurring expense',
         monthlyTransactions: 'Monthly transactions',
         inactiveTransactions: 'Inactive transactions',
-        averageMonthlyTotal: 'Average monthly total',
+        estimatedMonthlyTotal: 'Estimated monthly total',
         monthActualTotal: `{{0}} actual total`,
-        averageLabel: 'Average: {{0}}',
+        estimatedLabel: 'Estimated: {{0}}',
         fixedLabel: 'Fixed',
         newRecurringExpenseTitle: 'New recurring expense',
         newSpendNamePlaceholder: 'Rent payment',
@@ -52,6 +53,10 @@ const locale = {
         monthlyAmountLabel: 'Monthly amount',
         monthlyAmountVariesLabel: 'Estimated monthly amount',
         monthlyAmountPlaceholder: '$0.00',
+        deleteSpeedBumpHeader: 'Are you sure?',
+        deleteSpeedBumpDescription:
+            'This will permanently delete this recurring expense and all of its past data. This means all previous months\' spend data for "{{0}}" will be permanently deleted.',
+        finalDeletionWarning: 'This action cannot be undone.',
     },
     ACCOUNT_CATEGORIES: {
         CHECKING: 'Checking',

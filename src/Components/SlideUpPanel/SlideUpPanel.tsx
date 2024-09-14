@@ -9,17 +9,9 @@ type SlideUpPanelPropTypes = {
     isOpen: boolean;
     children: ReactNode;
     onPanelClose: () => void;
-    bottomSheetContents?: ReactNode;
 };
 
-export default function SlideUpPanel({
-    title,
-    isOpen,
-    tagColor,
-    children,
-    onPanelClose,
-    bottomSheetContents,
-}: SlideUpPanelPropTypes) {
+export default function SlideUpPanel({ title, isOpen, tagColor, children, onPanelClose }: SlideUpPanelPropTypes) {
     const slideInTransition = useTransition(isOpen, {
         config: {
             mass: 1,
@@ -54,8 +46,6 @@ export default function SlideUpPanel({
                             </div>
                             <div className={styles.panelContent}>
                                 <div className={styles.scrollableArea}>{children}</div>
-                                {/* TODO: Maybe decommission bottomSheetContents and put responsibility on component consumer to handle any buttons */}
-                                {bottomSheetContents && <div className={styles.bottomSheet}>{bottomSheetContents}</div>}
                             </div>
                         </animated.div>
                     </FocusLock>

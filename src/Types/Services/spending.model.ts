@@ -61,7 +61,7 @@ export type RecurringSpendTransaction = {
     isRecurring: true;
     expectedMonthlyAmount: number;
     recurringSpendName: string; // spend_name from recurring
-    recurringSpendId: string;
+    recurringSpendId: string; // uuid string
     isVariableRecurring: boolean;
     isActive: boolean;
 } & BaseSpendTransaction;
@@ -124,7 +124,7 @@ export const v1DiscretionaryAddSchema = zod.object({
     category: zod.nativeEnum(SpendingCategory),
     amountSpent: zod.number().safe().positive(),
     spentDate: zod.string().date(),
-    note: zod.string().trim().max(255),
+    note: zod.string().trim().max(100),
     linkedTripId: zod.string().uuid().optional(),
 });
 
@@ -160,11 +160,20 @@ export type RecurringSummaryV1Response = {
 // RECURRING ADD API --- /api/spending/v1/recurring/add
 export const v1AddRecurringSpendSchema = zod.object({
     category: zod.nativeEnum(SpendingCategory),
-    recurringSpendName: zod.string().trim().max(255),
+    recurringSpendName: zod.string().trim().max(60),
     expectedMonthlyAmount: zod.number().safe().positive(),
     isVariableRecurring: zod.boolean(),
 });
 
 export type AddRecurringSpendRequestParams = zod.infer<typeof v1AddRecurringSpendSchema>;
-
 // END RECURRING ADD API --------------------------------------------
+
+// RECURRING EDIT API --- /api/spending/v1/recurring/edit
+export const v1EditRecurringSpendSchema = v1AddRecurringSpendSchema.extend({
+    // Add the transactionId field
+    recurringSpendId: zod.string().uuid(),
+});
+
+export type EditRecurringSpendRequestParams = zod.infer<typeof v1EditRecurringSpendSchema>;
+
+// END RECURRING EDIT API --------------------------------------------
