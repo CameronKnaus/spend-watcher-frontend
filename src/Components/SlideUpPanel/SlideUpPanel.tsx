@@ -8,6 +8,7 @@ type SlideUpPanelPropTypes = {
     tagColor: string;
     isOpen: boolean;
     children: ReactNode;
+    onPanelClose: () => void;
     bottomSheetContents?: ReactNode;
 };
 
@@ -16,6 +17,7 @@ export default function SlideUpPanel({
     isOpen,
     tagColor,
     children,
+    onPanelClose,
     bottomSheetContents,
 }: SlideUpPanelPropTypes) {
     const slideInTransition = useTransition(isOpen, {
@@ -33,7 +35,11 @@ export default function SlideUpPanel({
         (animatedStyles, isOpen) =>
             isOpen && (
                 <div className={styles.container}>
-                    <animated.div className={styles.lockedBackground} style={{ opacity: animatedStyles.opacity }} />
+                    <animated.div
+                        className={styles.lockedBackground}
+                        style={{ opacity: animatedStyles.opacity }}
+                        onClick={onPanelClose}
+                    />
                     <FocusLock returnFocus>
                         <animated.div
                             aria-modal

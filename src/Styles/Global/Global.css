@@ -5,6 +5,7 @@
 @import './Shadows.css';
 @import './Layout.css';
 @import './PageSharedStyles.css';
+@import './FormsSharedStyles.css';
 
 /* Overwrite default button styling */
 button,

@@ -156,3 +156,15 @@ export type RecurringSummaryV1Response = {
     actualMonthlyTotal: number;
 };
 // END RECURRING SUMMARY API --------------------------------------------
+
+// RECURRING ADD API --- /api/spending/v1/recurring/add
+export const v1AddRecurringSpendSchema = zod.object({
+    category: zod.nativeEnum(SpendingCategory),
+    recurringSpendName: zod.string().trim().max(255),
+    expectedMonthlyAmount: zod.number().safe().positive(),
+    isVariableRecurring: zod.boolean(),
+});
+
+export type AddRecurringSpendRequestParams = zod.infer<typeof v1AddRecurringSpendSchema>;
+
+// END RECURRING ADD API --------------------------------------------

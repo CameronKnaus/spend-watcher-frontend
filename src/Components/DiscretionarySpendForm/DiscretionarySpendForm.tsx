@@ -3,10 +3,9 @@ import axios from 'axios';
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
 import DatePicker from 'Components/FormInputs/DatePickerController/DatePickerController';
-import { FilterableSelectOptionType } from 'Components/FormInputs/FilterableSelect/FilterableSelect';
 import FilterableSelect from 'Components/FormInputs/FilterableSelect/FilterableSelectController';
+import useSpendCategoryList from 'Components/FormInputs/FilterableSelect/presetLists/useSpendCategoryList/useSpendCategoryList';
 import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
-import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useEffect } from 'react';
@@ -19,14 +18,14 @@ export type DiscretionarySpendFormAttributes = Omit<DiscretionarySpendTransactio
 
 type DiscretionarySpendFormPropTypes = {
     transactionToEdit?: DiscretionarySpendTransaction;
-    onPanelClose: () => void;
+    onCancel: () => void;
 };
 
-export default function DiscretionarySpendForm({ transactionToEdit, onPanelClose }: DiscretionarySpendFormPropTypes) {
+export default function DiscretionarySpendForm({ transactionToEdit, onCancel }: DiscretionarySpendFormPropTypes) {
     const editMode = Boolean(transactionToEdit);
     const getContent = useContent('transactions');
-    const getSpendCategoryLabel = useContent('SPENDING_CATEGORIES');
     const getGeneralContent = useContent('general');
+    const spendingCategoryList = useSpendCategoryList();
 
     // All form handling managed here
     const form = useForm<DiscretionarySpendFormAttributes>({
@@ -41,9 +40,9 @@ export default function DiscretionarySpendForm({ transactionToEdit, onPanelClose
         form.reset(transactionToEdit);
     }, [transactionToEdit, form]);
 
-    function closePanel() {
+    function handleCancel() {
         form.reset();
-        onPanelClose();
+        onCancel();
     }
 
     function onSubmit(submission: DiscretionarySpendFormAttributes) {
@@ -65,7 +64,8 @@ export default function DiscretionarySpendForm({ transactionToEdit, onPanelClose
             axios.post(SERVICE_ROUTES.postAddDiscretionarySpending, payload);
         }
 
-        closePanel();
+        // Reset form
+        handleCancel();
     }
 
     return (
@@ -82,13 +82,14 @@ export default function DiscretionarySpendForm({ transactionToEdit, onPanelClose
                     className={styles.textInput}
                 />
 
+                {/* Spend category */}
                 <label>{getContent('categoryLabel')}</label>
                 <FilterableSelect
                     control={form.control}
                     name="category"
                     className={styles.textInput}
                     defaultValue={SpendingCategory.OTHER}
-                    optionsList={generateSpendCategoryList(getSpendCategoryLabel)}
+                    optionsList={spendingCategoryList}
                 />
 
                 {/* A short note about the transaction */}
@@ -97,11 +98,11 @@ export default function DiscretionarySpendForm({ transactionToEdit, onPanelClose
                     className={styles.textInput}
                     placeholder={getContent('notesPlaceholder')}
                     autoComplete="off"
-                    {...form.register('note', { maxLength: 60 })}
+                    {...form.register('note', { maxLength: 100 })}
                 />
 
                 {/* Date of the transaction */}
-                <label>{getContent('dateLabel')}</label>
+                <label className={styles.dateLabel}>{getContent('dateLabel')}</label>
                 <DatePicker
                     isRequired
                     control={form.control}
@@ -129,7 +130,7 @@ export default function DiscretionarySpendForm({ transactionToEdit, onPanelClose
                 />
             </form>
             <BottomSheet>
-                <CustomButton variant="secondary" onClick={closePanel} layout="full-width">
+                <CustomButton variant="secondary" onClick={handleCancel} layout="full-width">
                     {getGeneralContent('cancel')}
                 </CustomButton>
                 <CustomButton
@@ -143,23 +144,4 @@ export default function DiscretionarySpendForm({ transactionToEdit, onPanelClose
             </BottomSheet>
         </>
     );
-}
-
-function generateSpendCategoryList(
-    getContent: ReturnType<typeof useContent<'SPENDING_CATEGORIES'>>,
-): FilterableSelectOptionType<SpendingCategory>[] {
-    const { RESTAURANTS, GROCERIES, DRINKS, OTHER, ...rest } = SpendingCategory;
-
-    const newOrder = [RESTAURANTS, GROCERIES, DRINKS, ...Object.values(rest), OTHER];
-
-    return newOrder.map((category) => ({
-        value: category,
-        optionName: getContent(category),
-        customRender: (optionName: string, value: SpendingCategory) => (
-            <div className={styles.spendCategoryOption}>
-                <SpendingCategoryIcon className={styles.spendCategoryIcon} category={value} size={32} />
-                <div>{optionName}</div>
-            </div>
-        ),
-    }));
 }

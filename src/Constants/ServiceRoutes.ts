@@ -12,6 +12,7 @@ const SERVICE_ROUTES: Record<string, string> = {
     postEditDiscretionarySpending: domainName + '/spending/v1/discretionary/edit',
     postDeleteDiscretionarySpending: domainName + '/spending/v1/discretionary/delete',
     getRecurringSummary: domainName + '/spending/v1/recurring/summary',
+    postAddRecurringSpend: domainName + '/spending/v1/recurring/add',
 };
 
 export default SERVICE_ROUTES;
