@@ -6,8 +6,8 @@
 }
 
 .spendingSectionTitle {
-    font-size: var(--font-heading-large);
-    font-weight: var(--font-weight-medium);
+    font-size: var(--page-title-font-size);
+    font-weight: var(--page-title-font-weight);
     margin-bottom: 24px;
 }
 

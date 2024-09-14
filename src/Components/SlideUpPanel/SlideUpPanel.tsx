@@ -1,7 +1,7 @@
-import styles from './SlideUpPanel.module.css';
-import FocusLock from 'react-focus-lock';
-import { ReactNode } from 'react';
 import { animated, useTransition } from '@react-spring/web';
+import { ReactNode } from 'react';
+import FocusLock from 'react-focus-lock';
+import styles from './SlideUpPanel.module.css';
 
 type SlideUpPanelPropTypes = {
     title: string;
@@ -48,6 +48,7 @@ export default function SlideUpPanel({
                             </div>
                             <div className={styles.panelContent}>
                                 <div className={styles.scrollableArea}>{children}</div>
+                                {/* TODO: Maybe decommission bottomSheetContents and put responsibility on component consumer to handle any buttons */}
                                 {bottomSheetContents && <div className={styles.bottomSheet}>{bottomSheetContents}</div>}
                             </div>
                         </animated.div>

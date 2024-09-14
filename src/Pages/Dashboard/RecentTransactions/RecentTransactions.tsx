@@ -1,5 +1,5 @@
 import Currency from 'Components/Currency/Currency';
-import DiscretionarySpendPanel from 'Components/ExpenseForm/DiscretionarySpendPanel';
+import DiscretionarySpendPanel from 'Components/DiscretionarySpendForm/DiscretionarySpendPanel';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import TransactionRow from 'Components/TransactionRow';
 import { format, isToday, isYesterday, parseISO } from 'date-fns';

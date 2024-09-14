@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import Currency from 'Components/Currency/Currency';
 import CustomButton from 'Components/CustomButton/CustomButton';
-import DiscretionarySpendPanel from 'Components/ExpenseForm/DiscretionarySpendPanel';
+import DiscretionarySpendPanel from 'Components/DiscretionarySpendForm/DiscretionarySpendPanel';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 import { format } from 'date-fns';

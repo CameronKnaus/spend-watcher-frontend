@@ -4,6 +4,7 @@
 @import './utilities.css';
 @import './Shadows.css';
 @import './Layout.css';
+@import './PageSharedStyles.css';
 
 /* Overwrite default button styling */
 button,
