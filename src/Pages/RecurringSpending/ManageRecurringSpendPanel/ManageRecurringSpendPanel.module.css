@@ -1,0 +1,21 @@
+.optionButton {
+    padding: 16px;
+    margin-bottom: 16px;
+    margin-right: 16px;
+    display: inline-block;
+    min-width: 120px;
+    background-color: inherit;
+    border: 1px solid var(--token-button-secondary-color);
+    color: var(--token-button-secondary-hover-color);
+}
+
+.optionButton:hover {
+    background-color: var(--theme-color-neutral-700);
+    border: 1px solid var(--token-button-secondary-hover-color);
+}
+
+.header {
+    font-weight: var(--font-weight-semi-bold);
+    font-size: var(--font-body-large);
+    padding-bottom: 16px;
+}

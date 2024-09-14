@@ -60,7 +60,7 @@ export default function RecurringExpenseForm({ onCancel, expenseToEdit }: Recurr
         <>
             <form className={styles.newRecurringSpendForm} onSubmit={form.handleSubmit(onSubmit)}>
                 {/* Expense name */}
-                <label>{getContent('newRecurringExpenseTitle')}</label>
+                <label>{getContent('recurringSpendName')}</label>
                 <input
                     className={styles.textInput}
                     placeholder={getContent('newSpendNamePlaceholder')}

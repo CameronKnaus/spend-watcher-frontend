@@ -46,6 +46,7 @@ const locale = {
         estimatedLabel: 'Estimated: {{0}}',
         fixedLabel: 'Fixed',
         newRecurringExpenseTitle: 'New recurring expense',
+        recurringSpendName: 'Expense name',
         newSpendNamePlaceholder: 'Rent payment',
         categoryLabel: 'Category',
         variableExpenseLabel: 'This amount varies',
@@ -57,6 +58,12 @@ const locale = {
         deleteSpeedBumpDescription:
             'This will permanently delete this recurring expense and all of its past data. This means all previous months\' spend data for "{{0}}" will be permanently deleted.',
         finalDeletionWarning: 'This action cannot be undone.',
+        edit: 'Edit',
+        permanentlyDelete: 'Permanently delete',
+        cancel: 'Cancel',
+        chooseOption: 'What would you like to do?',
+        editingTransaction: 'Edit "{{0}}"',
+        deletingTransaction: 'Delete "{{0}}"',
     },
     ACCOUNT_CATEGORIES: {
         CHECKING: 'Checking',

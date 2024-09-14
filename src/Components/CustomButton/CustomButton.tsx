@@ -1,11 +1,11 @@
-import styles from './CustomButton.module.css';
 import { clsx } from 'clsx';
 import { ComponentProps, ReactNode } from 'react';
+import styles from './CustomButton.module.css';
 
 type CustomButtonPropTypes = {
     onClick?: () => void;
     children: ReactNode;
-    variant: 'primary' | 'secondary' | 'tertiary';
+    variant?: 'primary' | 'secondary' | 'tertiary';
     isDisabled?: boolean;
     layout?: 'fit-content' | 'full-width';
     className?: string;
@@ -28,7 +28,7 @@ export default function CustomButton({
 
         onClick?.();
     }
-    const classList = clsx([styles.defaultButton, className, isDisabled && styles.disabled, styles[variant]]);
+    const classList = clsx([styles.defaultButton, className, isDisabled && styles.disabled, styles[variant ?? '']]);
 
     return (
         <button
