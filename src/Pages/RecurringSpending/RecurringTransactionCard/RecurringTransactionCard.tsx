@@ -27,7 +27,7 @@ export default function RecurringTransactionCard({
             <div className={styles.transactionDetails}>
                 <div className={styles.dataRow}>
                     <span>{transaction.recurringSpendName}</span>
-                    <span>
+                    <span className={styles.spendAmount}>
                         <Currency amount={-transaction.amountSpent} isGainLoss />
                     </span>
                 </div>

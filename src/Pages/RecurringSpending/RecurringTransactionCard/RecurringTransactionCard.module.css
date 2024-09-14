@@ -38,3 +38,7 @@
     padding: 2px 8px;
     border-radius: 4px;
 }
+
+.spendAmount {
+    font-weight: var(--font-weight-semi-bold);
+}
