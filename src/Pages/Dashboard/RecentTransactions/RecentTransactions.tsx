@@ -42,7 +42,7 @@ export default function RecentTransactions() {
             const newCount = transactionCount + transactionsCountForDate;
 
             // If adding the date's transactions would exceed the absolute maximum
-            if (newCount > absoluteMaxTransactionCount) {
+            if (!transactionsCountForDate || newCount > absoluteMaxTransactionCount) {
                 // Don't add anymore transactions
                 break;
             }
