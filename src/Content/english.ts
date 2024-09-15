@@ -8,8 +8,8 @@ const locale = {
         topCategories: 'Top discretionary categories',
     },
     spendingData: {
-        topFour: 'Top four cat. total',
-        other: 'Rest of spending',
+        topFour: 'Top four spend',
+        other: 'Remaining spend',
         moreLabel: 'See more',
     },
     general: {

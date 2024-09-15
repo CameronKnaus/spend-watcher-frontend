@@ -36,7 +36,7 @@ export default function RecentTransactions() {
         const allDateEntries = Object.entries(spendingData.transactionsByDate);
         while (index < allDateEntries.length && transactionCount <= targetTransactionCount) {
             const [date, dateSpendSummary] = allDateEntries[index];
-            const transactionsCountForDate = dateSpendSummary.discretionaryTotal.count;
+            const transactionsCountForDate = dateSpendSummary.discretionaryTotals.count;
 
             // Add date's transactions to transaction count
             const newCount = transactionCount + transactionsCountForDate;
@@ -79,7 +79,7 @@ export default function RecentTransactions() {
                             <h3 className={styles.dateHeader}>
                                 {dateLabel}
                                 <div className={styles.daysTotalAmount}>
-                                    (<Currency amount={-dateSpendSummary.discretionaryTotal.amount} isGainLoss />)
+                                    (<Currency amount={-dateSpendSummary.discretionaryTotals.amount} isGainLoss />)
                                 </div>
                             </h3>
                             <div className={styles.transactionGroup}>

@@ -54,7 +54,7 @@ export default function Dashboard() {
                             ) : (
                                 <Currency
                                     className="font-heading-medium font-thin"
-                                    amount={-spendingData.summary.discretionaryTotal.amount}
+                                    amount={-spendingData.summary.discretionaryTotals.amount}
                                     isGainLoss
                                 />
                             )}
@@ -70,7 +70,7 @@ export default function Dashboard() {
                             ) : (
                                 <Currency
                                     className="font-heading-medium font-thin"
-                                    amount={-spendingData.summary.recurringTotal.amount}
+                                    amount={-spendingData.summary.recurringTotals.amount}
                                     isGainLoss
                                 />
                             )}

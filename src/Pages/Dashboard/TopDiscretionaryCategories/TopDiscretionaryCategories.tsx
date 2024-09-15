@@ -4,7 +4,6 @@ import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService/useSpendingDetailsService';
 import { useEffect, useRef, useState } from 'react';
 import { SpendingCategory } from 'Types/SpendingCategory';
-import roundNumber from 'Util/Calculations/roundNumber';
 import TopCategoryLabel from './TopCategoryLabel/TopCategoryLabel';
 import TopCategoryLabelLoader from './TopCategoryLabel/TopCategoryLabelLoader';
 import styles from './TopDiscretionaryCategories.module.css';
@@ -60,14 +59,11 @@ export default function TopDiscretionaryCategories() {
         );
     }
 
-    const list = spendingData.categoryDetailsList.slice(0, 4);
-    const topFourTotalAmount = roundNumber(list.reduce((acc, details) => acc + details.amount, 0));
-    const topFourTotalPercentage = roundNumber(
-        list.reduce((acc, details) => acc + details.percentageOfDiscretionarySpend, 0),
-    );
-
-    const otherCategoriesTotalAmount = roundNumber(spendingData.summary.discretionaryTotal.amount - topFourTotalAmount);
-    const otherCategoriesTotalPercentage = roundNumber(100 - topFourTotalPercentage);
+    const { spendCategoryOverview } = spendingData;
+    // Sort by discretionary totals and get the top 4
+    const list = spendCategoryOverview.categoryDetailsList
+        .sort((a, b) => b.discretionaryTotals.amount - a.discretionaryTotals.amount)
+        .slice(0, 4);
 
     const otherCategoriesColor = 'var(--theme-color-neutral-500)';
 
@@ -80,7 +76,7 @@ export default function TopDiscretionaryCategories() {
                         id={`${details.category}-percentage-bar`}
                         className={styles.percentageBarGroup}
                         style={{
-                            width: `${details.percentageOfDiscretionarySpend}%`,
+                            width: `${details.discretionaryTotals.percentageOfTotalAmount}%`,
                             backgroundColor: `var(--theme-color-spend-category-${details.category})`,
                         }}
                     />
@@ -101,16 +97,16 @@ export default function TopDiscretionaryCategories() {
                         key={`${details.category}-description`}
                         label={getCategoryLabel(details.category)}
                         isVerticalList={isVerticalList}
-                        amount={-details.amount}
-                        percentage={details.percentageOfDiscretionarySpend}
+                        amount={-details.discretionaryTotals.amount}
+                        percentage={details.discretionaryTotals.percentageOfTotalAmount}
                         category={details.category}
                     />
                 ))}
                 <TopCategoryLabel
                     label={getContent('topFour')}
                     isVerticalList={isVerticalList}
-                    amount={-topFourTotalAmount}
-                    percentage={topFourTotalPercentage}
+                    amount={-spendCategoryOverview.topFourDiscretionaryTotals.amount}
+                    percentage={spendCategoryOverview.topFourDiscretionaryTotals.percentageOfTotalAmount}
                     category={SpendingCategory.OTHER}
                     customIconStyles={{
                         background: `linear-gradient(to right, ${list.map((details) => `var(--theme-color-spend-category-${details.category})`).join(', ')})`,
@@ -119,8 +115,8 @@ export default function TopDiscretionaryCategories() {
                 <TopCategoryLabel
                     label={getContent('other')}
                     isVerticalList={isVerticalList}
-                    amount={-otherCategoriesTotalAmount}
-                    percentage={otherCategoriesTotalPercentage}
+                    amount={-spendCategoryOverview.remainingDiscretionaryTotals.amount}
+                    percentage={spendCategoryOverview.remainingDiscretionaryTotals.percentageOfTotalAmount}
                     category={SpendingCategory.OTHER}
                     customIconStyles={{
                         backgroundColor: otherCategoriesColor,

@@ -14,6 +14,13 @@ export type TransactionTotal = {
     count: number;
 };
 
+export type TransactionTotalWithPercentage = TransactionTotal & {
+    // Percentage of the total dollar amount
+    percentageOfTotalAmount: number;
+    // Percentage of the total number of transactions
+    percentageOfTotalCount: number;
+};
+
 export type TotalsByCategory = {
     [category in SpendingCategory]?: SummaryTotals;
 };
@@ -21,8 +28,8 @@ export type TotalsByCategory = {
 // Summary data for a given list of transactions (includedTransactions)
 export type SpendGroupSummary = {
     total: TransactionTotal;
-    recurringTotal: TransactionTotal;
-    discretionaryTotal: TransactionTotal;
+    recurringTotals: TransactionTotal;
+    discretionaryTotals: TransactionTotal;
     includedTransactions: TransactionId[];
 };
 
@@ -95,18 +102,23 @@ export type SpendingDetailsRequestParams = zod.infer<typeof v1DetailsSchema>;
 
 export type CategoryDetails = {
     category: SpendingCategory;
-    amount: number;
-    count: number;
-    percentageOfTotalSpend: number;
-    percentageOfTotalTransactions: number;
-    percentageOfDiscretionarySpend: number;
-    percentageOfDiscretionaryTransactions: number;
-    percentageOfRecurringSpend: number;
-    percentageOfRecurringTransactions: number;
+    combinedTotals: TransactionTotalWithPercentage;
+    discretionaryTotals: TransactionTotalWithPercentage;
+    recurringTotals: TransactionTotalWithPercentage;
+};
+
+export type SpendCategoryOverview = {
+    categoryDetailsList: CategoryDetails[];
+    topFourCombinedTotals: TransactionTotalWithPercentage;
+    remainingCombinedTotals: TransactionTotalWithPercentage;
+    topFourDiscretionaryTotals: TransactionTotalWithPercentage;
+    remainingDiscretionaryTotals: TransactionTotalWithPercentage;
+    topFourRecurringTotals: TransactionTotalWithPercentage;
+    remainingRecurringTotals: TransactionTotalWithPercentage;
 };
 
 export type SpendingDetailsV1Response = {
-    categoryDetailsList: CategoryDetails[];
+    spendCategoryOverview: SpendCategoryOverview;
     transactionDictionary: TransactionDictionary;
     spendTypeRatio: {
         discretionary: number;
