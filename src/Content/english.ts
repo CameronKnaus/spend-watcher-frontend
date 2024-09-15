@@ -64,6 +64,8 @@ const locale = {
         chooseOption: 'What would you like to do?',
         editingTransaction: 'Edit "{{0}}"',
         deletingTransaction: 'Delete "{{0}}"',
+        markActive: 'Reactive this expense',
+        markInactive: 'Mark as inactive',
     },
     ACCOUNT_CATEGORIES: {
         CHECKING: 'Checking',

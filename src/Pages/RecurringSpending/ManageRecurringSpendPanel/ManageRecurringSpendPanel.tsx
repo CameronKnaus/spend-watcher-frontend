@@ -1,11 +1,13 @@
+import axios from 'axios';
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
 import RecurringExpenseForm from 'Components/RecurringExpenseForm/RecurringExpenseForm';
+import SpeedBump from 'Components/SlideUpPanel/Addons/SpeedBump/SpeedBump';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
+import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useEffect, useState } from 'react';
 import { RecurringSpendTransaction } from 'Types/Services/spending.model';
-import DeleteRecurringSpeedBump from './DeleteRecurringSpeedBump/DeleteRecurringSpeedBump';
 import styles from './ManageRecurringSpendPanel.module.css';
 
 type ManageRecurringSpendPanelPropTypes = {
@@ -24,6 +26,7 @@ export default function ManageRecurringSpendPanel({
     closePanel,
 }: ManageRecurringSpendPanelPropTypes) {
     const getContent = useContent('recurringSpending');
+    const getGeneralContent = useContent('general');
     const [currentPanelContents, setCurrentPanelContents] = useState(ManageRecurringSpendPanels.base);
 
     useEffect(() => {
@@ -71,6 +74,14 @@ export default function ManageRecurringSpendPanel({
                             {getContent('edit')}
                         </CustomButton>
                         <CustomButton
+                            layout="fit-content"
+                            className={styles.optionButton}
+                            variant="secondary"
+                            onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.edit)}
+                        >
+                            {getContent('markInactive')}
+                        </CustomButton>
+                        <CustomButton
                             className={styles.optionButton}
                             variant="secondary"
                             layout="fit-content"
@@ -93,10 +104,19 @@ export default function ManageRecurringSpendPanel({
                     />
                 )}
                 {recurringSpendTransaction && currentPanelContents === ManageRecurringSpendPanels.delete && (
-                    <DeleteRecurringSpeedBump
-                        recurringSpendTransaction={recurringSpendTransaction}
-                        handleCancel={returnToBase}
-                        onDeletion={closePanel}
+                    <SpeedBump
+                        warningTitle={getContent('deleteSpeedBumpHeader')}
+                        warningDescription={getContent('deleteSpeedBumpDescription', [
+                            recurringSpendTransaction.recurringSpendName,
+                        ])}
+                        proceedText={getGeneralContent('delete')}
+                        onCancel={returnToBase}
+                        onProceed={() => {
+                            axios.post(SERVICE_ROUTES.postDeleteRecurringSpend, {
+                                recurringSpendId: recurringSpendTransaction.recurringSpendId,
+                            });
+                            closePanel();
+                        }}
                     />
                 )}
             </>

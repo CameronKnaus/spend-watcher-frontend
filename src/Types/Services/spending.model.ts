@@ -3,7 +3,6 @@ import { SpendingCategory } from 'Types/SpendingCategory';
 import { z as zod } from 'zod';
 
 // SPEND RELATED TYPES BEGIN --------------------------------------------
-
 export type RecurringTransactionId = `${'Recurring-'}${number}`;
 export type DiscretionaryTransactionId = `${'Discretionary-'}${number}`;
 export type TransactionId = RecurringTransactionId | DiscretionaryTransactionId;
@@ -198,3 +197,14 @@ export const v1DeleteRecurringSpendSchema = zod.object({
 
 export type DeleteRecurringSpendRequestParams = zod.infer<typeof v1DeleteRecurringSpendSchema>;
 // END RECURRING DELETE API --------------------------------------------
+
+// RECURRING SET-ACTIVE API --- /api/spending/v1/recurring/set-active
+
+export const v1SetActiveRecurringSpendSchema = zod.object({
+    recurringSpendId: zod.string().uuid(),
+    isActive: zod.boolean(),
+});
+
+export type SetActiveRecurringSpendRequestParams = zod.infer<typeof v1SetActiveRecurringSpendSchema>;
+
+// END RECURRING SET-ACTIVE API --------------------------------------------
