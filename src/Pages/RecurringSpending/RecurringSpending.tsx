@@ -79,13 +79,16 @@ export default function RecurringSpending() {
                 isOpen={newSpendFormOpen}
                 title={getContent('newRecurringExpenseTitle')}
                 tagColor="var(--token-color-semantic-expense)"
-                onPanelClose={() => setNewSpendFormOpen(false)}
+                handlePanelWillClose={() => setNewSpendFormOpen(false)}
             >
-                <RecurringExpenseForm onCancel={() => setNewSpendFormOpen(false)} />
+                <RecurringExpenseForm
+                    onCancel={() => setNewSpendFormOpen(false)}
+                    onSubmit={() => setNewSpendFormOpen(false)}
+                />
             </SlideUpPanel>
             <ManageRecurringSpendPanel
                 recurringSpendTransaction={recurringSpendToEdit}
-                onPanelClose={() => setRecurringSpendToEdit(undefined)}
+                closePanel={() => setRecurringSpendToEdit(undefined)}
             />
         </>
     );

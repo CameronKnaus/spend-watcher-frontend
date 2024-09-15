@@ -37,7 +37,7 @@ export default function DiscretionarySpendPanel({
             isOpen={isOpen}
             title={getContent(editMode ? 'editExpense' : 'newExpense')}
             tagColor="var(--token-color-semantic-expense)"
-            onPanelClose={onPanelClose}
+            handlePanelWillClose={onPanelClose}
         >
             <>
                 <DiscretionarySpendForm transactionToEdit={transactionToEdit} onCancel={onPanelClose} />

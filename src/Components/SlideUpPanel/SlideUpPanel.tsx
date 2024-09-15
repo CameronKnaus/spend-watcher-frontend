@@ -8,10 +8,16 @@ type SlideUpPanelPropTypes = {
     tagColor: string;
     isOpen: boolean;
     children: ReactNode;
-    onPanelClose: () => void;
+    handlePanelWillClose: () => void;
 };
 
-export default function SlideUpPanel({ title, isOpen, tagColor, children, onPanelClose }: SlideUpPanelPropTypes) {
+export default function SlideUpPanel({
+    title,
+    isOpen,
+    tagColor,
+    children,
+    handlePanelWillClose,
+}: SlideUpPanelPropTypes) {
     const slideInTransition = useTransition(isOpen, {
         config: {
             mass: 1,
@@ -30,7 +36,7 @@ export default function SlideUpPanel({ title, isOpen, tagColor, children, onPane
                     <animated.div
                         className={styles.lockedBackground}
                         style={{ opacity: animatedStyles.opacity }}
-                        onClick={onPanelClose}
+                        onClick={handlePanelWillClose}
                     />
                     <FocusLock returnFocus>
                         <animated.div

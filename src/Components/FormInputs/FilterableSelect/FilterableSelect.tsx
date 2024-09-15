@@ -68,6 +68,7 @@ function FilterableSelectComponent<T extends string>(
             <input
                 ref={ref}
                 type="text"
+                autoComplete="off"
                 {...props}
                 value={currentSelectedValue()}
                 placeholder={noSelectionText}

@@ -10,6 +10,7 @@ type DeleteRecurringSpeedBumpPropTypes = {
     recurringSpendTransaction: RecurringSpendTransaction;
     handleCancel: () => void;
     onDeletion: () => void;
+    onCancel?: () => void;
 };
 
 export default function DeleteRecurringSpeedBump({

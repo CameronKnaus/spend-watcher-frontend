@@ -3,6 +3,7 @@ import { SpendingCategory } from 'Types/SpendingCategory';
 import { z as zod } from 'zod';
 
 // SPEND RELATED TYPES BEGIN --------------------------------------------
+
 export type RecurringTransactionId = `${'Recurring-'}${number}`;
 export type DiscretionaryTransactionId = `${'Discretionary-'}${number}`;
 export type TransactionId = RecurringTransactionId | DiscretionaryTransactionId;

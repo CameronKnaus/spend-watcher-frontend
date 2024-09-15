@@ -18,11 +18,12 @@ import { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './RecurringExpenseForm.module.css';
 
 type RecurringExpenseFormPropTypes = {
+    onSubmit: () => void;
     onCancel: () => void;
     expenseToEdit?: RecurringSpendTransaction;
 };
 
-export default function RecurringExpenseForm({ onCancel, expenseToEdit }: RecurringExpenseFormPropTypes) {
+export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit }: RecurringExpenseFormPropTypes) {
     const editMode = Boolean(expenseToEdit);
     const getContent = useContent('recurringSpending');
     const getGeneralContent = useContent('general');
@@ -45,7 +46,7 @@ export default function RecurringExpenseForm({ onCancel, expenseToEdit }: Recurr
         onCancel();
     }
 
-    function onSubmit(submission: AddRecurringSpendRequestParams) {
+    function handleSubmit(submission: AddRecurringSpendRequestParams) {
         if (editMode) {
             const payload = { ...submission, recurringSpendId: expenseToEdit?.recurringSpendId };
             axios.post(SERVICE_ROUTES.postEditRecurringSpend, payload);
@@ -53,12 +54,13 @@ export default function RecurringExpenseForm({ onCancel, expenseToEdit }: Recurr
             axios.post(SERVICE_ROUTES.postAddRecurringSpend, submission);
         }
 
-        handleCancel();
+        form.reset();
+        onSubmit();
     }
 
     return (
         <>
-            <form className={styles.newRecurringSpendForm} onSubmit={form.handleSubmit(onSubmit)}>
+            <form className={styles.newRecurringSpendForm} onSubmit={form.handleSubmit(handleSubmit)}>
                 {/* Expense name */}
                 <label>{getContent('recurringSpendName')}</label>
                 <input
@@ -114,7 +116,7 @@ export default function RecurringExpenseForm({ onCancel, expenseToEdit }: Recurr
                 <CustomButton
                     isDisabled={!form.formState.isValid}
                     variant="primary"
-                    onClick={form.handleSubmit(onSubmit)}
+                    onClick={form.handleSubmit(handleSubmit)}
                     layout="full-width"
                 >
                     {getGeneralContent('submit')}

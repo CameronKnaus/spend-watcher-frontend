@@ -10,7 +10,7 @@ import styles from './ManageRecurringSpendPanel.module.css';
 
 type ManageRecurringSpendPanelPropTypes = {
     recurringSpendTransaction?: RecurringSpendTransaction;
-    onPanelClose: () => void;
+    closePanel: () => void;
 };
 
 enum ManageRecurringSpendPanels {
@@ -21,7 +21,7 @@ enum ManageRecurringSpendPanels {
 
 export default function ManageRecurringSpendPanel({
     recurringSpendTransaction,
-    onPanelClose,
+    closePanel,
 }: ManageRecurringSpendPanelPropTypes) {
     const getContent = useContent('recurringSpending');
     const [currentPanelContents, setCurrentPanelContents] = useState(ManageRecurringSpendPanels.base);
@@ -55,7 +55,7 @@ export default function ManageRecurringSpendPanel({
         <SlideUpPanel
             isOpen={Boolean(recurringSpendTransaction)}
             title={getTagTitle()}
-            onPanelClose={onPanelClose}
+            handlePanelWillClose={closePanel}
             tagColor="var(--token-color-semantic-expense)"
         >
             <>
@@ -79,20 +79,24 @@ export default function ManageRecurringSpendPanel({
                             {getContent('permanentlyDelete')}
                         </CustomButton>
                         <BottomSheet>
-                            <CustomButton layout="full-width" variant="secondary" onClick={onPanelClose}>
+                            <CustomButton layout="full-width" variant="secondary" onClick={closePanel}>
                                 {getContent('cancel')}
                             </CustomButton>
                         </BottomSheet>
                     </>
                 )}
                 {currentPanelContents === ManageRecurringSpendPanels.edit && (
-                    <RecurringExpenseForm onCancel={returnToBase} expenseToEdit={recurringSpendTransaction} />
+                    <RecurringExpenseForm
+                        onCancel={returnToBase}
+                        onSubmit={closePanel}
+                        expenseToEdit={recurringSpendTransaction}
+                    />
                 )}
                 {recurringSpendTransaction && currentPanelContents === ManageRecurringSpendPanels.delete && (
                     <DeleteRecurringSpeedBump
                         recurringSpendTransaction={recurringSpendTransaction}
                         handleCancel={returnToBase}
-                        onDeletion={() => {}}
+                        onDeletion={closePanel}
                     />
                 )}
             </>

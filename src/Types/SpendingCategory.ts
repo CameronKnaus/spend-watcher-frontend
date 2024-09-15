@@ -1,3 +1,4 @@
+// Remember to update backend version if you change anything here
 export enum SpendingCategory {
     AIRFARE = 'AIRFARE',
     BUSINESS = 'BUSINESS',
