@@ -17,6 +17,7 @@ const locale = {
         submit: 'Submit',
         cancel: 'Cancel',
         delete: 'Delete',
+        confirm: 'Confirm',
     },
     transactions: {
         recent: 'Recent transactions',
@@ -66,6 +67,12 @@ const locale = {
         deletingTransaction: 'Delete "{{0}}"',
         markActive: 'Reactive this expense',
         markInactive: 'Mark as inactive',
+        setActiveTitle: 'Reactivate this recurring spend',
+        setActiveDescription:
+            'Reactivating an expense means fixed expenses will resume being automatically logged each month and variable expenses will remind you to provide a monthly update.  Upon activation, the expense will be logged, or an update requested, for the current month.',
+        setInactiveTitle: 'Deactivate this recurring spend',
+        setInactiveDescription:
+            'Deactivating an expense will stop it from being automatically logged each month, if fixed, or requesting monthly updates, if variable. You can reactivate it at any time.',
     },
     ACCOUNT_CATEGORIES: {
         CHECKING: 'Checking',

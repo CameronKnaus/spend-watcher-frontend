@@ -8,6 +8,7 @@ import styles from './CategoryIcon.module.css';
 type SpendingCategoryIconPropTypes = {
     category: SpendingCategory;
     size: number;
+    isInactive?: boolean;
     className?: string;
     showRevolvingIcon?: boolean;
     style?: CSSProperties;
@@ -17,6 +18,7 @@ export default function SpendingCategoryIcon({
     category,
     size = 32,
     className,
+    isInactive,
     showRevolvingIcon = false,
     style,
 }: SpendingCategoryIconPropTypes) {
@@ -29,7 +31,7 @@ export default function SpendingCategoryIcon({
     };
 
     return (
-        <div style={containerStyle} className={clsx(styles.icon, className)}>
+        <div style={containerStyle} className={clsx(styles.icon, isInactive && styles.inactive, className)}>
             {showRevolvingIcon ? (
                 <>
                     {spendCategoryIconMapper[category]}

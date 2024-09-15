@@ -10,6 +10,10 @@
     color: var(--token-color-category-icon);
 }
 
+.inactive {
+    filter: grayscale(100%);
+}
+
 .revolvingIcon {
     top: 3px;
     right: 3px;

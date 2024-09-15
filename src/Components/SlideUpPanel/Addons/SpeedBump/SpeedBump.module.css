@@ -9,7 +9,7 @@
     padding-bottom: 1.5rem;
 }
 
-.criticalWarning {
+.finalWarning {
     font-size: var(--font-body-regular);
     color: var(--token-color-semantic-danger);
 }

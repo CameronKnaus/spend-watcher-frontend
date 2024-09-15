@@ -35,7 +35,11 @@ export default function SpeedBump({
                 <CustomButton variant="secondary" onClick={onCancel} layout="full-width">
                     {getGeneralContent('cancel')}
                 </CustomButton>
-                <CustomButton variant="tertiary" onClick={handleProceed} layout="full-width">
+                <CustomButton
+                    variant={finalWarningText ? 'tertiary' : 'primary'}
+                    onClick={handleProceed}
+                    layout="full-width"
+                >
                     {proceedText}
                 </CustomButton>
             </BottomSheet>

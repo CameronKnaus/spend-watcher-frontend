@@ -6,6 +6,7 @@ import styles from './CategoryIcon.module.css';
 type AccountCategoryIconPropTypes = {
     category: AccountCategory;
     size: number;
+    isInactive?: boolean;
     roundedCorners?: boolean;
     className?: string;
 };
@@ -13,6 +14,7 @@ type AccountCategoryIconPropTypes = {
 export default function AccountCategoryIcon({
     category,
     size = 32,
+    isInactive,
     roundedCorners = true,
     className,
 }: AccountCategoryIconPropTypes) {
@@ -26,7 +28,7 @@ export default function AccountCategoryIcon({
     };
 
     return (
-        <div className={clsx(styles.icon, className)} style={containerStyle}>
+        <div className={clsx(styles.icon, isInactive && styles.inactive, className)} style={containerStyle}>
             {accountCategoryIconMapper[category]}
         </div>
     );

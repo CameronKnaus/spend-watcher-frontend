@@ -48,21 +48,10 @@ export default function RecurringSpending() {
                         </ModuleContainer>
                     </div>
                     <div className={styles.contentContainer}>
-                        <h2 className={styles.contentTitle}>{getContent('monthlyTransactions')}</h2>
-                        <div className={styles.transactionsContainer}>
-                            {activeList.map((transaction) => (
-                                <div key={transaction.transactionId} className={styles.cardContainer}>
-                                    <RecurringTransactionCard
-                                        transaction={transaction}
-                                        onClick={(transaction) => setRecurringSpendToEdit(transaction)}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                        {inactiveList.length > 0 && (
-                            <>
-                                <h2 className={styles.contentTitle}>{getContent('inactiveTransactions')}</h2>
-                                {inactiveList.map((transaction) => (
+                        <div>
+                            <h2 className={styles.contentTitle}>{getContent('monthlyTransactions')}</h2>
+                            <div className={styles.transactionsContainer}>
+                                {activeList.map((transaction) => (
                                     <div key={transaction.transactionId} className={styles.cardContainer}>
                                         <RecurringTransactionCard
                                             transaction={transaction}
@@ -70,7 +59,23 @@ export default function RecurringSpending() {
                                         />
                                     </div>
                                 ))}
-                            </>
+                            </div>
+                        </div>
+                        {inactiveList.length > 0 && (
+                            <div>
+                                <h2 className={styles.contentTitle}>{getContent('inactiveTransactions')}</h2>
+                                <div className={styles.transactionsContainer}>
+                                    {inactiveList.map((transaction) => (
+                                        <div key={transaction.transactionId} className={styles.cardContainer}>
+                                            <RecurringTransactionCard
+                                                isInactive
+                                                transaction={transaction}
+                                                onClick={(transaction) => setRecurringSpendToEdit(transaction)}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         )}
                     </div>
                 </div>

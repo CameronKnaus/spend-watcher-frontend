@@ -18,6 +18,8 @@ type ManageRecurringSpendPanelPropTypes = {
 enum ManageRecurringSpendPanels {
     base = 'base',
     edit = 'edit',
+    setInactive = 'setInactive',
+    setActive = 'setActive',
     delete = 'delete',
 }
 
@@ -54,6 +56,9 @@ export default function ManageRecurringSpendPanel({
         return spendName;
     }
 
+    const panelIsSetActive = currentPanelContents === ManageRecurringSpendPanels.setActive;
+    const panelIsChangingActiveStatus =
+        panelIsSetActive || currentPanelContents === ManageRecurringSpendPanels.setInactive;
     return (
         <SlideUpPanel
             isOpen={Boolean(recurringSpendTransaction)}
@@ -77,9 +82,15 @@ export default function ManageRecurringSpendPanel({
                             layout="fit-content"
                             className={styles.optionButton}
                             variant="secondary"
-                            onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.edit)}
+                            onClick={() =>
+                                setCurrentPanelContents(
+                                    recurringSpendTransaction?.isActive
+                                        ? ManageRecurringSpendPanels.setInactive
+                                        : ManageRecurringSpendPanels.setActive,
+                                )
+                            }
                         >
-                            {getContent('markInactive')}
+                            {getContent(recurringSpendTransaction?.isActive ? 'markInactive' : 'markActive')}
                         </CustomButton>
                         <CustomButton
                             className={styles.optionButton}
@@ -110,10 +121,28 @@ export default function ManageRecurringSpendPanel({
                             recurringSpendTransaction.recurringSpendName,
                         ])}
                         proceedText={getGeneralContent('delete')}
+                        finalWarningText={getContent('finalDeletionWarning')}
                         onCancel={returnToBase}
                         onProceed={() => {
                             axios.post(SERVICE_ROUTES.postDeleteRecurringSpend, {
                                 recurringSpendId: recurringSpendTransaction.recurringSpendId,
+                            });
+                            closePanel();
+                        }}
+                    />
+                )}
+                {recurringSpendTransaction && panelIsChangingActiveStatus && (
+                    <SpeedBump
+                        warningTitle={getContent(panelIsSetActive ? 'setActiveTitle' : 'setInactiveTitle')}
+                        warningDescription={getContent(
+                            panelIsSetActive ? 'setActiveDescription' : 'setInactiveDescription',
+                        )}
+                        proceedText={getGeneralContent('confirm')}
+                        onCancel={returnToBase}
+                        onProceed={() => {
+                            axios.post(SERVICE_ROUTES.postUpdateRecurringSpendStatus, {
+                                recurringSpendId: recurringSpendTransaction.recurringSpendId,
+                                isActive: panelIsSetActive,
                             });
                             closePanel();
                         }}
