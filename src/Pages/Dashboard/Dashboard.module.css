@@ -25,7 +25,7 @@
     max-width: calc(100% - var(--section-min-width));
     display: flex;
     flex-wrap: wrap;
-    align-items: start;
+    align-items: flex-start;
 }
 
 .spendingGrid {

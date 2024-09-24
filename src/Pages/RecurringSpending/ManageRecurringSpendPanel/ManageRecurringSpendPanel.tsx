@@ -7,6 +7,8 @@ import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useEffect, useState } from 'react';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { MdUpdate, MdUpdateDisabled } from 'react-icons/md';
 import { RecurringSpendTransaction } from 'Types/Services/spending.model';
 import styles from './ManageRecurringSpendPanel.module.css';
 
@@ -70,36 +72,45 @@ export default function ManageRecurringSpendPanel({
                 {currentPanelContents === ManageRecurringSpendPanels.base && (
                     <>
                         <h3 className={styles.header}>{getContent('chooseOption')}</h3>
-                        <CustomButton
-                            layout="fit-content"
-                            className={styles.optionButton}
-                            variant="secondary"
-                            onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.edit)}
-                        >
-                            {getContent('edit')}
-                        </CustomButton>
-                        <CustomButton
-                            layout="fit-content"
-                            className={styles.optionButton}
-                            variant="secondary"
-                            onClick={() =>
-                                setCurrentPanelContents(
-                                    recurringSpendTransaction?.isActive
-                                        ? ManageRecurringSpendPanels.setInactive
-                                        : ManageRecurringSpendPanels.setActive,
-                                )
-                            }
-                        >
-                            {getContent(recurringSpendTransaction?.isActive ? 'markInactive' : 'markActive')}
-                        </CustomButton>
-                        <CustomButton
-                            className={styles.optionButton}
-                            variant="secondary"
-                            layout="fit-content"
-                            onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.delete)}
-                        >
-                            {getContent('permanentlyDelete')}
-                        </CustomButton>
+                        <div className={styles.buttonContainer}>
+                            <CustomButton
+                                layout="fit-content"
+                                className={styles.optionButton}
+                                variant="secondary"
+                                onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.edit)}
+                            >
+                                <FaEdit size={20} />
+                                {getContent('edit')}
+                            </CustomButton>
+                            <CustomButton
+                                layout="fit-content"
+                                className={styles.optionButton}
+                                variant="secondary"
+                                onClick={() =>
+                                    setCurrentPanelContents(
+                                        recurringSpendTransaction?.isActive
+                                            ? ManageRecurringSpendPanels.setInactive
+                                            : ManageRecurringSpendPanels.setActive,
+                                    )
+                                }
+                            >
+                                {recurringSpendTransaction?.isActive ? (
+                                    <MdUpdateDisabled size={20} />
+                                ) : (
+                                    <MdUpdate size={20} />
+                                )}
+                                {getContent(recurringSpendTransaction?.isActive ? 'markInactive' : 'markActive')}
+                            </CustomButton>
+                            <CustomButton
+                                className={styles.optionButton}
+                                variant="secondary"
+                                layout="fit-content"
+                                onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.delete)}
+                            >
+                                <FaTrashAlt size={20} />
+                                {getContent('permanentlyDelete')}
+                            </CustomButton>
+                        </div>
                         <BottomSheet>
                             <CustomButton layout="full-width" variant="secondary" onClick={closePanel}>
                                 {getContent('cancel')}

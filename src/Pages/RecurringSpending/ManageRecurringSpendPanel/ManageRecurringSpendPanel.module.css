@@ -1,8 +1,16 @@
-.optionButton {
-    padding: 16px;
+.buttonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
     margin-bottom: 16px;
-    margin-right: 16px;
-    display: inline-block;
+    font-size: var(--font-body-large);
+}
+
+.optionButton {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    padding: 16px;
     min-width: 120px;
     background-color: inherit;
     border: 1px solid var(--token-button-secondary-color);
