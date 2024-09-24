@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
@@ -19,13 +20,50 @@ export type DiscretionarySpendFormAttributes = Omit<DiscretionarySpendTransactio
 type DiscretionarySpendFormPropTypes = {
     transactionToEdit?: DiscretionarySpendTransaction;
     onCancel: () => void;
+    onSubmit: () => void;
 };
 
-export default function DiscretionarySpendForm({ transactionToEdit, onCancel }: DiscretionarySpendFormPropTypes) {
+export const addDiscretionaryQueryKey = 'add-discretionary';
+export const editDiscretionaryQueryKey = 'edit-discretionary';
+
+export default function DiscretionarySpendForm({
+    transactionToEdit,
+    onCancel,
+    onSubmit,
+}: DiscretionarySpendFormPropTypes) {
     const editMode = Boolean(transactionToEdit);
     const getContent = useContent('transactions');
     const getGeneralContent = useContent('general');
     const spendingCategoryList = useSpendCategoryList();
+    const queryClient = useQueryClient();
+
+    const transactionService = useMutation({
+        mutationKey: transactionToEdit
+            ? [editDiscretionaryQueryKey, transactionToEdit.transactionId]
+            : [addDiscretionaryQueryKey],
+        mutationFn: (params: DiscretionarySpendFormAttributes) => {
+            if (editMode) {
+                return axios.post(SERVICE_ROUTES.postEditDiscretionarySpending, {
+                    ...params,
+                    transactionId: transactionToEdit?.transactionId,
+                });
+            } else {
+                return axios.post(SERVICE_ROUTES.postAddDiscretionarySpending, params);
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['spending'],
+            });
+
+            // Reset form
+            onSubmit();
+            form.reset();
+        },
+        onError: () => {
+            // TODO: Error handling
+        },
+    });
 
     // All form handling managed here
     const form = useForm<DiscretionarySpendFormAttributes>({
@@ -45,32 +83,13 @@ export default function DiscretionarySpendForm({ transactionToEdit, onCancel }: 
         onCancel();
     }
 
-    function onSubmit(submission: DiscretionarySpendFormAttributes) {
-        if (editMode) {
-            // Editing existing transaction
-            const payload = {
-                ...submission,
-                transactionId: transactionToEdit?.transactionId,
-            };
-
-            // TODO: Change to Tanstack useMutation hook
-            axios.post(SERVICE_ROUTES.postEditDiscretionarySpending, payload);
-        } else {
-            // New transaction
-            const payload = {
-                ...submission,
-            };
-
-            axios.post(SERVICE_ROUTES.postAddDiscretionarySpending, payload);
-        }
-
-        // Reset form
-        handleCancel();
+    function handleSubmission(submission: DiscretionarySpendFormAttributes) {
+        transactionService.mutate(submission);
     }
 
     return (
         <>
-            <form className={styles.transactionForm} onSubmit={form.handleSubmit(onSubmit)}>
+            <form className={styles.transactionForm} onSubmit={form.handleSubmit(handleSubmission)}>
                 {/* Amount spent */}
                 <label>{getContent('amountLabel')}</label>
                 <MoneyInput
@@ -136,7 +155,7 @@ export default function DiscretionarySpendForm({ transactionToEdit, onCancel }: 
                 <CustomButton
                     isDisabled={!form.formState.isValid}
                     variant="primary"
-                    onClick={form.handleSubmit(onSubmit)}
+                    onClick={form.handleSubmit(handleSubmission)}
                     layout="full-width"
                 >
                     {getGeneralContent('submit')}

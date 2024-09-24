@@ -1,9 +1,10 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { FaTrashAlt } from 'react-icons/fa';
-import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
+import { DiscretionarySpendTransaction, DiscretionaryTransactionId } from 'Types/Services/spending.model';
 import DiscretionarySpendForm from './DiscretionarySpendForm';
 import styles from './DiscretionarySpendForm.module.css';
 
@@ -11,6 +12,7 @@ type DiscretionarySpendPanelPropTypes = {
     isOpen: boolean;
     onPanelClose: () => void;
     transactionToEdit?: DiscretionarySpendTransaction;
+    onDeletion?: (transactionId: DiscretionaryTransactionId) => void;
 };
 
 export default function DiscretionarySpendPanel({
@@ -18,18 +20,34 @@ export default function DiscretionarySpendPanel({
     onPanelClose,
     // If transactionToEdit is provided, the panel will be in edit mode
     transactionToEdit,
+    onDeletion,
 }: DiscretionarySpendPanelPropTypes) {
     const editMode = Boolean(transactionToEdit);
     const getContent = useContent('transactions');
+    const queryClient = useQueryClient();
+
+    const deleteTransaction = useMutation({
+        mutationFn: (transactionId: DiscretionaryTransactionId) =>
+            axios.post(SERVICE_ROUTES.postDeleteDiscretionarySpending, {
+                transactionId: transactionId,
+            }),
+        onSuccess: async (_, transactionId) => {
+            await queryClient.invalidateQueries({
+                queryKey: ['spending'],
+            });
+            onDeletion?.(transactionId);
+        },
+        onError: () => {
+            // TODO: Error handling
+        },
+    });
+
     function handleDelete() {
         if (!transactionToEdit) {
             return;
         }
 
-        axios.post(SERVICE_ROUTES.postDeleteDiscretionarySpending, {
-            transactionId: transactionToEdit.transactionId,
-        });
-        onPanelClose();
+        deleteTransaction.mutate(transactionToEdit.transactionId);
     }
 
     return (
@@ -40,7 +58,11 @@ export default function DiscretionarySpendPanel({
             handlePanelWillClose={onPanelClose}
         >
             <>
-                <DiscretionarySpendForm transactionToEdit={transactionToEdit} onCancel={onPanelClose} />
+                <DiscretionarySpendForm
+                    transactionToEdit={transactionToEdit}
+                    onCancel={onPanelClose}
+                    onSubmit={onPanelClose}
+                />
                 {editMode && (
                     <button className={styles.deleteLink} onClick={handleDelete}>
                         {getContent('deleteExpense')}
