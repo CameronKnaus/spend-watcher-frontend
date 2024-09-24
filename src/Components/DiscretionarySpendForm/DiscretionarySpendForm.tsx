@@ -57,7 +57,6 @@ export default function DiscretionarySpendForm({
             });
 
             // Reset form
-            onSubmit();
             form.reset();
         },
         onError: () => {
@@ -85,6 +84,7 @@ export default function DiscretionarySpendForm({
 
     function handleSubmission(submission: DiscretionarySpendFormAttributes) {
         transactionService.mutate(submission);
+        onSubmit();
     }
 
     return (

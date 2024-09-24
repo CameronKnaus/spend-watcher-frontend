@@ -12,7 +12,6 @@ type DiscretionarySpendPanelPropTypes = {
     isOpen: boolean;
     onPanelClose: () => void;
     transactionToEdit?: DiscretionarySpendTransaction;
-    onDeletion?: (transactionId: DiscretionaryTransactionId) => void;
 };
 
 export default function DiscretionarySpendPanel({
@@ -20,7 +19,6 @@ export default function DiscretionarySpendPanel({
     onPanelClose,
     // If transactionToEdit is provided, the panel will be in edit mode
     transactionToEdit,
-    onDeletion,
 }: DiscretionarySpendPanelPropTypes) {
     const editMode = Boolean(transactionToEdit);
     const getContent = useContent('transactions');
@@ -31,11 +29,10 @@ export default function DiscretionarySpendPanel({
             axios.post(SERVICE_ROUTES.postDeleteDiscretionarySpending, {
                 transactionId: transactionId,
             }),
-        onSuccess: async (_, transactionId) => {
-            await queryClient.invalidateQueries({
+        onSuccess: () => {
+            queryClient.invalidateQueries({
                 queryKey: ['spending'],
             });
-            onDeletion?.(transactionId);
         },
         onError: () => {
             // TODO: Error handling
@@ -48,6 +45,7 @@ export default function DiscretionarySpendPanel({
         }
 
         deleteTransaction.mutate(transactionToEdit.transactionId);
+        onPanelClose();
     }
 
     return (

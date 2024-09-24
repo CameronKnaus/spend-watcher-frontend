@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
@@ -9,7 +10,11 @@ import useContent from 'Hooks/useContent';
 import { useEffect, useState } from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { MdUpdate, MdUpdateDisabled } from 'react-icons/md';
-import { RecurringSpendTransaction } from 'Types/Services/spending.model';
+import {
+    DeleteRecurringSpendRequestParams,
+    RecurringSpendTransaction,
+    SetActiveRecurringSpendRequestParams,
+} from 'Types/Services/spending.model';
 import styles from './ManageRecurringSpendPanel.module.css';
 
 type ManageRecurringSpendPanelPropTypes = {
@@ -32,6 +37,37 @@ export default function ManageRecurringSpendPanel({
     const getContent = useContent('recurringSpending');
     const getGeneralContent = useContent('general');
     const [currentPanelContents, setCurrentPanelContents] = useState(ManageRecurringSpendPanels.base);
+    const queryClient = useQueryClient();
+
+    function invalidateRecurring() {
+        queryClient.invalidateQueries({
+            queryKey: ['recurring'],
+        });
+        queryClient.invalidateQueries({
+            queryKey: ['spending'],
+        });
+    }
+
+    const deleteMutation = useMutation({
+        mutationFn: (params: DeleteRecurringSpendRequestParams) =>
+            axios.post(SERVICE_ROUTES.postDeleteRecurringSpend, params),
+        onSuccess: () => {
+            invalidateRecurring();
+        },
+        onError: () => {
+            // TODO: Error handling
+        },
+    });
+    const activeStatusMutation = useMutation({
+        mutationFn: (params: SetActiveRecurringSpendRequestParams) =>
+            axios.post(SERVICE_ROUTES.postUpdateRecurringSpendStatus, params),
+        onSuccess: () => {
+            invalidateRecurring();
+        },
+        onError: () => {
+            // TODO: Error handling
+        },
+    });
 
     useEffect(() => {
         returnToBase();
@@ -135,7 +171,7 @@ export default function ManageRecurringSpendPanel({
                         finalWarningText={getContent('finalDeletionWarning')}
                         onCancel={returnToBase}
                         onProceed={() => {
-                            axios.post(SERVICE_ROUTES.postDeleteRecurringSpend, {
+                            deleteMutation.mutate({
                                 recurringSpendId: recurringSpendTransaction.recurringSpendId,
                             });
                             closePanel();
@@ -151,7 +187,7 @@ export default function ManageRecurringSpendPanel({
                         proceedText={getGeneralContent('confirm')}
                         onCancel={returnToBase}
                         onProceed={() => {
-                            axios.post(SERVICE_ROUTES.postUpdateRecurringSpendStatus, {
+                            activeStatusMutation.mutate({
                                 recurringSpendId: recurringSpendTransaction.recurringSpendId,
                                 isActive: panelIsSetActive,
                             });

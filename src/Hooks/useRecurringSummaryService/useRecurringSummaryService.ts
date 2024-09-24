@@ -5,7 +5,7 @@ import { RecurringSummaryV1Response } from 'Types/Services/spending.model';
 
 export default function useRecurringSummaryService() {
     return useQuery<RecurringSummaryV1Response>({
-        queryKey: ['recurring-summary'],
+        queryKey: ['recurring', 'summary'],
         queryFn: async () => {
             const response = await axios.get(SERVICE_ROUTES.getRecurringSummary);
 

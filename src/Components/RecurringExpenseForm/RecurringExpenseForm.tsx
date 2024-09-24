@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
@@ -11,6 +12,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
     AddRecurringSpendRequestParams,
+    EditRecurringSpendRequestParams,
     RecurringSpendTransaction,
     v1AddRecurringSpendSchema,
 } from 'Types/Services/spending.model';
@@ -24,16 +26,46 @@ type RecurringExpenseFormPropTypes = {
 };
 
 export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit }: RecurringExpenseFormPropTypes) {
-    const editMode = Boolean(expenseToEdit);
     const getContent = useContent('recurringSpending');
     const getGeneralContent = useContent('general');
     const spendingCategoryList = useSpendCategoryList();
+    const queryClient = useQueryClient();
 
     const form = useForm<AddRecurringSpendRequestParams>({
         resolver: zodResolver(v1AddRecurringSpendSchema),
         defaultValues: {
             isVariableRecurring: false,
             category: SpendingCategory.OTHER,
+        },
+    });
+
+    const editRecurringMutation = useMutation({
+        mutationFn: (params: EditRecurringSpendRequestParams) => {
+            return axios.post(SERVICE_ROUTES.postEditRecurringSpend, params);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['recurring'],
+            });
+        },
+        onError: () => {
+            // TODO: Error handling
+        },
+    });
+
+    const addRecurringMutation = useMutation({
+        mutationFn: (params: AddRecurringSpendRequestParams) =>
+            axios.post(SERVICE_ROUTES.postAddRecurringSpend, params),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['recurring'],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ['spending'],
+            });
+        },
+        onError: () => {
+            // TODO: Error handling
         },
     });
 
@@ -47,13 +79,12 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
     }
 
     function handleSubmit(submission: AddRecurringSpendRequestParams) {
-        if (editMode) {
-            const payload = { ...submission, recurringSpendId: expenseToEdit?.recurringSpendId };
-            axios.post(SERVICE_ROUTES.postEditRecurringSpend, payload);
+        if (expenseToEdit) {
+            // Edit mode
+            editRecurringMutation.mutate({ ...submission, recurringSpendId: expenseToEdit.recurringSpendId });
         } else {
-            axios.post(SERVICE_ROUTES.postAddRecurringSpend, submission);
+            addRecurringMutation.mutate(submission);
         }
-
         form.reset();
         onSubmit();
     }
