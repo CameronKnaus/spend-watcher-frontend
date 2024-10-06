@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import CustomButton from 'Components/CustomButton/CustomButton';
 import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
+import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
@@ -63,6 +64,7 @@ export default function EditableRecurringTransactionRow({
 
     const isDirty = form.formState.isDirty;
     const isValidInput = form.formState.isValid;
+    const isLoading = recurringTransactionMutation.isPending;
 
     return (
         <div className={styles.rowContainer}>
@@ -70,18 +72,20 @@ export default function EditableRecurringTransactionRow({
             <div>
                 <label className={styles.label}>{getContent('amountSpentLabel')}</label>
                 <div className={styles.moneyInputContainer}>
-                    <div className={styles.editIcon}>
-                        <FaPencilAlt />
-                    </div>
+                    <div className={styles.editIcon}>{!isLoading && <FaPencilAlt />}</div>
                     <form onSubmit={form.handleSubmit(handleSubmission)}>
-                        <MoneyInput
-                            isRequired
-                            className={styles.moneyInput}
-                            control={form.control}
-                            name="amountSpent"
-                            placeholder={formatCurrency(expectedMonthlyAmount)}
-                            hookFormSetValue={form.setValue}
-                        />
+                        {isLoading ? (
+                            <SkeletonLoader style={{ height: 40, width: 200 }} />
+                        ) : (
+                            <MoneyInput
+                                isRequired
+                                className={styles.moneyInput}
+                                control={form.control}
+                                name="amountSpent"
+                                placeholder={formatCurrency(expectedMonthlyAmount)}
+                                hookFormSetValue={form.setValue}
+                            />
+                        )}
                     </form>
                 </div>
                 {isDirty && isValidInput && (
@@ -91,6 +95,7 @@ export default function EditableRecurringTransactionRow({
                         className={styles.confirmChangeButton}
                         layout="full-width"
                         onClick={form.handleSubmit(handleSubmission)}
+                        isDisabled={isLoading}
                     >
                         {getContent('confirmChange')}
                     </CustomButton>

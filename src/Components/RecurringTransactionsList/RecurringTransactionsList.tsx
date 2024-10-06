@@ -28,7 +28,7 @@ export default function RecurringTransactionsList({
         <>
             {recurringTransactionsList.map((transaction) => (
                 <EditableRecurringTransactionRow
-                    key={transaction.date}
+                    key={`${transaction.date}-${transaction.amountSpent}`}
                     date={transaction.date}
                     transactionId={transaction.transactionId}
                     amountSpent={transaction.amountSpent}
