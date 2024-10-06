@@ -79,6 +79,7 @@ const locale = {
     recurringTransactionsList: {
         amountSpentLabel: 'Amount spent',
         confirmChange: 'Confirm change',
+        backButton: 'Back',
     },
     ACCOUNT_CATEGORIES: {
         CHECKING: 'Checking',
