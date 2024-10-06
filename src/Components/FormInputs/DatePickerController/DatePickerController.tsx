@@ -1,7 +1,7 @@
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { format } from 'date-fns';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { DbDateFormat } from 'Types/dateTypes';
+import { dbDateFormat } from 'Types/dateTypes';
 import getDateFromDBDateString from 'Util/Time/getDateFromDBDateString';
 
 type DatePickerWithoutEssentialAttributes = Omit<DatePickerProps<Date>, 'onChange'>;
@@ -20,7 +20,7 @@ export default function DatePickerController<T extends FieldValues>({
     ...datePickerProps
 }: DatePickerControllerPropTypes<T>) {
     const today = new Date();
-    const formatDate = (date: Date | null) => format(date ?? new Date(), DbDateFormat);
+    const formatDate = (date: Date | null) => format(date ?? new Date(), dbDateFormat);
 
     return (
         <Controller

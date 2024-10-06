@@ -90,6 +90,18 @@ const zodValidateDiscretionaryId = zod.custom<DiscretionaryTransactionId>(
     },
 );
 
+const zodValidateRecurringTransactionId = zod.custom<RecurringTransactionId>(
+    (givenValue): givenValue is RecurringTransactionId => {
+        if (typeof givenValue === 'string' && /^Recurring-\d+$/.test(givenValue)) {
+            return true; // Valid format
+        }
+        return false; // Invalid format
+    },
+    {
+        message: 'Invalid transactionId format. Expected format: "Recurring-<number>".',
+    },
+);
+
 // ZOD CUSTOM VALIDATORS END --------------------------------------------
 
 // SPENDING DETAILS API --- /api/spending/v1/details
@@ -208,3 +220,32 @@ export const v1SetActiveRecurringSpendSchema = zod.object({
 export type SetActiveRecurringSpendRequestParams = zod.infer<typeof v1SetActiveRecurringSpendSchema>;
 
 // END RECURRING SET-ACTIVE API --------------------------------------------
+
+// RECURRING TRANSACTIONS LIST API
+
+export const v1RecurringTransactionsListSchema = zod.object({
+    recurringSpendId: zod.string().uuid(),
+});
+
+export type RecurringTransactionsListRequestParams = zod.infer<typeof v1RecurringTransactionsListSchema>;
+
+export type RecurringTransactionsListV1Response = {
+    transactions: {
+        transactionId: RecurringTransactionId;
+        date: DbDate;
+        amountSpent: number;
+    }[];
+};
+
+// END RECURRING TRANSACTIONS LIST API --------------------------------------------
+
+// EDIT RECURRING TRANSACTION API --------------------------------------------
+
+export const v1EditRecurringTransactionSchema = zod.object({
+    transactionId: zodValidateRecurringTransactionId,
+    amountSpent: zod.number().safe().positive(),
+});
+
+export type EditRecurringTransactionRequestParams = zod.infer<typeof v1EditRecurringTransactionSchema>;
+
+// END EDIT RECURRING TRANSACTION API

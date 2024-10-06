@@ -3,12 +3,13 @@ import axios from 'axios';
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
 import RecurringExpenseForm from 'Components/RecurringExpenseForm/RecurringExpenseForm';
+import RecurringTransactionsList from 'Components/RecurringTransactionsList/RecurringTransactionsList';
 import SpeedBump from 'Components/SlideUpPanel/Addons/SpeedBump/SpeedBump';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useEffect, useState } from 'react';
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { FaEdit, FaHistory, FaTrashAlt } from 'react-icons/fa';
 import { MdUpdate, MdUpdateDisabled } from 'react-icons/md';
 import {
     DeleteRecurringSpendRequestParams,
@@ -28,6 +29,7 @@ enum ManageRecurringSpendPanels {
     setInactive = 'setInactive',
     setActive = 'setActive',
     delete = 'delete',
+    history = 'history',
 }
 
 export default function ManageRecurringSpendPanel({
@@ -122,6 +124,15 @@ export default function ManageRecurringSpendPanel({
                                 layout="fit-content"
                                 className={styles.optionButton}
                                 variant="secondary"
+                                onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.history)}
+                            >
+                                <FaHistory size={20} />
+                                {getContent('transactionHistory')}
+                            </CustomButton>
+                            <CustomButton
+                                layout="fit-content"
+                                className={styles.optionButton}
+                                variant="secondary"
                                 onClick={() =>
                                     setCurrentPanelContents(
                                         recurringSpendTransaction?.isActive
@@ -153,6 +164,12 @@ export default function ManageRecurringSpendPanel({
                             </CustomButton>
                         </BottomSheet>
                     </>
+                )}
+                {recurringSpendTransaction && currentPanelContents === ManageRecurringSpendPanels.history && (
+                    <RecurringTransactionsList
+                        recurringSpendId={recurringSpendTransaction.recurringSpendId}
+                        expectedMonthlyAmount={recurringSpendTransaction.expectedMonthlyAmount}
+                    />
                 )}
                 {currentPanelContents === ManageRecurringSpendPanels.edit && (
                     <RecurringExpenseForm

@@ -60,6 +60,7 @@ const locale = {
             'This will permanently delete this recurring expense and all of its past data. This means all previous months\' spend data for "{{0}}" will be permanently deleted.',
         finalDeletionWarning: 'This action cannot be undone.',
         edit: 'Edit',
+        transactionHistory: 'History',
         permanentlyDelete: 'Permanently delete',
         cancel: 'Cancel',
         chooseOption: 'What would you like to do?',
@@ -73,6 +74,11 @@ const locale = {
         setInactiveTitle: 'Deactivate this recurring spend',
         setInactiveDescription:
             'Deactivating an expense will stop it from being automatically logged each month, if fixed, or requesting monthly updates, if variable. You can reactivate it at any time.',
+        historyTitle: '"{{0}}" history',
+    },
+    recurringTransactionsList: {
+        amountSpentLabel: 'Amount spent',
+        confirmChange: 'Confirm change',
     },
     ACCOUNT_CATEGORIES: {
         CHECKING: 'Checking',
