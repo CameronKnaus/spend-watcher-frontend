@@ -33,7 +33,7 @@
     --theme-color-secondary-600: #35addf;
     --theme-color-secondary-700: #71caef;
     --theme-color-secondary-800: #a0def8;
-    --theme-color-secondary-900: #d1f1ff;
+    --theme-color-secondary-900: #ebf9ff;
 
     /* Tertiary Colors */
     --theme-color-tertiary-100: #3b1c20;
@@ -107,6 +107,7 @@
     --token-disable-button-background: var(--theme-color-neutral-400);
     --token-button-primary-color: var(--theme-color-primary-500);
     --token-button-primary-hover-color: var(--theme-color-primary-400);
+    --token-button-secondary-text-color: var(--theme-color-secondary-900);
     --token-button-secondary-color: var(--theme-color-secondary-200);
     --token-button-secondary-hover-color: var(--theme-color-secondary-100);
     --token-button-tertiary-color: var(--theme-color-tertiary-500);

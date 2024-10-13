@@ -5,11 +5,9 @@ import CustomButton from 'Components/CustomButton/CustomButton';
 import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
 import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
-import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import { useForm } from 'react-hook-form';
 import { FaPencilAlt } from 'react-icons/fa';
-import { DbDate } from 'Types/dateTypes';
 import {
     EditRecurringTransactionRequestParams,
     RecurringTransactionId,
@@ -20,14 +18,14 @@ import styles from './EditableRecurringTransactionRow.module.css';
 
 type EditableRecurringTransactionRowPropTypes = {
     transactionId: RecurringTransactionId;
-    date: DbDate;
+    label: string;
     amountSpent?: number;
     expectedMonthlyAmount: number;
 };
 
 export default function EditableRecurringTransactionRow({
     transactionId,
-    date,
+    label,
     amountSpent,
     expectedMonthlyAmount,
 }: EditableRecurringTransactionRowPropTypes) {
@@ -68,7 +66,7 @@ export default function EditableRecurringTransactionRow({
 
     return (
         <div className={styles.rowContainer}>
-            <div className={styles.date}>{format(date, 'MMM yyyy')}</div>
+            <div className={styles.date}>{label}</div>
             <div>
                 <label className={styles.label}>{getContent('amountSpentLabel')}</label>
                 <div className={styles.moneyInputContainer}>

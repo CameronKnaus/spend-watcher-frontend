@@ -33,6 +33,7 @@
 }
 
 .moreButton {
+    color: var(--token-button-secondary-text-color);
     padding: 4px 16px;
     border-radius: 8px;
     font-size: var(--font-body-small);

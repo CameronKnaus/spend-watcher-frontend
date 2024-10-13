@@ -80,6 +80,7 @@ const locale = {
         amountSpentLabel: 'Amount spent',
         confirmChange: 'Confirm change',
         backButton: 'Back',
+        addNewRow: 'Add for {{0}}',
     },
     ACCOUNT_CATEGORIES: {
         CHECKING: 'Checking',

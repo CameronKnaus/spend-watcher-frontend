@@ -33,7 +33,7 @@
 }
 
 .fixedTag {
-    color: var(--token-color-background-primary);
+    color: var(--token-button-secondary-text-color);
     background-color: var(--theme-color-secondary-200);
     padding: 2px 8px;
     border-radius: 4px;
