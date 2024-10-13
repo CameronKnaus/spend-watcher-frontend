@@ -1,20 +1,23 @@
 import { ComponentProps } from 'react';
-import { Control, Controller, FieldValues, Path, UseFormSetValue } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path, UseFormTrigger } from 'react-hook-form';
 import { NumericFormat } from 'react-number-format';
 
 type NumericFormatWithoutEssentialAttributes = Omit<ComponentProps<typeof NumericFormat>, 'onChange' | 'value'>;
 
 type MoneyInputPropTypes<T extends FieldValues> = {
     control: Control<T>;
+    // react-number-format NumericFormat component isn't playing nice with react-hook-form
+    // Validation isn't occurring onChange, only onBlur
+    // Grabbing the trigger method from the form context to force validation on change
+    trigger: UseFormTrigger<T>;
     name: Path<T>;
-    hookFormSetValue: UseFormSetValue<T>;
     isRequired?: boolean;
 } & NumericFormatWithoutEssentialAttributes;
 
 export default function MoneyInput<T extends FieldValues>({
     control,
+    trigger,
     name,
-    hookFormSetValue,
     isRequired = false,
     ...props
 }: MoneyInputPropTypes<T>) {
@@ -23,7 +26,7 @@ export default function MoneyInput<T extends FieldValues>({
             control={control}
             name={name}
             rules={{ required: isRequired }}
-            render={({ field: { ref, onChange, ...rest } }) => (
+            render={({ field: { ref, onChange, value, ...rest } }) => (
                 <NumericFormat
                     thousandSeparator=","
                     decimalSeparator="."
@@ -31,10 +34,10 @@ export default function MoneyInput<T extends FieldValues>({
                     decimalScale={2}
                     getInputRef={ref}
                     autoComplete="off"
+                    value={value ?? ''}
                     onValueChange={({ floatValue }) => {
-                        onChange();
-                        // @ts-expect-error I should figure out the proper typing of this but it works for now
-                        hookFormSetValue(name, floatValue);
+                        onChange(floatValue);
+                        trigger(name);
                     }}
                     {...props}
                     {...rest}

@@ -139,9 +139,9 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
                 <MoneyInput
                     isRequired
                     control={form.control}
+                    trigger={form.trigger}
                     name="expectedMonthlyAmount"
                     placeholder={getContent('monthlyAmountPlaceholder')}
-                    hookFormSetValue={form.setValue}
                     className={styles.textInput}
                 />
             </form>

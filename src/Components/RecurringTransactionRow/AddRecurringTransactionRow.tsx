@@ -89,9 +89,9 @@ export default function AddRecurringTransactionRow({
                                 isRequired
                                 className={styles.moneyInput}
                                 control={form.control}
+                                trigger={form.trigger}
                                 name="amountSpent"
                                 placeholder={formatCurrency(expectedMonthlyAmount)}
-                                hookFormSetValue={form.setValue}
                                 onFocus={() => {
                                     // If the user clicks on the input, and the form isn't dirty, set it to zero to allow for easier editing
                                     if (!isDirty) {

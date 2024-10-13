@@ -79,9 +79,9 @@ export default function EditableRecurringTransactionRow({
                                 isRequired
                                 className={styles.moneyInput}
                                 control={form.control}
+                                trigger={form.trigger}
                                 name="amountSpent"
                                 placeholder={formatCurrency(expectedMonthlyAmount)}
-                                hookFormSetValue={form.setValue}
                             />
                         )}
                     </form>

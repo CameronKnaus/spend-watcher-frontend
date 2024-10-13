@@ -95,9 +95,9 @@ export default function DiscretionarySpendForm({
                 <MoneyInput
                     isRequired
                     control={form.control}
+                    trigger={form.trigger}
                     name="amountSpent"
                     placeholder={getContent('amountPlaceholder')}
-                    hookFormSetValue={form.setValue}
                     className={styles.textInput}
                 />
 
