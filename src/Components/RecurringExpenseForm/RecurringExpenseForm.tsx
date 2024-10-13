@@ -33,6 +33,7 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
 
     const form = useForm<AddRecurringSpendRequestParams>({
         resolver: zodResolver(v1AddRecurringSpendSchema),
+        mode: 'onChange',
         defaultValues: {
             isVariableRecurring: false,
             category: SpendingCategory.OTHER,
@@ -89,6 +90,10 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
         onSubmit();
     }
 
+    // If editing a transaction: disable the button if the form is not dirty. If new transaction: disable if form is not valid
+    const confirmButtonDisabled = expenseToEdit
+        ? !form.formState.isDirty || !form.formState.isValid
+        : !form.formState.isValid;
     return (
         <>
             <form className={styles.newRecurringSpendForm} onSubmit={form.handleSubmit(handleSubmit)}>
@@ -145,7 +150,7 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
                     {getGeneralContent('cancel')}
                 </CustomButton>
                 <CustomButton
-                    isDisabled={!form.formState.isValid}
+                    isDisabled={confirmButtonDisabled}
                     variant="primary"
                     onClick={form.handleSubmit(handleSubmit)}
                     layout="full-width"
