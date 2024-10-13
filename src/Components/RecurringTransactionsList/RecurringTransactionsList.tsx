@@ -1,11 +1,12 @@
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
-import EditableRecurringTransactionRow from 'Components/EditableRecurringTransactionRow';
+import EditableRecurringTransactionRow from 'Components/RecurringTransactionRow';
+import AddRecurringTransactionRow from 'Components/RecurringTransactionRow/AddRecurringTransactionRow';
 import { format, parse } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useRecurringTransactionsList from 'Hooks/useRecurringTransactionsList/useRecurringTransactionsList';
+import { MonthYearDbDate } from 'Types/dateTypes';
 import { RecurringSpendTransaction } from 'Types/Services/spending.model';
-import styles from './RecurringTransactionList.module.css';
 
 type RecurringTransactionsListPropTypes = {
     recurringSpendId: RecurringSpendTransaction['recurringSpendId'];
@@ -31,10 +32,10 @@ export default function RecurringTransactionsList({
     const oldestTransactionDate = recurringTransactionsList[recurringTransactionsList.length - 1].date;
     // Starting with the current date, we will iterate backwards until we reach the oldest transaction date
     const currentDate = new Date();
-    const applicableMonths = [];
+    const applicableMonths: MonthYearDbDate[] = [];
     let lastTransactionDateReached = false;
     while (!lastTransactionDateReached) {
-        const formattedCurrentDate = format(currentDate, 'yyyy-MM');
+        const formattedCurrentDate = format(currentDate, 'yyyy-MM') as MonthYearDbDate;
         applicableMonths.push(formattedCurrentDate);
 
         if (formattedCurrentDate === oldestTransactionDate) {
@@ -55,7 +56,7 @@ export default function RecurringTransactionsList({
                     // Month already has transaction logged
                     return (
                         <EditableRecurringTransactionRow
-                            key={`${transaction.date}-${transaction.amountSpent}`}
+                            key={transaction.date}
                             label={formattedDate}
                             transactionId={transaction.transactionId}
                             amountSpent={transaction.amountSpent}
@@ -66,9 +67,12 @@ export default function RecurringTransactionsList({
 
                 // Month has no transaction logged
                 return (
-                    <CustomButton key={date} layout="full-width" className={styles.addNewRow}>
-                        {getContent('addNewRow', [formattedDate])}
-                    </CustomButton>
+                    <AddRecurringTransactionRow
+                        key={date}
+                        date={date}
+                        expectedMonthlyAmount={expectedMonthlyAmount}
+                        recurringSpendId={recurringSpendId}
+                    />
                 );
             })}
             <BottomSheet>

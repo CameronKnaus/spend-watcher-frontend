@@ -18,6 +18,7 @@ const SERVICE_ROUTES: Record<string, string> = {
     postUpdateRecurringSpendStatus: domainName + '/spending/v1/recurring/set-active',
     getRecurringTransactionsList: domainName + '/spending/v1/recurring/transactions',
     postEditRecurringTransaction: domainName + '/spending/v1/recurring/transactions/edit',
+    postAddRecurringTransaction: domainName + '/spending/v1/recurring/transactions/add',
 };
 
 export default SERVICE_ROUTES;

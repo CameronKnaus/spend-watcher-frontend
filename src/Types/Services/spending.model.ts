@@ -1,4 +1,4 @@
-import { DbDate } from 'Types/dateTypes';
+import { DbDate, MonthYearDbDate } from 'Types/dateTypes';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import { z as zod } from 'zod';
 
@@ -79,26 +79,26 @@ export type SpendTransaction = RecurringSpendTransaction | DiscretionarySpendTra
 
 // ZOD CUSTOM VALIDATORS BEGIN --------------------------------------------
 const zodValidateDiscretionaryId = zod.custom<DiscretionaryTransactionId>(
-    (givenValue): givenValue is DiscretionaryTransactionId => {
-        if (typeof givenValue === 'string' && /^Discretionary-\d+$/.test(givenValue)) {
-            return true; // Valid format
-        }
-        return false; // Invalid format
-    },
+    (givenValue): givenValue is DiscretionaryTransactionId =>
+        typeof givenValue === 'string' && /^Discretionary-\d+$/.test(givenValue),
     {
         message: 'Invalid transactionId format. Expected format: "Discretionary-<number>".',
     },
 );
 
 const zodValidateRecurringTransactionId = zod.custom<RecurringTransactionId>(
-    (givenValue): givenValue is RecurringTransactionId => {
-        if (typeof givenValue === 'string' && /^Recurring-\d+$/.test(givenValue)) {
-            return true; // Valid format
-        }
-        return false; // Invalid format
-    },
+    (givenValue): givenValue is RecurringTransactionId =>
+        typeof givenValue === 'string' && /^Recurring-\d+$/.test(givenValue),
     {
         message: 'Invalid transactionId format. Expected format: "Recurring-<number>".',
+    },
+);
+
+const zodValidateMonthYear = zod.custom<MonthYearDbDate>(
+    (givenValue): givenValue is MonthYearDbDate =>
+        typeof givenValue === 'string' && /^\d{4}-(0\d|1[0-2])$/.test(givenValue),
+    {
+        message: 'Invalid MonthYear format. Expected format: "YYYY-MM".',
     },
 );
 
@@ -249,3 +249,15 @@ export const v1EditRecurringTransactionSchema = zod.object({
 export type EditRecurringTransactionRequestParams = zod.infer<typeof v1EditRecurringTransactionSchema>;
 
 // END EDIT RECURRING TRANSACTION API
+
+// ADD RECURRING TRANSACTION API --------------------------------------------
+
+export const v1AddRecurringTransactionSchema = zod.object({
+    recurringSpendId: zod.string().uuid(),
+    amountSpent: zod.number().safe().nonnegative(),
+    date: zodValidateMonthYear,
+});
+
+export type AddRecurringTransactionRequestParams = zod.infer<typeof v1AddRecurringTransactionSchema>;
+
+// END ADD RECURRING TRANSACTION API

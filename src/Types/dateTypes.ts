@@ -6,5 +6,7 @@ type Day = `0${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}` | `${1 | 2}${number}` | '30' 
 export type DbDate = `${Year}-${Month}-${Day}`;
 export const dbDateFormat = 'yyy-MM-dd';
 
-export type MonthYearDate = `${Month}/${Year}`;
+export type MonthYearDbDate = `${Year}-${Month}`;
+
+export type MonthYearDate = `${Month}/${Year}`; // TODO: Deprecate this in favor of MonthYearDbDate
 export const MonthYearDateFormat = 'MM/YYYY';

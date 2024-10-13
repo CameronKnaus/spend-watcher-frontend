@@ -14,7 +14,7 @@ import {
     v1EditRecurringTransactionSchema,
 } from 'Types/Services/spending.model';
 import formatCurrency from 'Util/Formatters/formatCurrency/formatCurrency';
-import styles from './EditableRecurringTransactionRow.module.css';
+import styles from './RecurringTransactionRow.module.css';
 
 type EditableRecurringTransactionRowPropTypes = {
     transactionId: RecurringTransactionId;
@@ -52,7 +52,7 @@ export default function EditableRecurringTransactionRow({
         resolver: zodResolver(v1EditRecurringTransactionSchema),
         defaultValues: {
             transactionId,
-            amountSpent: amountSpent,
+            amountSpent: amountSpent ?? 0,
         },
     });
 
