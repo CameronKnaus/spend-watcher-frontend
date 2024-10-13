@@ -117,10 +117,8 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
                 />
 
                 {/* Is variable expense */}
-                <div
-                    className={styles.checkInputContainer}
-                    onClick={() => form.setValue('isVariableRecurring', !form.getValues('isVariableRecurring'))}
-                >
+                {/* TODO: Fix this so the touching anywhere on container updates checked status AND validates */}
+                <div className={styles.checkInputContainer}>
                     <input
                         className={styles.checkBox}
                         type="checkbox"
