@@ -13,6 +13,10 @@
     z-index: 1;
 }
 
+.outletSpacer {
+    padding-top: 120px;
+}
+
 .menuItem {
     display: flex;
     justify-content: center;

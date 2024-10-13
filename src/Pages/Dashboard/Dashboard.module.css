@@ -64,3 +64,27 @@
 .logExpenseButton {
     padding: 16px;
 }
+
+/* Mobile screen size */
+@media (max-width: 768px) {
+    .contentContainer {
+        gap: 24px;
+    }
+
+    .leftSection {
+        max-width: 100%;
+    }
+
+    .rightSection {
+        max-width: 100%;
+        padding-left: 0;
+    }
+
+    .summaryTile {
+        flex-basis: 100%;
+    }
+
+    .topCategoriesTile {
+        flex-basis: 100%;
+    }
+}
