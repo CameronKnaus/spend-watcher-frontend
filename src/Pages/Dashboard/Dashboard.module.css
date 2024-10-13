@@ -22,7 +22,7 @@
     flex-grow: 1;
     flex-shrink: 0;
     min-width: var(--section-min-width);
-    max-width: calc(100% - var(--section-min-width));
+    max-width: calc(100% - var(--section-min-width) - var(--dashboard-column-gap) - var(--dashboard-column-gap));
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -46,14 +46,6 @@
     padding-left: var(--dashboard-column-gap);
 }
 
-.summaryTile {
-    flex-basis: calc(33% - var(--dashboard-column-gap));
-    flex-grow: 1;
-    flex-shrink: 0;
-    min-width: 200px;
-    flex-wrap: wrap;
-}
-
 .topCategoriesTile {
     flex-basis: calc(66% - var(--dashboard-column-gap));
     flex-grow: 1;
@@ -71,17 +63,21 @@
         gap: 24px;
     }
 
+    .spendingGrid {
+        flex-grow: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--dashboard-column-gap);
+    }
+
     .leftSection {
+        min-width: 0;
         max-width: 100%;
     }
 
     .rightSection {
         max-width: 100%;
         padding-left: 0;
-    }
-
-    .summaryTile {
-        flex-basis: 100%;
     }
 
     .topCategoriesTile {

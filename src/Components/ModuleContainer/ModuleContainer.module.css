@@ -6,6 +6,6 @@
 
 .defaultContainer > h3 {
     font-size: var(--font-heading-small);
-    font-weight: var(--fw-medium);
+    font-weight: var(--font-weight-medium);
     margin-bottom: 8px;
 }
