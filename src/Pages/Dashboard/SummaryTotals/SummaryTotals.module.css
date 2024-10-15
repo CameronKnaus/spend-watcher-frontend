@@ -7,12 +7,12 @@
 }
 
 .summaryDataMobileContainer {
-    flex-basis: 100%;
-    flex-grow: 1;
+    display: flex;
+    row-gap: 16px;
+    flex-wrap: wrap;
 }
 
 .mobileSummaryItem {
-    margin-bottom: 16px;
     width: 100%;
 }
 
@@ -23,14 +23,10 @@
 }
 
 .distinctTotals {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    display: contents;
 }
 
 .mobileSummaryLabel {
     font-size: var(--font-body-medium);
     color: var(--token-color-text-primary);
-    flex: 1 1 50%;
 }
