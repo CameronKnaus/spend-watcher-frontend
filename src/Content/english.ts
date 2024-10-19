@@ -37,6 +37,9 @@ const locale = {
         notesPlaceholder: 'About your expense',
         amountPlaceholder: '$0.00',
     },
+    trips: {
+        pageTitle: 'My trips',
+    },
     recurringSpending: {
         pageTitle: 'Recurring spending',
         createNew: 'Create recurring expense',

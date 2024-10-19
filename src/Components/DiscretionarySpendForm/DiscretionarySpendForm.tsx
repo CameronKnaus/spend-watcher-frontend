@@ -89,8 +89,6 @@ export default function DiscretionarySpendForm({
         onSubmit();
     }
 
-    console.log(typeof form.watch('linkedTripId'));
-
     return (
         <>
             <form className={styles.transactionForm} onSubmit={form.handleSubmit(handleSubmission)}>
