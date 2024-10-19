@@ -41,6 +41,8 @@ const locale = {
         pageTitle: 'My trips',
         discretionary: 'Discretionary',
         total: 'Total',
+        linkedTransactions: 'Linked transactions',
+        details: 'Details',
     },
     recurringSpending: {
         pageTitle: 'Recurring spending',

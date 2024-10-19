@@ -5,7 +5,7 @@ import styles from './CustomButton.module.css';
 type CustomButtonPropTypes = {
     onClick?: () => void;
     children: ReactNode;
-    variant?: 'primary' | 'secondary' | 'tertiary';
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'detail';
     isDisabled?: boolean;
     layout?: 'fit-content' | 'full-width';
     className?: string;

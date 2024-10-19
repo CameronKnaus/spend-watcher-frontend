@@ -18,6 +18,24 @@
 .spendTotalDataPoints {
     display: flex;
     gap: 16px;
-    margin-top: 12px;
+    margin-top: 16px;
     flex-wrap: wrap;
+}
+
+.buttonRow {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.actionButton {
+    color: var(--token-button-secondary-text-color);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: var(--font-body-small);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
 }

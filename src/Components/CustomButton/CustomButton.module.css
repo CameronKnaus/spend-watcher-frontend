@@ -35,3 +35,11 @@
 .tertiary:hover {
     background-color: var(--token-button-tertiary-hover-color);
 }
+
+.detail {
+    background-color: var(--token-button-details-color);
+}
+
+.detail:hover {
+    background-color: var(--token-button-details-color-hover);
+}
