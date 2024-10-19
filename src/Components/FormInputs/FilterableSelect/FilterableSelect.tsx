@@ -20,7 +20,7 @@ function FilterableSelectComponent<T extends string>(
     { opens = 'down', clearLabel, noSelectionText = '', optionsList, ...props }: FilterableSelectPropTypes<T>,
     ref: React.ForwardedRef<HTMLInputElement>,
 ) {
-    const [selectedValue, setSelectedValue] = useState<FilterableSelectOptionType<T> | null>(null);
+    const [selectedValue, setSelectedValue] = useState<FilterableSelectOptionType<T> | undefined>();
     const containerRef = useRef<HTMLDivElement | null>(null);
     const popOverMenuRef = useRef<HTMLDivElement | null>(null);
     const getContent = useContent('general');
@@ -101,8 +101,9 @@ function FilterableSelectComponent<T extends string>(
                         <div
                             className={styles.option}
                             onClick={() => {
-                                props.onChange?.(syntheticChangeEvent(''));
-                                setSelectedValue(null);
+                                // @ts-expect-error What have I done....
+                                props.onChange?.(syntheticChangeEvent(undefined));
+                                setSelectedValue(undefined);
                                 setFilterText('');
                                 setIsOpen(false);
                             }}

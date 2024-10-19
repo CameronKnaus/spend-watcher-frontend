@@ -9,6 +9,7 @@ import useSpendCategoryList from 'Components/FormInputs/FilterableSelect/presetL
 import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
+import useTripsList from 'Hooks/useTripsList/useTripsList';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { DiscretionarySpendTransaction, v1DiscretionaryAddSchema } from 'Types/Services/spending.model';
@@ -36,6 +37,7 @@ export default function DiscretionarySpendForm({
     const getGeneralContent = useContent('general');
     const spendingCategoryList = useSpendCategoryList();
     const queryClient = useQueryClient();
+    const { tripsList } = useTripsList();
 
     const transactionService = useMutation({
         mutationKey: transactionToEdit
@@ -86,6 +88,8 @@ export default function DiscretionarySpendForm({
         transactionService.mutate(submission);
         onSubmit();
     }
+
+    console.log(typeof form.watch('linkedTripId'));
 
     return (
         <>
@@ -140,11 +144,12 @@ export default function DiscretionarySpendForm({
                     opens="up"
                     className={styles.textInput}
                     noSelectionText={getContent('emptyPlaceholder')}
-                    optionsList={[
-                        { value: '1', optionName: 'America Trip 1' },
-                        { value: '2', optionName: 'Japan Trip 2' },
-                        { value: '3', optionName: 'Germany Trip 3' },
-                    ]}
+                    optionsList={
+                        tripsList?.map((trip) => ({
+                            value: trip.tripId,
+                            optionName: trip.tripName,
+                        })) ?? []
+                    }
                     clearLabel={getContent('clearSelection')}
                 />
             </form>

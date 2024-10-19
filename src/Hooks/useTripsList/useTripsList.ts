@@ -4,7 +4,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { TripsListV1Response } from 'Types/Services/trips.model';
 
 export default function useTripsList() {
-    return useQuery<TripsListV1Response>({
+    const { isFetching, isLoading, data } = useQuery<TripsListV1Response>({
         queryKey: ['trips'],
         queryFn: async () => {
             const response = await axios.get(SERVICE_ROUTES.getTripsList);
@@ -12,4 +12,9 @@ export default function useTripsList() {
             return response.data;
         },
     });
+
+    return {
+        isLoading: isLoading || isFetching,
+        tripsList: data?.tripsList,
+    };
 }
