@@ -53,10 +53,6 @@
     min-width: 375px;
 }
 
-.logExpenseButton {
-    padding: 16px;
-}
-
 /* Mobile screen size */
 @media (max-width: 768px) {
     .contentContainer {

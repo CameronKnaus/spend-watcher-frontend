@@ -1,21 +1,17 @@
 import { clsx } from 'clsx';
-import CustomButton from 'Components/CustomButton/CustomButton';
-import DiscretionarySpendPanel from 'Components/DiscretionarySpendForm/DiscretionarySpendPanel';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
-import { useState } from 'react';
 import { useIsMobile } from 'Util/IsMobileContext';
 import styles from './Dashboard.module.css';
 import RecentTransactions from './RecentTransactions';
 import SummaryTotals from './SummaryTotals/SummaryTotals';
 import TopDiscretionaryCategories from './TopDiscretionaryCategories';
+import LogSpendButton from 'Components/LogSpendButton';
 
 export default function Dashboard() {
     const isMobile = useIsMobile();
-    const [logExpensePanelOpen, setLogExpensePanelOpen] = useState(false);
     const getContent = useContent('dashboard');
-    const getTransactionContent = useContent('transactions');
     const currentMonth = format(new Date(), 'LLLL');
 
     return (
@@ -45,23 +41,11 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className={styles.rightSection}>
-                    {/* Log Expense button */}
-                    <CustomButton
-                        variant="tertiary"
-                        layout="full-width"
-                        onClick={() => {
-                            setLogExpensePanelOpen(true);
-                        }}
-                        className={styles.logExpenseButton}
-                    >
-                        {getTransactionContent('logExpense')}
-                    </CustomButton>
+                    <LogSpendButton />
+
                     <RecentTransactions />
                 </div>
             </div>
-
-            {/* Log expense slide up panel */}
-            <DiscretionarySpendPanel onPanelClose={() => setLogExpensePanelOpen(false)} isOpen={logExpensePanelOpen} />
         </div>
     );
 }
