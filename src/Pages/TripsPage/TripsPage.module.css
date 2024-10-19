@@ -7,3 +7,9 @@
     font-size: var(--page-title-font-size);
     font-weight: var(--page-title-font-weight);
 }
+
+.tripModulesContainer {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}

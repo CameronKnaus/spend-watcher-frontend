@@ -4,7 +4,7 @@ type Day = `0${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}` | `${1 | 2}${number}` | '30' 
 
 // For use with Database interactions
 export type DbDate = `${Year}-${Month}-${Day}`;
-export const dbDateFormat = 'yyy-MM-dd';
+export const dbDateFormat = 'yyyy-MM-dd';
 
 export type MonthYearDbDate = `${Year}-${Month}`;
 

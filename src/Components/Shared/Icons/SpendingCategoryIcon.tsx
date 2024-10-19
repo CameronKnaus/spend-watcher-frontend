@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import spendCategoryIconMapper from 'Components/Shared/Icons/spendCategoryIconMapper';
+import { spendCategoryIconMapper } from 'Components/Shared/Icons/spendCategoryIconMapper';
 import { CSSProperties } from 'react';
 import { MdRefresh } from 'react-icons/md';
 import { SpendingCategory } from 'Types/SpendingCategory';

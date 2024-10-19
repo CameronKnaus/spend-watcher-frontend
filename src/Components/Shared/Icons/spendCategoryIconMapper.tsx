@@ -34,7 +34,7 @@ import {
     MdWaterDrop,
 } from 'react-icons/md';
 
-const spendCategoryIconMapper: Record<SpendingCategory, ReactElement> = {
+export const spendCategoryIconMapper: Record<SpendingCategory, ReactElement> = {
     AIRFARE: <MdLocalAirport />,
     BUSINESS: <MdBusinessCenter />,
     CANNABIS: <FaCannabis />,
@@ -66,4 +66,34 @@ const spendCategoryIconMapper: Record<SpendingCategory, ReactElement> = {
     VEHICLE: <FaCar />,
 } as const;
 
-export default spendCategoryIconMapper;
+export const spendCategoryColorMapper: Record<SpendingCategory, string> = {
+    AIRFARE: 'var(--theme-color-spend-category-AIRFARE)',
+    BUSINESS: 'var(--theme-color-spend-category-BUSINESS)',
+    CANNABIS: 'var(--theme-color-spend-category-CANNABIS)',
+    CLOTHING: 'var(--theme-color-spend-category-CLOTHING)',
+    DRINKS: 'var(--theme-color-spend-category-DRINKS)',
+    EDUCATION: 'var(--theme-color-spend-category-EDUCATION)',
+    ENTERTAINMENT: 'var(--theme-color-spend-category-ENTERTAINMENT)',
+    EV_CHARGING: 'var(--theme-color-spend-category-EV_CHARGING)',
+    FITNESS: 'var(--theme-color-spend-category-FITNESS)',
+    FUEL: 'var(--theme-color-spend-category-FUEL)',
+    GAMES: 'var(--theme-color-spend-category-GAMES)',
+    GIFTS: 'var(--theme-color-spend-category-GIFTS)',
+    GROOMING: 'var(--theme-color-spend-category-GROOMING)',
+    GROCERIES: 'var(--theme-color-spend-category-GROCERIES)',
+    HEALTH: 'var(--theme-color-spend-category-HEALTH)',
+    HOBBY: 'var(--theme-color-spend-category-HOBBY)',
+    HOUSING: 'var(--theme-color-spend-category-HOUSING)',
+    INSURANCE: 'var(--theme-color-spend-category-INSURANCE)',
+    LODGING: 'var(--theme-color-spend-category-LODGING)',
+    MATERIAL_ITEMS: 'var(--theme-color-spend-category-MATERIAL_ITEMS)',
+    NICOTINE: 'var(--theme-color-spend-category-NICOTINE)',
+    OTHER: 'var(--theme-color-spend-category-OTHER)',
+    PETS: 'var(--theme-color-spend-category-PETS)',
+    RESTAURANTS: 'var(--theme-color-spend-category-RESTAURANTS)',
+    TAXES: 'var(--theme-color-spend-category-TAXES)',
+    TRANSPORTATION: 'var(--theme-color-spend-category-TRANSPORTATION)',
+    TREATS: 'var(--theme-color-spend-category-TREATS)',
+    UTILITIES: 'var(--theme-color-spend-category-UTILITIES)',
+    VEHICLE: 'var(--theme-color-spend-category-VEHICLE)',
+} as const;

@@ -1,0 +1,23 @@
+.module {
+    padding: 16px;
+    background-color: var(--token-color-background-primary);
+    width: 350px;
+    border-radius: 16px;
+}
+
+.tripName {
+    font-size: var(--font-heading-medium);
+    font-weight: var(--font-weight-medium);
+}
+
+.tripDates {
+    margin-top: 4px;
+    font-size: var(--font-body-small);
+}
+
+.spendTotalDataPoints {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
