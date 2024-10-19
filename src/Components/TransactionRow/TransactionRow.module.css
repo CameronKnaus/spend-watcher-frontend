@@ -1,7 +1,6 @@
 .transactionsRow {
     display: flex;
     width: 100%;
-    min-width: 320px;
     column-gap: 8px;
     align-items: center;
 }

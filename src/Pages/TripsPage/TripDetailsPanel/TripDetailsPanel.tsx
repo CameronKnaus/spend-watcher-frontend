@@ -1,39 +1,70 @@
-import DiscretionarySpendForm from 'Components/DiscretionarySpendForm/DiscretionarySpendForm';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
-import TripExpenseList from 'Components/TripExpenseList/TripExpenseList';
+import useContent from 'Hooks/useContent';
 import { useState } from 'react';
-import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
 import { Trip } from 'Types/Services/trips.model';
+import TripDetails from './TripDetails/TripDetails';
 
 type TripDetailsPanelPropTypes = {
     trip: Trip;
+    dateLabel: string;
     isOpen: boolean;
     onClose: () => void;
 };
 
-export default function TripDetailsPanel({ trip, isOpen, onClose }: TripDetailsPanelPropTypes) {
-    const [transactionToEdit, setTransactionToEdit] = useState<DiscretionarySpendTransaction>();
+enum TripPanelState {
+    base = 'base',
+    editTripDetails = 'editTripDetails',
+    editTransaction = 'editTransaction',
+}
+
+export default function TripDetailsPanel({ trip, isOpen, dateLabel, onClose }: TripDetailsPanelPropTypes) {
+    const [panelState, setPanelState] = useState(TripPanelState.base);
+    const getContent = useContent('trips');
+
+    function getPanelTitle() {
+        if (panelState === TripPanelState.editTripDetails) {
+            return getContent('editTripDetails');
+        }
+
+        if (panelState === TripPanelState.editTransaction) {
+            return getContent('editTransaction');
+        }
+
+        return trip.tripName;
+    }
+
+    function getTagColor() {
+        if (panelState === TripPanelState.editTripDetails) {
+            return 'var(--token-color-semantic-info)';
+        }
+
+        if (panelState === TripPanelState.editTransaction) {
+            return 'var(--token-color-semantic-expense)';
+        }
+
+        return 'var(--token-color-semantic-info)';
+    }
 
     return (
         <SlideUpPanel
             isOpen={isOpen}
-            title={trip.tripName}
-            tagColor="var(--token-color-semantic-info)"
+            title={getPanelTitle()}
+            tagColor={getTagColor()}
             handlePanelWillClose={() => {
+                setPanelState(TripPanelState.base);
                 onClose();
-                setTransactionToEdit(undefined);
             }}
         >
-            {transactionToEdit ? (
-                <DiscretionarySpendForm
-                    transactionToEdit={transactionToEdit}
-                    onCancel={() => setTransactionToEdit(undefined)}
-                    onSubmit={() => {
-                        /* TODO: */
-                    }}
-                />
-            ) : (
-                <TripExpenseList tripId={trip.tripId} setTransactionToEdit={setTransactionToEdit} />
+            {panelState === TripPanelState.base && (
+                <>
+                    <TripDetails
+                        trip={trip}
+                        dateLabel={dateLabel}
+                        onEditButtonClick={() => setPanelState(TripPanelState.editTripDetails)}
+                        onEditComplete={() => setPanelState(TripPanelState.base)}
+                        onClose={onClose}
+                    />
+                </>
             )}
         </SlideUpPanel>
     );

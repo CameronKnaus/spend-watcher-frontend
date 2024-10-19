@@ -71,7 +71,12 @@ export default function TripModule({ trip, tripCostTotals }: TripModulePropTypes
                     </CustomButton>
                 </div>
             </div>
-            <TripDetailsPanel trip={trip} isOpen={detailPanelOpen} onClose={() => setDetailPanelOpen(false)} />
+            <TripDetailsPanel
+                trip={trip}
+                dateLabel={dateLabel}
+                isOpen={detailPanelOpen}
+                onClose={() => setDetailPanelOpen(false)}
+            />
         </>
     );
 }

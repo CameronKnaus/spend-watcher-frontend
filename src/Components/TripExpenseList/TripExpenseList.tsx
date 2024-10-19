@@ -25,7 +25,10 @@ export default function TripExpenseList({ tripId, setTransactionToEdit }: TripEx
                       </div>
                   ))
                 : expenseList.map((transaction) => (
-                      <div className={styles.row} key={transaction.transactionId}>
+                      <div
+                          className={`${styles.row} background-secondary-elevation-low`}
+                          key={transaction.transactionId}
+                      >
                           <TransactionRow
                               transactionId={transaction.transactionId}
                               category={transaction.category}

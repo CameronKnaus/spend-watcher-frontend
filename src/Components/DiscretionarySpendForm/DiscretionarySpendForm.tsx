@@ -84,8 +84,8 @@ export default function DiscretionarySpendForm({
         onCancel();
     }
 
-    function handleSubmission(submission: DiscretionarySpendFormAttributes) {
-        transactionService.mutate(submission);
+    async function handleSubmission(submission: DiscretionarySpendFormAttributes) {
+        await transactionService.mutate(submission);
         onSubmit();
     }
 

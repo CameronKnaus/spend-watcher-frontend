@@ -43,6 +43,9 @@ const locale = {
         total: 'Total',
         linkedTransactions: 'Linked transactions',
         details: 'Details',
+        close: 'Close',
+        editTransaction: 'Edit transaction',
+        editTripDetails: 'Edit trip details',
     },
     recurringSpending: {
         pageTitle: 'Recurring spending',
