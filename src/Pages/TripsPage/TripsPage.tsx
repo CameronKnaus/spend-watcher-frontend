@@ -16,7 +16,13 @@ export default function TripsPage() {
         <div className={styles.pageContainer}>
             <h1 className={styles.pageTitle}>{getContent('pageTitle')}</h1>
             <div className={styles.tripModulesContainer}>
-                {tripsList?.map((trip) => <TripModule key={trip.tripId} trip={trip} />)}
+                {tripsList?.map((tripDetails) => (
+                    <TripModule
+                        key={tripDetails.trip.tripId}
+                        trip={tripDetails.trip}
+                        tripCostTotals={tripDetails.costTotals}
+                    />
+                ))}
             </div>
         </div>
     );

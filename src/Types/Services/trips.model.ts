@@ -11,10 +11,18 @@ export type Trip = {
 
 // TRIPS LIST API --- /api/trips/v1/list
 
+export type TripCostTotals = {
+    totalSpent: number;
+    totalDiscretionarySpent: number;
+    totalAirfareSpent: number;
+    totalLodgingSpent: number;
+};
+
 export type TripsListV1Response = {
-    tripsList: (Trip & {
-        totalSpent: number;
-    })[];
+    tripsList: {
+        trip: Trip;
+        costTotals: TripCostTotals;
+    }[];
 };
 
 // END TRIPS LIST API

@@ -143,9 +143,9 @@ export default function DiscretionarySpendForm({
                     className={styles.textInput}
                     noSelectionText={getContent('emptyPlaceholder')}
                     optionsList={
-                        tripsList?.map((trip) => ({
-                            value: trip.tripId,
-                            optionName: trip.tripName,
+                        tripsList?.map((tripDetails) => ({
+                            value: tripDetails.trip.tripId,
+                            optionName: tripDetails.trip.tripName,
                         })) ?? []
                     }
                     clearLabel={getContent('clearSelection')}

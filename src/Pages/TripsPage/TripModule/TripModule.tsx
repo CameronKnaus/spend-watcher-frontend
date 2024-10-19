@@ -1,7 +1,7 @@
 import { spendCategoryColorMapper, spendCategoryIconMapper } from 'Components/Shared/Icons/spendCategoryIconMapper';
 import useContent from 'Hooks/useContent';
 import { FaMoneyBillWave } from 'react-icons/fa';
-import { Trip } from 'Types/Services/trips.model';
+import { Trip, TripCostTotals } from 'Types/Services/trips.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import { formatToMonthDay, formatToMonthDayYear } from 'Util/Formatters/dateFormatters/dateFormatters';
 import { TripModuleDataPoint } from '../TripModuleDataPoint/TripModuleDataPoint';
@@ -9,9 +9,10 @@ import styles from './TripModule.module.css';
 
 type TripModulePropTypes = {
     trip: Trip;
+    tripCostTotals: TripCostTotals;
 };
 
-export default function TripModule({ trip }: TripModulePropTypes) {
+export default function TripModule({ trip, tripCostTotals }: TripModulePropTypes) {
     const getContent = useContent('trips');
     const getCategoryLabel = useContent('SPENDING_CATEGORIES');
     const isSameYear = trip.startDate.slice(0, 4) === trip.endDate.slice(0, 4);
@@ -30,28 +31,28 @@ export default function TripModule({ trip }: TripModulePropTypes) {
                     label={getCategoryLabel(SpendingCategory.AIRFARE)}
                     icon={spendCategoryIconMapper[SpendingCategory.AIRFARE]}
                     iconBackgroundColor={spendCategoryColorMapper[SpendingCategory.AIRFARE]}
-                    amount={-99.99}
+                    amount={-tripCostTotals.totalAirfareSpent}
                 />
                 {/* Lodging total */}
                 <TripModuleDataPoint
                     label={getCategoryLabel(SpendingCategory.LODGING)}
                     icon={spendCategoryIconMapper[SpendingCategory.LODGING]}
                     iconBackgroundColor={spendCategoryColorMapper[SpendingCategory.LODGING]}
-                    amount={-99.99}
+                    amount={-tripCostTotals.totalLodgingSpent}
                 />
                 {/* Discretionary total */}
                 <TripModuleDataPoint
                     label={getContent('discretionary')}
                     icon={spendCategoryIconMapper[SpendingCategory.OTHER]}
                     iconBackgroundColor={spendCategoryColorMapper[SpendingCategory.OTHER]}
-                    amount={-99.99}
+                    amount={-tripCostTotals.totalDiscretionarySpent}
                 />
                 {/* Total */}
                 <TripModuleDataPoint
                     label={getContent('total')}
                     icon={<FaMoneyBillWave />}
                     iconBackgroundColor={'var(--theme-color-secondary-100)'}
-                    amount={-99.99}
+                    amount={-tripCostTotals.totalSpent}
                 />
             </div>
         </div>
