@@ -24,7 +24,7 @@
     --font-heading-medium: 24px;
     --font-heading-small: 20px;
     --font-body-large: 18px;
-    --font-body-regular: 16px;
+    --font-body-medium: 16px;
     --font-body-small: 14px;
     --font-caption: 12px;
 }
@@ -57,8 +57,8 @@
     font-size: var(--font-body-large);
 }
 
-.font-body-regular {
-    font-size: var(--font-body-regular);
+.font-body-medium {
+    font-size: var(--font-body-medium);
 }
 
 .font-body-small {

@@ -46,6 +46,11 @@ const locale = {
         close: 'Close',
         editTransaction: 'Edit transaction',
         editTripDetails: 'Edit trip details',
+        tripsPageErrorTitle: "We couldn't load your trips",
+        tripsPageErrorMessage: 'Please try again later.',
+        linkedTransactionsErrorTitle: 'Error loading trip transactions',
+        linkedTransactionsErrorMessage:
+            'We were unable to show you transactions linked to this trip. Please try again later.',
     },
     recurringSpending: {
         pageTitle: 'Recurring spending',

@@ -1,20 +1,30 @@
+import ErrorMessage from 'Components/ErrorMessage/ErrorMessage';
+import PageContainer from 'Components/PageContainer/PageContainer';
 import useContent from 'Hooks/useContent';
 import useTripsList from 'Hooks/useTripsList/useTripsList';
 import TripModule from './TripModule/TripModule';
 import styles from './TripsPage.module.css';
 
 export default function TripsPage() {
-    const { tripsList, isLoading } = useTripsList();
+    const { tripsList, isLoading, isError } = useTripsList();
     const getContent = useContent('trips');
+    const pageTitle = getContent('pageTitle');
 
     if (isLoading) {
         // TODO: Implement proper loading
-        return 'Loading...';
+        return <PageContainer pageTitle={pageTitle}>Loading...</PageContainer>;
+    }
+
+    if (isError) {
+        return (
+            <PageContainer pageTitle={pageTitle}>
+                <ErrorMessage title={getContent('tripsPageErrorTitle')} message={getContent('tripsPageErrorMessage')} />
+            </PageContainer>
+        );
     }
 
     return (
-        <div className={styles.pageContainer}>
-            <h1 className={styles.pageTitle}>{getContent('pageTitle')}</h1>
+        <PageContainer pageTitle={pageTitle}>
             <div className={styles.tripModulesContainer}>
                 {tripsList?.map((tripDetails) => (
                     <TripModule
@@ -24,6 +34,6 @@ export default function TripsPage() {
                     />
                 ))}
             </div>
-        </div>
+        </PageContainer>
     );
 }

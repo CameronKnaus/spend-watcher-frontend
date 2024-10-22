@@ -1,5 +1,5 @@
 .defaultButton {
-    font-size: var(--font-body-regular);
+    font-size: var(--font-body-medium);
     text-align: center;
     border-radius: 12px;
     font-weight: var(--fw-regular);

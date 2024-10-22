@@ -5,11 +5,11 @@
 }
 
 .description {
-    font-size: var(--font-body-regular);
+    font-size: var(--font-body-medium);
     padding-bottom: 1.5rem;
 }
 
 .finalWarning {
-    font-size: var(--font-body-regular);
+    font-size: var(--font-body-medium);
     color: var(--token-color-semantic-danger);
 }

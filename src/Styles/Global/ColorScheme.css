@@ -126,4 +126,11 @@
     --token-navigation-selected: var(--theme-color-primary-600);
 
     --token-color-skeleton-loader: var(--theme-color-neutral-700);
+
+    /* Alert colors */
+    --token-error-background-color: var(--theme-color-tertiary-900);
+    --token-error-title-color: var(--theme-color-tertiary-500);
+    --token-error-icon-color: var(--theme-color-tertiary-500);
+    --token-error-message-color: var(--theme-color-tertiary-200);
+    --token-error-border-color: var(--theme-color-tertiary-700);
 }

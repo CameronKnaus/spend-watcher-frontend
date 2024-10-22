@@ -1,3 +1,4 @@
+import ErrorMessage from 'Components/ErrorMessage/ErrorMessage';
 import TransactionRow from 'Components/TransactionRow';
 import LoadingTransactionRow from 'Components/TransactionRow/LoadingTransactionRow';
 import useContent from 'Hooks/useContent';
@@ -13,32 +14,50 @@ type TripExpenseListPropTypes = {
 
 export default function TripExpenseList({ tripId, setTransactionToEdit }: TripExpenseListPropTypes) {
     const getContent = useContent('trips');
-    const { isLoading, expenseList } = useTripLinkedExpenses(tripId);
+    const { isLoading, expenseList, isError } = useTripLinkedExpenses(tripId);
+
+    const linkedTransactionsLabel = getContent('linkedTransactions');
+
+    if (isLoading) {
+        return (
+            <div>
+                <div className={styles.linkedTransactionsLabel}>{linkedTransactionsLabel}</div>
+                {Array.from({ length: 5 }).map((_, index) => (
+                    <div className={styles.row} key={index}>
+                        <LoadingTransactionRow />
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
+    if (isError) {
+        return (
+            <div>
+                <div className={styles.linkedTransactionsLabel}>{linkedTransactionsLabel}</div>
+                <ErrorMessage
+                    title={getContent('linkedTransactionsErrorTitle')}
+                    message={getContent('linkedTransactionsErrorMessage')}
+                />
+            </div>
+        );
+    }
 
     return (
         <div>
             <div className={styles.linkedTransactionsLabel}>{getContent('linkedTransactions')}</div>
-            {isLoading
-                ? Array.from({ length: 5 }).map((_, index) => (
-                      <div className={styles.row} key={index}>
-                          <LoadingTransactionRow />
-                      </div>
-                  ))
-                : expenseList.map((transaction) => (
-                      <div
-                          className={`${styles.row} background-secondary-elevation-low`}
-                          key={transaction.transactionId}
-                      >
-                          <TransactionRow
-                              transactionId={transaction.transactionId}
-                              category={transaction.category}
-                              onClick={() => setTransactionToEdit(transaction)}
-                              amountSpent={transaction.amountSpent}
-                              note={transaction.note}
-                              secondaryNote={formatToMonthDay(transaction.spentDate)}
-                          />
-                      </div>
-                  ))}
+            {expenseList.map((transaction) => (
+                <div className={`${styles.row} background-secondary-elevation-low`} key={transaction.transactionId}>
+                    <TransactionRow
+                        transactionId={transaction.transactionId}
+                        category={transaction.category}
+                        onClick={() => setTransactionToEdit(transaction)}
+                        amountSpent={transaction.amountSpent}
+                        note={transaction.note}
+                        secondaryNote={formatToMonthDay(transaction.spentDate)}
+                    />
+                </div>
+            ))}
         </div>
     );
 }

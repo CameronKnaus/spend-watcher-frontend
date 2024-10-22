@@ -4,7 +4,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { TripLinkedExpensesV1Response } from 'Types/Services/trips.model';
 
 export default function useTripLinkedExpenses(tripId?: string) {
-    const { isLoading, isFetching, data } = useQuery<TripLinkedExpensesV1Response>({
+    const { isLoading, isFetching, data, isError } = useQuery<TripLinkedExpensesV1Response>({
         enabled: Boolean(tripId),
         // TODO: Smart query invalidation if an expense with the respective tripId is added/edited/deleted
         queryKey: ['trips', 'linkedExpenses', tripId],
@@ -17,6 +17,7 @@ export default function useTripLinkedExpenses(tripId?: string) {
 
     return {
         isLoading: isLoading || isFetching,
+        isError,
         expenseList: data?.expenseList ?? [],
     };
 }
