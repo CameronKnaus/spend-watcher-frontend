@@ -38,6 +38,7 @@ const locale = {
         amountPlaceholder: '$0.00',
     },
     trips: {
+        pageLoadingAccessibleText: 'Trips page is loading',
         pageTitle: 'My trips',
         discretionary: 'Discretionary',
         total: 'Total',

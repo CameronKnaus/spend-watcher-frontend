@@ -3,6 +3,7 @@ import PageContainer from 'Components/PageContainer/PageContainer';
 import useContent from 'Hooks/useContent';
 import useTripsList from 'Hooks/useTripsList/useTripsList';
 import TripModule from './TripModule/TripModule';
+import TripModuleLoader from './TripModule/TripModuleLoader';
 import styles from './TripsPage.module.css';
 
 export default function TripsPage() {
@@ -11,8 +12,16 @@ export default function TripsPage() {
     const pageTitle = getContent('pageTitle');
 
     if (isLoading) {
-        // TODO: Implement proper loading
-        return <PageContainer pageTitle={pageTitle}>Loading...</PageContainer>;
+        return (
+            <PageContainer pageTitle={pageTitle}>
+                <span className="accessible-text">{getContent('pageLoadingAccessibleText')}</span>
+                <div className={styles.tripModulesContainer}>
+                    <TripModuleLoader />
+                    <TripModuleLoader />
+                    <TripModuleLoader />
+                </div>
+            </PageContainer>
+        );
     }
 
     if (isError) {

@@ -1,13 +1,14 @@
+import clsx from 'clsx';
+import { ComponentProps } from 'react';
 import styles from './PageContainer.module.css';
 
 type PageContainerPropTypes = {
     pageTitle: string;
-    children: React.ReactNode;
-};
+} & ComponentProps<'div'>;
 
-export default function PageContainer({ pageTitle, children }: PageContainerPropTypes) {
+export default function PageContainer({ pageTitle, children, className, ...props }: PageContainerPropTypes) {
     return (
-        <div className={styles.pageContainer}>
+        <div className={clsx(styles.pageContainer, className)} {...props}>
             <h1 className={styles.pageTitle}>{pageTitle}</h1>
             {children}
         </div>

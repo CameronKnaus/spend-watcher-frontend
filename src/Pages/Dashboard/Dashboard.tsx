@@ -1,5 +1,7 @@
 import { clsx } from 'clsx';
+import LogSpendButton from 'Components/LogSpendButton';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
+import PageContainer from 'Components/PageContainer/PageContainer';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import { useIsMobile } from 'Util/IsMobileContext';
@@ -7,16 +9,15 @@ import styles from './Dashboard.module.css';
 import RecentTransactions from './RecentTransactions';
 import SummaryTotals from './SummaryTotals/SummaryTotals';
 import TopDiscretionaryCategories from './TopDiscretionaryCategories';
-import LogSpendButton from 'Components/LogSpendButton';
 
 export default function Dashboard() {
     const isMobile = useIsMobile();
     const getContent = useContent('dashboard');
     const currentMonth = format(new Date(), 'LLLL');
+    const pageTitle = getContent('monthOverview', [currentMonth]);
 
     return (
-        <div className={styles.dashboard}>
-            <h1 className={styles.spendingSectionTitle}>{getContent('monthOverview', [currentMonth])}</h1>
+        <PageContainer pageTitle={pageTitle} className={styles.dashboard}>
             <div className={styles.contentContainer}>
                 <div className={styles.leftSection}>
                     <div className={styles.spendingGrid}>
@@ -42,10 +43,9 @@ export default function Dashboard() {
                 </div>
                 <div className={styles.rightSection}>
                     <LogSpendButton />
-
                     <RecentTransactions />
                 </div>
             </div>
-        </div>
+        </PageContainer>
     );
 }
