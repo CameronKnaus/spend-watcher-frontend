@@ -167,8 +167,7 @@ export default function ManageRecurringSpendPanel({
                 )}
                 {recurringSpendTransaction && currentPanelContents === ManageRecurringSpendPanels.history && (
                     <RecurringTransactionsList
-                        recurringSpendId={recurringSpendTransaction.recurringSpendId}
-                        expectedMonthlyAmount={recurringSpendTransaction.expectedMonthlyAmount}
+                        recurringSpendTransaction={recurringSpendTransaction}
                         onBack={() => setCurrentPanelContents(ManageRecurringSpendPanels.base)}
                     />
                 )}

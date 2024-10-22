@@ -9,19 +9,19 @@ import { MonthYearDbDate } from 'Types/dateTypes';
 import { RecurringSpendTransaction } from 'Types/Services/spending.model';
 
 type RecurringTransactionsListPropTypes = {
-    recurringSpendId: RecurringSpendTransaction['recurringSpendId'];
-    expectedMonthlyAmount: number;
+    recurringSpendTransaction: RecurringSpendTransaction;
     onBack: () => void;
 };
 
 const formatDate = (date: string) => format(parse(date, 'yyyy-MM', new Date()), 'MMMM yyyy');
 
 export default function RecurringTransactionsList({
-    recurringSpendId,
-    expectedMonthlyAmount,
+    recurringSpendTransaction,
     onBack,
 }: RecurringTransactionsListPropTypes) {
-    const { recurringTransactionsList, isLoading } = useRecurringTransactionsList(recurringSpendId);
+    const { recurringTransactionsList, isLoading } = useRecurringTransactionsList(
+        recurringSpendTransaction.recurringSpendId,
+    );
     const getContent = useContent('recurringTransactionsList');
 
     if (!recurringTransactionsList || isLoading) {
@@ -60,20 +60,25 @@ export default function RecurringTransactionsList({
                             label={formattedDate}
                             transactionId={transaction.transactionId}
                             amountSpent={transaction.amountSpent}
-                            expectedMonthlyAmount={expectedMonthlyAmount}
+                            expectedMonthlyAmount={recurringSpendTransaction.expectedMonthlyAmount}
                         />
                     );
                 }
 
-                // Month has no transaction logged
-                return (
-                    <AddRecurringTransactionRow
-                        key={date}
-                        date={date}
-                        expectedMonthlyAmount={expectedMonthlyAmount}
-                        recurringSpendId={recurringSpendId}
-                    />
-                );
+                // Month has no transaction logged, show add button only if still active
+                if (recurringSpendTransaction.isActive) {
+                    return (
+                        <AddRecurringTransactionRow
+                            key={date}
+                            date={date}
+                            expectedMonthlyAmount={recurringSpendTransaction.expectedMonthlyAmount}
+                            recurringSpendId={recurringSpendTransaction.recurringSpendId}
+                        />
+                    );
+                }
+
+                // Transaction missing for the month, but is not active so don't show anything
+                return null;
             })}
             <BottomSheet>
                 <CustomButton variant="secondary" onClick={onBack} layout="full-width">

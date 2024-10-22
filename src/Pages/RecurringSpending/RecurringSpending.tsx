@@ -1,6 +1,7 @@
 import Currency from 'Components/Currency/Currency';
 import CustomButton from 'Components/CustomButton/CustomButton';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
+import PageContainer from 'Components/PageContainer/PageContainer';
 import RecurringExpenseForm from 'Components/RecurringExpenseForm/RecurringExpenseForm';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import { format } from 'date-fns';
@@ -18,18 +19,18 @@ export default function RecurringSpending() {
     const getContent = useContent('recurringSpending');
     const currentMonth = format(new Date(), 'LLLL');
     const { data: summaryData } = useRecurringSummaryService();
+    const pageTitle = getContent('pageTitle');
 
     if (!summaryData) {
         // TODO: Loader
-        return 'Loading...';
+        return <PageContainer pageTitle={pageTitle}>...Loading</PageContainer>;
     }
 
     const activeList = summaryData.activeRecurringTransactions;
     const inactiveList = summaryData.inactiveRecurringTransactions;
     return (
         <>
-            <div className={styles.recurringSpending}>
-                <h1 className={styles.pageTitle}>{getContent('pageTitle')}</h1>
+            <PageContainer pageTitle={pageTitle}>
                 <div className={styles.pageContainer}>
                     <div className={styles.sideBarContainer}>
                         <CustomButton
@@ -79,7 +80,7 @@ export default function RecurringSpending() {
                         )}
                     </div>
                 </div>
-            </div>
+            </PageContainer>
             <SlideUpPanel
                 isOpen={newSpendFormOpen}
                 title={getContent('newRecurringExpenseTitle')}

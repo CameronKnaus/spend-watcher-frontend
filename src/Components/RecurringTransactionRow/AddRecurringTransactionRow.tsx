@@ -59,7 +59,13 @@ export default function AddRecurringTransactionRow({
     const formattedDate = format(parse(date, 'yyyy-MM', new Date()), 'MMMM yyyy');
     if (!isActive) {
         return (
-            <CustomButton key={date} layout="full-width" className={styles.addNewRow} onClick={() => setIsActive(true)}>
+            <CustomButton
+                key={date}
+                variant="detail"
+                layout="full-width"
+                className={styles.addNewRow}
+                onClick={() => setIsActive(true)}
+            >
                 {getContent('addNewRow', [formattedDate])}
             </CustomButton>
         );
