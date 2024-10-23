@@ -1,5 +1,9 @@
-import { DbDate, MonthYearDbDate } from 'Types/dateTypes';
+import { DbDate } from 'Types/dateTypes';
 import { SpendingCategory } from 'Types/SpendingCategory';
+import zodValidateDbDateFormat from 'Util/zodCustomValidators/zodValidateDbDateFormat';
+import zodValidateDiscretionaryId from 'Util/zodCustomValidators/zodValidateDiscretionaryId';
+import zodValidateMonthYear from 'Util/zodCustomValidators/zodValidateMonthYear';
+import zodValidateRecurringTransactionId from 'Util/zodCustomValidators/zodValidateRecurringTransactionId';
 import { z as zod } from 'zod';
 
 // SPEND RELATED TYPES BEGIN --------------------------------------------
@@ -77,37 +81,10 @@ export type SpendTransaction = RecurringSpendTransaction | DiscretionarySpendTra
 
 // SPEND RELATED TYPES END --------------------------------------------
 
-// ZOD CUSTOM VALIDATORS BEGIN --------------------------------------------
-const zodValidateDiscretionaryId = zod.custom<DiscretionaryTransactionId>(
-    (givenValue): givenValue is DiscretionaryTransactionId =>
-        typeof givenValue === 'string' && /^Discretionary-\d+$/.test(givenValue),
-    {
-        message: 'Invalid transactionId format. Expected format: "Discretionary-<number>".',
-    },
-);
-
-const zodValidateRecurringTransactionId = zod.custom<RecurringTransactionId>(
-    (givenValue): givenValue is RecurringTransactionId =>
-        typeof givenValue === 'string' && /^Recurring-\d+$/.test(givenValue),
-    {
-        message: 'Invalid transactionId format. Expected format: "Recurring-<number>".',
-    },
-);
-
-const zodValidateMonthYear = zod.custom<MonthYearDbDate>(
-    (givenValue): givenValue is MonthYearDbDate =>
-        typeof givenValue === 'string' && /^\d{4}-(0\d|1[0-2])$/.test(givenValue),
-    {
-        message: 'Invalid MonthYear format. Expected format: "YYYY-MM".',
-    },
-);
-
-// ZOD CUSTOM VALIDATORS END --------------------------------------------
-
 // SPENDING DETAILS API --- /api/spending/v1/details
 export const v1DetailsSchema = zod.object({
-    startDate: zod.string().date(),
-    endDate: zod.string().date(),
+    startDate: zodValidateDbDateFormat,
+    endDate: zodValidateDbDateFormat,
 });
 
 export type SpendingDetailsRequestParams = zod.infer<typeof v1DetailsSchema>;
@@ -147,7 +124,7 @@ export type SpendingDetailsV1Response = {
 export const v1DiscretionaryAddSchema = zod.object({
     category: zod.nativeEnum(SpendingCategory),
     amountSpent: zod.number().safe().positive(),
-    spentDate: zod.string().date(),
+    spentDate: zodValidateDbDateFormat,
     note: zod.string().trim().max(100),
     linkedTripId: zod.string().uuid().optional(),
 });
