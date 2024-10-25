@@ -1,4 +1,5 @@
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
+import TripForm from 'Components/TripForm/TripForm';
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
 import { Trip } from 'Types/Services/trips.model';
@@ -45,6 +46,10 @@ export default function TripDetailsPanel({ trip, isOpen, dateLabel, onClose }: T
         return 'var(--token-color-semantic-info)';
     }
 
+    function returnToBasePage() {
+        setPanelState(TripPanelState.base);
+    }
+
     return (
         <SlideUpPanel
             isOpen={isOpen}
@@ -65,6 +70,9 @@ export default function TripDetailsPanel({ trip, isOpen, dateLabel, onClose }: T
                         onClose={onClose}
                     />
                 </>
+            )}
+            {panelState === TripPanelState.editTripDetails && (
+                <TripForm onSubmit={returnToBasePage} onCancel={returnToBasePage} tripToEdit={trip} />
             )}
         </SlideUpPanel>
     );

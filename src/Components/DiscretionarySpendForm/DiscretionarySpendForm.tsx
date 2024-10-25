@@ -32,16 +32,16 @@ export default function DiscretionarySpendForm({
     onCancel,
     onSubmit,
 }: DiscretionarySpendFormPropTypes) {
-    const editMode = Boolean(transactionToEdit);
     const getContent = useContent('transactions');
     const getGeneralContent = useContent('general');
     const spendingCategoryList = useSpendCategoryList();
     const queryClient = useQueryClient();
     const { tripsList } = useTripsList();
 
+    const editMode = Boolean(transactionToEdit);
     const transactionService = useMutation({
-        mutationKey: transactionToEdit
-            ? [editDiscretionaryQueryKey, transactionToEdit.transactionId]
+        mutationKey: editMode
+            ? [editDiscretionaryQueryKey, transactionToEdit!.transactionId]
             : [addDiscretionaryQueryKey],
         mutationFn: (params: DiscretionarySpendFormAttributes) => {
             if (editMode) {

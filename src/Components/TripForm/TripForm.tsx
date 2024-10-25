@@ -7,26 +7,39 @@ import DatePicker from 'Components/FormInputs/DatePickerController/DatePickerCon
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { format, parse } from 'date-fns';
 import useContent from 'Hooks/useContent';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { dbDateFormat } from 'Types/dateTypes';
-import { AddTripRequestParams, v1AddTripSchema } from 'Types/Services/trips.model';
+import { AddTripRequestParams, Trip, v1AddTripSchema } from 'Types/Services/trips.model';
 import styles from './TripForm.module.css';
 
 type TripFormPropTypes = {
     onSubmit: () => void;
     onCancel: () => void;
+    tripToEdit?: Trip;
 };
 
 const addTripQueryKey = 'add-trip';
+const editTripQueryKey = 'edit-trip';
 
-export default function TripForm({ onSubmit, onCancel }: TripFormPropTypes) {
+export default function TripForm({ onSubmit, onCancel, tripToEdit }: TripFormPropTypes) {
     const queryClient = useQueryClient();
     const getContent = useContent('trips');
     const getGeneralContent = useContent('general');
 
+    const editMode = Boolean(tripToEdit);
     const tripService = useMutation({
-        mutationKey: [addTripQueryKey],
-        mutationFn: (params: AddTripRequestParams) => axios.post(SERVICE_ROUTES.postAddTrip, params),
+        mutationKey: editMode ? [editTripQueryKey, tripToEdit!.tripId] : [addTripQueryKey],
+        mutationFn: (params: AddTripRequestParams) => {
+            if (editMode) {
+                return axios.post(SERVICE_ROUTES.postEditTrip, {
+                    ...params,
+                    tripId: tripToEdit?.tripId,
+                });
+            } else {
+                return axios.post(SERVICE_ROUTES.postAddTrip, params);
+            }
+        },
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ['trips'],
@@ -46,6 +59,10 @@ export default function TripForm({ onSubmit, onCancel }: TripFormPropTypes) {
             endDate: defaultStartDate,
         },
     });
+
+    useEffect(() => {
+        form.reset(tripToEdit);
+    }, [tripToEdit, form]);
 
     function handleCancel() {
         form.reset();
