@@ -52,6 +52,12 @@ const locale = {
         linkedTransactionsErrorTitle: 'Error loading trip transactions',
         linkedTransactionsErrorMessage:
             'We were unable to show you transactions linked to this trip. Please try again later.',
+        addTrip: 'Add trip',
+        newTrip: 'New trip',
+        tripName: 'Trip name',
+        tripNamePlaceholder: 'Europe summer trip',
+        startDate: 'Start date',
+        endDate: 'End date',
     },
     recurringSpending: {
         pageTitle: 'Recurring spending',

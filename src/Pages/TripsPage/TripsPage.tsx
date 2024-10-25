@@ -1,7 +1,8 @@
-import ErrorMessage from 'Components/ErrorMessage/ErrorMessage';
+import AlertMessage from 'Components/AlertMessage/AlertMessage';
 import PageContainer from 'Components/PageContainer/PageContainer';
 import useContent from 'Hooks/useContent';
 import useTripsList from 'Hooks/useTripsList/useTripsList';
+import AddTripButton from './AddTripButton/AddTripButton';
 import TripModule from './TripModule/TripModule';
 import TripModuleLoader from './TripModule/TripModuleLoader';
 import styles from './TripsPage.module.css';
@@ -27,13 +28,18 @@ export default function TripsPage() {
     if (isError) {
         return (
             <PageContainer pageTitle={pageTitle}>
-                <ErrorMessage title={getContent('tripsPageErrorTitle')} message={getContent('tripsPageErrorMessage')} />
+                <AlertMessage
+                    variant="error"
+                    title={getContent('tripsPageErrorTitle')}
+                    message={getContent('tripsPageErrorMessage')}
+                />
             </PageContainer>
         );
     }
 
     return (
         <PageContainer pageTitle={pageTitle}>
+            <AddTripButton />
             <div className={styles.tripModulesContainer}>
                 {tripsList?.map((tripDetails) => (
                     <TripModule

@@ -1,4 +1,4 @@
-import { DbDate } from '@type/dateTypes';
+import { DbDate } from 'Types/dateTypes';
 import { z as zod } from 'zod';
 
 // Validates a string is 'YYYY-MM-DD' format

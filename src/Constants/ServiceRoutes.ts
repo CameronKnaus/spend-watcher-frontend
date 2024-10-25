@@ -21,6 +21,7 @@ const SERVICE_ROUTES: Record<string, string> = {
     postAddRecurringTransaction: domainName + '/spending/v1/recurring/transactions/add',
     getTripsList: domainName + '/trips/v1/list',
     getTripLinkedExpenses: domainName + '/trips/v1/expenses',
+    postAddTrip: domainName + '/trips/v1/add',
 };
 
 export default SERVICE_ROUTES;

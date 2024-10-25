@@ -1,4 +1,3 @@
-import ErrorMessage from 'Components/ErrorMessage/ErrorMessage';
 import TransactionRow from 'Components/TransactionRow';
 import LoadingTransactionRow from 'Components/TransactionRow/LoadingTransactionRow';
 import useContent from 'Hooks/useContent';
@@ -6,6 +5,7 @@ import useTripLinkedExpenses from 'Hooks/useTripLinkedExpenses/useTripLinkedExpe
 import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
 import { formatToMonthDay } from 'Util/Formatters/dateFormatters/dateFormatters';
 import styles from './TripExpenseList.module.css';
+import AlertMessage from 'Components/AlertMessage/AlertMessage';
 
 type TripExpenseListPropTypes = {
     tripId: string;
@@ -35,7 +35,8 @@ export default function TripExpenseList({ tripId, setTransactionToEdit }: TripEx
         return (
             <div>
                 <div className={styles.linkedTransactionsLabel}>{linkedTransactionsLabel}</div>
-                <ErrorMessage
+                <AlertMessage
+                    variant="error"
                     title={getContent('linkedTransactionsErrorTitle')}
                     message={getContent('linkedTransactionsErrorMessage')}
                 />

@@ -103,6 +103,7 @@
     --token-color-semantic-expense: var(--theme-color-tertiary-500);
     --token-color-semantic-danger: var(--theme-color-tertiary-600);
     --token-color-semantic-info: var(--theme-color-secondary-500);
+    --token-color-semantic-addition: var(--theme-color-primary-500);
 
     /* Button Colors */
     --token-disable-button-background: var(--theme-color-neutral-400);
@@ -128,9 +129,28 @@
     --token-color-skeleton-loader: var(--theme-color-neutral-700);
 
     /* Alert colors */
+    /* error */
     --token-error-background-color: var(--theme-color-tertiary-900);
     --token-error-title-color: var(--theme-color-tertiary-500);
     --token-error-icon-color: var(--theme-color-tertiary-500);
-    --token-error-message-color: var(--theme-color-tertiary-200);
+    --token-error-message-color: var(--theme-color-tertiary-300);
     --token-error-border-color: var(--theme-color-tertiary-700);
+    /* info */
+    --token-info-background-color: var(--theme-color-secondary-900);
+    --token-info-title-color: var(--theme-color-secondary-500);
+    --token-info-icon-color: var(--theme-color-secondary-500);
+    --token-info-message-color: var(--theme-color-secondary-300);
+    --token-info-border-color: var(--theme-color-secondary-700);
+    /* success */
+    --token-success-background-color: var(--theme-color-primary-900);
+    --token-success-title-color: var(--theme-color-primary-500);
+    --token-success-icon-color: var(--theme-color-primary-500);
+    --token-success-message-color: var(--theme-color-primary-300);
+    --token-success-border-color: var(--theme-color-primary-700);
+    /* warning */
+    --token-warning-background-color: var(--theme-color-neutral-900);
+    --token-warning-title-color: var(--theme-color-neutral-200);
+    --token-warning-icon-color: var(--theme-color-neutral-200);
+    --token-warning-message-color: var(--theme-color-neutral-100);
+    --token-warning-border-color: var(--theme-color-neutral-700);
 }

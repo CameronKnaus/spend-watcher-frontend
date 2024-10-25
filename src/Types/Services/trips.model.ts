@@ -1,5 +1,6 @@
 import { DbDate } from 'Types/dateTypes';
-import * as zod from 'zod';
+import zodValidateDbDateFormat from 'Util/zodCustomValidators/zodValidateDbDateFormat';
+import { z as zod } from 'zod';
 import { DiscretionarySpendTransaction } from './spending.model';
 
 export type Trip = {
@@ -40,3 +41,15 @@ export type TripLinkedExpensesV1Response = {
 };
 
 // END TRIP EXPENSES API
+
+// ADD TRIPS API --- /api/trips/v1/add
+
+export const v1AddTripSchema = zod.object({
+    tripName: zod.string().min(1).max(100),
+    startDate: zodValidateDbDateFormat,
+    endDate: zodValidateDbDateFormat,
+});
+
+export type AddTripRequestParams = zod.infer<typeof v1AddTripSchema>;
+
+// END ADD TRIPS API

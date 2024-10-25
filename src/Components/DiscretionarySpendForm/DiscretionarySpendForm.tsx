@@ -58,7 +58,6 @@ export default function DiscretionarySpendForm({
                 queryKey: ['spending'],
             });
 
-            // Reset form
             form.reset();
         },
         onError: () => {

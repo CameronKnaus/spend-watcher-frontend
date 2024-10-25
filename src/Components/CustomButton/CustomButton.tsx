@@ -1,16 +1,14 @@
 import { clsx } from 'clsx';
-import { ComponentProps, ReactNode } from 'react';
+import { ComponentProps } from 'react';
 import styles from './CustomButton.module.css';
 
 type CustomButtonPropTypes = {
     onClick?: () => void;
-    children: ReactNode;
     variant?: 'primary' | 'secondary' | 'tertiary' | 'detail';
     isDisabled?: boolean;
     layout?: 'fit-content' | 'full-width';
-    className?: string;
     backgroundColor?: string;
-};
+} & ComponentProps<'button'>;
 
 // Background color must be provided by the parent component
 export default function CustomButton({
@@ -18,9 +16,10 @@ export default function CustomButton({
     variant,
     isDisabled = false,
     layout = 'fit-content',
-    className = '',
+    className,
     children,
-}: CustomButtonPropTypes & ComponentProps<'button'>) {
+    ...props
+}: CustomButtonPropTypes) {
     function handleClick() {
         if (isDisabled) {
             return;
@@ -32,6 +31,7 @@ export default function CustomButton({
 
     return (
         <button
+            {...props}
             className={classList}
             style={{
                 width: layout === 'full-width' ? '100%' : 'fit-content',
