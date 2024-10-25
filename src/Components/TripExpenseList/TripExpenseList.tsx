@@ -1,3 +1,4 @@
+import AlertMessage from 'Components/AlertMessage/AlertMessage';
 import TransactionRow from 'Components/TransactionRow';
 import LoadingTransactionRow from 'Components/TransactionRow/LoadingTransactionRow';
 import useContent from 'Hooks/useContent';
@@ -5,7 +6,6 @@ import useTripLinkedExpenses from 'Hooks/useTripLinkedExpenses/useTripLinkedExpe
 import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
 import { formatToMonthDay } from 'Util/Formatters/dateFormatters/dateFormatters';
 import styles from './TripExpenseList.module.css';
-import AlertMessage from 'Components/AlertMessage/AlertMessage';
 
 type TripExpenseListPropTypes = {
     tripId: string;
@@ -44,8 +44,21 @@ export default function TripExpenseList({ tripId, setTransactionToEdit }: TripEx
         );
     }
 
+    if (expenseList.length === 0) {
+        return (
+            <>
+                <div className={styles.linkedTransactionsLabel}>{linkedTransactionsLabel}</div>
+                <AlertMessage
+                    variant="info"
+                    title={getContent('linkedTransactionsEmptyTitle')}
+                    message={getContent('linkedTransactionsEmptyMessage')}
+                />
+            </>
+        );
+    }
+
     return (
-        <div>
+        <>
             <div className={styles.linkedTransactionsLabel}>{getContent('linkedTransactions')}</div>
             {expenseList.map((transaction) => (
                 <div className={`${styles.row} background-secondary-elevation-low`} key={transaction.transactionId}>
@@ -59,6 +72,6 @@ export default function TripExpenseList({ tripId, setTransactionToEdit }: TripEx
                     />
                 </div>
             ))}
-        </div>
+        </>
     );
 }

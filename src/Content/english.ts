@@ -58,6 +58,8 @@ const locale = {
         tripNamePlaceholder: 'Europe summer trip',
         startDate: 'Start date',
         endDate: 'End date',
+        linkedTransactionsEmptyTitle: 'This trip has no linked transactions yet',
+        linkedTransactionsEmptyMessage: 'Add transactions to this trip to see them here.',
     },
     recurringSpending: {
         pageTitle: 'Recurring spending',
