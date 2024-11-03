@@ -63,7 +63,7 @@ export default function RecentTransactions() {
 
     return (
         <>
-            <ModuleContainer heading={getContent('recent')} className="background-secondary-elevation-low">
+            <ModuleContainer heading={getContent('recent')} elevation="low">
                 {/* Loop through each date group */}
                 {Object.entries(applicableTransactionsByDate).map(([dateString, dateSpendSummary]) => {
                     const date = parseISO(dateString);

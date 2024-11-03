@@ -1,4 +1,3 @@
-import { clsx } from 'clsx';
 import LogSpendButton from 'Components/LogSpendButton';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import PageContainer from 'Components/PageContainer/PageContainer';
@@ -26,7 +25,8 @@ export default function Dashboard() {
                         {!isMobile && (
                             <ModuleContainer
                                 heading={getContent('spendRatio')}
-                                className={clsx([styles.summaryTile, 'background-secondary-elevation-low'])}
+                                className={styles.summaryTile}
+                                elevation="low"
                             >
                                 Placeholder dummy
                             </ModuleContainer>
@@ -35,7 +35,8 @@ export default function Dashboard() {
                         {/* Top categories */}
                         <ModuleContainer
                             heading={getContent('topCategories')}
-                            className={clsx([styles.topCategoriesTile, 'background-secondary-elevation-low'])}
+                            className={styles.summaryTile}
+                            elevation="low"
                         >
                             <TopDiscretionaryCategories />
                         </ModuleContainer>
@@ -44,6 +45,9 @@ export default function Dashboard() {
                 <div className={styles.rightSection}>
                     <LogSpendButton />
                     <RecentTransactions />
+                    <ModuleContainer heading={getContent('totalAccountValues')} className={styles.summaryTile}>
+                        Placeholder dummy
+                    </ModuleContainer>
                 </div>
             </div>
         </PageContainer>
