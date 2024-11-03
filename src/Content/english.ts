@@ -2,6 +2,7 @@ const locale = {
     authScreen: {
         welcome: 'Welcome to SpendWatcher',
         email: 'Email address',
+        username: 'Username',
         password: 'Password',
         register: 'Register',
         login: 'Login',

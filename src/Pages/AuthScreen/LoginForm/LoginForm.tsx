@@ -1,5 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import CustomButton from 'Components/CustomButton/CustomButton';
+import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useForm } from 'react-hook-form';
 import { LoginRequestParams, loginRequestParamsSchema } from 'Types/Services/auth.model';
@@ -15,32 +18,50 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
         resolver: zodResolver(loginRequestParamsSchema),
     });
 
-    function handleSubmission() {
-        // TODO: Implement login
+    const loginService = useMutation({
+        mutationKey: ['login'],
+        mutationFn: (params: LoginRequestParams) => axios.post(SERVICE_ROUTES.postLogin, params),
+        onSuccess: () => {
+            // TODO: Route to dashboard
+        },
+        onError: (error) => {
+            console.error(error);
+        },
+    });
+
+    function handleSubmission(submission: LoginRequestParams) {
+        loginService.mutate(submission);
     }
 
     return (
-        <>
-            <label>{getContent('email')}</label>
+        <form onSubmit={form.handleSubmit(handleSubmission)}>
+            <label>{getContent('username')}</label>
             <input
                 className={styles.textInput}
-                placeholder={getContent('email')}
-                autoComplete="off"
-                {...form.register('email', { maxLength: 100 })}
+                placeholder={getContent('username')}
+                autoComplete="username"
+                type="username"
+                {...form.register('username', { maxLength: 100 })}
             />
             <label>{getContent('password')}</label>
             <input
                 className={styles.textInput}
                 placeholder={getContent('password')}
-                autoComplete="off"
+                autoComplete="current-password"
+                type="password"
                 {...form.register('password', { maxLength: 100 })}
             />
             <div className={styles.buttonRowContainer}>
-                <CustomButton variant="secondary" onClick={switchToRegister} layout="full-width">
+                <CustomButton
+                    isDisabled={loginService.isPending}
+                    variant="secondary"
+                    onClick={switchToRegister}
+                    layout="full-width"
+                >
                     {getContent('register')}
                 </CustomButton>
                 <CustomButton
-                    isDisabled={!form.formState.isValid}
+                    isDisabled={!form.formState.isValid || loginService.isPending}
                     variant="primary"
                     onClick={form.handleSubmit(handleSubmission)}
                     layout="full-width"
@@ -48,6 +69,6 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
                     {getContent('submit')}
                 </CustomButton>
             </div>
-        </>
+        </form>
     );
 }

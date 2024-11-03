@@ -21,18 +21,20 @@ export default function RegisterForm({ switchToLogin }: RegisterFormPropTypes) {
 
     return (
         <>
-            <label>{getContent('email')}</label>
+            <label>{getContent('username')}</label>
             <input
                 className={styles.textInput}
-                placeholder={getContent('email')}
+                placeholder={getContent('username')}
                 autoComplete="off"
-                {...form.register('email', { maxLength: 100 })}
+                type="username"
+                {...form.register('username', { maxLength: 100 })}
             />
             <label>{getContent('password')}</label>
             <input
                 className={styles.textInput}
                 placeholder={getContent('password')}
-                autoComplete="off"
+                autoComplete="new-password"
+                type="password"
                 {...form.register('password', { maxLength: 100 })}
             />
             <div className={styles.buttonRowContainer}>
