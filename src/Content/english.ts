@@ -1,4 +1,12 @@
 const locale = {
+    authScreen: {
+        welcome: 'Welcome to SpendWatcher',
+        email: 'Email address',
+        password: 'Password',
+        register: 'Register',
+        login: 'Login',
+        submit: 'Submit',
+    },
     dashboard: {
         monthOverview: '{{0}} overview',
         totalSpent: 'Total spent',

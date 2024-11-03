@@ -216,7 +216,7 @@ export type RecurringTransactionsListV1Response = {
 
 // END RECURRING TRANSACTIONS LIST API --------------------------------------------
 
-// EDIT RECURRING TRANSACTION API --------------------------------------------
+// EDIT RECURRING TRANSACTION API ------s--------------------------------------
 
 export const v1EditRecurringTransactionSchema = zod.object({
     transactionId: zodValidateRecurringTransactionId,
