@@ -5,7 +5,6 @@ import PageRoutes from 'Components/PageRoutes/PageRoutes';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import SessionChecker from 'Util/Authentication/SessionChecker';
 import { IsMobileContextProvider } from 'Util/IsMobileContext';
 import msMapper from 'Util/Time/TimeMapping';
 import './index.css';
@@ -26,9 +25,7 @@ root.render(
             <QueryClientProvider client={queryClient}>
                 <IsMobileContextProvider>
                     <BrowserRouter>
-                        <SessionChecker>
-                            <PageRoutes />
-                        </SessionChecker>
+                        <PageRoutes />
                     </BrowserRouter>
                 </IsMobileContextProvider>
             </QueryClientProvider>

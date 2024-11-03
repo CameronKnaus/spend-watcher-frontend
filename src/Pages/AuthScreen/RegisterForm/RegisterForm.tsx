@@ -1,9 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import CustomButton from 'Components/CustomButton/CustomButton';
 import useContent from 'Hooks/useContent';
 import { useForm } from 'react-hook-form';
 import { RegisterRequestParams, registerRequestParamSchema } from 'Types/Services/auth.model';
 import styles from '../AuthScreen.module.css';
+axios.defaults.withCredentials = true;
 
 type RegisterFormPropTypes = {
     switchToLogin: () => void;

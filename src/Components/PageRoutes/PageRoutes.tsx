@@ -1,10 +1,12 @@
 import DesktopNavigation from 'Components/Navigation/DesktopNavigation/DesktopNavigation';
 import MobileNavigation from 'Components/Navigation/MobileNavigation/MobileNavigation';
+import useSessionStatus from 'Hooks/useSessionStatus/useSessionStatus';
 import AuthScreen from 'Pages/AuthScreen/AuthScreen';
 import Dashboard from 'Pages/Dashboard/Dashboard';
 import RecurringSpending from 'Pages/RecurringSpending/RecurringSpending';
 import TripsPage from 'Pages/TripsPage/TripsPage';
-import { Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useIsMobile } from 'Util/IsMobileContext';
 
 export enum PageName {
@@ -27,6 +29,19 @@ export const PAGE_ROUTES: Record<PageName, `/${PageName}`> = {
 
 export default function PageRoutes() {
     const isMobile = useIsMobile();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { isAuthenticating, isAuthenticated } = useSessionStatus();
+
+    useEffect(() => {
+        if (!isAuthenticating && !isAuthenticated) {
+            navigate('/auth');
+        }
+
+        if (location.pathname === '/auth' && isAuthenticated) {
+            navigate('/dashboard');
+        }
+    }, [isAuthenticated, isAuthenticating, location.pathname, navigate]);
 
     return (
         <Routes>
