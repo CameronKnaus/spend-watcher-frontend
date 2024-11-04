@@ -42,7 +42,7 @@ export const addAccountRequestParamSchema = zod.object({
     startingAccountValue: zod.number(),
     accountCategory: zod.nativeEnum(AccountCategory),
     isFixedRate: zod.boolean(),
-    annualPercentageRate: zod.number(),
+    annualPercentageRate: zod.number().optional(),
 });
 
 export type AddAccountRequestParams = zod.infer<typeof addAccountRequestParamSchema>;

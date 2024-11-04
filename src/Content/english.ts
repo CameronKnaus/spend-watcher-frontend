@@ -15,7 +15,6 @@ const locale = {
         recurringTotal: 'Recurring total',
         spendRatio: 'Discretionary ratio',
         topCategories: 'Top discretionary categories',
-        totalAccountValues: 'Accounts total',
     },
     spendingData: {
         topFour: 'Top four spend',
@@ -28,6 +27,20 @@ const locale = {
         cancel: 'Cancel',
         delete: 'Delete',
         confirm: 'Confirm',
+    },
+    accounts: {
+        addAccount: 'Add account',
+        totalAccountValues: 'Accounts total',
+        accountNameLabel: 'Account name',
+        accountTypeLabel: 'Account type',
+        startingAccountValueLabel: 'Current account value',
+        annualGrowthRateLabel: 'Annual growth rate',
+        fixedRateLabel: 'This growth rate is fixed',
+        accountNamePlaceholder: 'Account name',
+        submit: 'Submit',
+        cancel: 'Cancel',
+        amountPlaceholder: '$0.00',
+        percentagePlaceholder: '0.00%',
     },
     transactions: {
         recent: 'Recent transactions',

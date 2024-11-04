@@ -9,6 +9,7 @@ import styles from './Dashboard.module.css';
 import RecentTransactions from './RecentTransactions';
 import SummaryTotals from './SummaryTotals/SummaryTotals';
 import TopDiscretionaryCategories from './TopDiscretionaryCategories';
+import AddAccountButton from 'Components/AddAccountButton/AddAccountButton';
 
 export default function Dashboard() {
     const isMobile = useIsMobile();
@@ -47,6 +48,7 @@ export default function Dashboard() {
                     <LogSpendButton />
                     <RecentTransactions />
                     <TotalAccountValues />
+                    <AddAccountButton />
                 </div>
             </div>
         </PageContainer>

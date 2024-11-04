@@ -6,7 +6,7 @@ import useContent from 'Hooks/useContent';
 import styles from './TotalAccountValues.module.css';
 
 export default function TotalAccountValues() {
-    const getContent = useContent('dashboard');
+    const getContent = useContent('accounts');
     const { isLoading, accountsSummary } = useAccountSummaryService();
 
     return (

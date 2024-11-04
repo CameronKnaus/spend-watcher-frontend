@@ -32,8 +32,8 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
         },
     });
 
-    function handleSubmission(params: LoginRequestParams) {
-        loginService.mutate(params);
+    async function handleSubmission(params: LoginRequestParams) {
+        await loginService.mutate(params);
     }
 
     return (

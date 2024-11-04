@@ -24,6 +24,7 @@ const SERVICE_ROUTES: Record<string, string> = {
     postAddTrip: domainName + '/trips/v1/add',
     postEditTrip: domainName + '/trips/v1/edit',
     getAccountsSummary: domainName + '/accounts/v1/summary',
+    postAddAccount: domainName + '/accounts/v1/add',
 };
 
 export default SERVICE_ROUTES;
