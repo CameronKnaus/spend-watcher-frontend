@@ -1,0 +1,12 @@
+.amount {
+    font-size: var(--font-heading-large);
+    font-weight: var(--font-weight-thin);
+    color: var(--token-color-semantic-gain);
+    text-align: center;
+}
+
+.skeleton {
+    height: 38px;
+    width: 166px;
+    margin: auto;
+}

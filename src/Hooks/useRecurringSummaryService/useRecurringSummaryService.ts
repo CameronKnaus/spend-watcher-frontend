@@ -8,7 +8,6 @@ export default function useRecurringSummaryService() {
         queryKey: ['recurring', 'summary'],
         queryFn: async () => {
             const response = await axios.get(SERVICE_ROUTES.getRecurringSummary);
-
             return response.data;
         },
     });
