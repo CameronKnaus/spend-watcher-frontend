@@ -16,6 +16,12 @@
     font-size: var(--font-body-small);
 }
 
+.dataRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .secondaryRow {
     white-space: nowrap;
     overflow: hidden;
