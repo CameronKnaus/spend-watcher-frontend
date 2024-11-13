@@ -61,3 +61,11 @@ export const v1EditTripSchema = v1AddTripSchema.extend({
 export type EditTripRequestParams = zod.infer<typeof v1EditTripSchema>;
 
 // END EDIT TRIPS API
+
+// DELETE TRIPS API --- /api/trips/v1/delete
+export const v1DeleteTripSchema = zod.object({
+    tripId: zod.string().uuid(),
+});
+
+export type DeleteTripRequestParams = zod.infer<typeof v1DeleteTripSchema>;
+// END DELETE TRIPS API

@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
+import DeleteButton from 'Components/DeleteButton/DeleteButton';
 import DatePicker from 'Components/FormInputs/DatePickerController/DatePickerController';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import { format, parse } from 'date-fns';
@@ -13,16 +14,26 @@ import { dbDateFormat } from 'Types/dateTypes';
 import { AddTripRequestParams, Trip, v1AddTripSchema } from 'Types/Services/trips.model';
 import styles from './TripForm.module.css';
 
-type TripFormPropTypes = {
+type NewTripForm = {
     onSubmit: () => void;
     onCancel: () => void;
-    tripToEdit?: Trip;
+    onDelete?: never;
+    tripToEdit?: never;
 };
+
+type EditTripForm = {
+    onSubmit: () => void;
+    onCancel: () => void;
+    onDelete: () => void;
+    tripToEdit: Trip;
+};
+
+type TripFormPropTypes = NewTripForm | EditTripForm;
 
 const addTripQueryKey = 'add-trip';
 const editTripQueryKey = 'edit-trip';
 
-export default function TripForm({ onSubmit, onCancel, tripToEdit }: TripFormPropTypes) {
+export default function TripForm({ onSubmit, onCancel, onDelete, tripToEdit }: TripFormPropTypes) {
     const queryClient = useQueryClient();
     const getContent = useContent('trips');
     const getGeneralContent = useContent('general');
@@ -108,6 +119,11 @@ export default function TripForm({ onSubmit, onCancel, tripToEdit }: TripFormPro
                     className={styles.textInput}
                 />
             </form>
+            {editMode && (
+                <div className={styles.deleteButtonContainer}>
+                    <DeleteButton label={getContent('deleteButtonLabel')} onClick={onDelete} />
+                </div>
+            )}
             <BottomSheet>
                 <CustomButton variant="secondary" onClick={handleCancel} layout="full-width">
                     {getGeneralContent('cancel')}

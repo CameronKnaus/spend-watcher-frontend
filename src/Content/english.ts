@@ -83,6 +83,11 @@ const locale = {
         endDate: 'End date',
         linkedTransactionsEmptyTitle: 'This trip has no linked transactions yet',
         linkedTransactionsEmptyMessage: 'Add transactions to this trip to see them here.',
+        deleteTrip: 'Delete {{0}}',
+        deleteButtonLabel: 'Permanently delete this trip',
+        deleteSpeedBumpHeader: 'Are you sure?',
+        deleteSpeedBumpDescription:
+            "This will permanently delete this trip, but all linked transactions will remain.  Linked transactions will have their linked trip value set to 'None'.",
     },
     recurringSpending: {
         pageTitle: 'Recurring spending',

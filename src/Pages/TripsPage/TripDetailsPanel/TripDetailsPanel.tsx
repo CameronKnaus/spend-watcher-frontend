@@ -1,5 +1,9 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import SpeedBump from 'Components/SlideUpPanel/Addons/SpeedBump/SpeedBump';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import TripForm from 'Components/TripForm/TripForm';
+import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
 import { Trip } from 'Types/Services/trips.model';
@@ -16,13 +20,35 @@ enum TripPanelState {
     base = 'base',
     editTripDetails = 'editTripDetails',
     editTransaction = 'editTransaction',
+    deleteTrip = 'deleteTrip',
 }
 
 export default function TripDetailsPanel({ trip, isOpen, dateLabel, onClose }: TripDetailsPanelPropTypes) {
+    const queryClient = useQueryClient();
     const [panelState, setPanelState] = useState(TripPanelState.base);
     const getContent = useContent('trips');
+    const getGeneralContent = useContent('general');
+
+    const deleteMutation = useMutation({
+        mutationFn: () =>
+            axios.post(SERVICE_ROUTES.postDeleteTrip, {
+                tripId: trip.tripId,
+            }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['trips'],
+            });
+        },
+        onError: () => {
+            // TODO: Error handling
+        },
+    });
 
     function getPanelTitle() {
+        if (panelState === TripPanelState.deleteTrip) {
+            return getContent('deleteTrip', [trip.tripName]);
+        }
+
         if (panelState === TripPanelState.editTripDetails) {
             return getContent('editTripDetails');
         }
@@ -35,6 +61,10 @@ export default function TripDetailsPanel({ trip, isOpen, dateLabel, onClose }: T
     }
 
     function getTagColor() {
+        if (panelState === TripPanelState.deleteTrip) {
+            return 'var(--token-color-semantic-danger)';
+        }
+
         if (panelState === TripPanelState.editTripDetails) {
             return 'var(--token-color-semantic-info)';
         }
@@ -72,7 +102,26 @@ export default function TripDetailsPanel({ trip, isOpen, dateLabel, onClose }: T
                 </>
             )}
             {panelState === TripPanelState.editTripDetails && (
-                <TripForm onSubmit={returnToBasePage} onCancel={returnToBasePage} tripToEdit={trip} />
+                <TripForm
+                    onSubmit={returnToBasePage}
+                    onCancel={returnToBasePage}
+                    onDelete={() => setPanelState(TripPanelState.deleteTrip)}
+                    tripToEdit={trip}
+                />
+            )}
+            {panelState === TripPanelState.deleteTrip && (
+                <SpeedBump
+                    warningTitle={getContent('deleteSpeedBumpHeader')}
+                    warningDescription={getContent('deleteSpeedBumpDescription')}
+                    proceedText={getGeneralContent('confirm')}
+                    onCancel={() => {
+                        setPanelState(TripPanelState.editTripDetails);
+                    }}
+                    onProceed={() => {
+                        deleteMutation.mutate();
+                        onClose();
+                    }}
+                />
             )}
         </SlideUpPanel>
     );

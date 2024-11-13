@@ -6,6 +6,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { DiscretionarySpendTransaction, DiscretionaryTransactionId } from 'Types/Services/spending.model';
 import DiscretionarySpendForm from './DiscretionarySpendForm';
+import styles from './DiscretionarySpendForm.module.css';
 
 type DiscretionarySpendPanelPropTypes = {
     isOpen: boolean;
@@ -59,7 +60,11 @@ export default function DiscretionarySpendPanel({
                 onCancel={onPanelClose}
                 onSubmit={onPanelClose}
             />
-            {editMode && <DeleteButton label={getContent('deleteExpense')} onClick={handleDelete} />}
+            {editMode && (
+                <div className={styles.deleteButtonContainer}>
+                    <DeleteButton label={getContent('deleteExpense')} onClick={handleDelete} />
+                </div>
+            )}
         </SlideUpPanel>
     );
 }

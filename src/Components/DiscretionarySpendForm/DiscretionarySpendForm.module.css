@@ -24,3 +24,7 @@
 .dateLabel {
     margin-bottom: 12px;
 }
+
+.deleteButtonContainer {
+    margin: 80px auto 20px;
+}
