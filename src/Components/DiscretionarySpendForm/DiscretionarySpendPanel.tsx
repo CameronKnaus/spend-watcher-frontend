@@ -1,12 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import DeleteButton from 'Components/DeleteButton/DeleteButton';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
-import { FaTrashAlt } from 'react-icons/fa';
 import { DiscretionarySpendTransaction, DiscretionaryTransactionId } from 'Types/Services/spending.model';
 import DiscretionarySpendForm from './DiscretionarySpendForm';
-import styles from './DiscretionarySpendForm.module.css';
 
 type DiscretionarySpendPanelPropTypes = {
     isOpen: boolean;
@@ -55,19 +54,12 @@ export default function DiscretionarySpendPanel({
             tagColor="var(--token-color-semantic-expense)"
             handlePanelWillClose={onPanelClose}
         >
-            <>
-                <DiscretionarySpendForm
-                    transactionToEdit={transactionToEdit}
-                    onCancel={onPanelClose}
-                    onSubmit={onPanelClose}
-                />
-                {editMode && (
-                    <button className={styles.deleteLink} onClick={handleDelete}>
-                        {getContent('deleteExpense')}
-                        <FaTrashAlt />
-                    </button>
-                )}
-            </>
+            <DiscretionarySpendForm
+                transactionToEdit={transactionToEdit}
+                onCancel={onPanelClose}
+                onSubmit={onPanelClose}
+            />
+            {editMode && <DeleteButton label={getContent('deleteExpense')} onClick={handleDelete} />}
         </SlideUpPanel>
     );
 }

@@ -24,13 +24,3 @@
 .dateLabel {
     margin-bottom: 12px;
 }
-
-.deleteLink {
-    color: var(--token-color-semantic-danger);
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin: 80px auto 20px;
-}

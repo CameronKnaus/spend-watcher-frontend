@@ -103,7 +103,7 @@ export default function TopDiscretionaryCategories() {
                     />
                 ))}
                 <TopCategoryLabel
-                    label={getContent('topFour')}
+                    label={getContent('topCombined')}
                     isVerticalList={isVerticalList}
                     amount={-spendCategoryOverview.topFourDiscretionaryTotals.amount}
                     percentage={spendCategoryOverview.topFourDiscretionaryTotals.percentageOfTotalAmount}

@@ -17,8 +17,8 @@ const locale = {
         topCategories: 'Top discretionary categories',
     },
     spendingData: {
-        topFour: 'Top four spend',
-        other: 'Remaining spend',
+        topCombined: 'Combined total',
+        other: 'Remaining total',
         moreLabel: 'See more',
     },
     general: {
