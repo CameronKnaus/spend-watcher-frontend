@@ -1,22 +1,22 @@
-.transactionsRow {
+.interactiveRow {
     display: flex;
     width: 100%;
     column-gap: 8px;
     align-items: center;
 }
 
-.transactionDetails {
+.detailsContainer {
     flex-basis: 100%;
 }
 
-.dataRow {
+.primaryRow {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: var(--font-body-small);
 }
 
-.noteRow {
+.secondaryRow {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

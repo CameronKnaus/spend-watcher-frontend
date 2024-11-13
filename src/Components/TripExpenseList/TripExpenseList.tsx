@@ -1,6 +1,6 @@
 import AlertMessage from 'Components/AlertMessage/AlertMessage';
+import LoadingInteractiveRow from 'Components/InteractiveRow/LoadingTransactionRow';
 import TransactionRow from 'Components/TransactionRow';
-import LoadingTransactionRow from 'Components/TransactionRow/LoadingTransactionRow';
 import useContent from 'Hooks/useContent';
 import useTripLinkedExpenses from 'Hooks/useTripLinkedExpenses/useTripLinkedExpenses';
 import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
@@ -24,7 +24,7 @@ export default function TripExpenseList({ tripId, setTransactionToEdit }: TripEx
                 <div className={styles.linkedTransactionsLabel}>{linkedTransactionsLabel}</div>
                 {Array.from({ length: 5 }).map((_, index) => (
                     <div className={styles.row} key={index}>
-                        <LoadingTransactionRow />
+                        <LoadingInteractiveRow />
                     </div>
                 ))}
             </div>

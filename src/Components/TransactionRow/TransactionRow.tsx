@@ -1,12 +1,10 @@
-import { clsx } from 'clsx';
 import Currency from 'Components/Currency/Currency';
+import InteractiveRow from 'Components/InteractiveRow/InteractiveRow';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import useContent from 'Hooks/useContent';
 import { ComponentProps } from 'react';
-import { FaChevronRight } from 'react-icons/fa';
 import { DiscretionaryTransactionId } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
-import styles from './TransactionRow.module.css';
 
 type TransactionRowPropTypes = {
     transactionId: DiscretionaryTransactionId;
@@ -31,25 +29,15 @@ export default function TransactionRow({
     const getCategoryLabel = useContent('SPENDING_CATEGORIES');
 
     return (
-        <button
+        <InteractiveRow
+            icon={<SpendingCategoryIcon category={category} size={36} />}
+            primaryLabel={getCategoryLabel(category)}
+            primaryDataPoint={<Currency amount={-amountSpent} isGainLoss />}
+            secondaryDataPoint={note}
+            secondaryLabel={secondaryNote}
+            className={className}
             onClick={() => onClick(transactionId)}
-            className={clsx(styles.transactionsRow, className)}
             {...attributes}
-        >
-            <SpendingCategoryIcon category={category} size={36} />
-            <div className={styles.transactionDetails}>
-                <div className={styles.dataRow}>
-                    <span>{getCategoryLabel(category)}</span>
-                    <span>
-                        <Currency amount={-amountSpent} isGainLoss />
-                    </span>
-                </div>
-                <div className={styles.dataRow}>
-                    {note && <div className={styles.noteRow}>{note}</div>}
-                    {secondaryNote && <div className={styles.noteRow}>{secondaryNote}</div>}
-                </div>
-            </div>
-            <FaChevronRight className={styles.chevron} />
-        </button>
+        />
     );
 }
