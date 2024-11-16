@@ -80,6 +80,13 @@ export default function RecurringTransactionsList({
                 // Transaction missing for the month, but is not active so don't show anything
                 return null;
             })}
+            {/* Add button for the month prior to the oldest month logged */}
+            <AddRecurringTransactionRow
+                key={currentDate.toISOString()}
+                date={format(currentDate, 'yyyy-MM') as MonthYearDbDate}
+                expectedMonthlyAmount={recurringSpendTransaction.expectedMonthlyAmount}
+                recurringSpendId={recurringSpendTransaction.recurringSpendId}
+            />
             <BottomSheet>
                 <CustomButton variant="secondary" onClick={onBack} layout="full-width">
                     {getContent('backButton')}
