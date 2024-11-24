@@ -216,7 +216,7 @@ export type RecurringTransactionsListV1Response = {
 
 // END RECURRING TRANSACTIONS LIST API --------------------------------------------
 
-// EDIT RECURRING TRANSACTION API ------s--------------------------------------
+// EDIT RECURRING TRANSACTION API --------------------------------------------
 
 export const v1EditRecurringTransactionSchema = zod.object({
     transactionId: zodValidateRecurringTransactionId,
@@ -238,3 +238,13 @@ export const v1AddRecurringTransactionSchema = zod.object({
 export type AddRecurringTransactionRequestParams = zod.infer<typeof v1AddRecurringTransactionSchema>;
 
 // END ADD RECURRING TRANSACTION API
+
+// SPENDING HISTORY START API --------------------------------------------
+
+export type SpendingHistoryStartV1Response = {
+    earliestTransactionDate: DbDate;
+    earliestRecurringTransactionDate: DbDate;
+    earliestDiscretionaryTransactionDate: DbDate;
+};
+
+// END SPENDING HISTORY START API --------------------------------------------

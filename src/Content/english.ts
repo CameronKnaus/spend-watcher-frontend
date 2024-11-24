@@ -13,7 +13,6 @@ const locale = {
         totalSpent: 'Total spent',
         discretionaryTotal: 'Discretionary total',
         recurringTotal: 'Recurring total',
-        spendRatio: 'Discretionary ratio',
         topCategories: 'Top discretionary categories',
     },
     spendingData: {

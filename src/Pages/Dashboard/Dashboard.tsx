@@ -1,18 +1,16 @@
+import AddAccountButton from 'Components/AddAccountButton/AddAccountButton';
 import LogSpendButton from 'Components/LogSpendButton';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import PageContainer from 'Components/PageContainer/PageContainer';
 import TotalAccountValues from 'Components/TotalAccounValues/TotalAccountValues';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
-import { useIsMobile } from 'Util/IsMobileContext';
 import styles from './Dashboard.module.css';
 import RecentTransactions from './RecentTransactions';
 import SummaryTotals from './SummaryTotals/SummaryTotals';
 import TopDiscretionaryCategories from './TopDiscretionaryCategories';
-import AddAccountButton from 'Components/AddAccountButton/AddAccountButton';
 
 export default function Dashboard() {
-    const isMobile = useIsMobile();
     const getContent = useContent('dashboard');
     const currentMonth = format(new Date(), 'LLLL');
     const pageTitle = getContent('monthOverview', [currentMonth]);
@@ -23,17 +21,6 @@ export default function Dashboard() {
                 <div className={styles.leftSection}>
                     <div className={styles.spendingGrid}>
                         <SummaryTotals />
-                        {/* Spend ratio */}
-                        {!isMobile && (
-                            <ModuleContainer
-                                heading={getContent('spendRatio')}
-                                className={styles.summaryTile}
-                                elevation="low"
-                            >
-                                Placeholder dummy
-                            </ModuleContainer>
-                        )}
-
                         {/* Top categories */}
                         <ModuleContainer
                             heading={getContent('topCategories')}
