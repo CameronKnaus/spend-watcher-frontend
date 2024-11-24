@@ -1,5 +1,5 @@
 import AlertMessage from 'Components/AlertMessage/AlertMessage';
-import LoadingInteractiveRow from 'Components/InteractiveRow/LoadingTransactionRow';
+import LoadingInteractiveRow from 'Components/InteractiveRow/LoadingInteractiveRow';
 import TransactionRow from 'Components/TransactionRow';
 import useContent from 'Hooks/useContent';
 import useTripLinkedExpenses from 'Hooks/useTripLinkedExpenses/useTripLinkedExpenses';

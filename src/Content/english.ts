@@ -40,6 +40,8 @@ const locale = {
         cancel: 'Cancel',
         amountPlaceholder: '$0.00',
         percentagePlaceholder: '0.00%',
+        accountsList: 'Accounts list',
+        asOf: 'As of {{0}}',
     },
     transactions: {
         recent: 'Recent transactions',

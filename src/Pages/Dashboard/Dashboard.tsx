@@ -1,8 +1,8 @@
+import AccountsList from 'Components/AccountsList/AccountsList';
 import AddAccountButton from 'Components/AddAccountButton/AddAccountButton';
 import LogSpendButton from 'Components/LogSpendButton';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import PageContainer from 'Components/PageContainer/PageContainer';
-import TotalAccountValues from 'Components/TotalAccounValues/TotalAccountValues';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import styles from './Dashboard.module.css';
@@ -34,7 +34,7 @@ export default function Dashboard() {
                 <div className={styles.rightSection}>
                     <LogSpendButton />
                     <RecentTransactions />
-                    <TotalAccountValues />
+                    <AccountsList />
                     <AddAccountButton />
                 </div>
             </div>

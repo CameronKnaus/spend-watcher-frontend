@@ -5,10 +5,10 @@ import styles from './InteractiveRow.module.css';
 
 type InteractiveRowPropTypes = {
     icon?: ReactNode;
-    primaryLabel: string | ReactNode;
-    secondaryLabel?: string | ReactNode;
-    primaryDataPoint: string | number | ReactNode;
-    secondaryDataPoint?: string | number | ReactNode;
+    primaryLabel: ReactNode;
+    secondaryLabel?: ReactNode;
+    primaryDataPoint: ReactNode;
+    secondaryDataPoint?: ReactNode;
 } & ComponentProps<'button'>;
 
 export default function InteractiveRow({

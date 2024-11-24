@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import { spendCategoryIconMapper } from 'Components/Shared/Icons/spendCategoryIconMapper';
-import { CSSProperties } from 'react';
+import { ComponentProps } from 'react';
 import { MdRefresh } from 'react-icons/md';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './CategoryIcon.module.css';
@@ -9,10 +9,8 @@ type SpendingCategoryIconPropTypes = {
     category: SpendingCategory;
     size: number;
     isInactive?: boolean;
-    className?: string;
     showRevolvingIcon?: boolean;
-    style?: CSSProperties;
-};
+} & ComponentProps<'div'>;
 
 export default function SpendingCategoryIcon({
     category,

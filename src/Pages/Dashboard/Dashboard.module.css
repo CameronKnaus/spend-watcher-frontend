@@ -1,6 +1,7 @@
 .dashboard {
     /* Shared tile designs */
     --dashboard-column-gap: 16px;
+    padding-bottom: 64px;
 }
 
 .contentContainer {

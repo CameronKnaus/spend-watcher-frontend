@@ -1,30 +1,29 @@
 import { clsx } from 'clsx';
+import { ComponentProps } from 'react';
 import { AccountCategory } from 'Types/accountTypes';
 import accountCategoryIconMapper from './accountCategoryIconMapper';
 import styles from './CategoryIcon.module.css';
 
 type AccountCategoryIconPropTypes = {
     category: AccountCategory;
-    size: number;
+    size?: number;
     isInactive?: boolean;
-    roundedCorners?: boolean;
-    className?: string;
-};
+} & ComponentProps<'div'>;
 
+// Should probably combine this with SpendingCategoryIcon.tsx
 export default function AccountCategoryIcon({
     category,
     size = 32,
     isInactive,
-    roundedCorners = true,
     className,
+    style,
 }: AccountCategoryIconPropTypes) {
     const containerStyle = {
         height: size,
         width: size,
         backgroundColor: `var(--theme-color-account-category-${category})`,
-        fontSize: size * 0.75,
-        // radius 1/8th the size
-        borderRadius: roundedCorners ? size * (1 / 8) : 0,
+        fontSize: size * 0.65,
+        ...(style ?? {}),
     };
 
     return (
