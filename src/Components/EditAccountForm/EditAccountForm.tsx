@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
@@ -24,6 +24,7 @@ type EditAccountFormPropTypes = {
 };
 
 export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: EditAccountFormPropTypes) {
+    const queryClient = useQueryClient();
     const accountCategoryList = useAccountCategoryList();
     const getContent = useContent('accounts');
 
@@ -32,7 +33,6 @@ export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: E
         mutationFn: (params: EditAccountDetailsRequestParams) =>
             axios.post(SERVICE_ROUTES.postEditAccount, {
                 ...params,
-                accountId: accountToEdit.id,
             }),
     });
 
@@ -55,6 +55,9 @@ export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: E
 
     async function handleSubmission(submission: EditAccountDetailsRequestParams) {
         await editAccountService.mutateAsync(submission);
+        queryClient.invalidateQueries({
+            queryKey: ['account'],
+        });
         onSubmit();
     }
 

@@ -1,64 +1,103 @@
-import BottomSheet from 'Components/BottomSheet/BottomSheet';
-import CustomButton from 'Components/CustomButton/CustomButton';
+import { useQueryClient } from '@tanstack/react-query';
 import EditAccountForm from 'Components/EditAccountForm/EditAccountForm';
-import PanelOptionButton from 'Components/SlideUpPanel/Addons/PanelOptionButton/PanelOptionButton';
-import PanelOptionButtonContainer from 'Components/SlideUpPanel/Addons/PanelOptionButtonContainer/PanelOptionButtonContainer';
+import SpeedBump from 'Components/SlideUpPanel/Addons/SpeedBump/SpeedBump';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
 import { Account } from 'Types/Services/accounts.model';
+import ManageAccountBasePanel from './ManageAccountBasePanel';
 
 type ManageAccountPanelPropTypes = {
-    account: Account;
+    account: Account | null;
     onPanelClose: () => void;
 };
 
-enum PanelTabs {
+export enum PanelTabs {
     BASE = 'BASE',
     EDIT_ACCOUNT = 'EDIT_ACCOUNT',
+    SET_INACTIVE = 'SET_INACTIVE',
     DELETE_ACCOUNT = 'DELETE_ACCOUNT',
 }
 
 export default function ManageAccountPanel({ account, onPanelClose }: ManageAccountPanelPropTypes) {
+    const queryClient = useQueryClient();
     const [selectedTab, setSelectedTab] = useState<PanelTabs>(PanelTabs.BASE);
     const getContent = useContent('accounts');
 
-    const titleMapper = {
-        [PanelTabs.BASE]: getContent('manageAccountHeader', [account.name]),
-        [PanelTabs.EDIT_ACCOUNT]: getContent('editAccountHeader', [account.name]),
-        [PanelTabs.DELETE_ACCOUNT]: getContent('deleteAccountHeader'),
-    };
+    // TODO:
+    function invalidateQueries() {
+        queryClient.invalidateQueries({
+            queryKey: ['accounts'],
+        });
+    }
+
+    function onClose() {
+        setSelectedTab(PanelTabs.BASE);
+        onPanelClose();
+    }
+
+    function getTitle() {
+        if (!account) {
+            return '';
+        }
+
+        const titleMapper = {
+            [PanelTabs.BASE]: getContent('manageAccountHeader', [account.name]),
+            [PanelTabs.EDIT_ACCOUNT]: getContent('editAccountHeader', [account.name]),
+            [PanelTabs.SET_INACTIVE]: getContent('setInactiveHeader', [account.name]),
+            [PanelTabs.DELETE_ACCOUNT]: getContent('deleteAccountHeader'),
+        };
+
+        return titleMapper[selectedTab];
+    }
 
     function tabRenderer() {
+        if (!account) {
+            return null;
+        }
+
         switch (selectedTab) {
             case PanelTabs.BASE:
-                return (
-                    <>
-                        <PanelOptionButtonContainer>
-                            <PanelOptionButton onClick={() => setSelectedTab(PanelTabs.EDIT_ACCOUNT)}>
-                                {getContent('editAccountOption')}
-                            </PanelOptionButton>
-                            <PanelOptionButton onClick={() => setSelectedTab(PanelTabs.DELETE_ACCOUNT)}>
-                                {getContent('deleteAccountOption')}
-                            </PanelOptionButton>
-                        </PanelOptionButtonContainer>
-                        <BottomSheet>
-                            <CustomButton layout="full-width" variant="secondary" onClick={onPanelClose}>
-                                {getContent('close')}
-                            </CustomButton>
-                        </BottomSheet>
-                    </>
-                );
+                return <ManageAccountBasePanel setSelectedTab={setSelectedTab} onClose={onClose} />;
             case PanelTabs.EDIT_ACCOUNT:
                 return (
                     <EditAccountForm
                         accountToEdit={account}
-                        onSubmit={() => {}}
+                        onSubmit={onClose}
                         onCancel={() => setSelectedTab(PanelTabs.BASE)}
                     />
                 );
+            case PanelTabs.SET_INACTIVE:
+                return (
+                    <SpeedBump
+                        warningTitle={getContent('setAccountInactiveTitle', [account.name])}
+                        warningDescription={getContent('setAccountInactiveDescription')}
+                        proceedText={getContent('stopTrackingButton')}
+                        onCancel={() => setSelectedTab(PanelTabs.BASE)}
+                        onProceed={() => {
+                            // seInactiveMutation.mutate({
+                            //     accountId: account.id,
+                            // });
+                            onClose();
+                        }}
+                    />
+                );
             case PanelTabs.DELETE_ACCOUNT:
-                return <div>Delete account</div>;
+                return (
+                    <SpeedBump
+                        warningTitle={getContent('deleteAccountTitle', [account.name])}
+                        warningDescription={getContent('deleteAccountDescription')}
+                        proceedText={getContent('deleteAccountButton')}
+                        finalWarningText={getContent('deleteAccountFinalWarning')}
+                        onCancel={() => setSelectedTab(PanelTabs.BASE)}
+                        onProceed={() => {
+                            // deleteMutation.mutate({
+                            //     accountId: account.id,
+                            // });
+                            onClose();
+                        }}
+                    />
+                );
             default:
                 return null;
         }
@@ -66,9 +105,9 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
 
     return (
         <SlideUpPanel
-            title={titleMapper[selectedTab]}
-            isOpen
-            handlePanelWillClose={() => {}}
+            title={getTitle()}
+            isOpen={Boolean(account)}
+            handlePanelWillClose={onClose}
             tagColor="var(--token-color-semantic-info)"
         >
             {tabRenderer()}

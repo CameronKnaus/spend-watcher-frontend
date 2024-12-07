@@ -48,9 +48,7 @@ export default function AccountsList() {
                           ))}
                 </div>
             </ModuleContainer>
-            {accountToEdit && (
-                <ManageAccountPanel account={accountToEdit} onPanelClose={() => setAccountToEdit(null)} />
-            )}
+            <ManageAccountPanel account={accountToEdit} onPanelClose={() => setAccountToEdit(null)} />
         </>
     );
 }

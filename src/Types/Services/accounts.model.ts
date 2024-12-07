@@ -46,7 +46,6 @@ export const addAccountRequestParamSchema = zod.object({
 });
 
 export type AddAccountRequestParams = zod.infer<typeof addAccountRequestParamSchema>;
-// END ACCOUNT SERVICE
 
 // UPDATE ACCOUNT BALANCE SERVICE
 export const updateAccountBalanceRequestParamSchema = zod.object({
@@ -62,12 +61,13 @@ export const editAccountDetailsRequestParamsSchema = addAccountRequestParamSchem
     .extend({
         accountId: zod.string().uuid(),
     })
-    .omit({ startingAccountValue: true });
+    .omit({
+        startingAccountValue: true,
+    });
 
 export type EditAccountDetailsRequestParams = zod.infer<typeof editAccountDetailsRequestParamsSchema>;
-// END EDIT ACCOUNT DETAILS SERVICE
 
-// ACCOUNTS SUMMARY SERVICE
+// ACCOUNTS SUMMARY SERVICES
 export type AccountsSummaryV1Response = {
     totalEquity: number;
     totalAccountsCount: number;
@@ -77,5 +77,3 @@ export type AccountsSummaryV1Response = {
         requiresNewUpdate: boolean;
     })[];
 };
-
-// END ACCOUNT SUMMARY SERVICE

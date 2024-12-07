@@ -139,15 +139,12 @@ export default function ManageRecurringSpendPanel({
                                 )}
                                 {getContent(recurringSpendTransaction?.isActive ? 'markInactive' : 'markActive')}
                             </PanelOptionButton>
-                            <CustomButton
-                                className={styles.optionButton}
-                                variant="secondary"
-                                layout="fit-content"
+                            <PanelOptionButton
                                 onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.delete)}
                             >
                                 <FaTrashAlt size={20} />
                                 {getContent('permanentlyDelete')}
-                            </CustomButton>
+                            </PanelOptionButton>
                         </PanelOptionButtonContainer>
                         <BottomSheet>
                             <CustomButton layout="full-width" variant="secondary" onClick={closePanel}>
