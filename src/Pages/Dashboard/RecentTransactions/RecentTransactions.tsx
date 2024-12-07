@@ -61,49 +61,55 @@ export default function RecentTransactions() {
         return <h2>Placeholder loading</h2>;
     }
 
+    const noTransactions = Object.keys(applicableTransactionsByDate).length === 0;
+
     return (
         <>
             <ModuleContainer heading={getContent('recent')} elevation="low">
                 {/* Loop through each date group */}
-                {Object.entries(applicableTransactionsByDate).map(([dateString, dateSpendSummary]) => {
-                    const date = parseISO(dateString);
-                    let dateLabel = format(date, 'MMM do');
-                    if (isToday(date)) {
-                        dateLabel = getContent('todayLabel', [dateLabel]);
-                    } else if (isYesterday(date)) {
-                        dateLabel = getContent('yesterdayLabel', [dateLabel]);
-                    }
+                {noTransactions ? (
+                    <div className={styles.noTransactions}>{getContent('noRecentTransactions')}</div>
+                ) : (
+                    Object.entries(applicableTransactionsByDate).map(([dateString, dateSpendSummary]) => {
+                        const date = parseISO(dateString);
+                        let dateLabel = format(date, 'MMM do');
+                        if (isToday(date)) {
+                            dateLabel = getContent('todayLabel', [dateLabel]);
+                        } else if (isYesterday(date)) {
+                            dateLabel = getContent('yesterdayLabel', [dateLabel]);
+                        }
 
-                    return (
-                        <div key={dateLabel}>
-                            <h3 className={styles.dateHeader}>
-                                {dateLabel}
-                                <div className={styles.daysTotalAmount}>
-                                    (<Currency amount={-dateSpendSummary.discretionaryTotals.amount} isGainLoss />)
+                        return (
+                            <div key={dateLabel}>
+                                <h3 className={styles.dateHeader}>
+                                    {dateLabel}
+                                    <div className={styles.daysTotalAmount}>
+                                        (<Currency amount={-dateSpendSummary.discretionaryTotals.amount} isGainLoss />)
+                                    </div>
+                                </h3>
+                                <div className={styles.transactionGroup}>
+                                    {/* Loop through each transaction associated with the given date */}
+                                    {dateSpendSummary.includedTransactions
+                                        .filter(isDiscretionaryTransactionId)
+                                        .map((transactionId) => {
+                                            const transaction = spendingData.transactionDictionary[transactionId];
+
+                                            return (
+                                                <TransactionRow
+                                                    key={transactionId}
+                                                    transactionId={transaction.transactionId}
+                                                    category={transaction.category}
+                                                    onClick={() => setTransactionToEdit(transaction)}
+                                                    amountSpent={transaction.amountSpent}
+                                                    note={transaction.note}
+                                                />
+                                            );
+                                        })}
                                 </div>
-                            </h3>
-                            <div className={styles.transactionGroup}>
-                                {/* Loop through each transaction associated with the given date */}
-                                {dateSpendSummary.includedTransactions
-                                    .filter(isDiscretionaryTransactionId)
-                                    .map((transactionId) => {
-                                        const transaction = spendingData.transactionDictionary[transactionId];
-
-                                        return (
-                                            <TransactionRow
-                                                key={transactionId}
-                                                transactionId={transaction.transactionId}
-                                                category={transaction.category}
-                                                onClick={() => setTransactionToEdit(transaction)}
-                                                amountSpent={transaction.amountSpent}
-                                                note={transaction.note}
-                                            />
-                                        );
-                                    })}
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })
+                )}
             </ModuleContainer>
             <DiscretionarySpendPanel
                 isOpen={Boolean(transactionToEdit)}

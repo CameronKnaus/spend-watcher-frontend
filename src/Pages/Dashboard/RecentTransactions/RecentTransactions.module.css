@@ -17,3 +17,7 @@
     padding-left: 8px;
     font-size: var(--font-caption);
 }
+
+.noTransactions {
+    color: var(--token-color-text-subdued);
+}
