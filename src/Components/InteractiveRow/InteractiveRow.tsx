@@ -18,11 +18,10 @@ export default function InteractiveRow({
     primaryDataPoint,
     secondaryDataPoint,
     className,
-    onClick,
     ...attributes
 }: InteractiveRowPropTypes) {
     return (
-        <button onClick={onClick} className={clsx(styles.interactiveRow, className)} {...attributes}>
+        <button className={clsx(styles.interactiveRow, className)} {...attributes}>
             {icon}
             <div className={styles.detailsContainer}>
                 <div className={styles.primaryRow}>
