@@ -149,6 +149,7 @@ const locale = {
             'Deactivating an expense will stop it from being automatically logged each month, if fixed, or requesting monthly updates, if variable. You can reactivate it at any time.',
         historyTitle: '"{{0}}" history',
         spendsRequiringUpdates: '{{0}} recurring expense(s) require updates this month',
+        updateRequired: 'Update required',
     },
     recurringTransactionsList: {
         amountSpentLabel: 'Amount spent',

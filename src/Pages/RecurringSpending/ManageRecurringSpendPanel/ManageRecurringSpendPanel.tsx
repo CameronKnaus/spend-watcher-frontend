@@ -74,7 +74,12 @@ export default function ManageRecurringSpendPanel({
     });
 
     useEffect(() => {
-        returnToBase();
+        if (recurringSpendTransaction?.requiresMonthlyUpdate) {
+            // Open straight to the history page to update transaction for the month
+            setCurrentPanelContents(ManageRecurringSpendPanels.history);
+        } else {
+            returnToBase();
+        }
     }, [recurringSpendTransaction]);
 
     function returnToBase() {
