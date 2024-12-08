@@ -1,10 +1,12 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import EditAccountForm from 'Components/EditAccountForm/EditAccountForm';
 import SpeedBump from 'Components/SlideUpPanel/Addons/SpeedBump/SpeedBump';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
+import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
-import { Account } from 'Types/Services/accounts.model';
+import { Account, SetActiveAccountRequestParams } from 'Types/Services/accounts.model';
 import ManageAccountBasePanel from './ManageAccountBasePanel';
 
 type ManageAccountPanelPropTypes = {
@@ -31,6 +33,16 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
         });
     }
 
+    const activeStatusMutation = useMutation({
+        mutationFn: (params: SetActiveAccountRequestParams) => axios.post(SERVICE_ROUTES.postSetActiveAccount, params),
+        onSuccess: () => {
+            invalidateQueries();
+        },
+        onError: () => {
+            // TODO: Error handling
+        },
+    });
+
     function onClose() {
         setSelectedTab(PanelTabs.BASE);
         onPanelClose();
@@ -41,10 +53,11 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
             return '';
         }
 
+        const { name } = account;
         const titleMapper = {
-            [PanelTabs.BASE]: getContent('manageAccountHeader', [account.name]),
-            [PanelTabs.EDIT_ACCOUNT]: getContent('editAccountHeader', [account.name]),
-            [PanelTabs.SET_INACTIVE]: getContent('setInactiveHeader', [account.name]),
+            [PanelTabs.BASE]: getContent('manageAccountHeader', [name]),
+            [PanelTabs.EDIT_ACCOUNT]: getContent('editAccountHeader', [name]),
+            [PanelTabs.SET_INACTIVE]: getContent('setInactiveHeader', [name]),
             [PanelTabs.DELETE_ACCOUNT]: getContent('deleteAccountHeader'),
         };
 
@@ -75,9 +88,10 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
                         proceedText={getContent('stopTrackingButton')}
                         onCancel={() => setSelectedTab(PanelTabs.BASE)}
                         onProceed={() => {
-                            // seInactiveMutation.mutate({
-                            //     accountId: account.id,
-                            // });
+                            activeStatusMutation.mutate({
+                                accountId: account.id,
+                                isActive: false,
+                            });
                             onClose();
                         }}
                     />

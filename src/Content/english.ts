@@ -62,7 +62,7 @@ const locale = {
     },
     transactions: {
         recent: 'Recent transactions',
-        noRecentTransactions: 'You do not have any recent transactions this month.',
+        noRecentTransactions: 'You do not have any transactions this month.',
         todayLabel: '{{0}} - Today',
         yesterdayLabel: '{{0}} - Yesterday',
         emptyPlaceholder: '--',

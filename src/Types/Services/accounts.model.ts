@@ -77,3 +77,11 @@ export type AccountsSummaryV1Response = {
         requiresNewUpdate: boolean;
     })[];
 };
+
+// ACCOUNTS SET ACTIVE SERVICE /v1/set-active
+export const setActiveAccountRequestParamSchema = zod.object({
+    accountId: zod.string().uuid(),
+    isActive: zod.boolean(),
+});
+
+export type SetActiveAccountRequestParams = zod.infer<typeof setActiveAccountRequestParamSchema>;
