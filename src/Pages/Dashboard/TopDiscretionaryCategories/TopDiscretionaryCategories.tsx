@@ -60,12 +60,38 @@ export default function TopDiscretionaryCategories() {
     }
 
     const { spendCategoryOverview } = spendingData;
+    const numberOfCategories = spendCategoryOverview.categoriesWithDiscretionaryTransactionsCount;
+    const sortedCategories = spendCategoryOverview.categoryDetailsList.sort(
+        (a, b) => b.discretionaryTotals.amount - a.discretionaryTotals.amount,
+    );
+
+    // If the highest spend is zero, then there is no data
+    if (numberOfCategories === 0) {
+        return (
+            <div ref={containerRef} className={styles.topDiscretionaryCategories}>
+                {getContent('noTopDiscretionaryCategories')}
+            </div>
+        );
+    }
+
+    // Show combined total if more than 1 categories are represented
+    const showCombinedTotals = numberOfCategories > 1;
+
+    // Show other categories totals if more than top 4 are represented
+    const showOtherCategory = numberOfCategories > 4;
+
     // Sort by discretionary totals and get the top 4
-    const list = spendCategoryOverview.categoryDetailsList
-        .sort((a, b) => b.discretionaryTotals.amount - a.discretionaryTotals.amount)
-        .slice(0, 4);
+    const list = sortedCategories.slice(0, 4);
 
     const otherCategoriesColor = 'var(--theme-color-neutral-500)';
+
+    function generateLinearGradient() {
+        const gradientList = list
+            .filter((details) => details.discretionaryTotals.amount > 0)
+            .map((details) => `var(--theme-color-spend-category-${details.category})`)
+            .join(', ');
+        return `linear-gradient(to right, ${gradientList})`;
+    }
 
     return (
         <div ref={containerRef} className={styles.topDiscretionaryCategories}>
@@ -92,36 +118,43 @@ export default function TopDiscretionaryCategories() {
                 />
             </div>
             <div className={styles.categoryList}>
-                {list.map((details) => (
+                {list.map(
+                    (details) =>
+                        details.discretionaryTotals.amount > 0 && (
+                            <TopCategoryLabel
+                                key={`${details.category}-description`}
+                                label={getCategoryLabel(details.category)}
+                                isVerticalList={isVerticalList}
+                                amount={-details.discretionaryTotals.amount}
+                                percentage={details.discretionaryTotals.percentageOfTotalAmount}
+                                category={details.category}
+                            />
+                        ),
+                )}
+                {showCombinedTotals && (
                     <TopCategoryLabel
-                        key={`${details.category}-description`}
-                        label={getCategoryLabel(details.category)}
+                        label={getContent('topCombined')}
                         isVerticalList={isVerticalList}
-                        amount={-details.discretionaryTotals.amount}
-                        percentage={details.discretionaryTotals.percentageOfTotalAmount}
-                        category={details.category}
+                        amount={-spendCategoryOverview.topFourDiscretionaryTotals.amount}
+                        percentage={spendCategoryOverview.topFourDiscretionaryTotals.percentageOfTotalAmount}
+                        category={SpendingCategory.OTHER}
+                        customIconStyles={{
+                            background: generateLinearGradient(),
+                        }}
                     />
-                ))}
-                <TopCategoryLabel
-                    label={getContent('topCombined')}
-                    isVerticalList={isVerticalList}
-                    amount={-spendCategoryOverview.topFourDiscretionaryTotals.amount}
-                    percentage={spendCategoryOverview.topFourDiscretionaryTotals.percentageOfTotalAmount}
-                    category={SpendingCategory.OTHER}
-                    customIconStyles={{
-                        background: `linear-gradient(to right, ${list.map((details) => `var(--theme-color-spend-category-${details.category})`).join(', ')})`,
-                    }}
-                />
-                <TopCategoryLabel
-                    label={getContent('other')}
-                    isVerticalList={isVerticalList}
-                    amount={-spendCategoryOverview.remainingDiscretionaryTotals.amount}
-                    percentage={spendCategoryOverview.remainingDiscretionaryTotals.percentageOfTotalAmount}
-                    category={SpendingCategory.OTHER}
-                    customIconStyles={{
-                        backgroundColor: otherCategoriesColor,
-                    }}
-                />
+                )}
+                {showOtherCategory && (
+                    <TopCategoryLabel
+                        label={getContent('other')}
+                        isVerticalList={isVerticalList}
+                        amount={-spendCategoryOverview.remainingDiscretionaryTotals.amount}
+                        percentage={spendCategoryOverview.remainingDiscretionaryTotals.percentageOfTotalAmount}
+                        category={SpendingCategory.OTHER}
+                        customIconStyles={{
+                            backgroundColor: otherCategoriesColor,
+                        }}
+                    />
+                )}
             </div>
             <CustomButton variant="secondary" onClick={() => {}} className={styles.moreButton}>
                 {getContent('moreLabel')}

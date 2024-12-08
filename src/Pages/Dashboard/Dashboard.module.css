@@ -46,6 +46,10 @@
     min-width: 375px;
 }
 
+.topDiscretionaryCategories {
+    width: 100%;
+}
+
 /* Mobile screen size */
 @media (max-width: 768px) {
     .contentContainer {

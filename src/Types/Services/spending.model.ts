@@ -97,6 +97,9 @@ export type CategoryDetails = {
 };
 
 export type SpendCategoryOverview = {
+    categoriesWithTransactionsCount: number;
+    categoriesWithDiscretionaryTransactionsCount: number;
+    categoriesWithRecurringTransactionsCount: number;
     categoryDetailsList: CategoryDetails[];
     topFourCombinedTotals: TransactionTotalWithPercentage;
     remainingCombinedTotals: TransactionTotalWithPercentage;

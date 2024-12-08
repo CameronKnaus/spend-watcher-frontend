@@ -18,6 +18,7 @@ const locale = {
     spendingData: {
         topCombined: 'Combined total',
         other: 'Remaining total',
+        noTopDiscretionaryCategories: 'You have no discretionary spending so far this month.',
         moreLabel: 'See more',
     },
     general: {

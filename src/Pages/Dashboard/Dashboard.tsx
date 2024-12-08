@@ -24,7 +24,7 @@ export default function Dashboard() {
                         {/* Top categories */}
                         <ModuleContainer
                             heading={getContent('topCategories')}
-                            className={styles.summaryTile}
+                            className={styles.topDiscretionaryCategories}
                             elevation="low"
                         >
                             <TopDiscretionaryCategories />
