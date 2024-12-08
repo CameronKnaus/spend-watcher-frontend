@@ -3,7 +3,7 @@ import { ComponentProps, ReactNode } from 'react';
 import styles from './ModuleContainer.module.css';
 
 type ModuleContainerPropTypes = {
-    heading?: string;
+    heading?: ReactNode;
     // For shadow effect
     elevation?: 'low' | 'medium' | 'high';
     children: ReactNode;

@@ -25,6 +25,7 @@ export default function DiscretionarySpendPanel({
     const queryClient = useQueryClient();
 
     const deleteTransaction = useMutation({
+        mutationKey: ['delete-discretionary'],
         mutationFn: (transactionId: DiscretionaryTransactionId) =>
             axios.post(SERVICE_ROUTES.postDeleteDiscretionarySpending, {
                 transactionId: transactionId,
@@ -33,6 +34,8 @@ export default function DiscretionarySpendPanel({
             queryClient.invalidateQueries({
                 queryKey: ['spending'],
             });
+
+            onPanelClose();
         },
         onError: () => {
             // TODO: Error handling
@@ -40,12 +43,11 @@ export default function DiscretionarySpendPanel({
     });
 
     function handleDelete() {
-        if (!transactionToEdit) {
+        if (!transactionToEdit || deleteTransaction.isPending) {
             return;
         }
 
         deleteTransaction.mutate(transactionToEdit.transactionId);
-        onPanelClose();
     }
 
     return (
@@ -62,7 +64,11 @@ export default function DiscretionarySpendPanel({
             />
             {editMode && (
                 <div className={styles.deleteButtonContainer}>
-                    <DeleteButton label={getContent('deleteExpense')} onClick={handleDelete} />
+                    <DeleteButton
+                        label={getContent('deleteExpense')}
+                        onClick={handleDelete}
+                        isLoading={deleteTransaction.isPending}
+                    />
                 </div>
             )}
         </SlideUpPanel>

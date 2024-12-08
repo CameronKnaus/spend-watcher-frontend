@@ -7,6 +7,7 @@ import DatePicker from 'Components/FormInputs/DatePickerController/DatePickerCon
 import FilterableSelect from 'Components/FormInputs/FilterableSelect/FilterableSelectController';
 import useSpendCategoryList from 'Components/FormInputs/FilterableSelect/presetLists/useSpendCategoryList/useSpendCategoryList';
 import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
+import LoadingSpinner from 'Components/LoadingSpinner/LoadingSpinner';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import useTripsList from 'Hooks/useTripsList/useTripsList';
@@ -59,6 +60,7 @@ export default function DiscretionarySpendForm({
             });
 
             form.reset();
+            onSubmit();
         },
         onError: () => {
             // TODO: Error handling
@@ -83,9 +85,12 @@ export default function DiscretionarySpendForm({
         onCancel();
     }
 
-    async function handleSubmission(submission: DiscretionarySpendFormAttributes) {
-        await transactionService.mutate(submission);
-        onSubmit();
+    function handleSubmission(submission: DiscretionarySpendFormAttributes) {
+        if (transactionService.isPending) {
+            return;
+        }
+
+        transactionService.mutate(submission);
     }
 
     return (
@@ -160,7 +165,7 @@ export default function DiscretionarySpendForm({
                     onClick={form.handleSubmit(handleSubmission)}
                     layout="full-width"
                 >
-                    {getGeneralContent('submit')}
+                    {transactionService.isPending ? <LoadingSpinner /> : getGeneralContent('submit')}
                 </CustomButton>
             </BottomSheet>
         </>
