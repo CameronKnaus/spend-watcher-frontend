@@ -10,6 +10,7 @@ import styles from './Dashboard.module.css';
 import RecentTransactions from './RecentTransactions';
 import SummaryTotals from './SummaryTotals/SummaryTotals';
 import TopDiscretionaryCategories from './TopDiscretionaryCategories';
+import RecurringSpendNeedsUpdateBanner from 'Components/RecurringSpendNeedsUpdateBanner/RecurringSpendNeedsUpdateBanner';
 
 export default function Dashboard() {
     const getContent = useContent('dashboard');
@@ -19,9 +20,8 @@ export default function Dashboard() {
     // TODO: This layout is currently beyond cursed
     return (
         <PageContainer pageTitle={pageTitle} className={styles.dashboard}>
-            <div className={styles.bannerSection}>
-                <AccountsNeedUpdateBanner />
-            </div>
+            <AccountsNeedUpdateBanner />
+            <RecurringSpendNeedsUpdateBanner />
             <div className={styles.contentContainer}>
                 <div className={styles.leftSection}>
                     <div className={styles.spendingGrid}>

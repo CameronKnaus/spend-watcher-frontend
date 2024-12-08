@@ -1,6 +1,7 @@
 import AlertMessage from 'Components/AlertMessage/AlertMessage';
 import useAccountSummaryService from 'Hooks/useAccountSummaryService/useAccountSummaryService';
 import useContent from 'Hooks/useContent';
+import styles from './AccountsNeedUpdateBanner.module.css';
 
 export default function AccountsNeedUpdateBanner() {
     const getContent = useContent('accounts');
@@ -22,5 +23,9 @@ export default function AccountsNeedUpdateBanner() {
         return null;
     }
 
-    return <AlertMessage title={getContent('accountsExpectUpdates', [accountsRequiringUpdates])} variant="info" />;
+    return (
+        <div className={styles.bannerContainer}>
+            <AlertMessage title={getContent('accountsExpectUpdates', [accountsRequiringUpdates])} variant="info" />
+        </div>
+    );
 }

@@ -12,10 +12,6 @@
     --section-min-width: 360px;
 }
 
-.bannerSection {
-    margin-bottom: 24px;
-}
-
 .leftSection {
     flex-grow: 1;
     flex-shrink: 0;

@@ -60,7 +60,7 @@ const locale = {
             'This will permanently delete this account and all of its data. If you wish to keep this data, instead consider setting this account as inactive by choosing "I\'ve closed this account".',
         deleteAccountFinalWarning: 'This action cannot be undone.',
         deleteAccountButton: 'Delete account',
-        accountsExpectUpdates: '{{0}} accounts require updates for this month',
+        accountsExpectUpdates: '{{0}} account(s) require updates for this month',
     },
     transactions: {
         recent: 'Recent transactions',
@@ -148,6 +148,7 @@ const locale = {
         setInactiveDescription:
             'Deactivating an expense will stop it from being automatically logged each month, if fixed, or requesting monthly updates, if variable. You can reactivate it at any time.',
         historyTitle: '"{{0}}" history',
+        spendsRequiringUpdates: '{{0}} recurring expense(s) require updates this month',
     },
     recurringTransactionsList: {
         amountSpentLabel: 'Amount spent',

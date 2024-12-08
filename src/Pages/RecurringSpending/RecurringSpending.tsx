@@ -3,6 +3,7 @@ import CustomButton from 'Components/CustomButton/CustomButton';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import PageContainer from 'Components/PageContainer/PageContainer';
 import RecurringExpenseForm from 'Components/RecurringExpenseForm/RecurringExpenseForm';
+import RecurringSpendNeedsUpdateBanner from 'Components/RecurringSpendNeedsUpdateBanner/RecurringSpendNeedsUpdateBanner';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
@@ -31,6 +32,7 @@ export default function RecurringSpending() {
     return (
         <>
             <PageContainer pageTitle={pageTitle}>
+                <RecurringSpendNeedsUpdateBanner />
                 <div className={styles.pageContainer}>
                     <div className={styles.sideBarContainer}>
                         <CustomButton

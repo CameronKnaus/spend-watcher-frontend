@@ -75,6 +75,7 @@ export type RecurringSpendTransaction = {
     recurringSpendId: string; // uuid string
     isVariableRecurring: boolean;
     isActive: boolean;
+    requiresMonthlyUpdate: boolean;
 } & BaseSpendTransaction;
 
 export type SpendTransaction = RecurringSpendTransaction | DiscretionarySpendTransaction;
@@ -154,6 +155,8 @@ export type DiscretionaryDeleteRequestParams = zod.infer<typeof v1DiscretionaryD
 
 // RECURRING SUMMARY API --- /api/spending/v1/recurring/summary
 export type RecurringSummaryV1Response = {
+    recurringSpendsRequireUpdates: boolean;
+    spendsRequiringUpdatesCount: number;
     activeRecurringTransactions: RecurringSpendTransaction[];
     inactiveRecurringTransactions: RecurringSpendTransaction[];
     averageEstimatedMonthlyTotal: number;
