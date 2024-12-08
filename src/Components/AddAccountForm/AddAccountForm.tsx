@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
@@ -19,12 +19,18 @@ type AddAccountFormPropTypes = {
 };
 
 export default function AddAccountForm({ onSubmit, onCancel }: AddAccountFormPropTypes) {
+    const queryClient = useQueryClient();
     const accountCategoryList = useAccountCategoryList();
     const getContent = useContent('accounts');
 
     const addAccountService = useMutation({
         mutationKey: ['add-account'],
         mutationFn: (params: AddAccountRequestParams) => axios.post(SERVICE_ROUTES.postAddAccount, params),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['accounts'],
+            });
+        },
     });
 
     const form = useForm<AddAccountRequestParams>({

@@ -6,7 +6,7 @@ import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
-import { Account, SetActiveAccountRequestParams } from 'Types/Services/accounts.model';
+import { Account, DeleteAccountRequestParams, SetActiveAccountRequestParams } from 'Types/Services/accounts.model';
 import ManageAccountBasePanel from './ManageAccountBasePanel';
 
 type ManageAccountPanelPropTypes = {
@@ -26,7 +26,6 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
     const [selectedTab, setSelectedTab] = useState<PanelTabs>(PanelTabs.BASE);
     const getContent = useContent('accounts');
 
-    // TODO:
     function invalidateQueries() {
         queryClient.invalidateQueries({
             queryKey: ['accounts'],
@@ -35,6 +34,16 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
 
     const activeStatusMutation = useMutation({
         mutationFn: (params: SetActiveAccountRequestParams) => axios.post(SERVICE_ROUTES.postSetActiveAccount, params),
+        onSuccess: () => {
+            invalidateQueries();
+        },
+        onError: () => {
+            // TODO: Error handling
+        },
+    });
+
+    const deleteAccountMutation = useMutation({
+        mutationFn: (params: DeleteAccountRequestParams) => axios.post(SERVICE_ROUTES.postDeleteAccount, params),
         onSuccess: () => {
             invalidateQueries();
         },
@@ -87,8 +96,8 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
                         warningDescription={getContent('setAccountInactiveDescription')}
                         proceedText={getContent('stopTrackingButton')}
                         onCancel={() => setSelectedTab(PanelTabs.BASE)}
-                        onProceed={() => {
-                            activeStatusMutation.mutate({
+                        onProceed={async () => {
+                            await activeStatusMutation.mutateAsync({
                                 accountId: account.id,
                                 isActive: false,
                             });
@@ -104,10 +113,10 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
                         proceedText={getContent('deleteAccountButton')}
                         finalWarningText={getContent('deleteAccountFinalWarning')}
                         onCancel={() => setSelectedTab(PanelTabs.BASE)}
-                        onProceed={() => {
-                            // deleteMutation.mutate({
-                            //     accountId: account.id,
-                            // });
+                        onProceed={async () => {
+                            await deleteAccountMutation.mutate({
+                                accountId: account.id,
+                            });
                             onClose();
                         }}
                     />

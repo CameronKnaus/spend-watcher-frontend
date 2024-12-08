@@ -48,7 +48,7 @@ const locale = {
         deleteAccountHeader: 'Delete account',
         editAccountOption: 'Edit account',
         deleteAccountOption: 'Delete account',
-        setInactiveOption: "I've closed this account",
+        setInactiveOption: 'Stop tracking this account',
         close: 'Close',
         setAccountInactiveTitle: 'Stop tracking "{{0}}"',
         setAccountInactiveDescription:

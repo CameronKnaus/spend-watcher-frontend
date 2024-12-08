@@ -56,7 +56,7 @@ export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: E
     async function handleSubmission(submission: EditAccountDetailsRequestParams) {
         await editAccountService.mutateAsync(submission);
         queryClient.invalidateQueries({
-            queryKey: ['account'],
+            queryKey: ['accounts'],
         });
         onSubmit();
     }

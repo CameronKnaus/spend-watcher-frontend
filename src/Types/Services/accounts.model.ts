@@ -85,3 +85,10 @@ export const setActiveAccountRequestParamSchema = zod.object({
 });
 
 export type SetActiveAccountRequestParams = zod.infer<typeof setActiveAccountRequestParamSchema>;
+
+// PERMANENTLY DELETE ACCOUNT SERVICE /v1/delete
+export const deleteAccountRequestParamSchema = zod.object({
+    accountId: zod.string().uuid(),
+});
+
+export type DeleteAccountRequestParams = zod.infer<typeof deleteAccountRequestParamSchema>;

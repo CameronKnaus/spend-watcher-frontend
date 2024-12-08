@@ -5,7 +5,7 @@ import { AccountsSummaryV1Response } from 'Types/Services/accounts.model';
 
 export default function useAccountSummaryService() {
     const { isLoading, isFetching, data } = useQuery<AccountsSummaryV1Response>({
-        queryKey: ['account', 'details'],
+        queryKey: ['accounts', 'details'],
         queryFn: async () => {
             const response = await axios.get(SERVICE_ROUTES.getAccountsSummary);
             return response.data;
