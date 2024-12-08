@@ -12,4 +12,5 @@
 .finalWarning {
     font-size: var(--font-body-medium);
     color: var(--token-color-semantic-danger);
+    font-style: italic;
 }

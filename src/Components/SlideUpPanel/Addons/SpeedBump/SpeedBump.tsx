@@ -30,7 +30,11 @@ export default function SpeedBump({
         <div>
             <h3 className={styles.heading}>{warningTitle}</h3>
             <p className={styles.description}>{warningDescription}</p>
-            {finalWarningText && <p className={styles.finalWarning}>{finalWarningText}</p>}
+            {finalWarningText && (
+                <p className={styles.finalWarning}>
+                    <strong>{finalWarningText}</strong>
+                </p>
+            )}
             <BottomSheet>
                 <CustomButton variant="secondary" onClick={onCancel} layout="full-width">
                     {getGeneralContent('cancel')}
