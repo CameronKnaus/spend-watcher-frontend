@@ -12,6 +12,10 @@
     --section-min-width: 360px;
 }
 
+.bannerSection {
+    margin-bottom: 24px;
+}
+
 .leftSection {
     flex-grow: 1;
     flex-shrink: 0;
@@ -19,14 +23,13 @@
     max-width: calc(100% - var(--section-min-width) - var(--dashboard-column-gap) - var(--dashboard-column-gap));
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: start;
 }
 
 .spendingGrid {
     flex-grow: 1;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     gap: var(--dashboard-column-gap);
 }
 

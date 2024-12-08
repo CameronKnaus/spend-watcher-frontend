@@ -1,4 +1,5 @@
 import AccountsList from 'Components/AccountsList/AccountsList';
+import AccountsNeedUpdateBanner from 'Components/AccountsNeedUpdateBanner/AccountsNeedUpdateBanner';
 import AddAccountButton from 'Components/AddAccountButton/AddAccountButton';
 import LogSpendButton from 'Components/LogSpendButton';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
@@ -15,8 +16,12 @@ export default function Dashboard() {
     const currentMonth = format(new Date(), 'LLLL');
     const pageTitle = getContent('monthOverview', [currentMonth]);
 
+    // TODO: This layout is currently beyond cursed
     return (
         <PageContainer pageTitle={pageTitle} className={styles.dashboard}>
+            <div className={styles.bannerSection}>
+                <AccountsNeedUpdateBanner />
+            </div>
             <div className={styles.contentContainer}>
                 <div className={styles.leftSection}>
                     <div className={styles.spendingGrid}>
