@@ -60,7 +60,6 @@ export default function RecurringTransactionsList({
                             label={formattedDate}
                             transactionId={transaction.transactionId}
                             amountSpent={transaction.amountSpent}
-                            expectedMonthlyAmount={recurringSpendTransaction.expectedMonthlyAmount}
                         />
                     );
                 }

@@ -27,6 +27,7 @@ const locale = {
         cancel: 'Cancel',
         delete: 'Delete',
         confirm: 'Confirm',
+        confirmChange: 'Confirm change',
     },
     accounts: {
         addAccount: 'Add account',
@@ -61,6 +62,8 @@ const locale = {
         deleteAccountFinalWarning: 'This action cannot be undone.',
         deleteAccountButton: 'Delete account',
         accountsExpectUpdates: '{{0}} account(s) require updates for this month',
+        historyHeader: '"{{0}}" history',
+        accountHistoryOption: 'History',
     },
     transactions: {
         recent: 'Recent transactions',
@@ -153,7 +156,6 @@ const locale = {
     },
     recurringTransactionsList: {
         amountSpentLabel: 'Amount spent',
-        confirmChange: 'Confirm change',
         backButton: 'Back',
         addNewRow: 'Add for {{0}}',
     },

@@ -3,7 +3,7 @@ import CustomButton from 'Components/CustomButton/CustomButton';
 import PanelOptionButton from 'Components/SlideUpPanel/Addons/PanelOptionButton/PanelOptionButton';
 import PanelOptionButtonContainer from 'Components/SlideUpPanel/Addons/PanelOptionButtonContainer/PanelOptionButtonContainer';
 import useContent from 'Hooks/useContent';
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { FaEdit, FaHistory, FaTrashAlt } from 'react-icons/fa';
 import { MdUpdateDisabled } from 'react-icons/md';
 import { PanelTabs } from './ManageAccountPanel';
 
@@ -21,6 +21,10 @@ export default function ManageAccountBasePanel({ setSelectedTab, onClose }: Mana
                 <PanelOptionButton onClick={() => setSelectedTab(PanelTabs.EDIT_ACCOUNT)}>
                     <FaEdit size={20} />
                     {getContent('editAccountOption')}
+                </PanelOptionButton>
+                <PanelOptionButton onClick={() => setSelectedTab(PanelTabs.HISTORY)}>
+                    <FaHistory size={20} />
+                    {getContent('accountHistoryOption')}
                 </PanelOptionButton>
                 <PanelOptionButton onClick={() => setSelectedTab(PanelTabs.SET_INACTIVE)}>
                     <MdUpdateDisabled size={20} />
