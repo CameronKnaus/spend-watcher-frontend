@@ -64,6 +64,9 @@ const locale = {
         accountsExpectUpdates: '{{0}} account(s) require updates for this month',
         historyHeader: '"{{0}}" history',
         accountHistoryOption: 'History',
+        addNewRow: 'Add for {{0}}',
+        amountLabel: 'Amount',
+        backButton: 'Back',
     },
     transactions: {
         recent: 'Recent transactions',

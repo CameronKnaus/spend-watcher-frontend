@@ -1,4 +1,5 @@
 import { DbDate, MonthYearDbDate } from 'Types/dateTypes';
+import zodValidateMonthYear from 'Util/zodCustomValidators/zodValidateMonthYear';
 import { z as zod } from 'zod';
 
 // SHARED ZOD VALIDATORS
@@ -92,3 +93,37 @@ export const deleteAccountRequestParamSchema = zod.object({
 });
 
 export type DeleteAccountRequestParams = zod.infer<typeof deleteAccountRequestParamSchema>;
+
+// ACCOUNTS HISTORY SERVICE /v1/history
+export const accountsHistoryRequestParamSchema = zod.object({
+    accountId: zod.string().uuid(),
+});
+
+export type AccountsHistoryV1RequestParams = zod.infer<typeof accountsHistoryRequestParamSchema>;
+
+export type AccountHistoryV1Response = {
+    accountId: string;
+    updateHistory: {
+        date: MonthYearDbDate;
+        amount: number;
+        updateId: number;
+    }[];
+};
+
+// ACCOUNTS ADD NEW UPDATE SERVICE /v1/update/add
+export const addAccountUpdateRequestParamSchema = zod.object({
+    accountId: zod.string().uuid(),
+    amount: zod.number(),
+    date: zodValidateMonthYear,
+});
+
+export type AddAccountUpdateV1RequestParams = zod.infer<typeof addAccountUpdateRequestParamSchema>;
+
+// ACCOUNTS EDIT EXISTING ACCOUNT UPDATE VALUE /v1/update/edit
+export const editAccountUpdateRequestParamSchema = zod.object({
+    accountId: zod.string().uuid(),
+    updateId: zod.number(),
+    amount: zod.number(),
+});
+
+export type EditAccountUpdateV1RequestParams = zod.infer<typeof editAccountUpdateRequestParamSchema>;

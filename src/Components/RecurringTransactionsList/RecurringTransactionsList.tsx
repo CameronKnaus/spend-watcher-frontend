@@ -5,7 +5,7 @@ import AddRecurringTransactionRow from 'Components/RecurringTransactionRow/AddRe
 import { format, parse } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useRecurringTransactionsList from 'Hooks/useRecurringTransactionsList/useRecurringTransactionsList';
-import { MonthYearDbDate } from 'Types/dateTypes';
+import { MonthYearDbDate, monthYearDbDateFormat } from 'Types/dateTypes';
 import { RecurringSpendTransaction } from 'Types/Services/spending.model';
 
 type RecurringTransactionsListPropTypes = {
@@ -13,7 +13,7 @@ type RecurringTransactionsListPropTypes = {
     onBack: () => void;
 };
 
-const formatDate = (date: string) => format(parse(date, 'yyyy-MM', new Date()), 'MMMM yyyy');
+const formatDate = (date: string) => format(parse(date, monthYearDbDateFormat, new Date()), 'MMMM yyyy');
 
 export default function RecurringTransactionsList({
     recurringSpendTransaction,
@@ -35,7 +35,7 @@ export default function RecurringTransactionsList({
     const applicableMonths: MonthYearDbDate[] = [];
     let lastTransactionDateReached = false;
     while (!lastTransactionDateReached) {
-        const formattedCurrentDate = format(currentDate, 'yyyy-MM') as MonthYearDbDate;
+        const formattedCurrentDate = format(currentDate, monthYearDbDateFormat) as MonthYearDbDate;
         applicableMonths.push(formattedCurrentDate);
 
         if (formattedCurrentDate === oldestTransactionDate) {

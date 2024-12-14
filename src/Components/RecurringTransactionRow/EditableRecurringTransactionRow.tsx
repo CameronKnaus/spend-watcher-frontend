@@ -50,7 +50,7 @@ export default function EditableRecurringTransactionRow({
     });
 
     function handleSubmission(submission: EditRecurringTransactionRequestParams) {
-        if (!submission.amountSpent) {
+        if (!submission.amountSpent || recurringTransactionMutation.isPending) {
             return;
         }
 

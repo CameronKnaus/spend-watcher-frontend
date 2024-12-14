@@ -20,7 +20,7 @@ export default function AccountsList() {
 
     return (
         <>
-            <ModuleContainer heading={getContent('accountsList')}>
+            <ModuleContainer heading={getContent('accountsList')} elevation="low">
                 <div className={styles.totalAmount}>
                     {isLoading ? (
                         <SkeletonLoader className={styles.totalSkeleton} />

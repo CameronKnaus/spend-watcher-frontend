@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import AccountUpdateHistory from 'Components/AccountUpdateHistory/AccountUpdateHistory';
 import EditAccountForm from 'Components/EditAccountForm/EditAccountForm';
 import SpeedBump from 'Components/SlideUpPanel/Addons/SpeedBump/SpeedBump';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
@@ -18,6 +19,7 @@ export enum PanelTabs {
     BASE = 'BASE',
     EDIT_ACCOUNT = 'EDIT_ACCOUNT',
     SET_INACTIVE = 'SET_INACTIVE',
+    HISTORY = 'HISTORY',
     DELETE_ACCOUNT = 'DELETE_ACCOUNT',
 }
 
@@ -67,6 +69,7 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
             [PanelTabs.BASE]: getContent('manageAccountHeader', [name]),
             [PanelTabs.EDIT_ACCOUNT]: getContent('editAccountHeader', [name]),
             [PanelTabs.SET_INACTIVE]: getContent('setInactiveHeader', [name]),
+            [PanelTabs.HISTORY]: getContent('historyHeader', [name]),
             [PanelTabs.DELETE_ACCOUNT]: getContent('deleteAccountHeader'),
         };
 
@@ -121,6 +124,8 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
                         }}
                     />
                 );
+            case PanelTabs.HISTORY:
+                return <AccountUpdateHistory accountId={account.id} onBack={() => setSelectedTab(PanelTabs.BASE)} />;
             default:
                 return null;
         }

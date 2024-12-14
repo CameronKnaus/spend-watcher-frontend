@@ -9,35 +9,33 @@ import useContent from 'Hooks/useContent';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { MonthYearDbDate, monthYearDbDateFormat } from 'Types/dateTypes';
-import { AddRecurringTransactionRequestParams, v1AddRecurringTransactionSchema } from 'Types/Services/spending.model';
-import formatCurrency from 'Util/Formatters/formatCurrency/formatCurrency';
-import styles from './RecurringTransactionRow.module.css';
+import {
+    Account,
+    addAccountUpdateRequestParamSchema,
+    AddAccountUpdateV1RequestParams,
+} from 'Types/Services/accounts.model';
+import styles from './AddAccountUpdateRow.module.css';
 
-type AddRecurringTransactionRowPropTypes = {
-    expectedMonthlyAmount: number;
-    recurringSpendId: string;
+type AddAccountUpdateRowPropTypes = {
+    accountId: Account['id'];
     date: MonthYearDbDate;
 };
 
-export default function AddRecurringTransactionRow({
-    date,
-    recurringSpendId,
-    expectedMonthlyAmount,
-}: AddRecurringTransactionRowPropTypes) {
+export default function AddAccountUpdateRow({ accountId, date }: AddAccountUpdateRowPropTypes) {
+    const getContent = useContent('accounts');
     const [isActive, setIsActive] = useState(false);
 
-    const getContent = useContent('recurringTransactionsList');
     const queryClient = useQueryClient();
-    const recurringTransactionMutation = useMutation({
-        mutationKey: ['recurring', date],
-        mutationFn: (params: AddRecurringTransactionRequestParams) => {
-            return axios.post(SERVICE_ROUTES.postAddRecurringTransaction, {
+    const accountUpdateMutation = useMutation({
+        mutationKey: ['accounts'],
+        mutationFn: (params: AddAccountUpdateV1RequestParams) => {
+            return axios.post(SERVICE_ROUTES.postAddAccountUpdate, {
                 ...params,
             });
         },
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ['recurring'],
+                queryKey: ['accounts'],
             });
         },
         onError: () => {
@@ -45,14 +43,10 @@ export default function AddRecurringTransactionRow({
         },
     });
 
-    const form = useForm<AddRecurringTransactionRequestParams>({
-        resolver: zodResolver(
-            v1AddRecurringTransactionSchema.partial({
-                amountSpent: true, // Make amountSpent optional as this will be handled manually
-            }),
-        ),
+    const form = useForm<AddAccountUpdateV1RequestParams>({
+        resolver: zodResolver(addAccountUpdateRequestParamSchema),
         defaultValues: {
-            recurringSpendId,
+            accountId,
             date,
         },
     });
@@ -72,27 +66,26 @@ export default function AddRecurringTransactionRow({
         );
     }
 
-    function handleSubmission(submission: AddRecurringTransactionRequestParams) {
-        if (!submission.amountSpent || recurringTransactionMutation.isPending) {
-            submission.amountSpent = expectedMonthlyAmount;
+    function handleSubmission(submission: AddAccountUpdateV1RequestParams) {
+        if (accountUpdateMutation.isPending) {
+            return;
         }
-
-        recurringTransactionMutation.mutate(submission);
+        accountUpdateMutation.mutate(submission);
     }
 
     const isValidInput = form.formState.isValid;
-    const isLoading = recurringTransactionMutation.isPending;
+    const isLoading = accountUpdateMutation.isPending;
 
     return (
         <EditableAmountRow
             form={form}
             label={formattedDate}
             onSubmission={handleSubmission}
-            amountLabel={getContent('amountSpentLabel')}
+            amountLabel={getContent('amountLabel')}
             showConfirmButton={isValidInput}
             isLoading={isLoading}
-            amountFormFieldName="amountSpent"
-            amountPlaceholder={formatCurrency(expectedMonthlyAmount)}
+            amountFormFieldName="amount"
+            amountPlaceholder={getContent('amountPlaceholder')}
         />
     );
 }
