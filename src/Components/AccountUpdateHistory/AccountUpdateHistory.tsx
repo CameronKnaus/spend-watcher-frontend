@@ -65,7 +65,11 @@ export default function AccountUpdateHistory({ accountId, onBack }: AccountUpdat
                 return <AddAccountUpdateRow key={formattedDate} accountId={accountId} date={date} />;
             })}
             {/* Add button for the month prior to the oldest month logged */}
-            <AddAccountUpdateRow accountId={accountId} date={format(currentDate, 'yyyy-MM') as MonthYearDbDate} />
+            <AddAccountUpdateRow
+                key={currentDate.toISOString()}
+                accountId={accountId}
+                date={format(currentDate, 'yyyy-MM') as MonthYearDbDate}
+            />
             <BottomSheet>
                 <CustomButton variant="secondary" onClick={onBack} layout="full-width">
                     {getContent('backButton')}
