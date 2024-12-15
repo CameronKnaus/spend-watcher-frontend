@@ -21,6 +21,9 @@ const locale = {
         noTopDiscretionaryCategories: 'You have no discretionary spending so far this month.',
         moreLabel: 'See more',
     },
+    trends: {
+        pageTitle: 'Trends',
+    },
     general: {
         empty: '--',
         submit: 'Submit',

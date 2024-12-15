@@ -121,7 +121,7 @@ export default function DesktopNavigation() {
                         textSprings={textSprings}
                     />
                     <DesktopNavItem
-                        to={PAGE_ROUTES.spending_trends}
+                        to={PAGE_ROUTES.trends}
                         icon={<FaChartPie />}
                         text="Trends"
                         openMenu={openMenu}

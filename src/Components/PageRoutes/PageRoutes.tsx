@@ -4,6 +4,7 @@ import useSessionStatus from 'Hooks/useSessionStatus/useSessionStatus';
 import AuthScreen from 'Pages/AuthScreen/AuthScreen';
 import Dashboard from 'Pages/Dashboard/Dashboard';
 import RecurringSpending from 'Pages/RecurringSpending/RecurringSpending';
+import Trends from 'Pages/Trends/Trends';
 import TripsPage from 'Pages/TripsPage/TripsPage';
 import { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -14,7 +15,7 @@ export enum PageName {
     auth = 'auth',
     transactions = 'transactions',
     recurring_spending = 'recurring_spending',
-    spending_trends = 'spending_trends',
+    trends = 'trends',
     trips = 'trips',
 }
 
@@ -22,7 +23,7 @@ export const PAGE_ROUTES: Record<PageName, `/${PageName}`> = {
     dashboard: '/dashboard',
     auth: '/auth',
     transactions: '/transactions',
-    spending_trends: '/spending_trends',
+    trends: '/trends',
     recurring_spending: '/recurring_spending',
     trips: '/trips',
 };
@@ -48,7 +49,7 @@ export default function PageRoutes() {
             <Route element={isMobile ? <MobileNavigation /> : <DesktopNavigation />}>
                 <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
                 <Route path={PAGE_ROUTES.transactions} element={<h1>Transactions</h1>} />
-                <Route path={PAGE_ROUTES.spending_trends} element={<h1>Spending trends</h1>} />
+                <Route path={PAGE_ROUTES.trends} element={<Trends />} />
                 <Route path={PAGE_ROUTES.recurring_spending} element={<RecurringSpending />} />
                 <Route path={PAGE_ROUTES.trips} element={<TripsPage />} />
             </Route>
