@@ -9,7 +9,7 @@ import useAccountSummaryService from 'Hooks/useAccountSummaryService/useAccountS
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
 import { Account } from 'Types/Services/accounts.model';
-import { formatMonthYearDBDateAsReadable } from 'Util/Formatters/dateFormatters/dateFormatters';
+import { formatMonthYearDBDateAsReadable, getCurrentMonthLabel } from 'Util/Formatters/dateFormatters/dateFormatters';
 import styles from './AccountsList.module.css';
 
 export default function AccountsList() {
@@ -44,6 +44,11 @@ export default function AccountsList() {
                                       formatMonthYearDBDateAsReadable(account.lastUpdated),
                                   ])}
                                   onClick={() => setAccountToEdit(account)}
+                                  callToActionText={
+                                      account.requiresNewUpdate
+                                          ? getContent('accountRequiresUpdateCTA', [getCurrentMonthLabel()])
+                                          : ''
+                                  }
                               />
                           ))}
                 </div>

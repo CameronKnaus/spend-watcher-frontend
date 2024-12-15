@@ -1,3 +1,7 @@
+.button {
+    width: 100%;
+}
+
 .interactiveRow {
     display: flex;
     width: 100%;
@@ -34,4 +38,12 @@
 .chevron {
     font-size: 20px;
     flex-shrink: 0;
+}
+
+.callToAction {
+    background-color: var(--token-cta-background-color);
+    color: var(--token-cta-text-color);
+    padding: 4px;
+    border-radius: 0 0 8px 8px;
+    margin-top: 4px;
 }

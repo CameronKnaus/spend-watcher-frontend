@@ -33,7 +33,7 @@ export default function RecurringTransactionCard({
                     <span>{transaction.recurringSpendName}</span>
                     <span className={styles.spendAmount}>
                         {transaction.requiresMonthlyUpdate ? (
-                            getContent('updateRequired')
+                            <div className={styles.updateRequiredTag}>{getContent('updateRequired')}</div>
                         ) : (
                             <Currency amount={-transaction.amountSpent} isGainLoss={!isInactive} />
                         )}

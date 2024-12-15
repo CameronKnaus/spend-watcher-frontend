@@ -153,4 +153,10 @@
     --token-warning-icon-color: var(--theme-color-neutral-200);
     --token-warning-message-color: var(--theme-color-neutral-100);
     --token-warning-border-color: var(--theme-color-neutral-700);
+
+    --token-cta-background-color: var(--theme-color-primary-500);
+    --token-cta-text-color: var(--theme-color-neutral-1000);
+
+    --token-urgent-cta-background-color: var(--theme-color-tertiary-500);
+    --token-urgent-cta-text-color: var(--theme-color-neutral-1000);
 }

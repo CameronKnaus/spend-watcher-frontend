@@ -18,3 +18,7 @@ export function formatToMonthDay(date: DbDate): string {
 export function formatMonthYearDBDateAsReadable(date: MonthYearDbDate) {
     return format(parse(date, monthYearDbDateFormat, new Date()), 'MMM yyyy');
 }
+
+export function getCurrentMonthLabel(): string {
+    return format(new Date(), 'LLLL');
+}

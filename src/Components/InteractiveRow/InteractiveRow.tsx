@@ -9,6 +9,7 @@ type InteractiveRowPropTypes = {
     secondaryLabel?: ReactNode;
     primaryDataPoint: ReactNode;
     secondaryDataPoint?: ReactNode;
+    callToActionText?: string;
 } & ComponentProps<'button'>;
 
 export default function InteractiveRow({
@@ -18,22 +19,26 @@ export default function InteractiveRow({
     primaryDataPoint,
     secondaryDataPoint,
     className,
+    callToActionText,
     ...attributes
 }: InteractiveRowPropTypes) {
     return (
-        <button className={clsx(styles.interactiveRow, className)} {...attributes}>
-            {icon}
-            <div className={styles.detailsContainer}>
-                <div className={styles.primaryRow}>
-                    <span>{primaryLabel}</span>
-                    <span>{primaryDataPoint}</span>
+        <button className={styles.button} {...attributes}>
+            <div className={clsx(styles.interactiveRow, className)}>
+                {icon}
+                <div className={styles.detailsContainer}>
+                    <div className={styles.primaryRow}>
+                        <span>{primaryLabel}</span>
+                        <span>{primaryDataPoint}</span>
+                    </div>
+                    <div className={styles.dataRow}>
+                        {secondaryLabel && <div className={styles.secondaryRow}>{secondaryLabel}</div>}
+                        {secondaryDataPoint && <div className={styles.secondaryRow}>{secondaryDataPoint}</div>}
+                    </div>
                 </div>
-                <div className={styles.dataRow}>
-                    {secondaryLabel && <div className={styles.secondaryRow}>{secondaryLabel}</div>}
-                    {secondaryDataPoint && <div className={styles.secondaryRow}>{secondaryDataPoint}</div>}
-                </div>
+                <FaChevronRight className={styles.chevron} />
             </div>
-            <FaChevronRight className={styles.chevron} />
+            {callToActionText && <div className={styles.callToAction}>{callToActionText}</div>}
         </button>
     );
 }

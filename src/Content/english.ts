@@ -42,7 +42,7 @@ const locale = {
         cancel: 'Cancel',
         amountPlaceholder: '$0.00',
         percentagePlaceholder: '0.00%',
-        accountsList: 'Accounts list',
+        accountsList: 'Your accounts',
         asOf: 'As of {{0}}',
         manageAccountHeader: 'Manage {{0}}',
         editAccountHeader: 'Edit {{0}}',
@@ -67,6 +67,7 @@ const locale = {
         addNewRow: 'Add for {{0}}',
         amountLabel: 'Amount',
         backButton: 'Back',
+        accountRequiresUpdateCTA: '{{0}} requires an update',
     },
     transactions: {
         recent: 'Recent transactions',
