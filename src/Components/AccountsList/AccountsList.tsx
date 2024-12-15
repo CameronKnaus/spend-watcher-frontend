@@ -8,12 +8,12 @@ import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 import useAccountSummaryService from 'Hooks/useAccountSummaryService/useAccountSummaryService';
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
-import { Account } from 'Types/Services/accounts.model';
+import { AccountWithStatus } from 'Types/Services/accounts.model';
 import { formatMonthYearDBDateAsReadable, getCurrentMonthLabel } from 'Util/Formatters/dateFormatters/dateFormatters';
 import styles from './AccountsList.module.css';
 
 export default function AccountsList() {
-    const [accountToEdit, setAccountToEdit] = useState<Account | null>(null);
+    const [accountToEdit, setAccountToEdit] = useState<AccountWithStatus | null>(null);
     const { isLoading, accountsSummary } = useAccountSummaryService();
     const getCategoryLabel = useContent('ACCOUNT_CATEGORIES');
     const getContent = useContent('accounts');

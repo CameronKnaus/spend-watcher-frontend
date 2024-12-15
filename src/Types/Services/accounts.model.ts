@@ -14,6 +14,11 @@ export interface Account {
     annualPercentageRate: number;
 }
 
+export type AccountWithStatus = Account & {
+    lastUpdated: MonthYearDbDate;
+    requiresNewUpdate: boolean;
+};
+
 export interface DbMoneyAccountSchema {
     account_id: string;
     account_name: string;
@@ -73,10 +78,7 @@ export type AccountsSummaryV1Response = {
     totalEquity: number;
     totalAccountsCount: number;
     accountsCountByCategory: Record<AccountCategory, number>;
-    accountsList: (Account & {
-        lastUpdated: MonthYearDbDate;
-        requiresNewUpdate: boolean;
-    })[];
+    accountsList: AccountWithStatus[];
 };
 
 // ACCOUNTS SET ACTIVE SERVICE /v1/set-active

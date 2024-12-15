@@ -6,12 +6,16 @@ import SpeedBump from 'Components/SlideUpPanel/Addons/SpeedBump/SpeedBump';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
-import { useState } from 'react';
-import { Account, DeleteAccountRequestParams, SetActiveAccountRequestParams } from 'Types/Services/accounts.model';
+import { useEffect, useState } from 'react';
+import {
+    AccountWithStatus,
+    DeleteAccountRequestParams,
+    SetActiveAccountRequestParams,
+} from 'Types/Services/accounts.model';
 import ManageAccountBasePanel from './ManageAccountBasePanel';
 
 type ManageAccountPanelPropTypes = {
-    account: Account | null;
+    account: AccountWithStatus | null;
     onPanelClose: () => void;
 };
 
@@ -27,6 +31,14 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
     const queryClient = useQueryClient();
     const [selectedTab, setSelectedTab] = useState<PanelTabs>(PanelTabs.BASE);
     const getContent = useContent('accounts');
+
+    useEffect(() => {
+        if (!account) {
+            return;
+        }
+
+        setSelectedTab(account.requiresNewUpdate ? PanelTabs.HISTORY : PanelTabs.BASE);
+    }, [account]);
 
     function invalidateQueries() {
         queryClient.invalidateQueries({
