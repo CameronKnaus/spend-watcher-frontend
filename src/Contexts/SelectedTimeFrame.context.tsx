@@ -1,5 +1,5 @@
 import { addMonths, format, startOfMonth, subMonths } from 'date-fns';
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useState } from 'react';
 import { DbDate, dbDateFormat } from 'Types/dateTypes';
 import { parseDbDate } from 'Util/Formatters/dateFormatters/dateFormatters';
 
@@ -20,29 +20,26 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
     // Default end date to today
     const [endDate, setEndDate] = useState<DbDate>(format(new Date(), dbDateFormat));
 
-    const selectedTimeFrameAPI = useMemo(
-        () => ({
-            startDate,
-            endDate,
-            setStartDate,
-            setEndDate,
-            forwardOneMonth: () => {
-                const newStartDate = addMonths(parseDbDate(startDate), 1);
-                const newEndDate = addMonths(parseDbDate(endDate), 1);
+    const selectedTimeFrameAPI = {
+        startDate,
+        endDate,
+        setStartDate,
+        setEndDate,
+        forwardOneMonth: () => {
+            const newStartDate = addMonths(parseDbDate(startDate), 1);
+            const newEndDate = addMonths(parseDbDate(endDate), 1);
 
-                setStartDate(format(newStartDate, dbDateFormat));
-                setEndDate(format(newEndDate, dbDateFormat));
-            },
-            backOneMonth: () => {
-                const newStartDate = subMonths(parseDbDate(startDate), 1);
-                const newEndDate = subMonths(parseDbDate(endDate), 1);
+            setStartDate(format(newStartDate, dbDateFormat));
+            setEndDate(format(newEndDate, dbDateFormat));
+        },
+        backOneMonth: () => {
+            const newStartDate = subMonths(parseDbDate(startDate), 1);
+            const newEndDate = subMonths(parseDbDate(endDate), 1);
 
-                setStartDate(format(newStartDate, dbDateFormat));
-                setEndDate(format(newEndDate, dbDateFormat));
-            },
-        }),
-        [startDate, endDate, setStartDate, setEndDate],
-    );
+            setStartDate(format(newStartDate, dbDateFormat));
+            setEndDate(format(newEndDate, dbDateFormat));
+        },
+    };
 
     return (
         <SelectedTimeFrameContext.Provider value={selectedTimeFrameAPI}>{children}</SelectedTimeFrameContext.Provider>
