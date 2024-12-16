@@ -15,7 +15,7 @@ import { createContext, ReactNode, useState } from 'react';
 import { DbDate, dbDateFormat } from 'Types/dateTypes';
 import { parseDbDate } from 'Util/Formatters/dateFormatters/dateFormatters';
 
-enum DateRangeType {
+export enum DateRangeType {
     MONTH = 'MONTH',
     YEAR = 'YEAR',
     MAX = 'MAX',
@@ -34,6 +34,8 @@ export type SelectedTimeFrameContextAPI = {
     backOneMonth: () => void;
     forwardOneYear: () => void;
     backOneYear: () => void;
+    isPresentYear: boolean;
+    isPresentMonth: boolean;
 };
 
 export const SelectedTimeFrameContext = createContext<SelectedTimeFrameContextAPI | null>(null);
@@ -44,14 +46,14 @@ const formatDate = (date: Date) => {
 };
 
 export default function SelectedTimeFrameProvider({ children }: { children: ReactNode }) {
-    const [dateRangeType, setDateRangeType] = useState<DateRangeType>(DateRangeType.MONTH);
+    const [dateRangeType, setDateRangeType] = useState<DateRangeType>(DateRangeType.YEAR);
     // Default start date to first day of this month
     const [startDate, setStartDate] = useState<DbDate>(formatDate(startOfMonth(new Date())));
     // Default end date to today
     const [endDate, setEndDate] = useState<DbDate>(formatDate(new Date()));
 
     const presentDate = new Date();
-    const isCurrentYear = getYear(endDate) === getYear(presentDate);
+    const isPresentYear = getYear(endDate) === getYear(presentDate);
     const isSameMonth = getMonth(endDate) === getMonth(presentDate);
 
     const parsedStartDate = parseDbDate(startDate);
@@ -63,7 +65,7 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
         }
 
         // Disallow shifting forward if already at the current month and year
-        if (isCurrentYear && isSameMonth) {
+        if (isPresentYear && isSameMonth) {
             return;
         }
 
@@ -101,8 +103,8 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
     }
 
     function forwardOneYear() {
-        // Only allowed when in yearly date range type
-        if (dateRangeType !== DateRangeType.YEAR) {
+        // Only allowed when in yearly date range type and it's not the current year
+        if (dateRangeType !== DateRangeType.YEAR || isPresentYear) {
             return;
         }
 
@@ -115,8 +117,8 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
         const nextYearEnd = endOfYear(nextYearDate);
 
         // If the new year is the current year, use today instead of the end of the year
-        const isCurrentYear = getYear(nextYearDate) === getYear(presentDate);
-        setEndDate(isCurrentYear ? formatDate(presentDate) : formatDate(nextYearEnd));
+        const newYearEqualsPresentYear = getYear(nextYearDate) === getYear(presentDate);
+        setEndDate(newYearEqualsPresentYear ? formatDate(presentDate) : formatDate(nextYearEnd));
         setStartDate(formatDate(nextYearStart));
     }
 
@@ -150,6 +152,8 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
         backOneMonth,
         forwardOneYear,
         backOneYear,
+        isPresentYear,
+        isPresentMonth: isPresentYear && isSameMonth,
     };
 
     return (
