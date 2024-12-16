@@ -1,44 +1,155 @@
-import { addMonths, format, startOfMonth, subMonths } from 'date-fns';
-import { createContext, useState } from 'react';
+import {
+    addMonths,
+    addYears,
+    endOfMonth,
+    endOfYear,
+    format,
+    getMonth,
+    getYear,
+    startOfMonth,
+    startOfYear,
+    subMonths,
+    subYears,
+} from 'date-fns';
+import { createContext, ReactNode, useState } from 'react';
 import { DbDate, dbDateFormat } from 'Types/dateTypes';
 import { parseDbDate } from 'Util/Formatters/dateFormatters/dateFormatters';
+
+enum DateRangeType {
+    MONTH = 'MONTH',
+    YEAR = 'YEAR',
+    MAX = 'MAX',
+    CUSTOM = 'CUSTOM',
+}
 
 export type SelectedTimeFrameContextAPI = {
     startDate: DbDate;
     endDate: DbDate;
+    dateRangeType: DateRangeType;
+    currentMonthLabel: string;
+    currentYearLabel: string;
     setStartDate: (date: DbDate) => void;
     setEndDate: (date: DbDate) => void;
     forwardOneMonth: () => void;
     backOneMonth: () => void;
+    forwardOneYear: () => void;
+    backOneYear: () => void;
 };
 
 export const SelectedTimeFrameContext = createContext<SelectedTimeFrameContextAPI | null>(null);
 
-export default function SelectedTimeFrameProvider({ children }: { children: React.ReactNode }) {
-    // Default start date to first day of this month
-    const [startDate, setStartDate] = useState<DbDate>(format(startOfMonth(new Date()), dbDateFormat));
-    // Default end date to today
-    const [endDate, setEndDate] = useState<DbDate>(format(new Date(), dbDateFormat));
+// Small wrapper for readability
+const formatDate = (date: Date) => {
+    return format(date, dbDateFormat);
+};
 
-    const selectedTimeFrameAPI = {
+export default function SelectedTimeFrameProvider({ children }: { children: ReactNode }) {
+    const [dateRangeType, setDateRangeType] = useState<DateRangeType>(DateRangeType.MONTH);
+    // Default start date to first day of this month
+    const [startDate, setStartDate] = useState<DbDate>(formatDate(startOfMonth(new Date())));
+    // Default end date to today
+    const [endDate, setEndDate] = useState<DbDate>(formatDate(new Date()));
+
+    const presentDate = new Date();
+    const isCurrentYear = getYear(endDate) === getYear(presentDate);
+    const isSameMonth = getMonth(endDate) === getMonth(presentDate);
+
+    const parsedStartDate = parseDbDate(startDate);
+
+    function forwardOneMonth() {
+        // Only allowed when in monthly date range type
+        if (dateRangeType !== DateRangeType.MONTH) {
+            return;
+        }
+
+        // Disallow shifting forward if already at the current month and year
+        if (isCurrentYear && isSameMonth) {
+            return;
+        }
+
+        // Use start date to determine current month for calculations
+        // Forward the current date one month
+        const nextMonthDate = addMonths(parsedStartDate, 1);
+
+        // Get start and end date of next month
+        const nextMonthStart = startOfMonth(nextMonthDate);
+        const nextMonthEnd = endOfMonth(nextMonthDate);
+
+        // If the new month is the current month, use today instead of the end of the month
+        const isCurrentMonth =
+            getMonth(nextMonthDate) === getMonth(presentDate) && getYear(nextMonthDate) === getYear(presentDate);
+        setEndDate(isCurrentMonth ? formatDate(presentDate) : formatDate(nextMonthEnd));
+        setStartDate(formatDate(nextMonthStart));
+    }
+
+    function backOneMonth() {
+        // Only allowed when in monthly date range type
+        if (dateRangeType !== DateRangeType.MONTH) {
+            return;
+        }
+
+        // Use start date to determine current month for calculations
+        // Back the current date one month
+        const previousMonthDate = subMonths(parsedStartDate, 1);
+
+        // Get start and end date of previous month
+        const previousMonthStart = startOfMonth(previousMonthDate);
+        const previousMonthEnd = endOfMonth(previousMonthDate);
+
+        setStartDate(formatDate(previousMonthStart));
+        setEndDate(formatDate(previousMonthEnd));
+    }
+
+    function forwardOneYear() {
+        // Only allowed when in yearly date range type
+        if (dateRangeType !== DateRangeType.YEAR) {
+            return;
+        }
+
+        // Use start date to determine current year for calculations
+        // Forward the current date one year
+        const nextYearDate = addYears(parsedStartDate, 1);
+
+        // Get start and end date of next year
+        const nextYearStart = startOfYear(nextYearDate);
+        const nextYearEnd = endOfYear(nextYearDate);
+
+        // If the new year is the current year, use today instead of the end of the year
+        const isCurrentYear = getYear(nextYearDate) === getYear(presentDate);
+        setEndDate(isCurrentYear ? formatDate(presentDate) : formatDate(nextYearEnd));
+        setStartDate(formatDate(nextYearStart));
+    }
+
+    function backOneYear() {
+        // Only allowed when in yearly date range type
+        if (dateRangeType !== DateRangeType.YEAR) {
+            return;
+        }
+
+        // Use start date to determine current year for calculations
+        // Back the current date one year
+        const previousYearDate = subYears(parsedStartDate, 1);
+
+        // Get start and end date of previous year
+        const previousYearStart = startOfYear(previousYearDate);
+        const previousYearEnd = endOfYear(previousYearDate);
+
+        setStartDate(formatDate(previousYearStart));
+        setEndDate(formatDate(previousYearEnd));
+    }
+
+    const selectedTimeFrameAPI: SelectedTimeFrameContextAPI = {
         startDate,
         endDate,
         setStartDate,
         setEndDate,
-        forwardOneMonth: () => {
-            const newStartDate = addMonths(parseDbDate(startDate), 1);
-            const newEndDate = addMonths(parseDbDate(endDate), 1);
-
-            setStartDate(format(newStartDate, dbDateFormat));
-            setEndDate(format(newEndDate, dbDateFormat));
-        },
-        backOneMonth: () => {
-            const newStartDate = subMonths(parseDbDate(startDate), 1);
-            const newEndDate = subMonths(parseDbDate(endDate), 1);
-
-            setStartDate(format(newStartDate, dbDateFormat));
-            setEndDate(format(newEndDate, dbDateFormat));
-        },
+        dateRangeType,
+        currentMonthLabel: format(parsedStartDate, 'LLLL'), // Not reliable for custom date ranges
+        currentYearLabel: format(parsedStartDate, 'yyyy'),
+        forwardOneMonth,
+        backOneMonth,
+        forwardOneYear,
+        backOneYear,
     };
 
     return (

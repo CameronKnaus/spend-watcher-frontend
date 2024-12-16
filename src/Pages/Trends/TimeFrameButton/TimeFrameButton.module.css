@@ -2,12 +2,20 @@
     display: flex;
     gap: 16px;
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
+    max-width: 220px;
 }
 
 .timeFrameButton {
+    font-size: var(--font-body-medium);
+    font-weight: var(--font-weight-semi-bold);
+}
+
+.yearLabel {
+    letter-spacing: 8px;
 }
 
 .arrowButton {
-    font-size: 24px;
+    font-size: 20px;
+    min-width: 20px;
 }

@@ -9,6 +9,7 @@ import styles from './TrendsMobileNavigation.module.css';
 export default function TrendsMobileNavigation() {
     const navigate = useNavigate();
     const getContent = useContent('trends');
+
     return (
         <nav className={styles.navContainer}>
             <MobileButton
