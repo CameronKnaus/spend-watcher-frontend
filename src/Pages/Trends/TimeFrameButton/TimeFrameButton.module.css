@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
+}
+
+.timeFrameButton {
+}
+
+.arrowButton {
+    font-size: 24px;
+}

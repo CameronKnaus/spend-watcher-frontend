@@ -23,6 +23,8 @@ const locale = {
     },
     trends: {
         pageTitle: 'Trends',
+        dashboardButton: 'Dashboard',
+        filterButton: 'Filter',
     },
     general: {
         empty: '--',
