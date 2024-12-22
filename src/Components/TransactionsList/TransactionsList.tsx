@@ -19,7 +19,7 @@ export default function TransactionsList() {
                     ? Array.from({ length: 5 }).map((_, index) => <LoadingInteractiveRow key={index} />)
                     : Object.entries(spendingData.transactionsByDate)
                           // TODO: Have this list support more than just discretionary transactions (remove filter)
-                          .filter(([_, datesTransactions]) => datesTransactions.discretionaryTotals.amount > 0)
+                          .filter(([, datesTransactions]) => datesTransactions.discretionaryTotals.amount > 0)
                           .map(([dbDate, datesTransactions]) => (
                               <>
                                   <h3 className={styles.dateHeader}>

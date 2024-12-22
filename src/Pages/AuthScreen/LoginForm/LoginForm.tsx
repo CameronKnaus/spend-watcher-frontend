@@ -27,8 +27,8 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
                 queryKey: ['verify-auth'],
             });
         },
-        onError: (error) => {
-            console.error(error);
+        onError: () => {
+            // TODO: Error handling
         },
     });
 

@@ -19,7 +19,7 @@
     max-width: calc(100% - var(--section-min-width) - var(--dashboard-column-gap) - var(--dashboard-column-gap));
     display: flex;
     flex-wrap: wrap;
-    align-items: start;
+    align-items: flex-start;
 }
 
 .spendingGrid {
