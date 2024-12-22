@@ -39,7 +39,7 @@ export default function PageRoutes() {
             navigate('/auth');
         }
 
-        if (location.pathname === '/auth' && isAuthenticated) {
+        if ((location.pathname === '/auth' || location.pathname === '/') && isAuthenticated) {
             navigate('/dashboard');
         }
     }, [isAuthenticated, isAuthenticating, location.pathname, navigate]);
