@@ -4,7 +4,7 @@
     border-radius: 12px;
 }
 
-.defaultContainer > h3 {
+.heading {
     font-size: var(--font-heading-small);
     font-weight: var(--font-weight-medium);
     margin-bottom: 8px;

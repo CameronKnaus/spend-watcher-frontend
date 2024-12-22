@@ -26,7 +26,7 @@ export default function ModuleContainer({
     return (
         // Order of attributes here matters
         <div {...attributes} className={containerClass}>
-            {heading && <h3>{heading}</h3>}
+            {heading && <h3 className={styles.heading}>{heading}</h3>}
             {children}
         </div>
     );

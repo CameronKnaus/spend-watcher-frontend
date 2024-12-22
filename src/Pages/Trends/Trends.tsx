@@ -5,6 +5,7 @@ import useContent from 'Hooks/useContent';
 import { useIsMobile } from 'Util/IsMobileContext';
 import styles from './Trends.module.css';
 import TrendsMobileNavigation from './TrendsMobileNavigation/TrendsMobileNavigation';
+import TransactionsList from 'Components/TransactionsList/TransactionsList';
 
 export default function Trends() {
     const getContent = useContent('trends');
@@ -15,6 +16,7 @@ export default function Trends() {
             {isMobile && <TrendsMobileNavigation />}
             <AccountsNeedUpdateBanner />
             <RecurringSpendNeedsUpdateBanner />
+            <TransactionsList />
         </PageContainer>
     );
 }

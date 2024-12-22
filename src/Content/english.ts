@@ -25,6 +25,7 @@ const locale = {
         pageTitle: 'Trends',
         dashboardButton: 'Dashboard',
         filterButton: 'Filter',
+        transactionsTitle: 'Discretionary transactions',
     },
     general: {
         empty: '--',

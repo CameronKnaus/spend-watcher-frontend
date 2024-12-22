@@ -46,7 +46,7 @@ const formatDate = (date: Date) => {
 };
 
 export default function SelectedTimeFrameProvider({ children }: { children: ReactNode }) {
-    const [dateRangeType, setDateRangeType] = useState<DateRangeType>(DateRangeType.YEAR);
+    const [dateRangeType, setDateRangeType] = useState<DateRangeType>(DateRangeType.MONTH);
     // Default start date to first day of this month
     const [startDate, setStartDate] = useState<DbDate>(formatDate(startOfMonth(new Date())));
     // Default end date to today
