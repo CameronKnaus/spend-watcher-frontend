@@ -2,3 +2,13 @@
     padding: 24px 16px;
     padding-bottom: 160px;
 }
+
+.contentContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.module {
+    width: 100%;
+}

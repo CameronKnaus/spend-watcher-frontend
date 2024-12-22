@@ -3,17 +3,17 @@ import LoadingInteractiveRow from 'Components/InteractiveRow/LoadingInteractiveR
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import TransactionRow from 'Components/TransactionRow';
 import { format } from 'date-fns';
+import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
 import { isDiscretionaryTransactionId } from 'Util/SpendTransactionUtils/narrowIdType';
 import styles from './TransactionsList.module.css';
-import useContent from 'Hooks/useContent';
 
 export default function TransactionsList() {
     const getContent = useContent('trends');
     const { data: spendingData, isLoading } = useSpendingDetailsService();
 
     return (
-        <ModuleContainer heading={getContent('transactionsTitle')} elevation="low">
+        <ModuleContainer heading={getContent('transactionsTitle')} className={styles.module} elevation="low">
             <>
                 {isLoading || !spendingData
                     ? Array.from({ length: 5 }).map((_, index) => <LoadingInteractiveRow key={index} />)

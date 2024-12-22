@@ -1,3 +1,7 @@
+.module {
+    width: 100%;
+}
+
 .dateHeader {
     font-size: var(--font-body-small);
     color: var(--token-color-text-subdued);
