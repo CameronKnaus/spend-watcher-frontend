@@ -37,6 +37,7 @@ export type SelectedTimeFrameContextAPI = {
     isPresentYear: boolean;
     isPresentMonth: boolean;
     updateDateRangeType: (type: DateRangeType) => void;
+    setToCurrentMonth: () => void;
 };
 
 export const SelectedTimeFrameContext = createContext<SelectedTimeFrameContextAPI | null>(null);
@@ -59,6 +60,12 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
 
     const parsedStartDate = parseDbDate(startDate);
 
+    function setToCurrentMonth() {
+        setStartDate(formatDate(startOfMonth(new Date())));
+        setEndDate(formatDate(new Date()));
+        setDateRangeType(DateRangeType.MONTH);
+    }
+
     function updateDateRangeType(type: DateRangeType) {
         if (type === DateRangeType.MAX || type === DateRangeType.CUSTOM) {
             // TODO: Currently unsupported
@@ -67,17 +74,15 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
 
         if (type === DateRangeType.MONTH) {
             // When changing to monthly, set it to the current month
-            setStartDate(formatDate(startOfMonth(new Date())));
-            setEndDate(formatDate(new Date()));
+            setToCurrentMonth();
         }
 
         if (type === DateRangeType.YEAR) {
             // When changing to yearly, set it to the current year
             setStartDate(formatDate(startOfYear(new Date())));
             setEndDate(formatDate(new Date()));
+            setDateRangeType(type);
         }
-
-        setDateRangeType(type);
     }
 
     function forwardOneMonth() {
@@ -177,6 +182,7 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
         isPresentYear,
         isPresentMonth: isPresentYear && isSameMonth,
         updateDateRangeType,
+        setToCurrentMonth,
     };
 
     return (
