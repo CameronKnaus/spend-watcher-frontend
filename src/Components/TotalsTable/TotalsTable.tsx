@@ -22,6 +22,12 @@ export default function TotalsTable() {
         );
     }
 
+    // Sort by total amount spent descending
+    const sortedList = spendingData.spendCategoryOverview.categoryDetailsList.sort(
+        (a, b) => b.combinedTotals.amount - a.combinedTotals.amount,
+    );
+
+    // TODO: Table config
     return (
         <ModuleContainer heading={moduleTitle} elevation="medium">
             <div className={styles.tableContainer}>
@@ -47,7 +53,7 @@ export default function TotalsTable() {
                     </thead>
 
                     <tbody>
-                        {spendingData.spendCategoryOverview.categoryDetailsList.map((categoryDetails, index) => (
+                        {sortedList.map((categoryDetails, index) => (
                             <tr key={categoryDetails.category} className={index % 2 === 0 ? styles.dark : styles.light}>
                                 <td className={styles.categoryColumn} align="left">
                                     <div className={styles.categoryLayout}>
@@ -81,7 +87,7 @@ export default function TotalsTable() {
                         ))}
                     </tbody>
                     <tfoot>
-                        <tr>
+                        <tr className={sortedList.length % 2 === 0 ? styles.dark : styles.light}>
                             <td className={styles.categoryColumn}>{getContent('total')}</td>
                             <td align="right">
                                 <Currency isGainLoss amount={-spendingData.summary.total.amount} />
