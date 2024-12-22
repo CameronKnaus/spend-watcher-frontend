@@ -16,6 +16,7 @@ export default function Trends() {
             <TrendsMobileNavigation />
             <AccountsNeedUpdateBanner />
             <RecurringSpendNeedsUpdateBanner />
+
             <div className={styles.contentContainer}>
                 <ModuleContainer heading={getContent('topCategories')} className={styles.module} elevation="low">
                     <TopDiscretionaryCategories />

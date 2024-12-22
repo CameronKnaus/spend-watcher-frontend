@@ -24,7 +24,9 @@ const locale = {
     trends: {
         pageTitle: 'Trends',
         dashboardButton: 'Dashboard',
-        filterButton: 'Filter',
+        // filterButton: 'Filter', TODO:
+        yearlyLabel: 'Yearly',
+        monthlyLabel: 'Monthly',
         transactionsTitle: 'Discretionary transactions',
         topCategories: 'Top discretionary categories',
     },

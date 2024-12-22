@@ -36,6 +36,7 @@ export type SelectedTimeFrameContextAPI = {
     backOneYear: () => void;
     isPresentYear: boolean;
     isPresentMonth: boolean;
+    updateDateRangeType: (type: DateRangeType) => void;
 };
 
 export const SelectedTimeFrameContext = createContext<SelectedTimeFrameContextAPI | null>(null);
@@ -57,6 +58,27 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
     const isSameMonth = getMonth(endDate) === getMonth(presentDate);
 
     const parsedStartDate = parseDbDate(startDate);
+
+    function updateDateRangeType(type: DateRangeType) {
+        if (type === DateRangeType.MAX || type === DateRangeType.CUSTOM) {
+            // TODO: Currently unsupported
+            return;
+        }
+
+        if (type === DateRangeType.MONTH) {
+            // When changing to monthly, set it to the current month
+            setStartDate(formatDate(startOfMonth(new Date())));
+            setEndDate(formatDate(new Date()));
+        }
+
+        if (type === DateRangeType.YEAR) {
+            // When changing to yearly, set it to the current year
+            setStartDate(formatDate(startOfYear(new Date())));
+            setEndDate(formatDate(new Date()));
+        }
+
+        setDateRangeType(type);
+    }
 
     function forwardOneMonth() {
         // Only allowed when in monthly date range type
@@ -154,6 +176,7 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
         backOneYear,
         isPresentYear,
         isPresentMonth: isPresentYear && isSameMonth,
+        updateDateRangeType,
     };
 
     return (

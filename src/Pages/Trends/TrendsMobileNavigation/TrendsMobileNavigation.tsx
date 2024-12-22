@@ -1,5 +1,7 @@
 import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
+import { DateRangeType } from 'Contexts/SelectedTimeFrame.context';
 import useContent from 'Hooks/useContent';
+import useSelectedTimeFrame from 'Hooks/useSelectedTimeFrame/useSelectedTimeFrame';
 import { FaFilter, FaHome } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
 import TimeFrameButton from '../TimeFrameButton/TimeFrameButton';
@@ -7,6 +9,7 @@ import MobileButton from './MobileButton/MobileButton';
 import styles from './TrendsMobileNavigation.module.css';
 
 export default function TrendsMobileNavigation() {
+    const { dateRangeType, updateDateRangeType } = useSelectedTimeFrame();
     const navigate = useNavigate();
     const getContent = useContent('trends');
 
@@ -20,7 +23,17 @@ export default function TrendsMobileNavigation() {
                 }}
             />
             <TimeFrameButton />
-            <MobileButton icon={<FaFilter />} buttonText={getContent('filterButton')} />
+            <MobileButton
+                icon={<FaFilter />}
+                buttonText={
+                    dateRangeType === DateRangeType.YEAR ? getContent('monthlyLabel') : getContent('yearlyLabel')
+                }
+                onClick={() => {
+                    updateDateRangeType(
+                        dateRangeType === DateRangeType.YEAR ? DateRangeType.MONTH : DateRangeType.YEAR,
+                    );
+                }}
+            />
         </nav>
     );
 }
