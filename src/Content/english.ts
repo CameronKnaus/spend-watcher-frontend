@@ -50,6 +50,7 @@ const locale = {
         cancel: 'Cancel',
         delete: 'Delete',
         confirm: 'Confirm',
+        close: 'Close',
         confirmChange: 'Confirm change',
     },
     accounts: {
