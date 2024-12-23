@@ -28,6 +28,7 @@ export default function NumericInput<T extends FieldValues>({
             rules={{ required: isRequired }}
             render={({ field: { ref, onChange, value, ...rest } }) => (
                 <NumericFormat
+                    type="tel"
                     input-mode="numeric"
                     thousandSeparator=","
                     decimalSeparator="."
