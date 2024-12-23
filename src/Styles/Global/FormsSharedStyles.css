@@ -4,7 +4,7 @@
     /* Form labels */
     --form-label-font-weight: var(--fw-semi-bold);
     --form-label-color: var(--theme-light-text-color);
-    --form-label-font-size: var(--font-body-medium);
+    --form-label-font-size: var(--font-body-small);
     --form-padding-below-label: var(0.5rem);
 
     /* Text inputs */

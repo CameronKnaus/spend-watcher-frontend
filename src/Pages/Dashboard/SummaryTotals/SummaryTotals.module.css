@@ -17,7 +17,7 @@
 }
 
 .totalLabel {
-    font-size: var(--font-heading-small);
+    font-size: var(--font-body-large);
     font-weight: var(--font-weight-medium);
     color: var(--token-color-text-primary);
 }

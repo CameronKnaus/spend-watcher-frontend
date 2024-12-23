@@ -36,7 +36,7 @@ export default function SummaryTotals() {
                                 <SkeletonLoader style={totalsSkeletonLoaderStyle} />
                             ) : (
                                 <Currency
-                                    className="font-heading-medium font-thin"
+                                    className="font-heading-small font-thin"
                                     amount={-spendingData.summary.discretionaryTotals.amount}
                                     isGainLoss
                                 />
@@ -48,7 +48,7 @@ export default function SummaryTotals() {
                                 <SkeletonLoader style={totalsSkeletonLoaderStyle} />
                             ) : (
                                 <Currency
-                                    className="font-heading-medium font-thin"
+                                    className="font-heading-small font-thin"
                                     amount={-spendingData.summary.recurringTotals.amount}
                                     isGainLoss
                                 />

@@ -7,7 +7,7 @@
 }
 
 .label {
-    font-size: var(--font-heading-medium);
+    font-size: var(--font-heading-small);
     font-weight: var(--font-weight-thin);
 }
 

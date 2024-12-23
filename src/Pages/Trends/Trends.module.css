@@ -6,7 +6,7 @@
 .contentContainer {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 36px;
 }
 
 .module {

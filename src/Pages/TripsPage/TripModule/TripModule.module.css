@@ -6,13 +6,13 @@
 }
 
 .tripName {
-    font-size: var(--font-heading-medium);
+    font-size: var(--font-heading-small);
     font-weight: var(--font-weight-medium);
 }
 
 .tripDates {
     margin-top: 4px;
-    font-size: var(--font-body-small);
+    font-size: var(--font-caption);
 }
 
 .spendTotalDataPoints {
