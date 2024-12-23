@@ -12,6 +12,7 @@
     margin-bottom: 16px;
     border: 1px solid var(--token-color-border-secondary);
     font-size: var(--font-body-small);
+    background-color: var(--token-color-background-primary);
 }
 
 .table {
