@@ -1,5 +1,6 @@
 import AccountsNeedUpdateBanner from 'Components/AccountsNeedUpdateBanner/AccountsNeedUpdateBanner';
 import AlertMessage from 'Components/AlertMessage/AlertMessage';
+import LogSpendButton from 'Components/LogSpendButton';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import PageContainer from 'Components/PageContainer/PageContainer';
 import RecurringSpendNeedsUpdateBanner from 'Components/RecurringSpendNeedsUpdateBanner/RecurringSpendNeedsUpdateBanner';
@@ -26,6 +27,7 @@ export default function Trends() {
                 <ModuleContainer heading={getContent('topCategories')} className={styles.module} elevation="low">
                     <TopDiscretionaryCategories />
                 </ModuleContainer>
+                <LogSpendButton />
                 <TransactionsList />
                 <AlertMessage
                     variant="error"
