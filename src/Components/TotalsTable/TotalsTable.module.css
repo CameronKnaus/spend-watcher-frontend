@@ -6,18 +6,26 @@
 
 .tableContainer {
     width: 100%;
+    max-height: 60vh;
+    border-radius: 8px;
     overflow-x: auto;
     margin-bottom: 16px;
+    border: 1px solid var(--token-color-border-secondary);
+    font-size: var(--font-body-small);
 }
 
 .table {
     border-collapse: collapse;
-    border-top: 1px solid var(--token-color-border-secondary);
+}
+
+.headerRow > th {
+    position: sticky;
+    top: 0;
     border-bottom: 1px solid var(--token-color-border-secondary);
 }
 
-.headerRow {
-    border-bottom: 1px solid var(--token-color-border-secondary);
+.headerRow > th:first-of-type {
+    z-index: 2;
 }
 
 .tableContainer th,
@@ -30,7 +38,6 @@
 .categoryColumn {
     position: sticky;
     left: 0;
-    border-left: 1px solid var(--token-color-border-secondary);
 }
 
 .categoryLayout {
@@ -46,4 +53,13 @@
 
 .light > {
     background-color: var(--token-color-background-primary);
+}
+
+.footerRow {
+    position: sticky;
+    bottom: 0;
+}
+
+.icon {
+    border-radius: 4px;
 }

@@ -29,7 +29,6 @@ const locale = {
         monthlyLabel: 'Monthly',
         transactionsTitle: 'Discretionary transactions',
         topCategories: 'Top discretionary categories',
-        categoryBreakdown: 'Category breakdown',
         category: 'Category',
         totalAmountSpentHeader: 'Total spent',
         totalCountHeader: 'Transaction count',

@@ -1,25 +1,20 @@
 import Currency from 'Components/Currency/Currency';
-import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
 import styles from './TotalsTable.module.css';
+import clsx from 'clsx';
 
 export default function TotalsTable() {
     const { isLoading, data: spendingData } = useSpendingDetailsService();
     const getContent = useContent('trends');
     const getCategoryLabel = useContent('SPENDING_CATEGORIES');
-    const moduleTitle = getContent('categoryBreakdown');
 
     if (isLoading || !spendingData) {
-        return (
-            <ModuleContainer heading={moduleTitle} elevation="medium">
-                {Array.from({ length: 10 }).map((_, index) => (
-                    <SkeletonLoader key={index} className={styles.placeholder_skeleton} />
-                ))}
-            </ModuleContainer>
-        );
+        return Array.from({ length: 10 }).map((_, index) => (
+            <SkeletonLoader key={index} className={styles.placeholder_skeleton} />
+        ));
     }
 
     // Sort by total amount spent descending
@@ -29,88 +24,86 @@ export default function TotalsTable() {
 
     // TODO: Table config
     return (
-        <ModuleContainer heading={moduleTitle} elevation="medium">
-            <div className={styles.tableContainer}>
-                <table className={styles.table}>
-                    <thead>
-                        <tr className={styles.headerRow}>
-                            <th className={styles.categoryColumn} align="left">
-                                {getContent('category')}
-                            </th>
-                            <th align="right">{getContent('totalAmountSpentHeader')}</th>
-                            <th align="right">{getContent('totalCountHeader')}</th>
-                            <th align="right">{getContent('totalPercentageHeader')}</th>
-                            <th align="right">{getContent('totalCountPercentageHeader')}</th>
-                            <th align="right">{getContent('discretionaryTotalHeader')}</th>
-                            <th align="right">{getContent('discretionaryTotalCountHeader')}</th>
-                            <th align="right">{getContent('discretionaryTotalPercentageHeader')}</th>
-                            <th align="right">{getContent('discretionaryTotalCountPercentageHeader')}</th>
-                            <th align="right">{getContent('recurringTotalHeader')}</th>
-                            <th align="right">{getContent('recurringTotalCountHeader')}</th>
-                            <th align="right">{getContent('recurringTotalPercentageHeader')}</th>
-                            <th align="right">{getContent('recurringTotalCountPercentageHeader')}</th>
-                        </tr>
-                    </thead>
+        <div className={styles.tableContainer}>
+            <table className={styles.table}>
+                <thead>
+                    <tr className={styles.headerRow}>
+                        <th className={styles.categoryColumn} align="left">
+                            {getContent('category')}
+                        </th>
+                        <th align="right">{getContent('totalAmountSpentHeader')}</th>
+                        <th align="right">{getContent('totalCountHeader')}</th>
+                        <th align="right">{getContent('totalPercentageHeader')}</th>
+                        <th align="right">{getContent('totalCountPercentageHeader')}</th>
+                        <th align="right">{getContent('discretionaryTotalHeader')}</th>
+                        <th align="right">{getContent('discretionaryTotalCountHeader')}</th>
+                        <th align="right">{getContent('discretionaryTotalPercentageHeader')}</th>
+                        <th align="right">{getContent('discretionaryTotalCountPercentageHeader')}</th>
+                        <th align="right">{getContent('recurringTotalHeader')}</th>
+                        <th align="right">{getContent('recurringTotalCountHeader')}</th>
+                        <th align="right">{getContent('recurringTotalPercentageHeader')}</th>
+                        <th align="right">{getContent('recurringTotalCountPercentageHeader')}</th>
+                    </tr>
+                </thead>
 
-                    <tbody>
-                        {sortedList.map((categoryDetails, index) => (
-                            <tr key={categoryDetails.category} className={index % 2 === 0 ? styles.dark : styles.light}>
-                                <td className={styles.categoryColumn} align="left">
-                                    <div className={styles.categoryLayout}>
-                                        <SpendingCategoryIcon size={36} category={categoryDetails.category} />
-                                        <div>{getCategoryLabel(categoryDetails.category)}</div>
-                                    </div>
-                                </td>
-                                <td align="right">
-                                    <Currency isGainLoss amount={-categoryDetails.combinedTotals.amount} />
-                                </td>
-                                <td align="right">{categoryDetails.combinedTotals.count}</td>
-                                <td align="right">{categoryDetails.combinedTotals.percentageOfTotalAmount + '%'}</td>
-                                <td align="right">{categoryDetails.combinedTotals.percentageOfTotalCount + '%'}</td>
-                                <td align="right">
-                                    <Currency isGainLoss amount={-categoryDetails.discretionaryTotals.amount} />
-                                </td>
-                                <td align="right">{categoryDetails.discretionaryTotals.count}</td>
-                                <td align="right">
-                                    {categoryDetails.discretionaryTotals.percentageOfTotalAmount + '%'}
-                                </td>
-                                <td align="right">
-                                    {categoryDetails.discretionaryTotals.percentageOfTotalCount + '%'}
-                                </td>
-                                <td align="right">
-                                    <Currency isGainLoss amount={-categoryDetails.recurringTotals.amount} />
-                                </td>
-                                <td align="right">{categoryDetails.recurringTotals.count}</td>
-                                <td align="right">{categoryDetails.recurringTotals.percentageOfTotalAmount + '%'}</td>
-                                <td align="right">{categoryDetails.recurringTotals.percentageOfTotalCount + '%'}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                    <tfoot>
-                        <tr className={sortedList.length % 2 === 0 ? styles.dark : styles.light}>
-                            <td className={styles.categoryColumn}>{getContent('total')}</td>
-                            <td align="right">
-                                <Currency isGainLoss amount={-spendingData.summary.total.amount} />
+                <tbody>
+                    {sortedList.map((categoryDetails, index) => (
+                        <tr key={categoryDetails.category} className={index % 2 === 0 ? styles.dark : styles.light}>
+                            <td className={styles.categoryColumn} align="left">
+                                <div className={styles.categoryLayout}>
+                                    <SpendingCategoryIcon
+                                        size={24}
+                                        className={styles.icon}
+                                        category={categoryDetails.category}
+                                    />
+                                    <div>{getCategoryLabel(categoryDetails.category)}</div>
+                                </div>
                             </td>
-                            <td align="right">{spendingData.summary.total.count}</td>
-                            <td></td>
-                            <td></td>
                             <td align="right">
-                                <Currency isGainLoss amount={-spendingData.summary.discretionaryTotals.amount} />
+                                <Currency isGainLoss amount={-categoryDetails.combinedTotals.amount} />
                             </td>
-                            <td align="right">{spendingData.summary.discretionaryTotals.count}</td>
-                            <td></td>
-                            <td></td>
+                            <td align="right">{categoryDetails.combinedTotals.count}</td>
+                            <td align="right">{categoryDetails.combinedTotals.percentageOfTotalAmount + '%'}</td>
+                            <td align="right">{categoryDetails.combinedTotals.percentageOfTotalCount + '%'}</td>
                             <td align="right">
-                                <Currency isGainLoss amount={-spendingData.summary.recurringTotals.amount} />
+                                <Currency isGainLoss amount={-categoryDetails.discretionaryTotals.amount} />
                             </td>
-                            <td align="right">{spendingData.summary.recurringTotals.count}</td>
-                            <td></td>
-                            <td></td>
+                            <td align="right">{categoryDetails.discretionaryTotals.count}</td>
+                            <td align="right">{categoryDetails.discretionaryTotals.percentageOfTotalAmount + '%'}</td>
+                            <td align="right">{categoryDetails.discretionaryTotals.percentageOfTotalCount + '%'}</td>
+                            <td align="right">
+                                <Currency isGainLoss amount={-categoryDetails.recurringTotals.amount} />
+                            </td>
+                            <td align="right">{categoryDetails.recurringTotals.count}</td>
+                            <td align="right">{categoryDetails.recurringTotals.percentageOfTotalAmount + '%'}</td>
+                            <td align="right">{categoryDetails.recurringTotals.percentageOfTotalCount + '%'}</td>
                         </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </ModuleContainer>
+                    ))}
+                </tbody>
+                <tfoot>
+                    <tr className={clsx(sortedList.length % 2 === 0 ? styles.dark : styles.light, styles.footerRow)}>
+                        <td className={styles.categoryColumn}>{getContent('total')}</td>
+                        <td align="right">
+                            <Currency isGainLoss amount={-spendingData.summary.total.amount} />
+                        </td>
+                        <td align="right">{spendingData.summary.total.count}</td>
+                        <td></td>
+                        <td></td>
+                        <td align="right">
+                            <Currency isGainLoss amount={-spendingData.summary.discretionaryTotals.amount} />
+                        </td>
+                        <td align="right">{spendingData.summary.discretionaryTotals.count}</td>
+                        <td></td>
+                        <td></td>
+                        <td align="right">
+                            <Currency isGainLoss amount={-spendingData.summary.recurringTotals.amount} />
+                        </td>
+                        <td align="right">{spendingData.summary.recurringTotals.count}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     );
 }
