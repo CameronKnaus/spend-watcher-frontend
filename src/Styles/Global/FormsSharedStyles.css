@@ -8,10 +8,10 @@
     --form-padding-below-label: var(0.5rem);
 
     /* Text inputs */
-    --form-input-font-size: var(--font-body-large);
+    --form-input-font-size: var(--font-body-medium);
 
     /* Check box input */
     --form-checkbox-size: 18px;
-    --form-check-box-label-font-size: var(--font-body-medium);
+    --form-check-box-label-font-size: var(--font-body-small);
     --form-check-box-label-font-weight: var(--font-weight-regular);
 }

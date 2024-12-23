@@ -41,7 +41,7 @@
     background-color: var(--token-color-background-primary);
     border-radius: 32px 32px 0 0;
     position: relative;
-    max-height: 70dvh;
+    max-height: 90dvh;
 }
 
 .scrollableArea {
