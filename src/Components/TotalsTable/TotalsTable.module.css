@@ -9,6 +9,7 @@
     max-height: 60vh;
     border-radius: 8px;
     overflow-x: auto;
+    overscroll-behavior: none;
     margin-bottom: 16px;
     border: 1px solid var(--token-color-border-secondary);
     font-size: var(--font-body-small);
