@@ -28,9 +28,7 @@ export default function NumericInput<T extends FieldValues>({
             rules={{ required: isRequired }}
             render={({ field: { ref, onChange, value, ...rest } }) => (
                 <NumericFormat
-                    // @ts-expect-error - react-number-format doesn't have a type for getInputRef
-                    type="number"
-                    input-mode="numeric"
+                    inputMode="decimal"
                     thousandSeparator=","
                     decimalSeparator="."
                     decimalScale={2}
