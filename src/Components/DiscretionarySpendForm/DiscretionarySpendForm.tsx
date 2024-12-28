@@ -59,6 +59,10 @@ export default function DiscretionarySpendForm({
                 queryKey: ['spending'],
             });
 
+            queryClient.invalidateQueries({
+                queryKey: ['trips'],
+            });
+
             form.reset();
             onSubmit();
         },
