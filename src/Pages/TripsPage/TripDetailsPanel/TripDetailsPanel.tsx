@@ -16,7 +16,7 @@ type TripDetailsPanelPropTypes = {
     onClose: () => void;
 };
 
-enum TripPanelState {
+export enum TripPanelState {
     base = 'base',
     editTripDetails = 'editTripDetails',
     editTransaction = 'editTransaction',
@@ -86,20 +86,12 @@ export default function TripDetailsPanel({ trip, isOpen, dateLabel, onClose }: T
             title={getPanelTitle()}
             tagColor={getTagColor()}
             handlePanelWillClose={() => {
-                setPanelState(TripPanelState.base);
+                returnToBasePage();
                 onClose();
             }}
         >
             {panelState === TripPanelState.base && (
-                <>
-                    <TripDetails
-                        trip={trip}
-                        dateLabel={dateLabel}
-                        onEditButtonClick={() => setPanelState(TripPanelState.editTripDetails)}
-                        onEditComplete={() => setPanelState(TripPanelState.base)}
-                        onClose={onClose}
-                    />
-                </>
+                <TripDetails trip={trip} dateLabel={dateLabel} setPanelState={setPanelState} onClose={onClose} />
             )}
             {panelState === TripPanelState.editTripDetails && (
                 <TripForm

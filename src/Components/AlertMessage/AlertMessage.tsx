@@ -36,11 +36,11 @@ export default function AlertMessage({ title, variant, message, className, ...pr
                 <FaInfoCircle />
             </div>
             <div className={styles.messageText}>
-                <h3 className="font-body-medium" style={{ color: colors.titleColor }}>
+                <h3 className="font-body-small" style={{ color: colors.titleColor }}>
                     {title}
                 </h3>
                 {message && (
-                    <p className="font-body-small" style={{ color: colors.messageColor }}>
+                    <p className="font-caption" style={{ color: colors.messageColor }}>
                         {message}
                     </p>
                 )}

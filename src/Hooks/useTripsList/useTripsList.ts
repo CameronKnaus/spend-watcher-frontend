@@ -16,6 +16,7 @@ export default function useTripsList() {
     return {
         isLoading: isLoading || isFetching,
         isError,
+        activeTrip: data?.activeTrip,
         tripsList: data?.tripsList,
     };
 }

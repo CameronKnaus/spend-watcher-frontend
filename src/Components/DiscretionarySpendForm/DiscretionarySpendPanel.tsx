@@ -1,12 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
-import DeleteButton from 'Components/DeleteButton/DeleteButton';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
-import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
-import { DiscretionarySpendTransaction, DiscretionaryTransactionId } from 'Types/Services/spending.model';
-import DiscretionarySpendForm from './DiscretionarySpendForm';
-import styles from './DiscretionarySpendForm.module.css';
+import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
+import EditSpendForm from './EditSpendForm';
+import NewSpendForm from './NewSpendForm';
 
 type DiscretionarySpendPanelPropTypes = {
     isOpen: boolean;
@@ -22,33 +18,6 @@ export default function DiscretionarySpendPanel({
 }: DiscretionarySpendPanelPropTypes) {
     const editMode = Boolean(transactionToEdit);
     const getContent = useContent('transactions');
-    const queryClient = useQueryClient();
-
-    const deleteTransaction = useMutation({
-        mutationKey: ['delete-discretionary'],
-        mutationFn: (transactionId: DiscretionaryTransactionId) =>
-            axios.post(SERVICE_ROUTES.postDeleteDiscretionarySpending, {
-                transactionId: transactionId,
-            }),
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['spending'],
-            });
-
-            onPanelClose();
-        },
-        onError: () => {
-            // TODO: Error handling
-        },
-    });
-
-    function handleDelete() {
-        if (!transactionToEdit || deleteTransaction.isPending) {
-            return;
-        }
-
-        deleteTransaction.mutate(transactionToEdit.transactionId);
-    }
 
     return (
         <SlideUpPanel
@@ -57,19 +26,10 @@ export default function DiscretionarySpendPanel({
             tagColor="var(--token-color-semantic-expense)"
             handlePanelWillClose={onPanelClose}
         >
-            <DiscretionarySpendForm
-                transactionToEdit={transactionToEdit}
-                onCancel={onPanelClose}
-                onSubmit={onPanelClose}
-            />
-            {editMode && (
-                <div className={styles.deleteButtonContainer}>
-                    <DeleteButton
-                        label={getContent('deleteExpense')}
-                        onClick={handleDelete}
-                        isLoading={deleteTransaction.isPending}
-                    />
-                </div>
+            {transactionToEdit ? (
+                <EditSpendForm transactionToEdit={transactionToEdit} onCancel={onPanelClose} onSubmit={onPanelClose} />
+            ) : (
+                <NewSpendForm onCancel={onPanelClose} onSubmit={onPanelClose} />
             )}
         </SlideUpPanel>
     );

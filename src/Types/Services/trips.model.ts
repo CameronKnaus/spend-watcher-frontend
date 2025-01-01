@@ -20,6 +20,10 @@ export type TripCostTotals = {
 };
 
 export type TripsListV1Response = {
+    activeTrip?: {
+        tripId: Trip['tripId'];
+        tripName: Trip['tripName'];
+    };
     tripsList: {
         trip: Trip;
         costTotals: TripCostTotals;

@@ -1,7 +1,7 @@
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import Currency from 'Components/Currency/Currency';
 import CustomButton from 'Components/CustomButton/CustomButton';
-import DiscretionarySpendForm from 'Components/DiscretionarySpendForm/DiscretionarySpendForm';
+import EditSpendForm from 'Components/DiscretionarySpendForm/EditSpendForm';
 import InteractiveRow from 'Components/InteractiveRow/InteractiveRow';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
@@ -40,7 +40,7 @@ export default function CategoryTransactionListPanel({
             handlePanelWillClose={onPanelClose}
         >
             {transactionToEdit ? (
-                <DiscretionarySpendForm
+                <EditSpendForm
                     transactionToEdit={transactionToEdit}
                     onCancel={() => setTransactionToEdit(undefined)}
                     onSubmit={() => setTransactionToEdit(undefined)}

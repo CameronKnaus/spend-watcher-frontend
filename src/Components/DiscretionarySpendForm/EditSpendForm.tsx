@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import BottomSheet from 'Components/BottomSheet/BottomSheet';
 import CustomButton from 'Components/CustomButton/CustomButton';
+import DeleteButton from 'Components/DeleteButton/DeleteButton';
 import DatePicker from 'Components/FormInputs/DatePickerController/DatePickerController';
 import FilterableSelect from 'Components/FormInputs/FilterableSelect/FilterableSelectController';
 import useSpendCategoryList from 'Components/FormInputs/FilterableSelect/presetLists/useSpendCategoryList/useSpendCategoryList';
@@ -11,57 +12,49 @@ import LoadingSpinner from 'Components/LoadingSpinner/LoadingSpinner';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import useTripsList from 'Hooks/useTripsList/useTripsList';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { DiscretionarySpendTransaction, v1DiscretionaryAddSchema } from 'Types/Services/spending.model';
+import {
+    DiscretionarySpendTransaction,
+    DiscretionaryTransactionId,
+    v1DiscretionaryAddSchema,
+} from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './DiscretionarySpendForm.module.css';
 
-export type DiscretionarySpendFormAttributes = Omit<DiscretionarySpendTransaction, 'transactionId' | 'isRecurring'>;
+export type SpendFormAttributes = Omit<DiscretionarySpendTransaction, 'transactionId' | 'isRecurring'>;
 
-type DiscretionarySpendFormPropTypes = {
-    transactionToEdit?: DiscretionarySpendTransaction;
+type EditSpendFormPropTypes = {
+    transactionToEdit: DiscretionarySpendTransaction;
     onCancel: () => void;
     onSubmit: () => void;
 };
 
-export const addDiscretionaryQueryKey = 'add-discretionary';
-export const editDiscretionaryQueryKey = 'edit-discretionary';
-
-export default function DiscretionarySpendForm({
-    transactionToEdit,
-    onCancel,
-    onSubmit,
-}: DiscretionarySpendFormPropTypes) {
+export default function EditSpendForm({ transactionToEdit, onCancel, onSubmit }: EditSpendFormPropTypes) {
     const getContent = useContent('transactions');
     const getGeneralContent = useContent('general');
     const spendingCategoryList = useSpendCategoryList();
     const queryClient = useQueryClient();
     const { tripsList } = useTripsList();
 
-    const editMode = Boolean(transactionToEdit);
-    const transactionService = useMutation({
-        mutationKey: editMode
-            ? [editDiscretionaryQueryKey, transactionToEdit!.transactionId]
-            : [addDiscretionaryQueryKey],
-        mutationFn: (params: DiscretionarySpendFormAttributes) => {
-            if (editMode) {
-                return axios.post(SERVICE_ROUTES.postEditDiscretionarySpending, {
-                    ...params,
-                    transactionId: transactionToEdit?.transactionId,
-                });
-            } else {
-                return axios.post(SERVICE_ROUTES.postAddDiscretionarySpending, params);
-            }
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['spending'],
-            });
+    function invalidateRelevantQueries() {
+        queryClient.invalidateQueries({
+            queryKey: ['spending'],
+        });
 
-            queryClient.invalidateQueries({
-                queryKey: ['trips'],
-            });
+        queryClient.invalidateQueries({
+            queryKey: ['trips'],
+        });
+    }
+
+    const editTransactionService = useMutation({
+        mutationKey: ['edit-discretionary', transactionToEdit!.transactionId],
+        mutationFn: (params: SpendFormAttributes) =>
+            axios.post(SERVICE_ROUTES.postEditDiscretionarySpending, {
+                ...params,
+                transactionId: transactionToEdit.transactionId,
+            }),
+        onSuccess: () => {
+            invalidateRelevantQueries();
 
             form.reset();
             onSubmit();
@@ -72,29 +65,53 @@ export default function DiscretionarySpendForm({
     });
 
     // All form handling managed here
-    const form = useForm<DiscretionarySpendFormAttributes>({
+    const form = useForm<SpendFormAttributes>({
         resolver: zodResolver(v1DiscretionaryAddSchema),
         mode: 'onChange', // Least performant but not a concern here
-        defaultValues: {
-            category: SpendingCategory.OTHER,
-        },
+        defaultValues: transactionToEdit,
     });
-
-    useEffect(() => {
-        form.reset(transactionToEdit);
-    }, [transactionToEdit, form]);
 
     function handleCancel() {
         form.reset();
         onCancel();
     }
 
-    function handleSubmission(submission: DiscretionarySpendFormAttributes) {
-        if (transactionService.isPending) {
+    function handleSubmission(submission: SpendFormAttributes) {
+        if (editTransactionService.isPending) {
             return;
         }
 
-        transactionService.mutate(submission);
+        editTransactionService.mutate(submission);
+    }
+
+    const deleteTransaction = useMutation({
+        mutationKey: ['delete-discretionary'],
+        mutationFn: (transactionId: DiscretionaryTransactionId) =>
+            axios.post(SERVICE_ROUTES.postDeleteDiscretionarySpending, {
+                transactionId: transactionId,
+            }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['spending'],
+            });
+
+            queryClient.invalidateQueries({
+                queryKey: ['trips'],
+            });
+
+            onCancel();
+        },
+        onError: () => {
+            // TODO: Error handling
+        },
+    });
+
+    function handleDelete() {
+        if (!transactionToEdit || deleteTransaction.isPending) {
+            return;
+        }
+
+        deleteTransaction.mutate(transactionToEdit.transactionId);
     }
 
     return (
@@ -159,6 +176,13 @@ export default function DiscretionarySpendForm({
                     clearLabel={getContent('clearSelection')}
                 />
             </form>
+            <div className={styles.deleteButtonContainer}>
+                <DeleteButton
+                    label={getContent('deleteExpense')}
+                    onClick={handleDelete}
+                    isLoading={deleteTransaction.isPending}
+                />
+            </div>
             <BottomSheet>
                 <CustomButton variant="secondary" onClick={handleCancel} layout="full-width">
                     {getGeneralContent('cancel')}
@@ -169,7 +193,7 @@ export default function DiscretionarySpendForm({
                     onClick={form.handleSubmit(handleSubmission)}
                     layout="full-width"
                 >
-                    {transactionService.isPending ? <LoadingSpinner /> : getGeneralContent('submit')}
+                    {editTransactionService.isPending ? <LoadingSpinner /> : getGeneralContent('submit')}
                 </CustomButton>
             </BottomSheet>
         </>

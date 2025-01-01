@@ -111,6 +111,7 @@ const locale = {
         tripLabel: 'Linked Trip',
         notesPlaceholder: 'About your expense',
         amountPlaceholder: '$0.00',
+        tripNotice: 'Your current trip, "{{0}}", has already been applied to this transaction.',
     },
     trips: {
         pageLoadingAccessibleText: 'Trips page is loading',
