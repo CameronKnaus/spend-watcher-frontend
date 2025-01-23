@@ -21,6 +21,14 @@ const locale = {
         noTopDiscretionaryCategories: 'You have no discretionary spending so far this month.',
         moreLabel: 'See more',
     },
+    navigation: {
+        dashboard: 'Dashboard',
+        savings: 'Savings',
+        trends: 'Trends',
+        recurring: 'Recurring',
+        recurringDesktop: 'Recurring spending',
+        trips: 'Trips',
+    },
     trends: {
         pageTitle: 'Trends',
         dashboardButton: 'Dashboard',

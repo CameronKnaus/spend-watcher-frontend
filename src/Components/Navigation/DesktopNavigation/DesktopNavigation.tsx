@@ -1,7 +1,9 @@
 import { animated, useChain, useSpring, useSpringRef } from '@react-spring/web';
 import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
+import useContent from 'Hooks/useContent';
 import { useEffect, useRef, useState } from 'react';
-import { FaChartPie, FaHistory, FaHome, FaPlaneDeparture, FaReceipt } from 'react-icons/fa';
+import { FaChartPie, FaHistory, FaHome, FaPlaneDeparture } from 'react-icons/fa';
+import { MdSavings } from 'react-icons/md';
 import { Outlet, useLocation } from 'react-router-dom';
 import styles from './DesktopNavigation.module.css';
 import DesktopNavItem from './DesktopNavItem';
@@ -18,6 +20,7 @@ export default function DesktopNavigation() {
     const paddingOffset = 40;
     const expandedWidth = menuListRef.current ? menuListRef.current.scrollWidth + paddingOffset : DEFAULT_WIDTH;
     const location = useLocation();
+    const getContent = useContent('navigation');
 
     const containerSpringRef = useSpringRef();
     const containerSprings = useSpring({
@@ -85,7 +88,6 @@ export default function DesktopNavigation() {
         );
     }
 
-    // TODO: Determine new content process, replace hardcoded text
     return (
         <>
             <div className={styles.desktopNav}>
@@ -99,15 +101,15 @@ export default function DesktopNavigation() {
                     <DesktopNavItem
                         to={PAGE_ROUTES.dashboard}
                         icon={<FaHome />}
-                        text="Dashboard"
+                        text={getContent('dashboard')}
                         openMenu={openMenu}
                         onBlur={handleOnBlur}
                         textSprings={textSprings}
                     />
                     <DesktopNavItem
-                        to={PAGE_ROUTES.transactions}
-                        icon={<FaReceipt />}
-                        text="Transactions"
+                        to={PAGE_ROUTES.savings}
+                        icon={<MdSavings />}
+                        text={getContent('savings')}
                         openMenu={openMenu}
                         onBlur={handleOnBlur}
                         textSprings={textSprings}
@@ -115,7 +117,7 @@ export default function DesktopNavigation() {
                     <DesktopNavItem
                         to={PAGE_ROUTES.recurring_spending}
                         icon={<FaHistory />}
-                        text="Recurring spending"
+                        text={getContent('recurringDesktop')}
                         openMenu={openMenu}
                         onBlur={handleOnBlur}
                         textSprings={textSprings}
@@ -123,7 +125,7 @@ export default function DesktopNavigation() {
                     <DesktopNavItem
                         to={PAGE_ROUTES.trends}
                         icon={<FaChartPie />}
-                        text="Trends"
+                        text={getContent('trends')}
                         openMenu={openMenu}
                         onBlur={handleOnBlur}
                         textSprings={textSprings}
@@ -131,7 +133,7 @@ export default function DesktopNavigation() {
                     <DesktopNavItem
                         to={PAGE_ROUTES.trips}
                         icon={<FaPlaneDeparture />}
-                        text="Trips"
+                        text={getContent('trips')}
                         openMenu={openMenu}
                         onBlur={handleOnBlur}
                         textSprings={textSprings}
