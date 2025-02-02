@@ -63,6 +63,7 @@ const locale = {
     },
     savings: {
         pageTitle: 'Savings',
+        accountTotalByType: 'Totals by account type',
     },
     accounts: {
         addAccount: 'Add account',

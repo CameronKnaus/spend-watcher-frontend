@@ -14,7 +14,7 @@ import styles from './AccountsList.module.css';
 
 export default function AccountsList() {
     const [accountToEdit, setAccountToEdit] = useState<AccountWithStatus | null>(null);
-    const { isLoading, accountsSummary } = useAccountSummaryService();
+    const { isLoading, data: accountsSummary } = useAccountSummaryService();
     const getCategoryLabel = useContent('ACCOUNT_CATEGORIES');
     const getContent = useContent('accounts');
 

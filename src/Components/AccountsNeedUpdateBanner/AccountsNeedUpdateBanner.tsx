@@ -5,7 +5,7 @@ import styles from './AccountsNeedUpdateBanner.module.css';
 
 export default function AccountsNeedUpdateBanner() {
     const getContent = useContent('accounts');
-    const { accountsSummary } = useAccountSummaryService();
+    const { data: accountsSummary } = useAccountSummaryService();
 
     if (!accountsSummary) {
         return null;

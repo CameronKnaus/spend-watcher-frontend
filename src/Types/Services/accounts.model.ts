@@ -78,6 +78,7 @@ export type AccountsSummaryV1Response = {
     totalEquity: number;
     totalAccountsCount: number;
     accountsCountByCategory: Record<AccountCategory, number>;
+    accountTotalsByType: Record<AccountCategory, number>;
     accountsList: AccountWithStatus[];
 };
 
