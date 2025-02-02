@@ -52,8 +52,8 @@ export default function PageRoutes() {
                 <Route path={PAGE_ROUTES.savings} element={<Savings />} />
                 <Route path={PAGE_ROUTES.recurring_spending} element={<RecurringSpending />} />
                 <Route path={PAGE_ROUTES.trips} element={<TripsPage />} />
+                <Route path={PAGE_ROUTES.trends} element={<Trends />} />
             </Route>
-            <Route path={PAGE_ROUTES.trends} element={<Trends />} />
             <Route path={PAGE_ROUTES.auth} element={<AuthScreen />} />
         </Routes>
     );

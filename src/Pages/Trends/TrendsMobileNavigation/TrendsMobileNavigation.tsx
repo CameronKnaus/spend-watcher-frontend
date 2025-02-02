@@ -1,27 +1,39 @@
-import { PAGE_ROUTES } from 'Components/PageRoutes/PageRoutes';
 import { DateRangeType } from 'Contexts/SelectedTimeFrame.context';
 import useContent from 'Hooks/useContent';
 import useSelectedTimeFrame from 'Hooks/useSelectedTimeFrame/useSelectedTimeFrame';
-import { FaFilter, FaHome } from 'react-icons/fa';
+import { useLayoutEffect, useRef } from 'react';
+import { FaFilter } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
+import { useIsMobile } from 'Util/IsMobileContext';
 import TimeFrameButton from '../TimeFrameButton/TimeFrameButton';
 import MobileButton from './MobileButton/MobileButton';
 import styles from './TrendsMobileNavigation.module.css';
 
 export default function TrendsMobileNavigation() {
+    const navRef = useRef<HTMLDivElement>(null);
     const { dateRangeType, updateDateRangeType } = useSelectedTimeFrame();
     const navigate = useNavigate();
     const getContent = useContent('trends');
+    const isMobile = useIsMobile();
+
+    useLayoutEffect(() => {
+        const navElement = navRef.current;
+        if (!navElement) {
+            return;
+        }
+
+        if (!isMobile) {
+            navElement.style.bottom = '0px';
+            return;
+        }
+
+        const mobileNav = document.getElementById('mobile-nav');
+
+        navElement.style.bottom = `${mobileNav?.clientHeight ?? 0}px`;
+    }, [isMobile]);
 
     return (
-        <nav className={styles.navContainer}>
-            <MobileButton
-                icon={<FaHome />}
-                buttonText={getContent('dashboardButton')}
-                onClick={() => {
-                    navigate(PAGE_ROUTES.dashboard);
-                }}
-            />
+        <nav ref={navRef} className={styles.navContainer}>
             <TimeFrameButton />
             <MobileButton
                 icon={<FaFilter />}

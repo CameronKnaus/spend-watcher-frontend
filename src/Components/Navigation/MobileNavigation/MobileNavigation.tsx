@@ -15,7 +15,7 @@ export default function MobileNavigation() {
                 <Outlet data-testid="outlet-container" />
                 <div className={styles.outletSpacer} />
             </div>
-            <nav className={styles.navContainer}>
+            <nav id="mobile-nav" className={styles.navContainer}>
                 <MobileNavItem to={PAGE_ROUTES.dashboard} icon={<FaHome />} text={getContent('dashboard')} />
                 <MobileNavItem to={PAGE_ROUTES.savings} icon={<MdSavings />} text={getContent('savings')} />
                 <MobileNavItem to={PAGE_ROUTES.trends} icon={<FaChartPie />} text={getContent('trends')} />
