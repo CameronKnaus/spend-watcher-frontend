@@ -3,7 +3,7 @@ import DiscretionarySpendPanel from 'Components/DiscretionarySpendForm/Discretio
 import LoadingInteractiveRow from 'Components/InteractiveRow/LoadingInteractiveRow';
 import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
 import TransactionRow from 'Components/TransactionRow';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
 import { useState } from 'react';
@@ -25,38 +25,43 @@ export default function TransactionsList() {
                         : Object.entries(spendingData.transactionsByDate)
                               // TODO: Have this list support more than just discretionary transactions (remove filter)
                               .filter(([, datesTransactions]) => datesTransactions.discretionaryTotals.amount > 0)
-                              .map(([dbDate, datesTransactions]) => (
-                                  <>
-                                      <h3 className={styles.dateHeader}>
-                                          {format(dbDate, 'MMM do')}
-                                          <div className={styles.daysTotalAmount}>
-                                              <Currency
-                                                  amount={-datesTransactions.discretionaryTotals.amount}
-                                                  isGainLoss
-                                              />
+                              .map(([dbDate, datesTransactions]) => {
+                                  const date = parseISO(dbDate);
+                                  const dateLabel = format(date, 'MMM do');
+                                  return (
+                                      <>
+                                          <h3 className={styles.dateHeader}>
+                                              {dateLabel}
+                                              <div className={styles.daysTotalAmount}>
+                                                  <Currency
+                                                      amount={-datesTransactions.discretionaryTotals.amount}
+                                                      isGainLoss
+                                                  />
+                                              </div>
+                                          </h3>
+                                          <div className={styles.transactionGroup}>
+                                              {datesTransactions.includedTransactions
+                                                  .filter(isDiscretionaryTransactionId)
+                                                  .map((transactionId) => {
+                                                      const transaction =
+                                                          spendingData.transactionDictionary[transactionId];
+                                                      return (
+                                                          <TransactionRow
+                                                              key={transactionId}
+                                                              transactionId={transactionId}
+                                                              category={transaction.category}
+                                                              amountSpent={transaction.amountSpent}
+                                                              note={transaction.note}
+                                                              onClick={() => {
+                                                                  setTransactionToEdit(transaction);
+                                                              }}
+                                                          />
+                                                      );
+                                                  })}
                                           </div>
-                                      </h3>
-                                      <div className={styles.transactionGroup}>
-                                          {datesTransactions.includedTransactions
-                                              .filter(isDiscretionaryTransactionId)
-                                              .map((transactionId) => {
-                                                  const transaction = spendingData.transactionDictionary[transactionId];
-                                                  return (
-                                                      <TransactionRow
-                                                          key={transactionId}
-                                                          transactionId={transactionId}
-                                                          category={transaction.category}
-                                                          amountSpent={transaction.amountSpent}
-                                                          note={transaction.note}
-                                                          onClick={() => {
-                                                              setTransactionToEdit(transaction);
-                                                          }}
-                                                      />
-                                                  );
-                                              })}
-                                      </div>
-                                  </>
-                              ))}
+                                      </>
+                                  );
+                              })}
                 </>
             </ModuleContainer>
             <DiscretionarySpendPanel
