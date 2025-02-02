@@ -61,6 +61,9 @@ const locale = {
         close: 'Close',
         confirmChange: 'Confirm change',
     },
+    savings: {
+        pageTitle: 'Savings',
+    },
     accounts: {
         addAccount: 'Add account',
         totalAccountValues: 'Accounts total',

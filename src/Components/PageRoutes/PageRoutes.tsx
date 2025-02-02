@@ -4,6 +4,7 @@ import useSessionStatus from 'Hooks/useSessionStatus/useSessionStatus';
 import AuthScreen from 'Pages/AuthScreen/AuthScreen';
 import Dashboard from 'Pages/Dashboard/Dashboard';
 import RecurringSpending from 'Pages/RecurringSpending/RecurringSpending';
+import Savings from 'Pages/Savings/Savings';
 import Trends from 'Pages/Trends/Trends';
 import TripsPage from 'Pages/TripsPage/TripsPage';
 import { useEffect } from 'react';
@@ -48,7 +49,7 @@ export default function PageRoutes() {
         <Routes>
             <Route element={isMobile ? <MobileNavigation /> : <DesktopNavigation />}>
                 <Route path={PAGE_ROUTES.dashboard} element={<Dashboard />} />
-                <Route path={PAGE_ROUTES.savings} element={<h1>Savings</h1>} />
+                <Route path={PAGE_ROUTES.savings} element={<Savings />} />
                 <Route path={PAGE_ROUTES.recurring_spending} element={<RecurringSpending />} />
                 <Route path={PAGE_ROUTES.trips} element={<TripsPage />} />
             </Route>
