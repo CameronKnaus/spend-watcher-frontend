@@ -1,8 +1,10 @@
 import { clsx } from 'clsx';
 import { ComponentProps, ReactNode } from 'react';
+import { UseMeasureRef } from 'react-use/lib/useMeasure';
 import styles from './ModuleContainer.module.css';
 
 type ModuleContainerPropTypes = {
+    forwardRef?: UseMeasureRef<HTMLDivElement>;
     heading?: ReactNode;
     // For shadow effect
     elevation?: 'low' | 'medium' | 'high';
@@ -10,6 +12,7 @@ type ModuleContainerPropTypes = {
 };
 
 export default function ModuleContainer({
+    forwardRef,
     heading,
     elevation,
     children,
@@ -25,7 +28,7 @@ export default function ModuleContainer({
 
     return (
         // Order of attributes here matters
-        <div {...attributes} className={containerClass}>
+        <div ref={forwardRef} {...attributes} className={containerClass}>
             {heading && <h3 className={styles.heading}>{heading}</h3>}
             {children}
         </div>

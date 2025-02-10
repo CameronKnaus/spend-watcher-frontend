@@ -33,6 +33,7 @@ const SERVICE_ROUTES: Record<string, string> = {
     getAccountValueHistory: domainName + '/accounts/v1/history',
     postAddAccountUpdate: domainName + '/accounts/v1/update/add',
     postEditAccountUpdate: domainName + '/accounts/v1/update/edit',
+    getAccountGrowthOverTime: domainName + '/accounts/v1/growth-over-time',
 };
 
 export default SERVICE_ROUTES;

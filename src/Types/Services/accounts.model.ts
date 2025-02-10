@@ -130,3 +130,13 @@ export const editAccountUpdateRequestParamSchema = zod.object({
 });
 
 export type EditAccountUpdateV1RequestParams = zod.infer<typeof editAccountUpdateRequestParamSchema>;
+
+// ACCOUNTS GROWTH OVER TIME SERVICE v1/account/growth-over-time
+export type AccountValueDataPoint = {
+    accountId: string; // uuid string
+    accountName: string;
+    date: DbDate;
+    amount: number;
+};
+
+export type AccountGrowthOverTimeV1Response = AccountValueDataPoint[];

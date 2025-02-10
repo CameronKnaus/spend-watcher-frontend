@@ -8,7 +8,7 @@ export default function useAccountHistory(accountId: Account['id']) {
         queryKey: ['accounts', accountId],
         queryFn: async () =>
             (
-                await axios.get(SERVICE_ROUTES.getAccountValueHistory, {
+                await axios.get(SERVICE_ROUTES.getAccountGrowthOverTime, {
                     params: {
                         accountId,
                     },
