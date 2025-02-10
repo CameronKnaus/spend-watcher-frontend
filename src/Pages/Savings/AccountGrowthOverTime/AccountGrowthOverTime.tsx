@@ -6,6 +6,7 @@ import useContent from 'Hooks/useContent';
 import { useMeasure } from 'react-use';
 import { DbDate } from 'Types/dateTypes';
 import AxisBottom from './AxisBottom/AxisBottom';
+import AxisLeft from './AxisLeft/AxisLeft';
 
 export default function AccountGrowthOverTime() {
     const getContent = useContent('savings');
@@ -30,7 +31,7 @@ export default function AccountGrowthOverTime() {
             top: 10,
             right: 10,
             bottom: 30,
-            left: 30,
+            left: 60,
         },
         boundedWidth: 0,
         boundedHeight: 0,
@@ -93,6 +94,10 @@ export default function AccountGrowthOverTime() {
                 >
                     <path d={linePath} fill="none" stroke="black" strokeWidth="2" />
                 </g>
+                <AxisLeft
+                    scale={yScale}
+                    transform={`translate(${canvasDimensions.margin.left}, ${canvasDimensions.margin.top})`}
+                />
                 <AxisBottom
                     scale={xScale}
                     transform={`translate(${canvasDimensions.margin.left}, ${canvasDimensions.height - canvasDimensions.margin.bottom})`}
