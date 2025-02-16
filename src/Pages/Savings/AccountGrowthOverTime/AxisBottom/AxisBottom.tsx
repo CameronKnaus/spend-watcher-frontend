@@ -11,10 +11,8 @@ interface AxisBottomProps {
     tickFormat?: string;
 }
 
-export default function AxisBottom({ scale, transform, tickCount = 5, tickFormat = '%b %y' }: AxisBottomProps) {
-    // Compute tick values using D3's scale method.
+export default function AxisBottom({ scale, transform, tickCount = 5, tickFormat = '%b %Y' }: AxisBottomProps) {
     const ticks = scale.ticks(tickCount);
-    // Create a formatter for the tick labels.
     const formatTime = d3.timeFormat(tickFormat);
 
     return (
@@ -29,7 +27,11 @@ export default function AxisBottom({ scale, transform, tickCount = 5, tickFormat
                         {/* Tick mark */}
                         <line y2={6} stroke="currentColor" />
                         {/* Tick label */}
-                        <text style={{ textAnchor: 'middle', fontSize: '10px' }} y={9} dy="0.71em">
+                        <text
+                            style={{ textAnchor: 'middle', fontSize: '10px', fill: 'currentColor' }}
+                            y={9}
+                            dy="0.71em"
+                        >
                             {formatTime(tick)}
                         </text>
                     </g>

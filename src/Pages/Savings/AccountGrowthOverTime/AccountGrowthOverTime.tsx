@@ -5,6 +5,7 @@ import useAccountGrowthOverTimeService from 'Hooks/useAccountGrowthOverTimeServi
 import useContent from 'Hooks/useContent';
 import { useMeasure } from 'react-use';
 import { DbDate } from 'Types/dateTypes';
+import styles from './AccountGrowthOverTime.module.css';
 import AxisBottom from './AxisBottom/AxisBottom';
 import AxisLeft from './AxisLeft/AxisLeft';
 
@@ -28,9 +29,9 @@ export default function AccountGrowthOverTime() {
         width: tileMeasurement.width,
         height: 400,
         margin: {
-            top: 10,
-            right: 10,
-            bottom: 30,
+            top: 12,
+            right: 24,
+            bottom: 24,
             left: 60,
         },
         boundedWidth: 0,
@@ -66,10 +67,11 @@ export default function AccountGrowthOverTime() {
     const yAccessor = (d: DataPoint) => d.amount;
 
     // SCALES
+    const xScalePadding = 4;
     const xScale = d3
         .scaleTime()
         .domain(d3.extent(totalsArray, xAccessor) as [Date, Date])
-        .range([0, canvasDimensions.boundedWidth]);
+        .range([xScalePadding, canvasDimensions.boundedWidth + xScalePadding]);
 
     const yScale = d3
         .scaleLinear()
@@ -86,13 +88,14 @@ export default function AccountGrowthOverTime() {
     const linePath = lineGenerator(totalsArray)!;
 
     return (
-        <ModuleContainer forwardRef={tileRef} heading={tileTitle}>
+        <ModuleContainer forwardRef={tileRef} elevation="high" className={styles.container}>
+            <h3 className={styles.header}>{tileTitle}</h3>
             <svg width={canvasDimensions.width} height={canvasDimensions.height}>
                 <g
                     id="chart-bounds"
                     transform={`translate(${canvasDimensions.margin.left}, ${canvasDimensions.margin.top})`}
                 >
-                    <path d={linePath} fill="none" stroke="black" strokeWidth="2" />
+                    <path d={linePath} fill="none" stroke="currentColor" strokeWidth="2" />
                 </g>
                 <AxisLeft
                     scale={yScale}

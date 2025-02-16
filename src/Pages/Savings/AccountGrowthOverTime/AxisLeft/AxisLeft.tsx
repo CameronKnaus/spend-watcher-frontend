@@ -41,11 +41,19 @@ export default function AxisLeft({ scale, transform, tickCount = 5 }: AxisBottom
             {ticks.map((tick, index) => {
                 const y = scale(tick);
                 return (
-                    <g key={index} transform={`translate(-24, ${y})`}>
+                    <g key={index} transform={`translate(-12, ${y})`}>
                         {/* Tick mark */}
-                        <line x2={12} stroke="currentColor" transform="translate(12, 0)" />
+                        <line x2={6} stroke="currentColor" transform="translate(6, 0)" />
                         {/* Tick label */}
-                        <text style={{ textAnchor: 'end', fontSize: '12px', transform: 'translate(0, 3px)' }}>
+                        <text
+                            style={{
+                                textAnchor: 'end',
+                                fontSize: '12px',
+                                fontWeight: 'bold',
+                                transform: 'translate(0, 3px)',
+                                fill: 'currentColor',
+                            }}
+                        >
                             {formatCurrency(tick)}
                         </text>
                     </g>
