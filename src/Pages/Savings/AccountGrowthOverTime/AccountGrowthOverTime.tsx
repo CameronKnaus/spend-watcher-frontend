@@ -99,7 +99,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     const linePath = lineGenerator(totalsArray)!;
 
     // Bisector for the X accessor
-    const bisectDate = d3.bisector(xAccessor).left;
+    const bisectDate = d3.bisector(xAccessor).right;
 
     // For mouse move
     function handlePointerMove(event: React.PointerEvent<SVGRectElement>) {
@@ -122,7 +122,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
             closestDataPoint = d0 || d1;
         }
 
-        closestDataPoint && setHoveredData(closestDataPoint);
+        setHoveredData(closestDataPoint ?? totalsArray[totalsArray.length - 1]);
     }
 
     return (

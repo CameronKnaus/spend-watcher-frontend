@@ -1,5 +1,5 @@
 .container {
-    padding: 10px 16px;
+    padding: 10px 0;
     background: linear-gradient(
         -2deg,
         var(--theme-color-primary-400) 0%,
@@ -10,6 +10,11 @@
     );
     color: var(--theme-color-primary-900);
     min-height: 400px;
+}
+
+.loaderContainer {
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .skeletonOverride {
