@@ -2,7 +2,7 @@ import Currency from 'Components/Currency/Currency';
 import * as d3 from 'd3';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { UseMeasureRect } from 'react-use/lib/useMeasure';
 import { DbDate } from 'Types/dateTypes';
 import { AccountGrowthOverTimeV1Response } from 'Types/Services/accounts.model';
@@ -41,6 +41,25 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     const [hoveredData, setHoveredData] = useState<DataPoint>(totalsArray[totalsArray.length - 1]);
     const getContent = useContent('savings');
     const isMobile = useIsMobile();
+    const hitBoxRef = useRef<SVGRectElement>(null);
+
+    // Prevent touch-based scrolling
+    useEffect(() => {
+        if (!hitBoxRef.current) {
+            return;
+        }
+
+        function preventBehavior(event: TouchEvent) {
+            event.preventDefault();
+        }
+
+        const hitBox = hitBoxRef.current;
+        hitBox.addEventListener('touchmove', preventBehavior, { passive: false });
+
+        () => {
+            hitBox.removeEventListener('touchmove', preventBehavior);
+        };
+    }, []);
 
     type DataPoint = {
         date: DbDate;
@@ -53,7 +72,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
         height: 400,
         margin: {
             top: 12,
-            right: 24,
+            right: 32,
             bottom: 24,
             left: maxNumber > 100_000 ? 64 : 56, // making space for larger Y-axis labels
         },
@@ -154,6 +173,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
                 >
                     {/* Hitbox for scrubbing */}
                     <rect
+                        ref={hitBoxRef}
                         width={canvasDimensions.boundedWidth}
                         height={canvasDimensions.boundedHeight}
                         fill="transparent"
