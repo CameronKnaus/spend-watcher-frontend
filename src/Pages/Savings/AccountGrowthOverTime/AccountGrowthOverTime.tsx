@@ -82,7 +82,8 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     const xScale = d3
         .scaleTime()
         .domain(d3.extent(totalsArray, xAccessor) as [Date, Date])
-        .range([xScalePadding, canvasDimensions.boundedWidth + xScalePadding]);
+        .range([xScalePadding, canvasDimensions.boundedWidth + xScalePadding])
+        .nice();
 
     const yScale = d3
         .scaleLinear()
@@ -99,7 +100,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     const linePath = lineGenerator(totalsArray)!;
 
     // Bisector for the X accessor
-    const bisectDate = d3.bisector(xAccessor).right;
+    const bisectDate = d3.bisector(xAccessor).left;
 
     // For mouse move
     function handlePointerMove(event: React.PointerEvent<SVGRectElement>) {
