@@ -25,6 +25,8 @@
     flex-shrink: 1;
     flex-basis: 0;
     text-decoration: none;
+    /* Remove background color on tap default for <a> tags */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .icon {
