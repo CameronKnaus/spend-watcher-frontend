@@ -17,19 +17,17 @@ export default function AxisBottom({ scale, transform, tickCount = 5, tickFormat
 
     return (
         <g transform={transform}>
-            {/* Render the horizontal axis line */}
-            <line x1={scale.range()[0]} x2={scale.range()[1]} stroke="currentColor" />
             {/* Render tick marks and labels */}
             {ticks.map((tick, index) => {
                 const x = scale(tick);
                 return (
                     <g key={index} transform={`translate(${x}, 0)`}>
                         {/* Tick mark */}
-                        <line y2={6} stroke="currentColor" />
+                        <line y2={5} stroke="var(--theme-color-primary-800)" />
                         {/* Tick label */}
                         <text
                             style={{ textAnchor: 'middle', fontSize: '10px', fill: 'currentColor' }}
-                            y={9}
+                            y={12}
                             dy="0.71em"
                         >
                             {formatTime(tick)}

@@ -1,38 +1,61 @@
-import ModuleContainer from 'Components/ModuleContainer/ModuleContainer';
-import SkeletonLoader from 'Components/Shared/SkeletonLoader';
+import Currency from 'Components/Currency/Currency';
 import * as d3 from 'd3';
-import useAccountGrowthOverTimeService from 'Hooks/useAccountGrowthOverTimeService/useAccountGrowthOverTimeService';
+import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
-import { useMeasure } from 'react-use';
+import { useState } from 'react';
+import { UseMeasureRect } from 'react-use/lib/useMeasure';
 import { DbDate } from 'Types/dateTypes';
+import { AccountGrowthOverTimeV1Response } from 'Types/Services/accounts.model';
+import { useIsMobile } from 'Util/IsMobileContext';
 import styles from './AccountGrowthOverTime.module.css';
 import AxisBottom from './AxisBottom/AxisBottom';
 import AxisLeft from './AxisLeft/AxisLeft';
 
-export default function AccountGrowthOverTime() {
+export type ChartDimensions = {
+    width: number;
+    height: number;
+    margin: {
+        top: number;
+        right: number;
+        bottom: number;
+        left: number;
+    };
+    boundedWidth: number;
+    boundedHeight: number;
+};
+
+type AccountGrowthOverTimePropTypes = {
+    dataset: AccountGrowthOverTimeV1Response;
+    containerMeasurement: UseMeasureRect;
+};
+
+export default function AccountGrowthOverTime({ dataset, containerMeasurement }: AccountGrowthOverTimePropTypes) {
+    const totalsByDate = d3.rollup(
+        dataset,
+        (v) => d3.sum(v, (d) => d.amount),
+        (d) => d.date,
+    );
+    const totalsArray: DataPoint[] = Array.from(totalsByDate, ([date, amount]) => ({ date, amount }) as DataPoint);
+
+    // Hooks
+    const [hoveredData, setHoveredData] = useState<DataPoint>(totalsArray[totalsArray.length - 1]);
     const getContent = useContent('savings');
-    const { isLoading, data: dataset } = useAccountGrowthOverTimeService();
-    const [tileRef, tileMeasurement] = useMeasure<HTMLDivElement>();
+    const isMobile = useIsMobile();
 
-    const tileTitle = getContent('savingsOverTime');
-    if (isLoading || !dataset) {
-        return (
-            <ModuleContainer heading={tileTitle}>
-                <SkeletonLoader />
-                <SkeletonLoader style={{ width: '70%' }} />
-                <SkeletonLoader style={{ width: '35%' }} />
-            </ModuleContainer>
-        );
-    }
+    type DataPoint = {
+        date: DbDate;
+        amount: number;
+    };
 
-    const canvasDimensions = {
-        width: tileMeasurement.width,
+    const maxNumber = d3.max(totalsArray, (d) => d.amount) ?? 0;
+    const canvasDimensions: ChartDimensions = {
+        width: containerMeasurement.width,
         height: 400,
         margin: {
             top: 12,
             right: 24,
             bottom: 24,
-            left: 60,
+            left: maxNumber > 100_000 ? 64 : 56, // making space for larger Y-axis labels
         },
         boundedWidth: 0,
         boundedHeight: 0,
@@ -43,18 +66,6 @@ export default function AccountGrowthOverTime() {
         canvasDimensions.width - canvasDimensions.margin.left - canvasDimensions.margin.right;
     canvasDimensions.boundedHeight =
         canvasDimensions.height - canvasDimensions.margin.top - canvasDimensions.margin.bottom;
-
-    const totalsByDate = d3.rollup(
-        dataset,
-        (v) => d3.sum(v, (d) => d.amount),
-        (d) => d.date,
-    );
-
-    type DataPoint = {
-        date: DbDate;
-        amount: number;
-    };
-    const totalsArray: DataPoint[] = Array.from(totalsByDate, ([date, amount]) => ({ date, amount }) as DataPoint);
 
     const dateParser = d3.timeParse('%Y-%m-%d');
     const xAccessor = (d: DataPoint) => {
@@ -87,25 +98,78 @@ export default function AccountGrowthOverTime() {
 
     const linePath = lineGenerator(totalsArray)!;
 
+    // Bisector for the X accessor
+    const bisectDate = d3.bisector(xAccessor).left;
+
+    // For mouse move
+    function handlePointerMove(event: React.PointerEvent<SVGRectElement>) {
+        // mouse / touch position relative to chart bounds
+        const [xPos] = d3.pointer(event);
+        const hoveredDate = xScale.invert(xPos);
+
+        // Finding the closest data point to the hovered date
+        const index = bisectDate(totalsArray, hoveredDate);
+        const d0 = totalsArray[index - 1];
+        const d1 = totalsArray[index];
+
+        let closestDataPoint: DataPoint | undefined;
+        if (d0 && d1) {
+            closestDataPoint =
+                hoveredDate.getTime() - xAccessor(d0).getTime() < xAccessor(d1).getTime() - hoveredDate.getTime()
+                    ? d0
+                    : d1;
+        } else {
+            closestDataPoint = d0 || d1;
+        }
+
+        closestDataPoint && setHoveredData(closestDataPoint);
+    }
+
     return (
-        <ModuleContainer forwardRef={tileRef} elevation="high" className={styles.container}>
-            <h3 className={styles.header}>{tileTitle}</h3>
+        <>
+            <div className={styles.overviewContainer}>
+                <h3 className={styles.header}>{getContent('netWorth')}</h3>
+                <div className={styles.dataContainer}>
+                    <Currency className={styles.amount} amount={hoveredData?.amount ?? 0} />
+                    <span className={styles.date}>
+                        {hoveredData ? format(new Date(hoveredData.date), 'MMMM yyyy') : '--'}
+                    </span>
+                </div>
+            </div>
             <svg width={canvasDimensions.width} height={canvasDimensions.height}>
-                <g
-                    id="chart-bounds"
-                    transform={`translate(${canvasDimensions.margin.left}, ${canvasDimensions.margin.top})`}
-                >
-                    <path d={linePath} fill="none" stroke="currentColor" strokeWidth="2" />
-                </g>
                 <AxisLeft
                     scale={yScale}
-                    transform={`translate(${canvasDimensions.margin.left}, ${canvasDimensions.margin.top})`}
+                    transform={`translate(0, ${canvasDimensions.margin.top})`}
+                    dimensions={canvasDimensions}
                 />
                 <AxisBottom
                     scale={xScale}
                     transform={`translate(${canvasDimensions.margin.left}, ${canvasDimensions.height - canvasDimensions.margin.bottom})`}
+                    tickCount={isMobile ? 4 : 6}
                 />
+                <g
+                    id="chart-bounds"
+                    transform={`translate(${canvasDimensions.margin.left}, ${canvasDimensions.margin.top})`}
+                >
+                    <rect
+                        width={canvasDimensions.boundedWidth}
+                        height={canvasDimensions.boundedHeight}
+                        fill="transparent"
+                        style={{ pointerEvents: 'all' }}
+                        onPointerMove={handlePointerMove}
+                    />
+                    <path d={linePath} fill="none" stroke="currentColor" strokeWidth="2" />
+                    <circle
+                        cx={xScale(xAccessor(hoveredData))}
+                        cy={yScale(yAccessor(hoveredData))}
+                        r={6}
+                        fill="currentColor"
+                        className={styles.hoverPoint}
+                    >
+                        <animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                </g>
             </svg>
-        </ModuleContainer>
+        </>
     );
 }

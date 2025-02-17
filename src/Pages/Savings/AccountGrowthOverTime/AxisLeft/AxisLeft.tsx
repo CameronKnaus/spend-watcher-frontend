@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { ChartDimensions } from '../AccountGrowthOverTime';
 
 interface AxisBottomProps {
     /** A D3 time scale that maps Date objects to x coordinates */
@@ -9,6 +10,7 @@ interface AxisBottomProps {
     tickCount?: number;
     /** A D3 time format specifier for the tick labels (optional) */
     tickFormat?: string;
+    dimensions: ChartDimensions;
 }
 
 function formatCurrency(n: number): string {
@@ -29,29 +31,34 @@ function formatCurrency(n: number): string {
     }
 }
 
-export default function AxisLeft({ scale, transform, tickCount = 5 }: AxisBottomProps) {
+export default function AxisLeft({ scale, transform, tickCount = 5, dimensions }: AxisBottomProps) {
     // Compute tick values using D3's scale method.
     const ticks = scale.ticks(tickCount);
 
     return (
         <g transform={transform}>
-            {/* Render the horizontal axis line */}
-            <line y1={scale.range()[0]} y2={scale.range()[1]} stroke="currentColor" />
-            {/* Render tick marks and labels */}
+            {/* <line y1={scale.range()[0]} y2={scale.range()[1]} stroke="currentColor" /> */}
             {ticks.map((tick, index) => {
                 const y = scale(tick);
                 return (
-                    <g key={index} transform={`translate(-12, ${y})`}>
-                        {/* Tick mark */}
-                        <line x2={6} stroke="currentColor" transform="translate(6, 0)" />
+                    <g key={index} transform={`translate(${dimensions.margin.left}, ${y})`}>
+                        {/* Tick line */}
+                        {y < dimensions.boundedHeight && (
+                            <line
+                                x1={6}
+                                x2={dimensions.boundedWidth}
+                                stroke="var(--theme-color-primary-700)"
+                                strokeDasharray="4"
+                            />
+                        )}
                         {/* Tick label */}
                         <text
+                            textAnchor="end"
+                            transform={`translate(-8, 0)`}
                             style={{
-                                textAnchor: 'end',
                                 fontSize: '12px',
                                 fontWeight: 'bold',
-                                transform: 'translate(0, 3px)',
-                                fill: 'currentColor',
+                                fill: 'var(--theme-color-primary-800)',
                             }}
                         >
                             {formatCurrency(tick)}

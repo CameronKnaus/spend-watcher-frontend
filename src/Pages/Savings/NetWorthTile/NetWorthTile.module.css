@@ -1,0 +1,12 @@
+.container {
+    padding: 10px 0;
+    background: linear-gradient(
+        -2deg,
+        var(--theme-color-primary-400) 0%,
+        var(--theme-color-primary-500) 5%,
+        var(--theme-color-primary-500) 10%,
+        var(--theme-color-primary-600) 20%,
+        var(--theme-color-primary-600) 100%
+    );
+    color: var(--theme-color-primary-900);
+}
