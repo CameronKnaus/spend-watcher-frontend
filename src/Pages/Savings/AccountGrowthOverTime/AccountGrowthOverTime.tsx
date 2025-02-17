@@ -151,11 +151,12 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
                     id="chart-bounds"
                     transform={`translate(${canvasDimensions.margin.left}, ${canvasDimensions.margin.top})`}
                 >
+                    {/* Hitbox for scrubbing */}
                     <rect
                         width={canvasDimensions.boundedWidth}
                         height={canvasDimensions.boundedHeight}
                         fill="transparent"
-                        style={{ pointerEvents: 'all' }}
+                        style={{ pointerEvents: 'all', touchAction: 'none' }}
                         onPointerMove={handlePointerMove}
                     />
                     <path d={linePath} fill="none" stroke="currentColor" strokeWidth="2" />
