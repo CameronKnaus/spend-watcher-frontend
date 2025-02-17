@@ -1,28 +1,17 @@
 import NumberFlow from '@number-flow/react';
+import HoverHitBox from 'Components/charts/components/HoverHitBox';
+import { DataPoint } from 'Components/charts/types/dataPointTypes';
+import useCanvasDimensions from 'Components/charts/use/useCanvasDimensions/useCanvasDimensions';
 import * as d3 from 'd3';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { UseMeasureRect } from 'react-use/lib/useMeasure';
-import { DbDate } from 'Types/dateTypes';
 import { AccountGrowthOverTimeV1Response } from 'Types/Services/accounts.model';
 import { useIsMobile } from 'Util/IsMobileContext';
 import styles from './AccountGrowthOverTime.module.css';
 import AxisBottom from './AxisBottom/AxisBottom';
 import AxisLeft from './AxisLeft/AxisLeft';
-
-export type ChartDimensions = {
-    width: number;
-    height: number;
-    margin: {
-        top: number;
-        right: number;
-        bottom: number;
-        left: number;
-    };
-    boundedWidth: number;
-    boundedHeight: number;
-};
 
 type AccountGrowthOverTimePropTypes = {
     dataset: AccountGrowthOverTimeV1Response;
@@ -35,39 +24,15 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
         (v) => d3.sum(v, (d) => d.amount),
         (d) => d.date,
     );
-    const totalsArray: DataPoint[] = Array.from(totalsByDate, ([date, amount]) => ({ date, amount }) as DataPoint);
+    const totalsArray: DataPoint[] = Array.from(totalsByDate, ([date, amount]) => ({ date, amount }));
 
     // Hooks
     const [hoveredData, setHoveredData] = useState<DataPoint>(totalsArray[totalsArray.length - 1]);
     const getContent = useContent('savings');
     const isMobile = useIsMobile();
-    const hitBoxRef = useRef<SVGRectElement>(null);
-
-    // Prevent touch-based scrolling
-    useEffect(() => {
-        if (!hitBoxRef.current) {
-            return;
-        }
-
-        function preventBehavior(event: TouchEvent) {
-            event.preventDefault();
-        }
-
-        const hitBox = hitBoxRef.current;
-        hitBox.addEventListener('touchmove', preventBehavior, { passive: false });
-
-        () => {
-            hitBox.removeEventListener('touchmove', preventBehavior);
-        };
-    }, []);
-
-    type DataPoint = {
-        date: DbDate;
-        amount: number;
-    };
 
     const maxNumber = d3.max(totalsArray, (d) => d.amount) ?? 0;
-    const canvasDimensions: ChartDimensions = {
+    const canvasDimensions = useCanvasDimensions({
         width: containerMeasurement.width,
         height: 400,
         margin: {
@@ -76,15 +41,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
             bottom: 24,
             left: maxNumber > 100_000 ? 64 : 56, // making space for larger Y-axis labels
         },
-        boundedWidth: 0,
-        boundedHeight: 0,
-    };
-
-    // Set true bounded width and height
-    canvasDimensions.boundedWidth =
-        canvasDimensions.width - canvasDimensions.margin.left - canvasDimensions.margin.right;
-    canvasDimensions.boundedHeight =
-        canvasDimensions.height - canvasDimensions.margin.top - canvasDimensions.margin.bottom;
+    });
 
     const dateParser = d3.timeParse('%Y-%m-%d');
     const xAccessor = (d: DataPoint) => {
@@ -97,11 +54,10 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     const yAccessor = (d: DataPoint) => d.amount;
 
     // SCALES
-    const xScalePadding = 4;
     const xScale = d3
         .scaleTime()
         .domain(d3.extent(totalsArray, xAccessor) as [Date, Date])
-        .range([xScalePadding, canvasDimensions.boundedWidth + xScalePadding])
+        .range([0, canvasDimensions.boundedWidth])
         .nice();
 
     const yScale = d3
@@ -134,6 +90,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
 
         let closestDataPoint: DataPoint | undefined;
         if (d0 && d1) {
+            // If the hovered date is closer to d0, then d0 is the closest data point
             closestDataPoint =
                 hoveredDate.getTime() - xAccessor(d0).getTime() < xAccessor(d1).getTime() - hoveredDate.getTime()
                     ? d0
@@ -175,15 +132,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
                     id="chart-bounds"
                     transform={`translate(${canvasDimensions.margin.left}, ${canvasDimensions.margin.top})`}
                 >
-                    {/* Hitbox for scrubbing */}
-                    <rect
-                        ref={hitBoxRef}
-                        width={canvasDimensions.boundedWidth}
-                        height={canvasDimensions.boundedHeight}
-                        fill="transparent"
-                        style={{ pointerEvents: 'all', touchAction: 'none' }}
-                        onPointerMove={handlePointerMove}
-                    />
+                    <HoverHitBox dimensions={canvasDimensions} handlePointerMove={handlePointerMove} />
                     <path d={linePath} fill="none" stroke="currentColor" strokeWidth="2" />
                     <circle
                         cx={xScale(xAccessor(hoveredData))}

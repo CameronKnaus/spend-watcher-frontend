@@ -1,5 +1,5 @@
+import { CanvasDimensions } from 'Components/charts/use/useCanvasDimensions/useCanvasDimensions';
 import * as d3 from 'd3';
-import { ChartDimensions } from '../AccountGrowthOverTime';
 
 interface AxisBottomProps {
     /** A D3 time scale that maps Date objects to x coordinates */
@@ -10,7 +10,7 @@ interface AxisBottomProps {
     tickCount?: number;
     /** A D3 time format specifier for the tick labels (optional) */
     tickFormat?: string;
-    dimensions: ChartDimensions;
+    dimensions: CanvasDimensions;
 }
 
 function formatCurrency(n: number): string {
