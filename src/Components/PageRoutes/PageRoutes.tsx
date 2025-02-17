@@ -7,7 +7,7 @@ import RecurringSpending from 'Pages/RecurringSpending/RecurringSpending';
 import Savings from 'Pages/Savings/Savings';
 import Trends from 'Pages/Trends/Trends';
 import TripsPage from 'Pages/TripsPage/TripsPage';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useIsMobile } from 'Util/IsMobileContext';
 
@@ -44,6 +44,10 @@ export default function PageRoutes() {
             navigate('/dashboard');
         }
     }, [isAuthenticated, isAuthenticating, location.pathname, navigate]);
+
+    useLayoutEffect(() => {
+        document.documentElement.scrollTo(0, 0);
+    }, [location.pathname]);
 
     return (
         <Routes>
