@@ -1,8 +1,8 @@
-import Currency from 'Components/Currency/Currency';
+import NumberFlow from '@number-flow/react';
 import * as d3 from 'd3';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { UseMeasureRect } from 'react-use/lib/useMeasure';
 import { DbDate } from 'Types/dateTypes';
 import { AccountGrowthOverTimeV1Response } from 'Types/Services/accounts.model';
@@ -41,6 +41,25 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     const [hoveredData, setHoveredData] = useState<DataPoint>(totalsArray[totalsArray.length - 1]);
     const getContent = useContent('savings');
     const isMobile = useIsMobile();
+    const hitBoxRef = useRef<SVGRectElement>(null);
+
+    // Prevent touch-based scrolling
+    useEffect(() => {
+        if (!hitBoxRef.current) {
+            return;
+        }
+
+        function preventBehavior(event: TouchEvent) {
+            event.preventDefault();
+        }
+
+        const hitBox = hitBoxRef.current;
+        hitBox.addEventListener('touchmove', preventBehavior, { passive: false });
+
+        () => {
+            hitBox.removeEventListener('touchmove', preventBehavior);
+        };
+    }, []);
 
     type DataPoint = {
         date: DbDate;
@@ -53,7 +72,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
         height: 400,
         margin: {
             top: 12,
-            right: 24,
+            right: 32,
             bottom: 24,
             left: maxNumber > 100_000 ? 64 : 56, // making space for larger Y-axis labels
         },
@@ -82,7 +101,8 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     const xScale = d3
         .scaleTime()
         .domain(d3.extent(totalsArray, xAccessor) as [Date, Date])
-        .range([xScalePadding, canvasDimensions.boundedWidth + xScalePadding]);
+        .range([xScalePadding, canvasDimensions.boundedWidth + xScalePadding])
+        .nice();
 
     const yScale = d3
         .scaleLinear()
@@ -122,7 +142,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
             closestDataPoint = d0 || d1;
         }
 
-        closestDataPoint && setHoveredData(closestDataPoint);
+        setHoveredData(closestDataPoint ?? totalsArray[totalsArray.length - 1]);
     }
 
     return (
@@ -130,10 +150,14 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
             <div className={styles.overviewContainer}>
                 <h3 className={styles.header}>{getContent('netWorth')}</h3>
                 <div className={styles.dataContainer}>
-                    <Currency className={styles.amount} amount={hoveredData?.amount ?? 0} />
-                    <span className={styles.date}>
-                        {hoveredData ? format(new Date(hoveredData.date), 'MMMM yyyy') : '--'}
-                    </span>
+                    <NumberFlow
+                        className={styles.amount}
+                        value={hoveredData.amount}
+                        format={{ style: 'currency', currency: 'USD', trailingZeroDisplay: 'auto' }}
+                        transformTiming={{ duration: 60, easing: 'ease-in-out' }}
+                        spinTiming={{ duration: 60, easing: 'ease-in-out' }}
+                    />
+                    <span className={styles.date}>{format(new Date(hoveredData.date), 'MMMM yyyy')}</span>
                 </div>
             </div>
             <svg width={canvasDimensions.width} height={canvasDimensions.height}>
@@ -153,6 +177,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
                 >
                     {/* Hitbox for scrubbing */}
                     <rect
+                        ref={hitBoxRef}
                         width={canvasDimensions.boundedWidth}
                         height={canvasDimensions.boundedHeight}
                         fill="transparent"
