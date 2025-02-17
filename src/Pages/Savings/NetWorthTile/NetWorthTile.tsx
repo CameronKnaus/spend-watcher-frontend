@@ -14,9 +14,9 @@ export default function NetWorthTile() {
     if (isLoading || !dataset) {
         return (
             <ModuleContainer heading={getContent('netWorth')} className={styles.container}>
-                <SkeletonLoader />
-                <SkeletonLoader style={{ width: '70%' }} />
-                <SkeletonLoader style={{ width: '35%' }} />
+                <SkeletonLoader className={styles.skeletonOverride} />
+                <SkeletonLoader className={styles.skeletonOverride} style={{ width: '70%' }} />
+                <SkeletonLoader className={styles.skeletonOverride} style={{ width: '35%' }} />
             </ModuleContainer>
         );
     }
