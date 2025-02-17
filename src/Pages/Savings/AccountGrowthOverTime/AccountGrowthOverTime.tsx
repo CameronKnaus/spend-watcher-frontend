@@ -1,4 +1,4 @@
-import Currency from 'Components/Currency/Currency';
+import NumberFlow from '@number-flow/react';
 import * as d3 from 'd3';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
@@ -150,10 +150,12 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
             <div className={styles.overviewContainer}>
                 <h3 className={styles.header}>{getContent('netWorth')}</h3>
                 <div className={styles.dataContainer}>
-                    <Currency className={styles.amount} amount={hoveredData?.amount ?? 0} />
-                    <span className={styles.date}>
-                        {hoveredData ? format(new Date(hoveredData.date), 'MMMM yyyy') : '--'}
-                    </span>
+                    <NumberFlow
+                        className={styles.amount}
+                        value={hoveredData.amount}
+                        format={{ style: 'currency', currency: 'USD', trailingZeroDisplay: 'auto' }}
+                    />
+                    <span className={styles.date}>{format(new Date(hoveredData.date), 'MMMM yyyy')}</span>
                 </div>
             </div>
             <svg width={canvasDimensions.width} height={canvasDimensions.height}>
