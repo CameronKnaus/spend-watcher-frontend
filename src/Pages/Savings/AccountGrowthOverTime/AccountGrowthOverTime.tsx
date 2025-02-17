@@ -154,6 +154,8 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
                         className={styles.amount}
                         value={hoveredData.amount}
                         format={{ style: 'currency', currency: 'USD', trailingZeroDisplay: 'auto' }}
+                        transformTiming={{ duration: 60, easing: 'ease-in-out' }}
+                        spinTiming={{ duration: 60, easing: 'ease-in-out' }}
                     />
                     <span className={styles.date}>{format(new Date(hoveredData.date), 'MMMM yyyy')}</span>
                 </div>
