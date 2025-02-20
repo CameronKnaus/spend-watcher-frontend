@@ -254,3 +254,26 @@ export type SpendingHistoryStartV1Response = {
 };
 
 // END SPENDING HISTORY START API --------------------------------------------
+
+// TRANSACTIONS API --- /api/spending/v1/transactions
+
+export const v1TransactionsSchema = zod.object({
+    startDate: zodValidateDbDateFormat,
+    endDate: zodValidateDbDateFormat,
+});
+
+export type TransactionsRequestParams = zod.infer<typeof v1TransactionsSchema>;
+
+export type Transaction = {
+    transactionId: number;
+    category: SpendingCategory;
+    amount: number;
+    date: DbDate;
+    isRecurring: boolean;
+};
+
+export type TransactionsV1Response = {
+    transactions: Transaction[];
+};
+
+// END TRANSACTIONS API --------------------------------------------
