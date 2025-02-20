@@ -21,7 +21,7 @@ export default function useTransactions() {
                 },
             });
 
-            return response.data.transactions;
+            return response.data;
         },
     });
 }

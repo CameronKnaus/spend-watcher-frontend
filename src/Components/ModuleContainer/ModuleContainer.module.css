@@ -10,3 +10,10 @@
     font-weight: var(--font-weight-medium);
     margin-bottom: 8px;
 }
+
+.skeletonLoaderContainer {
+    padding: 16px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}

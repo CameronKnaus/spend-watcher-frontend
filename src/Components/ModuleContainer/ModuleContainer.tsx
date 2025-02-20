@@ -1,4 +1,5 @@
 import { clsx } from 'clsx';
+import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 import { ComponentProps, ReactNode } from 'react';
 import { UseMeasureRef } from 'react-use/lib/useMeasure';
 import styles from './ModuleContainer.module.css';
@@ -8,13 +9,15 @@ type ModuleContainerPropTypes = {
     heading?: ReactNode;
     // For shadow effect
     elevation?: 'low' | 'medium' | 'high';
-    children: ReactNode;
+    isLoading?: boolean; // Show default staggered skeleton loader animations
+    children?: ReactNode;
 };
 
 export default function ModuleContainer({
     forwardRef,
     heading,
     elevation,
+    isLoading = false,
     children,
     ...attributes
 }: ModuleContainerPropTypes & ComponentProps<'div'>) {
@@ -30,7 +33,15 @@ export default function ModuleContainer({
         // Order of attributes here matters
         <div ref={forwardRef} {...attributes} className={containerClass}>
             {heading && <h3 className={styles.heading}>{heading}</h3>}
-            {children}
+            {isLoading ? (
+                <div className={styles.skeletonLoaderContainer}>
+                    <SkeletonLoader style={{ height: 24, width: '100%' }} />
+                    <SkeletonLoader style={{ height: 24, width: '75%' }} />
+                    <SkeletonLoader style={{ height: 24, width: '50%' }} />
+                </div>
+            ) : (
+                children
+            )}
         </div>
     );
 }
