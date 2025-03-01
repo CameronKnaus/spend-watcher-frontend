@@ -16,9 +16,9 @@ export default function BarChart({ transactionResponse, containerMeasurement }: 
         height: 400,
         margin: {
             top: 16,
-            right: 16,
+            right: 8,
             bottom: 32,
-            left: 64,
+            left: 56,
         },
     });
 
@@ -49,7 +49,7 @@ export default function BarChart({ transactionResponse, containerMeasurement }: 
                 scale={yScale}
                 transform={`translate(0, ${dimensions.margin.top})`}
                 dimensions={dimensions}
-                formatter={(d: number) => d3.format('$,.2f')(d)}
+                formatter={(d: number) => d3.format('$,.0f')(d)}
                 tickCount={4}
                 fontSize="10px"
             />

@@ -11,8 +11,10 @@ type ModuleContainerPropTypes = {
     elevation?: 'low' | 'medium' | 'high';
     isLoading?: boolean; // Show default staggered skeleton loader animations
     children?: ReactNode;
+    padding?: string;
 };
 
+// TODO: This component has too many responsibilities.  It should be made into a simple "Tile" extension of a div
 export default function ModuleContainer({
     forwardRef,
     heading,
@@ -21,7 +23,7 @@ export default function ModuleContainer({
     children,
     ...attributes
 }: ModuleContainerPropTypes & ComponentProps<'div'>) {
-    const { className } = attributes;
+    const { className, ...restAttributes } = attributes;
 
     const containerClass = clsx(styles.defaultContainer, className, {
         'background-secondary-elevation-low': elevation === 'low',
@@ -31,7 +33,7 @@ export default function ModuleContainer({
 
     return (
         // Order of attributes here matters
-        <div ref={forwardRef} {...attributes} className={containerClass}>
+        <div ref={forwardRef} {...restAttributes} className={containerClass}>
             {heading && <h3 className={styles.heading}>{heading}</h3>}
             {isLoading ? (
                 <div className={styles.skeletonLoaderContainer}>
