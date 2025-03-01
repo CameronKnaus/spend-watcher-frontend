@@ -1,5 +1,5 @@
 import { SpendingCategory } from 'Types/SpendingCategory';
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import {
     FaCannabis,
     FaCar,
@@ -34,7 +34,7 @@ import {
     MdWaterDrop,
 } from 'react-icons/md';
 
-export const spendCategoryIconMapper: Record<SpendingCategory, ReactElement> = {
+export const spendCategoryIconMapper: Record<SpendingCategory, ReactNode> = {
     AIRFARE: <MdLocalAirport />,
     BUSINESS: <MdBusinessCenter />,
     CANNABIS: <FaCannabis />,

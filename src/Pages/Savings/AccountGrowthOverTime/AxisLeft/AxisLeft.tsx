@@ -11,6 +11,10 @@ interface AxisBottomProps {
     /** A D3 time format specifier for the tick labels (optional) */
     tickFormat?: string;
     dimensions: CanvasDimensions;
+    lineColor?: string;
+    tickColor?: string;
+    formatter?: (n: number) => string;
+    fontSize?: string;
 }
 
 function formatCurrency(n: number): string {
@@ -31,37 +35,40 @@ function formatCurrency(n: number): string {
     }
 }
 
-export default function AxisLeft({ scale, transform, tickCount = 5, dimensions }: AxisBottomProps) {
+export default function AxisLeft({
+    scale,
+    transform,
+    tickCount = 5,
+    dimensions,
+    tickColor = 'currentColor',
+    lineColor = 'currentColor',
+    formatter = formatCurrency,
+    fontSize = '12px',
+}: AxisBottomProps) {
     // Compute tick values using D3's scale method.
     const ticks = scale.ticks(tickCount);
 
     return (
         <g transform={transform}>
-            {/* <line y1={scale.range()[0]} y2={scale.range()[1]} stroke="currentColor" /> */}
             {ticks.map((tick, index) => {
                 const y = scale(tick);
                 return (
                     <g key={index} transform={`translate(${dimensions.margin.left}, ${y})`}>
                         {/* Tick line */}
                         {y < dimensions.boundedHeight && (
-                            <line
-                                x1={6}
-                                x2={dimensions.boundedWidth}
-                                stroke="var(--theme-color-primary-700)"
-                                strokeDasharray="4"
-                            />
+                            <line x1={6} x2={dimensions.boundedWidth} stroke={lineColor} strokeDasharray="4" />
                         )}
                         {/* Tick label */}
                         <text
                             textAnchor="end"
                             transform={`translate(-8, 0)`}
                             style={{
-                                fontSize: '12px',
+                                fontSize,
                                 fontWeight: 'bold',
-                                fill: 'var(--theme-color-primary-800)',
+                                fill: tickColor,
                             }}
                         >
-                            {formatCurrency(tick)}
+                            {formatter(tick)}
                         </text>
                     </g>
                 );

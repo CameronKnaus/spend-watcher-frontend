@@ -122,6 +122,8 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
                     scale={yScale}
                     transform={`translate(0, ${canvasDimensions.margin.top})`}
                     dimensions={canvasDimensions}
+                    lineColor="var(--theme-color-primary-700)"
+                    tickColor="var(--theme-color-primary-800)"
                 />
                 <AxisBottom
                     scale={xScale}
