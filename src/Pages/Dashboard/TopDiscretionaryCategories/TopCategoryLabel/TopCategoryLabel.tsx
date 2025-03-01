@@ -11,6 +11,7 @@ type TopCategoryLabelPropTypes = {
     amount: number;
     percentage: number;
     customIconStyles?: CSSProperties;
+    onClick?: () => void;
 };
 
 export default function TopCategoryLabel({
@@ -20,6 +21,7 @@ export default function TopCategoryLabel({
     amount,
     percentage,
     customIconStyles,
+    onClick,
 }: TopCategoryLabelPropTypes) {
     const iconSize = 20;
     const containerStyle = {
@@ -27,7 +29,7 @@ export default function TopCategoryLabel({
     };
 
     return (
-        <div className={styles.categoryListItem} style={containerStyle}>
+        <button className={styles.categoryListItem} style={containerStyle} onClick={onClick}>
             <SpendingCategoryIcon
                 category={category}
                 size={iconSize}
@@ -39,6 +41,6 @@ export default function TopCategoryLabel({
                 <Currency amount={amount} isGainLoss />
                 <span className={styles.percentageValue}>{`(${percentage}%)`}</span>
             </div>
-        </div>
+        </button>
     );
 }

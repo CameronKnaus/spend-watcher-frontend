@@ -2,6 +2,7 @@ import CustomButton from 'Components/CustomButton/CustomButton';
 import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService/useSpendingDetailsService';
+import CategoryTransactionListPanel from 'Pages/Trends/CategoryTransactionListPanel/CategoryTransactionListPanel';
 import { useEffect, useRef, useState } from 'react';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import TopCategoryLabel from './TopCategoryLabel/TopCategoryLabel';
@@ -14,6 +15,7 @@ export default function TopDiscretionaryCategories() {
     const getCategoryLabel = useContent('SPENDING_CATEGORIES');
     const getContent = useContent('spendingData');
     const [isVerticalList, setIsVerticalList] = useState(false);
+    const [selectedCategoryForTransactions, setSelectedCategoryForTransactions] = useState<SpendingCategory>();
 
     useEffect(() => {
         const categoryContainer = containerRef.current;
@@ -94,71 +96,79 @@ export default function TopDiscretionaryCategories() {
     }
 
     return (
-        <div ref={containerRef} className={styles.topDiscretionaryCategories}>
-            <div className={styles.percentageBar}>
-                {list.map((details) => (
+        <>
+            <div ref={containerRef} className={styles.topDiscretionaryCategories}>
+                <div className={styles.percentageBar}>
+                    {list.map((details) => (
+                        <div
+                            key={`${details.category}-percentage-bar`}
+                            id={`${details.category}-percentage-bar`}
+                            className={styles.percentageBarGroup}
+                            style={{
+                                width: `${details.discretionaryTotals.percentageOfTotalAmount}%`,
+                                backgroundColor: `var(--theme-color-spend-category-${details.category})`,
+                            }}
+                        />
+                    ))}
                     <div
-                        key={`${details.category}-percentage-bar`}
-                        id={`${details.category}-percentage-bar`}
+                        id={`leftover-percentage-bar`}
                         className={styles.percentageBarGroup}
                         style={{
-                            width: `${details.discretionaryTotals.percentageOfTotalAmount}%`,
-                            backgroundColor: `var(--theme-color-spend-category-${details.category})`,
-                        }}
-                    />
-                ))}
-                <div
-                    id={`leftover-percentage-bar`}
-                    className={styles.percentageBarGroup}
-                    style={{
-                        flexBasis: 0,
-                        flexGrow: 1,
-                        backgroundColor: otherCategoriesColor,
-                    }}
-                />
-            </div>
-            <div className={styles.categoryList}>
-                {list.map(
-                    (details) =>
-                        details.discretionaryTotals.amount > 0 && (
-                            <TopCategoryLabel
-                                key={`${details.category}-description`}
-                                label={getCategoryLabel(details.category)}
-                                isVerticalList={isVerticalList}
-                                amount={-details.discretionaryTotals.amount}
-                                percentage={details.discretionaryTotals.percentageOfTotalAmount}
-                                category={details.category}
-                            />
-                        ),
-                )}
-                {showCombinedTotals && (
-                    <TopCategoryLabel
-                        label={getContent('topCombined')}
-                        isVerticalList={isVerticalList}
-                        amount={-spendCategoryOverview.topFourDiscretionaryTotals.amount}
-                        percentage={spendCategoryOverview.topFourDiscretionaryTotals.percentageOfTotalAmount}
-                        category={SpendingCategory.OTHER}
-                        customIconStyles={{
-                            background: generateLinearGradient(),
-                        }}
-                    />
-                )}
-                {showOtherCategory && (
-                    <TopCategoryLabel
-                        label={getContent('other')}
-                        isVerticalList={isVerticalList}
-                        amount={-spendCategoryOverview.remainingDiscretionaryTotals.amount}
-                        percentage={spendCategoryOverview.remainingDiscretionaryTotals.percentageOfTotalAmount}
-                        category={SpendingCategory.OTHER}
-                        customIconStyles={{
+                            flexBasis: 0,
+                            flexGrow: 1,
                             backgroundColor: otherCategoriesColor,
                         }}
                     />
-                )}
+                </div>
+                <div className={styles.categoryList}>
+                    {list.map(
+                        (details) =>
+                            details.discretionaryTotals.amount > 0 && (
+                                <TopCategoryLabel
+                                    key={`${details.category}-description`}
+                                    label={getCategoryLabel(details.category)}
+                                    isVerticalList={isVerticalList}
+                                    amount={-details.discretionaryTotals.amount}
+                                    percentage={details.discretionaryTotals.percentageOfTotalAmount}
+                                    category={details.category}
+                                    onClick={() => setSelectedCategoryForTransactions(details.category)}
+                                />
+                            ),
+                    )}
+                    {showCombinedTotals && (
+                        <TopCategoryLabel
+                            label={getContent('topCombined')}
+                            isVerticalList={isVerticalList}
+                            amount={-spendCategoryOverview.topFourDiscretionaryTotals.amount}
+                            percentage={spendCategoryOverview.topFourDiscretionaryTotals.percentageOfTotalAmount}
+                            category={SpendingCategory.OTHER}
+                            customIconStyles={{
+                                background: generateLinearGradient(),
+                            }}
+                        />
+                    )}
+                    {showOtherCategory && (
+                        <TopCategoryLabel
+                            label={getContent('other')}
+                            isVerticalList={isVerticalList}
+                            amount={-spendCategoryOverview.remainingDiscretionaryTotals.amount}
+                            percentage={spendCategoryOverview.remainingDiscretionaryTotals.percentageOfTotalAmount}
+                            category={SpendingCategory.OTHER}
+                            customIconStyles={{
+                                backgroundColor: otherCategoriesColor,
+                            }}
+                        />
+                    )}
+                </div>
+                <CustomButton variant="secondary" onClick={() => {}} className={styles.moreButton}>
+                    {getContent('moreLabel')}
+                </CustomButton>
             </div>
-            <CustomButton variant="secondary" onClick={() => {}} className={styles.moreButton}>
-                {getContent('moreLabel')}
-            </CustomButton>
-        </div>
+            <CategoryTransactionListPanel
+                category={selectedCategoryForTransactions}
+                transactionDictionary={spendingData.transactionDictionary}
+                onPanelClose={() => setSelectedCategoryForTransactions(undefined)}
+            />
+        </>
     );
 }
