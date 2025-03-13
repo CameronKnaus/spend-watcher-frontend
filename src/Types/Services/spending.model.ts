@@ -273,6 +273,7 @@ export type Transaction = {
 };
 
 export type TransactionsV1Response = {
+    presentCategories: SpendingCategory[]; // TODO: Maybe not needed
     transactions: Transaction[];
 };
 

@@ -55,14 +55,15 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
                 {...form.register('password', { maxLength: 100 })}
             />
             <div className={styles.buttonRowContainer}>
-                <CustomButton
+                {/* TODO: Reimplement registration */}
+                {/* <CustomButton
                     isDisabled={loginService.isPending}
                     variant="secondary"
                     onClick={switchToRegister}
                     layout="full-width"
                 >
                     {getContent('register')}
-                </CustomButton>
+                </CustomButton> */}
                 <CustomButton
                     isDisabled={!form.formState.isValid || loginService.isPending}
                     variant="primary"
