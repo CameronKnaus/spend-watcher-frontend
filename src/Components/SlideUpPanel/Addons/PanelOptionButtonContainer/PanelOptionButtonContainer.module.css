@@ -1,7 +1,0 @@
-.buttonContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 16px;
-    font-size: var(--font-body-large);
-}
