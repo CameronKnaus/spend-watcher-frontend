@@ -23,6 +23,8 @@ export default function TripExpenseList({ tripId, setTransactionToEdit }: TripEx
             <div>
                 <div className={styles.linkedTransactionsLabel}>{linkedTransactionsLabel}</div>
                 {Array.from({ length: 5 }).map((_, index) => (
+                    // Just some loaders with no children, the key doesn't really matter here.
+                    // eslint-disable-next-line react-x/no-array-index-key
                     <div className={styles.row} key={index}>
                         <LoadingInteractiveRow />
                     </div>

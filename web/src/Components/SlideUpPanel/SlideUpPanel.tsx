@@ -29,33 +29,34 @@ export default function SlideUpPanel({
         leave: { transform: 'translate(-50%, 100vh)', opacity: 0 },
     });
 
-    return slideInTransition(
-        (animatedStyles, isOpen) =>
-            isOpen && (
-                <div className={styles.container}>
+    const renderedPanel = slideInTransition((animatedStyles, isPanelOpen) =>
+        isPanelOpen ? (
+            <div className={styles.container}>
+                <animated.div
+                    className={styles.lockedBackground}
+                    style={{ opacity: animatedStyles.opacity }}
+                    onClick={handlePanelWillClose}
+                />
+                <FocusLock returnFocus>
                     <animated.div
-                        className={styles.lockedBackground}
-                        style={{ opacity: animatedStyles.opacity }}
-                        onClick={handlePanelWillClose}
-                    />
-                    <FocusLock returnFocus>
-                        <animated.div
-                            aria-modal
-                            role="dialog"
-                            className={styles.panelContainer}
-                            style={{ transform: animatedStyles.transform }}
-                        >
-                            <div className={styles.titleTag} style={{ backgroundColor: tagColor }}>
-                                <h2 tabIndex={0} className={styles.title}>
-                                    {title}
-                                </h2>
-                            </div>
-                            <div className={styles.panelContent}>
-                                <div className={styles.scrollableArea}>{children}</div>
-                            </div>
-                        </animated.div>
-                    </FocusLock>
-                </div>
-            ),
+                        aria-modal
+                        role="dialog"
+                        className={styles.panelContainer}
+                        style={{ transform: animatedStyles.transform }}
+                    >
+                        <div className={styles.titleTag} style={{ backgroundColor: tagColor }}>
+                            <h2 tabIndex={0} className={styles.title}>
+                                {title}
+                            </h2>
+                        </div>
+                        <div className={styles.panelContent}>
+                            <div className={styles.scrollableArea}>{children}</div>
+                        </div>
+                    </animated.div>
+                </FocusLock>
+            </div>
+        ) : null,
     );
+
+    return <>{renderedPanel}</>;
 }

@@ -25,12 +25,14 @@ export default function AccountsList() {
                     {isLoading ? (
                         <SkeletonLoader className={styles.totalSkeleton} />
                     ) : (
-                        <Currency amount={accountsSummary!.totalEquity} />
+                        <Currency amount={accountsSummary?.totalEquity ?? 0} />
                     )}
                 </div>
                 <div className={styles.accountsList}>
                     {isLoading
                         ? Array.from({ length: 3 }).map((_, index) => (
+                              // Just some loaders with no children, the key doesn't really matter here.
+                              // eslint-disable-next-line react-x/no-array-index-key
                               <LoadingInteractiveRow key={`account-loading-${index}`} />
                           ))
                         : accountsSummary?.accountsList.map((account) => (

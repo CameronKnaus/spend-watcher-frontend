@@ -31,8 +31,8 @@ export default function AddAccountUpdateRow({ accountId, date }: AddAccountUpdat
                 ...params,
             });
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
                 queryKey: ['accounts'],
             });
         },
@@ -70,7 +70,8 @@ export default function AddAccountUpdateRow({ accountId, date }: AddAccountUpdat
         if (accountUpdateMutation.isPending) {
             return;
         }
-        accountUpdateMutation.mutate(submission);
+
+        void accountUpdateMutation.mutateAsync(submission);
     }
 
     const isValidInput = form.formState.isValid;

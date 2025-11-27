@@ -34,7 +34,7 @@ export default function RecentTransactions() {
         let transactionCount = 0;
         const allDateEntries = Object.entries(spendingData.transactionsByDate);
         while (index < allDateEntries.length && transactionCount <= targetTransactionCount) {
-            const [date, dateSpendSummary] = allDateEntries[index];
+            const [date, dateSpendSummary] = allDateEntries[index]!;
             const transactionsCountForDate = dateSpendSummary.discretionaryTotals.count;
 
             // Add date's transactions to transaction count
@@ -91,7 +91,7 @@ export default function RecentTransactions() {
                                     {dateSpendSummary.includedTransactions
                                         .filter(isDiscretionaryTransactionId)
                                         .map((transactionId) => {
-                                            const transaction = spendingData.transactionDictionary[transactionId];
+                                            const transaction = spendingData.transactionDictionary[transactionId]!;
 
                                             return (
                                                 <TransactionRow

@@ -27,8 +27,8 @@ export default function AddAccountForm({ onSubmit, onCancel }: AddAccountFormPro
     const addAccountService = useMutation({
         mutationKey: ['add-account'],
         mutationFn: (params: AddAccountRequestParams) => axios.post(SERVICE_ROUTES.postAddAccount, params),
-        onSuccess: () => {
-            queryClient.invalidateQueries({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
                 queryKey: ['accounts'],
             });
         },
@@ -56,7 +56,12 @@ export default function AddAccountForm({ onSubmit, onCancel }: AddAccountFormPro
 
     return (
         <>
-            <form className={styles.form} onSubmit={form.handleSubmit(handleSubmission)}>
+            <form
+                className={styles.form}
+                onSubmit={(event) => {
+                    void form.handleSubmit(handleSubmission)(event);
+                }}
+            >
                 <label>{getContent('accountNameLabel')}</label>
                 <input
                     className={styles.textInput}
@@ -108,7 +113,9 @@ export default function AddAccountForm({ onSubmit, onCancel }: AddAccountFormPro
                 <CustomButton
                     isDisabled={!form.formState.isValid || addAccountService.isPending}
                     variant="primary"
-                    onClick={form.handleSubmit(handleSubmission)}
+                    onClick={(event) => {
+                        void form.handleSubmit(handleSubmission)(event);
+                    }}
                     layout="full-width"
                 >
                     {getContent('submit')}

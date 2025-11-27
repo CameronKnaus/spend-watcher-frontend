@@ -11,7 +11,12 @@ type DeleteButtonPropTypes = {
 
 export default function DeleteButton({ label, className, onClick, isLoading, ...props }: DeleteButtonPropTypes) {
     return (
-        <button className={clsx(styles.deleteButton, className)} onClick={onClick} {...props}>
+        <button
+            className={clsx(styles.deleteButton, className)}
+            onClick={onClick}
+            type={props.type ?? 'button'}
+            {...props}
+        >
             {label}
             {isLoading ? <LoadingSpinner variant="red" size={20} /> : <FaTrashAlt />}
         </button>

@@ -33,12 +33,12 @@ export default function EditSpendForm({ transactionToEdit, onCancel, onSubmit }:
     const queryClient = useQueryClient();
     const { tripsList } = useTripsList();
 
-    function invalidateRelevantQueries() {
-        queryClient.invalidateQueries({
+    async function invalidateRelevantQueries() {
+        await queryClient.invalidateQueries({
             queryKey: ['spending'],
         });
 
-        queryClient.invalidateQueries({
+        await queryClient.invalidateQueries({
             queryKey: ['trips'],
         });
     }
@@ -50,8 +50,8 @@ export default function EditSpendForm({ transactionToEdit, onCancel, onSubmit }:
                 ...params,
                 transactionId: transactionToEdit.transactionId,
             }),
-        onSuccess: () => {
-            invalidateRelevantQueries();
+        onSuccess: async () => {
+            await invalidateRelevantQueries();
 
             form.reset();
             onSubmit();
@@ -78,7 +78,7 @@ export default function EditSpendForm({ transactionToEdit, onCancel, onSubmit }:
             return;
         }
 
-        editTransactionService.mutate(submission);
+        void editTransactionService.mutateAsync(submission);
     }
 
     const deleteTransaction = useMutation({
@@ -87,12 +87,12 @@ export default function EditSpendForm({ transactionToEdit, onCancel, onSubmit }:
             axios.post(SERVICE_ROUTES.postDeleteDiscretionarySpending, {
                 transactionId: transactionId,
             }),
-        onSuccess: () => {
-            queryClient.invalidateQueries({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
                 queryKey: ['spending'],
             });
 
-            queryClient.invalidateQueries({
+            await queryClient.invalidateQueries({
                 queryKey: ['trips'],
             });
 
@@ -104,16 +104,21 @@ export default function EditSpendForm({ transactionToEdit, onCancel, onSubmit }:
     });
 
     function handleDelete() {
-        if (!transactionToEdit || deleteTransaction.isPending) {
+        if (deleteTransaction.isPending) {
             return;
         }
 
-        deleteTransaction.mutate(transactionToEdit.transactionId);
+        void deleteTransaction.mutateAsync(transactionToEdit.transactionId);
     }
 
     return (
         <>
-            <form className={styles.transactionForm} onSubmit={form.handleSubmit(handleSubmission)}>
+            <form
+                className={styles.transactionForm}
+                onSubmit={(event) => {
+                    void form.handleSubmit(handleSubmission)(event);
+                }}
+            >
                 {/* Amount spent */}
                 <label>{getContent('amountLabel')}</label>
                 <MoneyInput
@@ -187,7 +192,9 @@ export default function EditSpendForm({ transactionToEdit, onCancel, onSubmit }:
                 <CustomButton
                     isDisabled={!form.formState.isValid}
                     variant="primary"
-                    onClick={form.handleSubmit(handleSubmission)}
+                    onClick={(event) => {
+                        void form.handleSubmit(handleSubmission)(event);
+                    }}
                     layout="full-width"
                 >
                     {editTransactionService.isPending ? <LoadingSpinner /> : getGeneralContent('submit')}

@@ -44,8 +44,8 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
         mutationFn: (params: EditRecurringSpendRequestParams) => {
             return axios.post(SERVICE_ROUTES.postEditRecurringSpend, params);
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
                 queryKey: ['recurring'],
             });
         },
@@ -57,13 +57,15 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
     const addRecurringMutation = useMutation({
         mutationFn: (params: AddRecurringSpendRequestParams) =>
             axios.post(SERVICE_ROUTES.postAddRecurringSpend, params),
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['recurring'],
-            });
-            queryClient.invalidateQueries({
-                queryKey: ['spending'],
-            });
+        onSuccess: async () => {
+            await Promise.all([
+                queryClient.invalidateQueries({
+                    queryKey: ['recurring'],
+                }),
+                queryClient.invalidateQueries({
+                    queryKey: ['spending'],
+                }),
+            ]);
         },
         onError: () => {
             // TODO: Error handling
@@ -96,7 +98,12 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
         : !form.formState.isValid;
     return (
         <>
-            <form className={styles.newRecurringSpendForm} onSubmit={form.handleSubmit(handleSubmit)}>
+            <form
+                className={styles.newRecurringSpendForm}
+                onSubmit={(event) => {
+                    void form.handleSubmit(handleSubmit)(event);
+                }}
+            >
                 {/* Expense name */}
                 <label>{getContent('recurringSpendName')}</label>
                 <input
@@ -152,7 +159,9 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
                 <CustomButton
                     isDisabled={confirmButtonDisabled}
                     variant="primary"
-                    onClick={form.handleSubmit(handleSubmit)}
+                    onClick={(event) => {
+                        void form.handleSubmit(handleSubmit)(event);
+                    }}
                     layout="full-width"
                 >
                     {getGeneralContent('submit')}

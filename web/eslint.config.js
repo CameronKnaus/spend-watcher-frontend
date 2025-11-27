@@ -35,6 +35,7 @@ export default defineConfig([
             '@typescript-eslint/no-explicit-any': 'warn',
             'no-console': 'warn',
             '@typescript-eslint/no-unused-vars': 'warn',
+            '@typescript-eslint/no-non-null-assertion': 'off',
             // TODO: Revisit these overrides
             'react-refresh/only-export-components': 'off',
             '@typescript-eslint/restrict-template-expressions': 'off',

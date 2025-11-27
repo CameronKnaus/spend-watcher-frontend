@@ -40,20 +40,21 @@ export default function TripForm({ onSubmit, onCancel, onDelete, tripToEdit }: T
     const getGeneralContent = useContent('general');
 
     const editMode = Boolean(tripToEdit);
+    const mutationKey = editMode ? [editTripQueryKey, tripToEdit?.tripId ?? 'edit-trip'] : [addTripQueryKey];
     const tripService = useMutation({
-        mutationKey: editMode ? [editTripQueryKey, tripToEdit!.tripId] : [addTripQueryKey],
+        mutationKey,
         mutationFn: (params: AddTripRequestParams) => {
-            if (editMode) {
+            if (editMode && tripToEdit) {
                 return axios.post(SERVICE_ROUTES.postEditTrip, {
                     ...params,
-                    tripId: tripToEdit?.tripId,
+                    tripId: tripToEdit.tripId,
                 });
-            } else {
-                return axios.post(SERVICE_ROUTES.postAddTrip, params);
             }
+
+            return axios.post(SERVICE_ROUTES.postAddTrip, params);
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
                 queryKey: ['trips'],
             });
 
@@ -82,7 +83,7 @@ export default function TripForm({ onSubmit, onCancel, onDelete, tripToEdit }: T
     }
 
     async function handleSubmission(submission: AddTripRequestParams) {
-        await tripService.mutate(submission);
+        await tripService.mutateAsync(submission);
         onSubmit();
     }
 
@@ -91,7 +92,12 @@ export default function TripForm({ onSubmit, onCancel, onDelete, tripToEdit }: T
 
     return (
         <>
-            <form className={styles.tripForm} onSubmit={form.handleSubmit(handleSubmission)}>
+            <form
+                className={styles.tripForm}
+                onSubmit={(event) => {
+                    void form.handleSubmit(handleSubmission)(event);
+                }}
+            >
                 <label>{getContent('tripName')}</label>
                 <input
                     className={styles.textInput}
@@ -132,7 +138,9 @@ export default function TripForm({ onSubmit, onCancel, onDelete, tripToEdit }: T
                 <CustomButton
                     isDisabled={!form.formState.isValid}
                     variant="primary"
-                    onClick={form.handleSubmit(handleSubmission)}
+                    onClick={(event) => {
+                        void form.handleSubmit(handleSubmission)(event);
+                    }}
                     layout="full-width"
                 >
                     {getGeneralContent('submit')}

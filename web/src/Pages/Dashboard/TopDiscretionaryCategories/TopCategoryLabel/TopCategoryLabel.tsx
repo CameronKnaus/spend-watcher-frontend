@@ -29,7 +29,7 @@ export default function TopCategoryLabel({
     };
 
     return (
-        <button className={styles.categoryListItem} style={containerStyle} onClick={onClick}>
+        <button className={styles.categoryListItem} style={containerStyle} onClick={onClick} type="button">
             <SpendingCategoryIcon
                 category={category}
                 size={iconSize}

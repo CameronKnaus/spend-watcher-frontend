@@ -9,7 +9,7 @@ type MobileButtonPropTypes = {
 
 export default function MobileButton({ buttonText, icon, className, ...props }: MobileButtonPropTypes) {
     return (
-        <button className={clsx(styles.button, className)} {...props}>
+        <button className={clsx(styles.button, className)} type={props.type ?? 'button'} {...props}>
             <div className={styles.icon}>{icon}</div>
             <div className={styles.buttonLabel}>{buttonText}</div>
         </button>

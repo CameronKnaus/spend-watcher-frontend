@@ -22,8 +22,8 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
 
     const loginService = useMutation({
         mutationFn: (params: LoginRequestParams) => axios.post(SERVICE_ROUTES.postLogin, params),
-        onSuccess: () => {
-            queryClient.invalidateQueries({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
                 queryKey: ['verify-auth'],
             });
         },
@@ -33,11 +33,15 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
     });
 
     async function handleSubmission(params: LoginRequestParams) {
-        await loginService.mutate(params);
+        await loginService.mutateAsync(params);
     }
 
     return (
-        <form onSubmit={form.handleSubmit(handleSubmission)}>
+        <form
+            onSubmit={(event) => {
+                void form.handleSubmit(handleSubmission)(event);
+            }}
+        >
             <label>{getContent('username')}</label>
             <input
                 className={styles.textInput}
@@ -66,7 +70,9 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
                 <CustomButton
                     isDisabled={!form.formState.isValid || loginService.isPending}
                     variant="primary"
-                    onClick={form.handleSubmit(handleSubmission)}
+                    onClick={(event) => {
+                        void form.handleSubmit(handleSubmission)(event);
+                    }}
                     layout="full-width"
                 >
                     {getContent('submit')}

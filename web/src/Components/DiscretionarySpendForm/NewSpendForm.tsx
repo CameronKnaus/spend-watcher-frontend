@@ -43,12 +43,12 @@ export default function NewSpendForm({ onCancel, onSubmit }: NewSpendFormPropTyp
     const transactionService = useMutation({
         mutationKey: ['add-discretionary'],
         mutationFn: (params: SpendFormAttributes) => axios.post(SERVICE_ROUTES.postAddDiscretionarySpending, params),
-        onSuccess: () => {
-            queryClient.invalidateQueries({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
                 queryKey: ['spending'],
             });
 
-            queryClient.invalidateQueries({
+            await queryClient.invalidateQueries({
                 queryKey: ['trips'],
             });
 
@@ -76,7 +76,7 @@ export default function NewSpendForm({ onCancel, onSubmit }: NewSpendFormPropTyp
             return;
         }
 
-        transactionService.mutate(submission);
+        void transactionService.mutateAsync(submission);
     }
 
     return (
@@ -88,7 +88,12 @@ export default function NewSpendForm({ onCancel, onSubmit }: NewSpendFormPropTyp
                     className={styles.tripNotice}
                 />
             )}
-            <form className={styles.transactionForm} onSubmit={form.handleSubmit(handleSubmission)}>
+            <form
+                className={styles.transactionForm}
+                onSubmit={(event) => {
+                    void form.handleSubmit(handleSubmission)(event);
+                }}
+            >
                 {/* Amount spent */}
                 <label>{getContent('amountLabel')}</label>
                 <MoneyInput
@@ -155,7 +160,9 @@ export default function NewSpendForm({ onCancel, onSubmit }: NewSpendFormPropTyp
                 <CustomButton
                     isDisabled={!form.formState.isValid}
                     variant="primary"
-                    onClick={form.handleSubmit(handleSubmission)}
+                    onClick={(event) => {
+                        void form.handleSubmit(handleSubmission)(event);
+                    }}
                     layout="full-width"
                 >
                     {transactionService.isPending ? <LoadingSpinner /> : getGeneralContent('submit')}

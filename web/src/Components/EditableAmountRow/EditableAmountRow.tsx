@@ -36,7 +36,11 @@ export default function EditableAmountRow<T extends FieldValues>({
                 <label className={styles.amountLabel}>{amountLabel}</label>
                 <div className={styles.moneyInputContainer}>
                     <div className={styles.editIcon}>{!isLoading && <FaPencilAlt />}</div>
-                    <form onSubmit={form.handleSubmit(onSubmission)}>
+                    <form
+                        onSubmit={(event) => {
+                            void form.handleSubmit(onSubmission)(event);
+                        }}
+                    >
                         {isLoading ? (
                             <SkeletonLoader style={{ height: 40, width: 200 }} />
                         ) : (
@@ -52,14 +56,16 @@ export default function EditableAmountRow<T extends FieldValues>({
                     </form>
                 </div>
                 {showConfirmButton && (
-                    <CustomButton
-                        type="submit"
-                        variant="primary"
-                        className={styles.confirmChangeButton}
-                        layout="full-width"
-                        onClick={form.handleSubmit(onSubmission)}
-                        isDisabled={isLoading}
-                    >
+                        <CustomButton
+                            type="submit"
+                            variant="primary"
+                            className={styles.confirmChangeButton}
+                            layout="full-width"
+                            onClick={(event) => {
+                                void form.handleSubmit(onSubmission)(event);
+                            }}
+                            isDisabled={isLoading}
+                        >
                         {getContent('confirmChange')}
                     </CustomButton>
                 )}

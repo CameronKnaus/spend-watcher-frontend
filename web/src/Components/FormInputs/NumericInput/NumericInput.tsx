@@ -39,7 +39,7 @@ export default function NumericInput<T extends FieldValues>({
                     value={value ?? ''}
                     onValueChange={({ floatValue }) => {
                         onChange(floatValue);
-                        trigger(name);
+                        void trigger(name);
                     }}
                     {...props}
                     {...rest}

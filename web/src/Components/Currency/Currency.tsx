@@ -9,6 +9,8 @@ interface CurrencyPropTypes {
     style?: React.CSSProperties;
 }
 
+const emptyStyle: React.CSSProperties = {};
+
 function getColor(value: number) {
     if (value > 0) {
         return 'var(--token-color-semantic-gain)';
@@ -26,7 +28,7 @@ export default function Currency({
     isGainLoss = false,
     defaultValue = '',
     className = '',
-    style = {},
+    style = emptyStyle,
     ...props
 }: CurrencyPropTypes & ComponentProps<'span'>) {
     if (amount === undefined) {

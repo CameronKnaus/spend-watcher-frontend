@@ -37,8 +37,8 @@ export default function AddRecurringTransactionRow({
                 ...params,
             });
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
                 queryKey: ['recurring'],
             });
         },

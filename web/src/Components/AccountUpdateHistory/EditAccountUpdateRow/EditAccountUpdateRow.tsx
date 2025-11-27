@@ -32,8 +32,8 @@ export default function EditAccountUpdateRow({
                 ...params,
             });
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
                 queryKey: ['accounts'],
             });
         },
@@ -59,7 +59,7 @@ export default function EditAccountUpdateRow({
             return;
         }
 
-        accountUpdateMutation.mutate(submission);
+        void accountUpdateMutation.mutateAsync(submission);
     }
 
     const formAccountAmount = form.watch('amount');

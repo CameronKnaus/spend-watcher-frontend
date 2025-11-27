@@ -28,8 +28,8 @@ export default function EditableRecurringTransactionRow({
                 ...params,
             });
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
                 queryKey: ['recurring'],
             });
         },
@@ -58,7 +58,7 @@ export default function EditableRecurringTransactionRow({
         form.setValue('amountSpent', amountSpent);
     }, [amountSpent, form]);
 
-    const formAmountSpentValue = form.watch('amountSpent') ?? 0;
+    const formAmountSpentValue = form.watch('amountSpent');
     const isDirty = formAmountSpentValue !== amountSpent;
     const isValidInput = formAmountSpentValue > 0;
     const isLoading = recurringTransactionMutation.isPending;

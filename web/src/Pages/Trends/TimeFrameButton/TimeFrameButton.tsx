@@ -23,7 +23,8 @@ export default function TimeFrameButton() {
     } = useSelectedTimeFrame();
 
     const forwardButtonDisabled =
-        (dateRangeType === 'MONTH' && isPresentMonth) || (dateRangeType === 'YEAR' && isPresentYear);
+        (dateRangeType === DateRangeType.MONTH && isPresentMonth) ||
+        (dateRangeType === DateRangeType.YEAR && isPresentYear);
 
     let backButtonDisabled = false;
     if (earliestStartDate) {
@@ -66,10 +67,11 @@ export default function TimeFrameButton() {
             <button
                 className={clsx(styles.arrowButton, backButtonDisabled && styles.disabledArrowButton)}
                 onClick={backClick}
+                type="button"
             >
                 <FaArrowLeft />
             </button>
-            <button className={styles.timeFrameButton}>
+            <button className={styles.timeFrameButton} type="button">
                 {dateRangeType === DateRangeType.MONTH && (
                     <>
                         <div>{currentMonthLabel}</div>
@@ -81,6 +83,7 @@ export default function TimeFrameButton() {
             <button
                 className={clsx(styles.arrowButton, forwardButtonDisabled && styles.disabledArrowButton)}
                 onClick={forwardClick}
+                type="button"
             >
                 <FaArrowRight />
             </button>

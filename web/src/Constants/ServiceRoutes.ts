@@ -35,6 +35,6 @@ const SERVICE_ROUTES: Record<string, string> = {
     postAddAccountUpdate: domainName + '/accounts/v1/update/add',
     postEditAccountUpdate: domainName + '/accounts/v1/update/edit',
     getAccountGrowthOverTime: domainName + '/accounts/v1/growth-over-time',
-};
+} as const;
 
 export default SERVICE_ROUTES;

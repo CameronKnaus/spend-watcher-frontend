@@ -29,6 +29,7 @@ export default function RecurringTransactionCard({
         <button
             className={clsx(styles.card, className)}
             {...attributes}
+            type={attributes.type ?? 'button'}
             onClick={() => {
                 onClick(transaction);
             }}

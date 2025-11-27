@@ -96,7 +96,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
                     ? d0
                     : d1;
         } else {
-            closestDataPoint = d0 || d1;
+            closestDataPoint = d0 ?? d1;
         }
 
         setHoveredData(closestDataPoint ?? totalsArray[totalsArray.length - 1]);

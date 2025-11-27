@@ -17,6 +17,8 @@ export default function TotalsTable() {
 
     if (isLoading || !spendingData) {
         return Array.from({ length: 10 }).map((_, index) => (
+            // Just some loaders with no children, the key doesn't really matter here.
+            // eslint-disable-next-line react-x/no-array-index-key
             <SkeletonLoader key={index} className={styles.placeholder_skeleton} />
         ));
     }
@@ -60,6 +62,7 @@ export default function TotalsTable() {
                                         onClick={() => {
                                             setSelectedCategoryForTransactions(categoryDetails.category);
                                         }}
+                                        type="button"
                                     >
                                         <SpendingCategoryIcon
                                             size={24}
@@ -73,24 +76,20 @@ export default function TotalsTable() {
                                     <Currency isGainLoss amount={-categoryDetails.combinedTotals.amount} />
                                 </td>
                                 <td align="right">{categoryDetails.combinedTotals.count}</td>
-                                <td align="right">{categoryDetails.combinedTotals.percentageOfTotalAmount + '%'}</td>
-                                <td align="right">{categoryDetails.combinedTotals.percentageOfTotalCount + '%'}</td>
+                                <td align="right">{`${categoryDetails.combinedTotals.percentageOfTotalAmount}%`}</td>
+                                <td align="right">{`${categoryDetails.combinedTotals.percentageOfTotalCount}%`}</td>
                                 <td align="right">
                                     <Currency isGainLoss amount={-categoryDetails.discretionaryTotals.amount} />
                                 </td>
                                 <td align="right">{categoryDetails.discretionaryTotals.count}</td>
-                                <td align="right">
-                                    {categoryDetails.discretionaryTotals.percentageOfTotalAmount + '%'}
-                                </td>
-                                <td align="right">
-                                    {categoryDetails.discretionaryTotals.percentageOfTotalCount + '%'}
-                                </td>
+                                <td align="right">{`${categoryDetails.discretionaryTotals.percentageOfTotalAmount}%`}</td>
+                                <td align="right">{`${categoryDetails.discretionaryTotals.percentageOfTotalCount}%`}</td>
                                 <td align="right">
                                     <Currency isGainLoss amount={-categoryDetails.recurringTotals.amount} />
                                 </td>
                                 <td align="right">{categoryDetails.recurringTotals.count}</td>
-                                <td align="right">{categoryDetails.recurringTotals.percentageOfTotalAmount + '%'}</td>
-                                <td align="right">{categoryDetails.recurringTotals.percentageOfTotalCount + '%'}</td>
+                                <td align="right">{`${categoryDetails.recurringTotals.percentageOfTotalAmount}%`}</td>
+                                <td align="right">{`${categoryDetails.recurringTotals.percentageOfTotalCount}%`}</td>
                             </tr>
                         ))}
                     </tbody>

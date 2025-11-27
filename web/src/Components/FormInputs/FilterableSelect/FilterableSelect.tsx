@@ -1,7 +1,7 @@
 import useContent from 'Hooks/useContent';
 import syntheticChangeEvent from 'Util/Events/syntheticChangeEvent';
-import { forwardRef, useEffect, useRef, useState } from 'react';
-import type { ComponentProps, ForwardedRef, ReactNode } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { ComponentProps, ReactNode, Ref } from 'react';
 import styles from './FilterableSelect.module.css';
 
 export interface FilterableSelectOptionType<T> {
@@ -17,10 +17,14 @@ export type FilterableSelectPropTypes<T> = {
     optionsList: FilterableSelectOptionType<T>[];
 } & ComponentProps<'input'>;
 
-function FilterableSelectComponent<T extends string>(
-    { opens = 'down', clearLabel, noSelectionText = '', optionsList, ...props }: FilterableSelectPropTypes<T>,
-    ref: ForwardedRef<HTMLInputElement>,
-) {
+function FilterableSelectComponent<T extends string>({
+    opens = 'down',
+    clearLabel,
+    noSelectionText = '',
+    optionsList,
+    ref,
+    ...props
+}: FilterableSelectPropTypes<T> & { ref?: Ref<HTMLInputElement> }) {
     const [selectedValue, setSelectedValue] = useState<FilterableSelectOptionType<T> | undefined>();
     const containerRef = useRef<HTMLDivElement | null>(null);
     const popOverMenuRef = useRef<HTMLDivElement | null>(null);
@@ -35,8 +39,8 @@ function FilterableSelectComponent<T extends string>(
             }
 
             const target = event.target as Node;
-            const targetWithinBounds =
-                popOverMenuRef.current?.contains(target) || containerRef.current.contains(target);
+            const isInPopover = popOverMenuRef.current?.contains(target) ?? false;
+            const targetWithinBounds = isInPopover ? true : containerRef.current.contains(target);
             setIsOpen(targetWithinBounds);
         }
 
@@ -59,8 +63,9 @@ function FilterableSelectComponent<T extends string>(
             return filterText;
         }
 
-        if (props.value) {
-            return optionsList.find((option) => option.value === props.value)?.optionName || getContent('empty');
+        const currentValue = props.value ?? '';
+        if (currentValue !== '') {
+            return optionsList.find((option) => option.value === currentValue)?.optionName ?? getContent('empty');
         }
 
         return '';
@@ -120,9 +125,8 @@ function FilterableSelectComponent<T extends string>(
     );
 }
 
-// TODO: forwardRef no longer needed - remove
-const FilterableSelect = forwardRef(FilterableSelectComponent) as <T extends string>(
-    props: FilterableSelectPropTypes<T> & { ref?: ForwardedRef<HTMLInputElement> },
+const FilterableSelect = FilterableSelectComponent as <T extends string>(
+    props: FilterableSelectPropTypes<T> & { ref?: Ref<HTMLInputElement> },
 ) => ReturnType<typeof FilterableSelectComponent>;
 
 export default FilterableSelect;

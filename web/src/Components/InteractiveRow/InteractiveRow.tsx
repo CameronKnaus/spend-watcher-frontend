@@ -23,7 +23,7 @@ export default function InteractiveRow({
     ...attributes
 }: InteractiveRowPropTypes) {
     return (
-        <button className={styles.button} {...attributes}>
+        <button className={styles.button} type={attributes.type ?? 'button'} {...attributes}>
             <div className={clsx(styles.interactiveRow, className)}>
                 {icon}
                 <div className={styles.detailsContainer}>

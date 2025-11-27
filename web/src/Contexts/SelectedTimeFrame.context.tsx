@@ -11,7 +11,7 @@ import {
     subMonths,
     subYears,
 } from 'date-fns';
-import { createContext, type ReactNode, useState } from 'react';
+import { createContext, type ReactNode, useCallback, useMemo, useState } from 'react';
 import { type DbDate, dbDateFormat } from 'Types/dateTypes';
 import { parseDbDate } from 'Util/Formatters/dateFormatters/dateFormatters';
 
@@ -54,19 +54,19 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
     // Default end date to today
     const [endDate, setEndDate] = useState<DbDate>(formatDate(new Date()));
 
-    const presentDate = new Date();
+    const presentDate = useMemo(() => new Date(), []);
     const isPresentYear = getYear(endDate) === getYear(presentDate);
     const isSameMonth = getMonth(endDate) === getMonth(presentDate);
 
     const parsedStartDate = parseDbDate(startDate);
 
-    function setToCurrentMonth() {
+    const setToCurrentMonth = useCallback(() => {
         setStartDate(formatDate(startOfMonth(new Date())));
         setEndDate(formatDate(new Date()));
         setDateRangeType(DateRangeType.MONTH);
-    }
+    }, []);
 
-    function updateDateRangeType(type: DateRangeType) {
+    const updateDateRangeType = useCallback((type: DateRangeType) => {
         if (type === DateRangeType.MAX || type === DateRangeType.CUSTOM) {
             // TODO: Currently unsupported
             return;
@@ -83,9 +83,9 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
             setEndDate(formatDate(new Date()));
             setDateRangeType(type);
         }
-    }
+    }, [setToCurrentMonth]);
 
-    function forwardOneMonth() {
+    const forwardOneMonth = useCallback(() => {
         // Only allowed when in monthly date range type
         if (dateRangeType !== DateRangeType.MONTH) {
             return;
@@ -109,9 +109,9 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
             getMonth(nextMonthDate) === getMonth(presentDate) && getYear(nextMonthDate) === getYear(presentDate);
         setEndDate(isCurrentMonth ? formatDate(presentDate) : formatDate(nextMonthEnd));
         setStartDate(formatDate(nextMonthStart));
-    }
+    }, [dateRangeType, isPresentYear, isSameMonth, parsedStartDate, presentDate]);
 
-    function backOneMonth() {
+    const backOneMonth = useCallback(() => {
         // Only allowed when in monthly date range type
         if (dateRangeType !== DateRangeType.MONTH) {
             return;
@@ -127,9 +127,9 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
 
         setStartDate(formatDate(previousMonthStart));
         setEndDate(formatDate(previousMonthEnd));
-    }
+    }, [dateRangeType, parsedStartDate]);
 
-    function forwardOneYear() {
+    const forwardOneYear = useCallback(() => {
         // Only allowed when in yearly date range type and it's not the current year
         if (dateRangeType !== DateRangeType.YEAR || isPresentYear) {
             return;
@@ -147,9 +147,9 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
         const newYearEqualsPresentYear = getYear(nextYearDate) === getYear(presentDate);
         setEndDate(newYearEqualsPresentYear ? formatDate(presentDate) : formatDate(nextYearEnd));
         setStartDate(formatDate(nextYearStart));
-    }
+    }, [dateRangeType, isPresentYear, parsedStartDate, presentDate]);
 
-    function backOneYear() {
+    const backOneYear = useCallback(() => {
         // Only allowed when in yearly date range type
         if (dateRangeType !== DateRangeType.YEAR) {
             return;
@@ -165,25 +165,41 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
 
         setStartDate(formatDate(previousYearStart));
         setEndDate(formatDate(previousYearEnd));
-    }
+    }, [dateRangeType, parsedStartDate]);
 
-    const selectedTimeFrameAPI: SelectedTimeFrameContextAPI = {
-        startDate,
-        endDate,
-        setStartDate,
-        setEndDate,
-        dateRangeType,
-        currentMonthLabel: format(parsedStartDate, 'LLLL'), // Not reliable for custom date ranges
-        currentYearLabel: format(parsedStartDate, 'yyyy'),
-        forwardOneMonth,
-        backOneMonth,
-        forwardOneYear,
-        backOneYear,
-        isPresentYear,
-        isPresentMonth: isPresentYear && isSameMonth,
-        updateDateRangeType,
-        setToCurrentMonth,
-    };
+    const selectedTimeFrameAPI: SelectedTimeFrameContextAPI = useMemo(
+        () => ({
+            startDate,
+            endDate,
+            setStartDate,
+            setEndDate,
+            dateRangeType,
+            currentMonthLabel: format(parsedStartDate, 'LLLL'), // Not reliable for custom date ranges
+            currentYearLabel: format(parsedStartDate, 'yyyy'),
+            forwardOneMonth,
+            backOneMonth,
+            forwardOneYear,
+            backOneYear,
+            isPresentYear,
+            isPresentMonth: isPresentYear && isSameMonth,
+            updateDateRangeType,
+            setToCurrentMonth,
+        }),
+        [
+            startDate,
+            endDate,
+            dateRangeType,
+            parsedStartDate,
+            forwardOneMonth,
+            backOneMonth,
+            forwardOneYear,
+            backOneYear,
+            isPresentYear,
+            isSameMonth,
+            updateDateRangeType,
+            setToCurrentMonth,
+        ],
+    );
 
     return <SelectedTimeFrameContext value={selectedTimeFrameAPI}>{children}</SelectedTimeFrameContext>;
 }

@@ -40,16 +40,16 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
         setSelectedTab(account.requiresNewUpdate ? PanelTabs.HISTORY : PanelTabs.BASE);
     }, [account]);
 
-    function invalidateQueries() {
-        queryClient.invalidateQueries({
+    async function invalidateQueries() {
+        await queryClient.invalidateQueries({
             queryKey: ['accounts'],
         });
     }
 
     const activeStatusMutation = useMutation({
         mutationFn: (params: SetActiveAccountRequestParams) => axios.post(SERVICE_ROUTES.postSetActiveAccount, params),
-        onSuccess: () => {
-            invalidateQueries();
+        onSuccess: async () => {
+            await invalidateQueries();
         },
         onError: () => {
             // TODO: Error handling
@@ -58,8 +58,8 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
 
     const deleteAccountMutation = useMutation({
         mutationFn: (params: DeleteAccountRequestParams) => axios.post(SERVICE_ROUTES.postDeleteAccount, params),
-        onSuccess: () => {
-            invalidateQueries();
+        onSuccess: async () => {
+            await invalidateQueries();
         },
         onError: () => {
             // TODO: Error handling
@@ -115,8 +115,8 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
                         onCancel={() => {
                             setSelectedTab(PanelTabs.BASE);
                         }}
-                        onProceed={async () => {
-                            await activeStatusMutation.mutateAsync({
+                        onProceed={() => {
+                            void activeStatusMutation.mutateAsync({
                                 accountId: account.id,
                                 isActive: false,
                             });
@@ -134,8 +134,8 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
                         onCancel={() => {
                             setSelectedTab(PanelTabs.BASE);
                         }}
-                        onProceed={async () => {
-                            await deleteAccountMutation.mutate({
+                        onProceed={() => {
+                            void deleteAccountMutation.mutateAsync({
                                 accountId: account.id,
                             });
                             onClose();

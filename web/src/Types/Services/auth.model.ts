@@ -23,7 +23,7 @@ export const loginRequestParamsSchema = zod
         email: true,
         username: true,
     })
-    .refine(({ email, username }) => email || username, {
+    .refine(({ email, username }) => Boolean(email ?? username), {
         message: 'Either email or username must be provided',
     });
 

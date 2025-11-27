@@ -6,7 +6,7 @@ import TransactionRow from 'Components/TransactionRow';
 import { format, parseISO } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import type { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
 import { isDiscretionaryTransactionId } from 'Util/SpendTransactionUtils/narrowIdType';
 import styles from './TransactionsList.module.css';
@@ -21,7 +21,9 @@ export default function TransactionsList() {
             <ModuleContainer heading={getContent('transactionsTitle')} className={styles.module} elevation="low">
                 <>
                     {isLoading || !spendingData
-                        ? Array.from({ length: 5 }).map((_, index) => <LoadingInteractiveRow key={index} />)
+                        ? // Just some loaders with no children, the key doesn't really matter here.
+                          // eslint-disable-next-line react-x/no-array-index-key
+                          Array.from({ length: 5 }).map((_, index) => <LoadingInteractiveRow key={index} />)
                         : Object.entries(spendingData.transactionsByDate)
                               // TODO: Have this list support more than just discretionary transactions (remove filter)
                               .filter(([, datesTransactions]) => datesTransactions.discretionaryTotals.amount > 0)
@@ -29,7 +31,7 @@ export default function TransactionsList() {
                                   const date = parseISO(dbDate);
                                   const dateLabel = format(date, 'MMM do');
                                   return (
-                                      <>
+                                      <Fragment key={dbDate}>
                                           <h3 className={styles.dateHeader}>
                                               {dateLabel}
                                               <div className={styles.daysTotalAmount}>
@@ -59,7 +61,7 @@ export default function TransactionsList() {
                                                       );
                                                   })}
                                           </div>
-                                      </>
+                                      </Fragment>
                                   );
                               })}
                 </>

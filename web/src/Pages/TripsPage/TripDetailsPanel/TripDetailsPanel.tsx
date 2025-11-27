@@ -35,7 +35,7 @@ export default function TripDetailsPanel({ trip, isOpen, dateLabel, onClose }: T
                 tripId: trip.tripId,
             }),
         onSuccess: () => {
-            queryClient.invalidateQueries({
+            void queryClient.invalidateQueries({
                 queryKey: ['trips'],
             });
         },

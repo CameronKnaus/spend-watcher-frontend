@@ -43,11 +43,11 @@ export default function ManageRecurringSpendPanel({
     const [currentPanelContents, setCurrentPanelContents] = useState(ManageRecurringSpendPanels.base);
     const queryClient = useQueryClient();
 
-    function invalidateRecurring() {
-        queryClient.invalidateQueries({
+    async function invalidateRecurring() {
+        await queryClient.invalidateQueries({
             queryKey: ['recurring'],
         });
-        queryClient.invalidateQueries({
+        await queryClient.invalidateQueries({
             queryKey: ['spending'],
         });
     }
@@ -55,8 +55,8 @@ export default function ManageRecurringSpendPanel({
     const deleteMutation = useMutation({
         mutationFn: (params: DeleteRecurringSpendRequestParams) =>
             axios.post(SERVICE_ROUTES.postDeleteRecurringSpend, params),
-        onSuccess: () => {
-            invalidateRecurring();
+        onSuccess: async () => {
+            await invalidateRecurring();
         },
         onError: () => {
             // TODO: Error handling
@@ -65,8 +65,8 @@ export default function ManageRecurringSpendPanel({
     const activeStatusMutation = useMutation({
         mutationFn: (params: SetActiveRecurringSpendRequestParams) =>
             axios.post(SERVICE_ROUTES.postUpdateRecurringSpendStatus, params),
-        onSuccess: () => {
-            invalidateRecurring();
+        onSuccess: async () => {
+            await invalidateRecurring();
         },
         onError: () => {
             // TODO: Error handling

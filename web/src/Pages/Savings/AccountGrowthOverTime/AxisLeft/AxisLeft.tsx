@@ -50,10 +50,10 @@ export default function AxisLeft({
 
     return (
         <g transform={transform}>
-            {ticks.map((tick, index) => {
+            {ticks.map((tick) => {
                 const y = scale(tick);
                 return (
-                    <g key={index} transform={`translate(${dimensions.margin.left}, ${y})`}>
+                    <g key={tick.toString()} transform={`translate(${dimensions.margin.left}, ${y})`}>
                         {/* Tick line */}
                         {y < dimensions.boundedHeight && (
                             <line x1={6} x2={dimensions.boundedWidth} stroke={lineColor} strokeDasharray="4" />

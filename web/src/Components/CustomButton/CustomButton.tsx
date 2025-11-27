@@ -32,6 +32,7 @@ export default function CustomButton({
     return (
         <button
             {...props}
+            type={props.type ?? 'button'}
             className={classList}
             style={{
                 width: layout === 'full-width' ? '100%' : 'fit-content',

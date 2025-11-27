@@ -51,7 +51,7 @@ export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: E
 
     async function handleSubmission(submission: EditAccountDetailsRequestParams) {
         await editAccountService.mutateAsync(submission);
-        queryClient.invalidateQueries({
+        await queryClient.invalidateQueries({
             queryKey: ['accounts'],
         });
         onSubmit();
@@ -60,7 +60,12 @@ export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: E
     const formIsValidForSubmission = form.formState.isValid && !editAccountService.isPending && form.formState.isDirty;
     return (
         <>
-            <form className={styles.form} onSubmit={form.handleSubmit(handleSubmission)}>
+            <form
+                className={styles.form}
+                onSubmit={(event) => {
+                    void form.handleSubmit(handleSubmission)(event);
+                }}
+            >
                 <label>{getContent('accountNameLabel')}</label>
                 <input
                     className={styles.textInput}
@@ -103,7 +108,9 @@ export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: E
                 <CustomButton
                     isDisabled={!formIsValidForSubmission}
                     variant="primary"
-                    onClick={form.handleSubmit(handleSubmission)}
+                    onClick={(event) => {
+                        void form.handleSubmit(handleSubmission)(event);
+                    }}
                     layout="full-width"
                 >
                     {getContent('submit')}
