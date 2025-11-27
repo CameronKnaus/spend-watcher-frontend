@@ -37,11 +37,11 @@ export default function PageRoutes() {
 
     useEffect(() => {
         if (!isAuthenticating && !isAuthenticated) {
-            navigate('/auth');
+            void navigate('/auth');
         }
 
         if ((location.pathname === '/auth' || location.pathname === '/') && isAuthenticated) {
-            navigate('/dashboard');
+            void navigate('/dashboard');
         }
     }, [isAuthenticated, isAuthenticating, location.pathname, navigate]);
 

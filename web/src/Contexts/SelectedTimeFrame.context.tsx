@@ -50,9 +50,9 @@ const formatDate = (date: Date) => {
 export default function SelectedTimeFrameProvider({ children }: { children: ReactNode }) {
     const [dateRangeType, setDateRangeType] = useState<DateRangeType>(DateRangeType.MONTH);
     // Default start date to first day of this month
-    const [startDate, setStartDate] = useState<DbDate>(formatDate(startOfMonth(new Date())));
+    const [startDate, setStartDate] = useState<DbDate>(() => formatDate(startOfMonth(new Date())));
     // Default end date to today
-    const [endDate, setEndDate] = useState<DbDate>(formatDate(new Date()));
+    const [endDate, setEndDate] = useState<DbDate>(() => formatDate(new Date()));
 
     const presentDate = useMemo(() => new Date(), []);
     const isPresentYear = getYear(endDate) === getYear(presentDate);
@@ -66,24 +66,27 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
         setDateRangeType(DateRangeType.MONTH);
     }, []);
 
-    const updateDateRangeType = useCallback((type: DateRangeType) => {
-        if (type === DateRangeType.MAX || type === DateRangeType.CUSTOM) {
-            // TODO: Currently unsupported
-            return;
-        }
+    const updateDateRangeType = useCallback(
+        (type: DateRangeType) => {
+            if (type === DateRangeType.MAX || type === DateRangeType.CUSTOM) {
+                // TODO: Currently unsupported
+                return;
+            }
 
-        if (type === DateRangeType.MONTH) {
-            // When changing to monthly, set it to the current month
-            setToCurrentMonth();
-        }
+            if (type === DateRangeType.MONTH) {
+                // When changing to monthly, set it to the current month
+                setToCurrentMonth();
+            }
 
-        if (type === DateRangeType.YEAR) {
-            // When changing to yearly, set it to the current year
-            setStartDate(formatDate(startOfYear(new Date())));
-            setEndDate(formatDate(new Date()));
-            setDateRangeType(type);
-        }
-    }, [setToCurrentMonth]);
+            if (type === DateRangeType.YEAR) {
+                // When changing to yearly, set it to the current year
+                setStartDate(formatDate(startOfYear(new Date())));
+                setEndDate(formatDate(new Date()));
+                setDateRangeType(type);
+            }
+        },
+        [setToCurrentMonth],
+    );
 
     const forwardOneMonth = useCallback(() => {
         // Only allowed when in monthly date range type

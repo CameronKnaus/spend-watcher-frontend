@@ -124,11 +124,11 @@ export interface SpendingDetailsV1Response {
 
 // LOG DISCRETIONARY API --- /api/spending/v1/discretionary/add
 export const v1DiscretionaryAddSchema = zod.object({
-    category: zod.nativeEnum(SpendingCategory),
-    amountSpent: zod.number().safe().positive(),
+    category: zod.enum(Object.values(SpendingCategory) as [SpendingCategory, ...SpendingCategory[]]),
+    amountSpent: zod.number().int().positive(),
     spentDate: zodValidateDbDateFormat,
     note: zod.string().trim().max(100),
-    linkedTripId: zod.string().uuid().optional(),
+    linkedTripId: zod.uuid().optional(),
 });
 
 export type DiscretionaryAddRequestParams = zod.infer<typeof v1DiscretionaryAddSchema>;
@@ -164,9 +164,9 @@ export interface RecurringSummaryV1Response {
 
 // RECURRING ADD API --- /api/spending/v1/recurring/add
 export const v1AddRecurringSpendSchema = zod.object({
-    category: zod.nativeEnum(SpendingCategory),
+    category: zod.enum(Object.values(SpendingCategory) as [SpendingCategory, ...SpendingCategory[]]),
     recurringSpendName: zod.string().trim().max(60),
-    expectedMonthlyAmount: zod.number().safe().positive(),
+    expectedMonthlyAmount: zod.number().int().positive(),
     isVariableRecurring: zod.boolean(),
 });
 
@@ -176,7 +176,7 @@ export type AddRecurringSpendRequestParams = zod.infer<typeof v1AddRecurringSpen
 // RECURRING EDIT API --- /api/spending/v1/recurring/edit
 export const v1EditRecurringSpendSchema = v1AddRecurringSpendSchema.extend({
     // Add the transactionId field
-    recurringSpendId: zod.string().uuid(),
+    recurringSpendId: zod.uuid(),
 });
 
 export type EditRecurringSpendRequestParams = zod.infer<typeof v1EditRecurringSpendSchema>;
@@ -185,7 +185,7 @@ export type EditRecurringSpendRequestParams = zod.infer<typeof v1EditRecurringSp
 
 // RECURRING DELETE API --- /api/spending/v1/recurring/delete
 export const v1DeleteRecurringSpendSchema = zod.object({
-    recurringSpendId: zod.string().uuid(),
+    recurringSpendId: zod.uuid(),
 });
 
 export type DeleteRecurringSpendRequestParams = zod.infer<typeof v1DeleteRecurringSpendSchema>;
@@ -194,7 +194,7 @@ export type DeleteRecurringSpendRequestParams = zod.infer<typeof v1DeleteRecurri
 // RECURRING SET-ACTIVE API --- /api/spending/v1/recurring/set-active
 
 export const v1SetActiveRecurringSpendSchema = zod.object({
-    recurringSpendId: zod.string().uuid(),
+    recurringSpendId: zod.uuid(),
     isActive: zod.boolean(),
 });
 
@@ -205,7 +205,7 @@ export type SetActiveRecurringSpendRequestParams = zod.infer<typeof v1SetActiveR
 // RECURRING TRANSACTIONS LIST API
 
 export const v1RecurringTransactionsListSchema = zod.object({
-    recurringSpendId: zod.string().uuid(),
+    recurringSpendId: zod.uuid(),
 });
 
 export type RecurringTransactionsListRequestParams = zod.infer<typeof v1RecurringTransactionsListSchema>;
@@ -224,7 +224,7 @@ export interface RecurringTransactionsListV1Response {
 
 export const v1EditRecurringTransactionSchema = zod.object({
     transactionId: zodValidateRecurringTransactionId,
-    amountSpent: zod.number().safe().positive(),
+    amountSpent: zod.number().int().positive(),
 });
 
 export type EditRecurringTransactionRequestParams = zod.infer<typeof v1EditRecurringTransactionSchema>;
@@ -234,8 +234,8 @@ export type EditRecurringTransactionRequestParams = zod.infer<typeof v1EditRecur
 // ADD RECURRING TRANSACTION API --------------------------------------------
 
 export const v1AddRecurringTransactionSchema = zod.object({
-    recurringSpendId: zod.string().uuid(),
-    amountSpent: zod.number().safe().nonnegative(),
+    recurringSpendId: zod.uuid(),
+    amountSpent: zod.number().int().nonnegative(),
     date: zodValidateMonthYear,
 });
 

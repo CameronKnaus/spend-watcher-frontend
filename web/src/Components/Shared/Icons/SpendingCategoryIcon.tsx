@@ -35,6 +35,8 @@ export default function SpendingCategoryIcon({
                     {spendCategoryIconMapper[category]}
                     <div
                         className={styles.revolvingIcon}
+                        // In this case it's fine because the CSS engine will handle it.
+                        // eslint-disable-next-line react-hooks/purity
                         style={{ animationDelay: `${(Math.random() * 8).toFixed(2)}s` }}
                     >
                         <MdRefresh />

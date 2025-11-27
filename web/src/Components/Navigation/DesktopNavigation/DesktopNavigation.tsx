@@ -13,11 +13,14 @@ const MENU_OPEN_DELAY = 1500;
 const DEFAULT_WIDTH = 68;
 
 // This component turned out rough
+// ^ lol update, increased eslint rule strictness and now it's even more not worth fixing.
 export default function DesktopNavigation() {
     const [menuExpanded, setMenuExpanded] = useState(false);
     const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout | null>(null);
     const menuListRef = useRef<HTMLDivElement>(null);
     const paddingOffset = 40;
+    // TODO: Ehh..
+    // eslint-disable-next-line react-hooks/refs
     const expandedWidth = menuListRef.current ? menuListRef.current.scrollWidth + paddingOffset : DEFAULT_WIDTH;
     const location = useLocation();
     const getContent = useContent('navigation');

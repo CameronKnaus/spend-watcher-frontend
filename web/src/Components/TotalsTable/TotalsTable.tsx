@@ -121,6 +121,7 @@ export default function TotalsTable() {
                 </table>
             </div>
             <CategoryTransactionListPanel
+                key={selectedCategoryForTransactions}
                 category={selectedCategoryForTransactions}
                 transactionDictionary={spendingData.transactionDictionary}
                 onPanelClose={() => {

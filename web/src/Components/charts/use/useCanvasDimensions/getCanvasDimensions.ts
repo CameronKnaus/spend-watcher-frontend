@@ -14,8 +14,9 @@ export type CanvasDimensions = BaseDimensions & {
     boundedHeight: number;
 };
 
+// TODO: This needs to be moved out of a hooks folder.
 // Simple helper that also provides the boundedWidth and boundedHeight of a canvas
-export default function useCanvasDimensions(dimensions: BaseDimensions): CanvasDimensions {
+export default function getCanvasDimensions(dimensions: BaseDimensions): CanvasDimensions {
     return {
         ...dimensions,
         boundedWidth: dimensions.width - dimensions.margin.left - dimensions.margin.right,

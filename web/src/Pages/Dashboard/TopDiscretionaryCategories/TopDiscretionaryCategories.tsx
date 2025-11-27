@@ -167,6 +167,7 @@ export default function TopDiscretionaryCategories() {
                 </CustomButton>
             </div>
             <CategoryTransactionListPanel
+                key={selectedCategoryForTransactions}
                 category={selectedCategoryForTransactions}
                 transactionDictionary={spendingData.transactionDictionary}
                 onPanelClose={() => {

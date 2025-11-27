@@ -1,4 +1,4 @@
-import type { CanvasDimensions } from 'Components/charts/use/useCanvasDimensions/useCanvasDimensions';
+import type { CanvasDimensions } from 'Components/charts/use/useCanvasDimensions/getCanvasDimensions';
 import * as d3 from 'd3';
 
 interface AxisBottomProps {

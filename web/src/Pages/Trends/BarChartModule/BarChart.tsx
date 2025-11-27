@@ -1,4 +1,4 @@
-import useCanvasDimensions from 'Components/charts/use/useCanvasDimensions/useCanvasDimensions';
+import getCanvasDimensions from 'Components/charts/use/useCanvasDimensions/getCanvasDimensions';
 import { spendCategoryIconMapper } from 'Components/Shared/Icons/spendCategoryIconMapper';
 import * as d3 from 'd3';
 import AxisLeft from 'Pages/Savings/AccountGrowthOverTime/AxisLeft/AxisLeft';
@@ -11,7 +11,7 @@ interface BarChartPropTypes {
 }
 
 export default function BarChart({ transactionResponse, containerMeasurement }: BarChartPropTypes) {
-    const dimensions = useCanvasDimensions({
+    const dimensions = getCanvasDimensions({
         width: containerMeasurement.width,
         height: 400,
         margin: {

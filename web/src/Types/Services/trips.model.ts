@@ -34,7 +34,7 @@ export interface TripsListV1Response {
 
 // TRIP EXPENSES API --- /api/trips/v1/expenses
 export const v1TripExpensesSchema = zod.object({
-    tripId: zod.string().uuid(),
+    tripId: zod.uuid(),
 });
 
 export type TripExpensesRequestParams = zod.infer<typeof v1TripExpensesSchema>;
@@ -59,7 +59,7 @@ export type AddTripRequestParams = zod.infer<typeof v1AddTripSchema>;
 // EDIT TRIPS API --- /api/trips/v1/edit
 
 export const v1EditTripSchema = v1AddTripSchema.extend({
-    tripId: zod.string().uuid(),
+    tripId: zod.uuid(),
 });
 
 export type EditTripRequestParams = zod.infer<typeof v1EditTripSchema>;
@@ -68,7 +68,7 @@ export type EditTripRequestParams = zod.infer<typeof v1EditTripSchema>;
 
 // DELETE TRIPS API --- /api/trips/v1/delete
 export const v1DeleteTripSchema = zod.object({
-    tripId: zod.string().uuid(),
+    tripId: zod.uuid(),
 });
 
 export type DeleteTripRequestParams = zod.infer<typeof v1DeleteTripSchema>;

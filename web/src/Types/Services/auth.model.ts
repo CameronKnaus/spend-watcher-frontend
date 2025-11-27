@@ -6,7 +6,7 @@ const MIN_PASSWORD_LENGTH = 8;
 // Validation schema for login service request params
 export const loginRequestParamsSchema = zod
     .object({
-        email: zod.string().email().or(zod.literal('')),
+        email: zod.email().or(zod.literal('')),
         username: zod
             .string()
             .min(MIN_USERNAME_LENGTH, {
@@ -29,7 +29,7 @@ export type LoginRequestParams = zod.infer<typeof loginRequestParamsSchema>;
 
 // Validation schema for registration service request params
 export const registerRequestParamSchema = zod.object({
-    email: zod.string().email(),
+    email: zod.email(),
     password: zod.string().min(MIN_PASSWORD_LENGTH, {
         message: `Password must be at least ${MIN_PASSWORD_LENGTH.toString()} characters`,
     }),

@@ -41,12 +41,13 @@ export enum AccountCategory {
     INVESTING = 'INVESTING',
     BONDS = 'BONDS',
 }
+const accountCategoryEnum = zod.enum(Object.values(AccountCategory) as [AccountCategory, ...AccountCategory[]]);
 
 // ADD ACCOUNT SERVICE
 export const addAccountRequestParamSchema = zod.object({
     accountName: zodAccountName,
     startingAccountValue: zod.number(),
-    accountCategory: zod.nativeEnum(AccountCategory),
+    accountCategory: accountCategoryEnum,
     isFixedRate: zod.boolean(),
     annualPercentageRate: zod.number().optional(),
 });
@@ -55,9 +56,9 @@ export type AddAccountRequestParams = zod.infer<typeof addAccountRequestParamSch
 
 // UPDATE ACCOUNT BALANCE SERVICE
 export const updateAccountBalanceRequestParamSchema = zod.object({
-    accountId: zod.string().uuid(),
+    accountId: zod.uuid(),
     newBalance: zod.number(),
-    targetDate: zod.string().date(), // Validates in YYYY-MM-DD format
+    targetDate: zod.iso.date(), // Validates in YYYY-MM-DD format
 });
 
 export type UpdateAccountBalanceRequestParams = zod.infer<typeof updateAccountBalanceRequestParamSchema>;
@@ -65,7 +66,7 @@ export type UpdateAccountBalanceRequestParams = zod.infer<typeof updateAccountBa
 // EDIT ACCOUNT DETAILS SERVICE
 export const editAccountDetailsRequestParamsSchema = addAccountRequestParamSchema
     .extend({
-        accountId: zod.string().uuid(),
+        accountId: zod.uuid(),
     })
     .omit({
         startingAccountValue: true,
@@ -84,7 +85,7 @@ export interface AccountsSummaryV1Response {
 
 // ACCOUNTS SET ACTIVE SERVICE /v1/set-active
 export const setActiveAccountRequestParamSchema = zod.object({
-    accountId: zod.string().uuid(),
+    accountId: zod.uuid(),
     isActive: zod.boolean(),
 });
 
@@ -92,14 +93,14 @@ export type SetActiveAccountRequestParams = zod.infer<typeof setActiveAccountReq
 
 // PERMANENTLY DELETE ACCOUNT SERVICE /v1/delete
 export const deleteAccountRequestParamSchema = zod.object({
-    accountId: zod.string().uuid(),
+    accountId: zod.uuid(),
 });
 
 export type DeleteAccountRequestParams = zod.infer<typeof deleteAccountRequestParamSchema>;
 
 // ACCOUNTS HISTORY SERVICE /v1/history
 export const accountsHistoryRequestParamSchema = zod.object({
-    accountId: zod.string().uuid(),
+    accountId: zod.uuid(),
 });
 
 export type AccountsHistoryV1RequestParams = zod.infer<typeof accountsHistoryRequestParamSchema>;
@@ -115,7 +116,7 @@ export interface AccountHistoryV1Response {
 
 // ACCOUNTS ADD NEW UPDATE SERVICE /v1/update/add
 export const addAccountUpdateRequestParamSchema = zod.object({
-    accountId: zod.string().uuid(),
+    accountId: zod.uuid(),
     amount: zod.number(),
     date: zodValidateMonthYear,
 });
@@ -124,7 +125,7 @@ export type AddAccountUpdateV1RequestParams = zod.infer<typeof addAccountUpdateR
 
 // ACCOUNTS EDIT EXISTING ACCOUNT UPDATE VALUE /v1/update/edit
 export const editAccountUpdateRequestParamSchema = zod.object({
-    accountId: zod.string().uuid(),
+    accountId: zod.uuid(),
     updateId: zod.number(),
     amount: zod.number(),
 });

@@ -6,13 +6,15 @@ import InteractiveRow from 'Components/InteractiveRow/InteractiveRow';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import useContent from 'Hooks/useContent';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { DiscretionarySpendTransaction, RecurringSpendTransaction } from 'Types/Services/spending.model';
 import type { SpendingCategory } from 'Types/SpendingCategory';
 import { formatToMonthDayYear } from 'Util/Formatters/dateFormatters/dateFormatters';
 import styles from './CategoryTransactionListPanel.module.css';
 
 interface CategoryTransactionListPanelPropTypes {
+    /** # For Resetting transaction to edit state */
+    key: SpendingCategory | undefined;
     category?: SpendingCategory;
     transaction?: DiscretionarySpendTransaction;
     transactionDictionary: Record<string, DiscretionarySpendTransaction | RecurringSpendTransaction>;
@@ -27,10 +29,6 @@ export default function CategoryTransactionListPanel({
     const getContent = useContent('general');
     const getCategoryLabel = useContent('SPENDING_CATEGORIES');
     const [transactionToEdit, setTransactionToEdit] = useState<DiscretionarySpendTransaction>();
-
-    useEffect(() => {
-        setTransactionToEdit(undefined);
-    }, [category]);
 
     return (
         <SlideUpPanel

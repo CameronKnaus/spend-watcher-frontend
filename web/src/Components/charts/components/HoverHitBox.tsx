@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import type { CanvasDimensions } from '../use/useCanvasDimensions/useCanvasDimensions';
+import type { CanvasDimensions } from '../use/useCanvasDimensions/getCanvasDimensions';
 
 interface HoverHitBoxPropTypes {
     dimensions: CanvasDimensions;

@@ -1,7 +1,7 @@
 import NumberFlow from '@number-flow/react';
 import HoverHitBox from 'Components/charts/components/HoverHitBox';
 import type { DataPoint } from 'Components/charts/types/dataPointTypes';
-import useCanvasDimensions from 'Components/charts/use/useCanvasDimensions/useCanvasDimensions';
+import getCanvasDimensions from 'Components/charts/use/useCanvasDimensions/getCanvasDimensions';
 import * as d3 from 'd3';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
@@ -32,7 +32,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     const isMobile = useIsMobile();
 
     const maxNumber = d3.max(totalsArray, (d) => d.amount) ?? 0;
-    const canvasDimensions = useCanvasDimensions({
+    const canvasDimensions = getCanvasDimensions({
         width: containerMeasurement.width,
         height: 400,
         margin: {
