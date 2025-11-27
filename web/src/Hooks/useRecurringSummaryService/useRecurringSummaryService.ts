@@ -4,11 +4,12 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import type { RecurringSummaryV1Response } from 'Types/Services/spending.model';
 
 export default function useRecurringSummaryService() {
-    return useQuery<RecurringSummaryV1Response>({
+    return useQuery({
         queryKey: ['recurring', 'summary'],
         queryFn: async () => {
             const response = await axios.get(SERVICE_ROUTES.getRecurringSummary);
-            return response.data;
+            // TODO: Need better type handling so type casting isn't required.
+            return response.data as RecurringSummaryV1Response;
         },
     });
 }

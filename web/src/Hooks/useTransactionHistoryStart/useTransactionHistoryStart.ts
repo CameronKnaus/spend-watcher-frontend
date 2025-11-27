@@ -5,8 +5,12 @@ import type { SpendingHistoryStartV1Response } from 'Types/Services/spending.mod
 
 // TODO: Currently Unused
 export default function useTransactionHistoryStart() {
-    return useQuery<SpendingHistoryStartV1Response>({
+    return useQuery({
         queryKey: ['spending', 'recurring', 'history-start'],
-        queryFn: async () => (await axios.get(SERVICE_ROUTES.getSpendingHistoryStart)).data,
+        queryFn: async () => {
+            const response = await axios.get(SERVICE_ROUTES.getSpendingHistoryStart);
+            // TODO: Need better type handling so type casting isn't required.
+            return response.data as SpendingHistoryStartV1Response;
+        },
     });
 }

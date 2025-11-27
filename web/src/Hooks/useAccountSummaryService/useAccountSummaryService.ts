@@ -4,11 +4,12 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import type { AccountsSummaryV1Response } from 'Types/Services/accounts.model';
 
 export default function useAccountSummaryService() {
-    return useQuery<AccountsSummaryV1Response>({
+    return useQuery({
         queryKey: ['accounts', 'details'],
         queryFn: async () => {
             const response = await axios.get(SERVICE_ROUTES.getAccountsSummary);
-            return response.data;
+            // TODO: Need better type handling so type casting isn't required.
+            return response.data as AccountsSummaryV1Response;
         },
     });
 }

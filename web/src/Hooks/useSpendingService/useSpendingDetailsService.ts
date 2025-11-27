@@ -9,7 +9,7 @@ export default function useSpendingDetailsService() {
     const { isAuthenticated } = useSessionStatus();
     const { startDate, endDate } = useSelectedTimeFrame();
 
-    return useQuery<SpendingDetailsV1Response>({
+    return useQuery({
         enabled: isAuthenticated,
         queryKey: ['spending', startDate, endDate],
         queryFn: async () => {
@@ -20,7 +20,8 @@ export default function useSpendingDetailsService() {
                 },
             });
 
-            return response.data;
+            // TODO: Need better type handling so type casting isn't required.
+            return response.data as SpendingDetailsV1Response;
         },
     });
 }

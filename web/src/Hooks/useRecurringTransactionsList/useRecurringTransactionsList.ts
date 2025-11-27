@@ -4,7 +4,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import type { RecurringSpendTransaction, RecurringTransactionsListV1Response } from 'Types/Services/spending.model';
 
 export default function useRecurringTransactionsList(recurringSpendId: RecurringSpendTransaction['recurringSpendId']) {
-    const { data, isLoading } = useQuery<RecurringTransactionsListV1Response>({
+    const { data, isLoading } = useQuery({
         queryKey: ['recurring', recurringSpendId],
         queryFn: async () => {
             const response = await axios.get(SERVICE_ROUTES.getRecurringTransactionsList, {
@@ -13,7 +13,8 @@ export default function useRecurringTransactionsList(recurringSpendId: Recurring
                 },
             });
 
-            return response.data;
+            // TODO: Need better type handling so type casting isn't required.
+            return response.data as RecurringTransactionsListV1Response;
         },
     });
 

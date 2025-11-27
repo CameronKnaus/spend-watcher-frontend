@@ -4,12 +4,13 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import type { TripsListV1Response } from 'Types/Services/trips.model';
 
 export default function useTripsList() {
-    const { isFetching, isLoading, data, isError } = useQuery<TripsListV1Response>({
+    const { isFetching, isLoading, data, isError } = useQuery({
         queryKey: ['trips'],
         queryFn: async () => {
             const response = await axios.get(SERVICE_ROUTES.getTripsList);
 
-            return response.data;
+            // TODO: Need better type handling so type casting isn't required.
+            return response.data as TripsListV1Response;
         },
     });
 

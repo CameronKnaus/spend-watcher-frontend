@@ -27,7 +27,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     const totalsArray: DataPoint[] = Array.from(totalsByDate, ([date, amount]) => ({ date, amount }));
 
     // Hooks
-    const [hoveredData, setHoveredData] = useState<DataPoint>(totalsArray[totalsArray.length - 1]);
+    const [hoveredData, setHoveredData] = useState<DataPoint>(totalsArray[totalsArray.length - 1]!);
     const getContent = useContent('savings');
     const isMobile = useIsMobile();
 
@@ -75,7 +75,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     const linePath = lineGenerator(totalsArray)!;
 
     // Bisector for the X accessor
-    const bisectDate = d3.bisector(xAccessor).left;
+    const bisectDate = (data: DataPoint[], targetDate: Date) => d3.bisector(xAccessor).left(data, targetDate);
 
     // For mouse move
     function handlePointerMove(event: React.PointerEvent<SVGRectElement>) {
@@ -99,7 +99,7 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
             closestDataPoint = d0 ?? d1;
         }
 
-        setHoveredData(closestDataPoint ?? totalsArray[totalsArray.length - 1]);
+        setHoveredData(closestDataPoint ?? totalsArray[totalsArray.length - 1]!);
     }
 
     return (

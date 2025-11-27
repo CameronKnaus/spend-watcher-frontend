@@ -3,7 +3,41 @@ const { devMode, prodAPI, localAPI } = EnvironmentSettings;
 
 const domainName = devMode ? localAPI : prodAPI;
 
-const SERVICE_ROUTES: Record<string, string> = {
+// TODO: Make this cleaner, but good enough for now.
+export type ServiceRouteKey =
+    | 'postLogin'
+    | 'postRegister'
+    | 'getCheckAuthentication'
+    | 'getSpendingDetails'
+    | 'postAddDiscretionarySpending'
+    | 'postEditDiscretionarySpending'
+    | 'postDeleteDiscretionarySpending'
+    | 'getRecurringSummary'
+    | 'postAddRecurringSpend'
+    | 'postEditRecurringSpend'
+    | 'postDeleteRecurringSpend'
+    | 'postUpdateRecurringSpendStatus'
+    | 'getRecurringTransactionsList'
+    | 'postEditRecurringTransaction'
+    | 'postAddRecurringTransaction'
+    | 'getSpendingHistoryStart'
+    | 'getTransactions'
+    | 'getTripsList'
+    | 'getTripLinkedExpenses'
+    | 'postAddTrip'
+    | 'postEditTrip'
+    | 'postDeleteTrip'
+    | 'getAccountsSummary'
+    | 'postAddAccount'
+    | 'postEditAccount'
+    | 'postSetActiveAccount'
+    | 'postDeleteAccount'
+    | 'getAccountValueHistory'
+    | 'postAddAccountUpdate'
+    | 'postEditAccountUpdate'
+    | 'getAccountGrowthOverTime';
+
+const SERVICE_ROUTES: Record<ServiceRouteKey, string> = {
     postLogin: domainName + '/user/v1/login',
     postRegister: domainName + '/user/v1/register',
     getCheckAuthentication: domainName + '/user/v1/verify',

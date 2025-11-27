@@ -40,7 +40,7 @@ export default function TopDiscretionaryCategories() {
     }, []);
 
     // Loaders
-    if (!spendingData || isLoading) {
+    if (isLoading || !spendingData) {
         return (
             <div ref={containerRef} className={styles.topDiscretionaryCategories}>
                 <div className={styles.percentageBar}>
@@ -162,7 +162,7 @@ export default function TopDiscretionaryCategories() {
                         />
                     )}
                 </div>
-                <CustomButton variant="secondary" onClick={() => {}} className={styles.moreButton}>
+                <CustomButton variant="secondary" className={styles.moreButton}>
                     {getContent('moreLabel')}
                 </CustomButton>
             </div>

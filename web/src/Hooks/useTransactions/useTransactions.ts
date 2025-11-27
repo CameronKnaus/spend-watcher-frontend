@@ -10,7 +10,7 @@ export default function useTransactions() {
     const { isAuthenticated } = useSessionStatus();
     const { startDate, endDate } = useSelectedTimeFrame();
 
-    return useQuery<TransactionsV1Response>({
+    return useQuery({
         enabled: isAuthenticated,
         queryKey: ['spending', 'transactions', startDate, endDate],
         queryFn: async () => {
@@ -21,7 +21,8 @@ export default function useTransactions() {
                 },
             });
 
-            return response.data;
+            // TODO: Need better type handling so type casting isn't required.
+            return response.data as TransactionsV1Response;
         },
     });
 }

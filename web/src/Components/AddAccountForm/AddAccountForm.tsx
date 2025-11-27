@@ -113,7 +113,7 @@ export default function AddAccountForm({ onSubmit, onCancel }: AddAccountFormPro
                 <CustomButton
                     isDisabled={!form.formState.isValid || addAccountService.isPending}
                     variant="primary"
-                    onClick={(event) => {
+                    onClick={() => {
                         void form.handleSubmit(handleSubmission)(event);
                     }}
                     layout="full-width"

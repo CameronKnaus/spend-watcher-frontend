@@ -4,15 +4,17 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import type { Account, AccountHistoryV1Response } from 'Types/Services/accounts.model';
 
 export default function useAccountHistory(accountId: Account['id']) {
-    return useQuery<AccountHistoryV1Response>({
+    return useQuery({
         queryKey: ['accounts', accountId],
-        queryFn: async () =>
-            (
-                await axios.get(SERVICE_ROUTES.getAccountValueHistory, {
-                    params: {
-                        accountId,
-                    },
-                })
-            ).data,
+        queryFn: async () => {
+            const response = await axios.get(SERVICE_ROUTES.getAccountValueHistory, {
+                params: {
+                    accountId,
+                },
+            });
+
+            // TODO: Need better type handling so type casting isn't required.
+            return response.data as AccountHistoryV1Response;
+        },
     });
 }
