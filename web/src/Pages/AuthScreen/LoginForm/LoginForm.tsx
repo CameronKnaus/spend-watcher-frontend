@@ -16,14 +16,19 @@ interface LoginFormPropTypes {
 export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
     const queryClient = useQueryClient();
     const getContent = useContent('authScreen');
-    const form = useForm<LoginRequestParams>({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isValid },
+    } = useForm<LoginRequestParams>({
         resolver: zodResolver(loginRequestParamsSchema),
+        mode: 'onChange',
     });
 
     const loginService = useMutation({
         mutationFn: (params: LoginRequestParams) => axios.post(SERVICE_ROUTES.postLogin, params),
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({
+        onSuccess: () => {
+            void queryClient.invalidateQueries({
                 queryKey: ['verify-auth'],
             });
         },
@@ -32,32 +37,34 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
         },
     });
 
-    async function handleSubmission(params: LoginRequestParams) {
-        await loginService.mutateAsync(params);
+    async function handleSubmission(fieldValues: LoginRequestParams) {
+        await loginService.mutateAsync(fieldValues);
     }
 
     return (
-        <form
-            onSubmit={() => {
-                void form.handleSubmit(handleSubmission)();
-            }}
-        >
-            <label>{getContent('username')}</label>
-            <input
-                className={styles.textInput}
-                placeholder={getContent('username')}
-                autoComplete="username"
-                type="username"
-                {...form.register('username', { maxLength: 100 })}
-            />
-            <label>{getContent('password')}</label>
-            <input
-                className={styles.textInput}
-                placeholder={getContent('password')}
-                autoComplete="current-password"
-                type="password"
-                {...form.register('password', { maxLength: 100 })}
-            />
+        <form onSubmit={handleSubmit(handleSubmission)}>
+            <div className={styles.formGroup}>
+                <label>{getContent('username')}</label>
+                <input
+                    className={styles.textInput}
+                    placeholder={getContent('username')}
+                    autoComplete="username"
+                    type="username"
+                    {...register('username')}
+                />
+                {errors.username?.message && <p className={styles.errorText}>{errors.username.message}</p>}
+            </div>
+            <div className={styles.formGroup}>
+                <label>{getContent('password')}</label>
+                <input
+                    className={styles.textInput}
+                    placeholder={getContent('password')}
+                    autoComplete="current-password"
+                    type="password"
+                    {...register('password')}
+                />
+                {errors.password?.message && <p className={styles.errorText}>{errors.password.message}</p>}
+            </div>
             <div className={styles.buttonRowContainer}>
                 <CustomButton
                     isDisabled={loginService.isPending}
@@ -68,7 +75,7 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
                     {getContent('register')}
                 </CustomButton>
                 <CustomButton
-                    isDisabled={!form.formState.isValid || loginService.isPending}
+                    isDisabled={!isValid || loginService.isPending}
                     variant="primary"
                     type="submit"
                     layout="full-width"

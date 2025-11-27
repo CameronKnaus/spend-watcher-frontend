@@ -13,11 +13,9 @@ export const loginRequestParamsSchema = zod
                 message: `Username must be at least ${MIN_USERNAME_LENGTH.toString()} characters`,
             })
             .or(zod.literal('')),
-        password: zod
-            .string()
-            .min(MIN_PASSWORD_LENGTH, {
-                message: `Password must be at least ${MIN_PASSWORD_LENGTH.toString()} characters`,
-            }),
+        password: zod.string().min(MIN_PASSWORD_LENGTH, {
+            message: `Password must be at least ${MIN_PASSWORD_LENGTH.toString()} characters`,
+        }),
     })
     .partial({
         email: true,
@@ -32,16 +30,12 @@ export type LoginRequestParams = zod.infer<typeof loginRequestParamsSchema>;
 // Validation schema for registration service request params
 export const registerRequestParamSchema = zod.object({
     email: zod.string().email(),
-    password: zod
-        .string()
-        .min(MIN_PASSWORD_LENGTH, {
-            message: `Password must be at least ${MIN_PASSWORD_LENGTH.toString()} characters`,
-        }),
-    username: zod
-        .string()
-        .min(MIN_USERNAME_LENGTH, {
-            message: `Username must be at least ${MIN_USERNAME_LENGTH.toString()} characters`,
-        }),
+    password: zod.string().min(MIN_PASSWORD_LENGTH, {
+        message: `Password must be at least ${MIN_PASSWORD_LENGTH.toString()} characters`,
+    }),
+    username: zod.string().min(MIN_USERNAME_LENGTH, {
+        message: `Username must be at least ${MIN_USERNAME_LENGTH.toString()} characters`,
+    }),
 });
 
 export type RegisterRequestParams = zod.infer<typeof registerRequestParamSchema>;

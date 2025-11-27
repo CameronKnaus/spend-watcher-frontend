@@ -1,7 +1,7 @@
 import EnvironmentSettings from 'Constants/EnvironmentSettings.json';
-const { devMode, prodAPI, localAPI } = EnvironmentSettings;
+const { devMode, prodAPI } = EnvironmentSettings;
 
-const domainName = devMode ? localAPI : prodAPI;
+const domainName = devMode ? '/api' : prodAPI;
 
 // TODO: Make this cleaner, but good enough for now.
 export type ServiceRouteKey =

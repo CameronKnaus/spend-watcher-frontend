@@ -47,7 +47,11 @@
     text-align: center;
     font-size: var(--form-input-font-size);
     background-color: var(--token-color-background-primary);
-    margin-bottom: var(--form-space-between-items) !important;
+    margin-bottom: 1rem;
+}
+
+.formGroup {
+    margin-block: 1.5rem;
 }
 
 .buttonRowContainer {
@@ -59,4 +63,8 @@
 
 .buttonRowContainer > button {
     padding: 8px 16px;
+}
+
+.errorText {
+    color: var(--token-color-semantic-danger);
 }
