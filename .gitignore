@@ -19,8 +19,6 @@ dist-ssr
 
 # Editor directories and files
 .VSCodeCounter
-.vscode/*
-!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
