@@ -56,12 +56,7 @@ export default function AddAccountForm({ onSubmit, onCancel }: AddAccountFormPro
 
     return (
         <>
-            <form
-                className={styles.form}
-                onSubmit={(event) => {
-                    void form.handleSubmit(handleSubmission)(event);
-                }}
-            >
+            <form className={styles.form} onSubmit={form.handleSubmit(handleSubmission)}>
                 <label>{getContent('accountNameLabel')}</label>
                 <input
                     className={styles.textInput}
@@ -114,7 +109,7 @@ export default function AddAccountForm({ onSubmit, onCancel }: AddAccountFormPro
                     isDisabled={!form.formState.isValid || addAccountService.isPending}
                     variant="primary"
                     onClick={() => {
-                        void form.handleSubmit(handleSubmission)(event);
+                        void form.handleSubmit(handleSubmission)();
                     }}
                     layout="full-width"
                 >

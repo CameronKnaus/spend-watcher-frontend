@@ -92,12 +92,7 @@ export default function TripForm({ onSubmit, onCancel, onDelete, tripToEdit }: T
 
     return (
         <>
-            <form
-                className={styles.tripForm}
-                onSubmit={(event) => {
-                    void form.handleSubmit(handleSubmission)(event);
-                }}
-            >
+            <form className={styles.tripForm} onSubmit={form.handleSubmit(handleSubmission)}>
                 <label>{getContent('tripName')}</label>
                 <input
                     className={styles.textInput}
@@ -138,8 +133,8 @@ export default function TripForm({ onSubmit, onCancel, onDelete, tripToEdit }: T
                 <CustomButton
                     isDisabled={!form.formState.isValid}
                     variant="primary"
-                    onClick={(event) => {
-                        void form.handleSubmit(handleSubmission)(event);
+                    onClick={() => {
+                        void form.handleSubmit(handleSubmission)();
                     }}
                     layout="full-width"
                 >

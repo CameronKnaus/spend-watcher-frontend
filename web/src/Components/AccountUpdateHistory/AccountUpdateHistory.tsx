@@ -26,7 +26,8 @@ export default function AccountUpdateHistory({ accountId, onBack }: AccountUpdat
     }
 
     const { updateHistory } = accountHistory;
-    const oldestAccountUpdateDate = updateHistory[updateHistory.length - 1].date;
+    const oldestAccountUpdateDate =
+        updateHistory[updateHistory.length - 1]?.date ?? (format(new Date(), monthYearDbDateFormat) as MonthYearDbDate);
     // Starting with the current date, iterate backwards until we reach the oldest account update date
     const currentDate = new Date();
     const applicableMonths: MonthYearDbDate[] = [];

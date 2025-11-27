@@ -37,8 +37,8 @@ export default function EditableAmountRow<T extends FieldValues>({
                 <div className={styles.moneyInputContainer}>
                     <div className={styles.editIcon}>{!isLoading && <FaPencilAlt />}</div>
                     <form
-                        onSubmit={(event) => {
-                            void form.handleSubmit(onSubmission)(event);
+                        onSubmit={() => {
+                            void form.handleSubmit(onSubmission)();
                         }}
                     >
                         {isLoading ? (
@@ -61,8 +61,8 @@ export default function EditableAmountRow<T extends FieldValues>({
                             variant="primary"
                             className={styles.confirmChangeButton}
                             layout="full-width"
-                            onClick={(event) => {
-                                void form.handleSubmit(onSubmission)(event);
+                            onClick={() => {
+                                void form.handleSubmit(onSubmission)();
                             }}
                             isDisabled={isLoading}
                         >

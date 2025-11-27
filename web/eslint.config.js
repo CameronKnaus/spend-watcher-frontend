@@ -36,6 +36,15 @@ export default defineConfig([
             'no-console': 'warn',
             '@typescript-eslint/no-unused-vars': 'warn',
             '@typescript-eslint/no-non-null-assertion': 'off',
+            '@typescript-eslint/no-misused-promises': [
+                'error',
+                {
+                    checksVoidReturn: {
+                        // Allow promise-returning handlers in JSX props; components handle their own errors/loading.
+                        attributes: false,
+                    },
+                },
+            ],
             // TODO: Revisit these overrides
             'react-refresh/only-export-components': 'off',
             '@typescript-eslint/restrict-template-expressions': 'off',

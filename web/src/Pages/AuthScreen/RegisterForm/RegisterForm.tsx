@@ -46,8 +46,8 @@ export default function RegisterForm({ switchToLogin }: RegisterFormPropTypes) {
                 <CustomButton
                     isDisabled={!form.formState.isValid}
                     variant="primary"
-                    onClick={(event) => {
-                        void form.handleSubmit(handleSubmission)(event);
+                    onClick={() => {
+                        void form.handleSubmit(handleSubmission)();
                     }}
                     layout="full-width"
                 >

@@ -47,6 +47,9 @@ export default function TransactionsList() {
                                                   .map((transactionId) => {
                                                       const transaction =
                                                           spendingData.transactionDictionary[transactionId];
+                                                      if (!transaction) {
+                                                          return null;
+                                                      }
                                                       return (
                                                           <TransactionRow
                                                               key={transactionId}

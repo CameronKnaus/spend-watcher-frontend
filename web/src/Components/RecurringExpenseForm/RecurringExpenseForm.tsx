@@ -98,12 +98,7 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
         : !form.formState.isValid;
     return (
         <>
-            <form
-                className={styles.newRecurringSpendForm}
-                onSubmit={(event) => {
-                    void form.handleSubmit(handleSubmit)(event);
-                }}
-            >
+            <form className={styles.newRecurringSpendForm} onSubmit={form.handleSubmit(handleSubmit)}>
                 {/* Expense name */}
                 <label>{getContent('recurringSpendName')}</label>
                 <input
@@ -159,8 +154,8 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
                 <CustomButton
                     isDisabled={confirmButtonDisabled}
                     variant="primary"
-                    onClick={(event) => {
-                        void form.handleSubmit(handleSubmit)(event);
+                    onClick={() => {
+                        void form.handleSubmit(handleSubmit)();
                     }}
                     layout="full-width"
                 >

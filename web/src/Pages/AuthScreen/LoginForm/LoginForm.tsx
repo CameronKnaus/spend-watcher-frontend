@@ -38,8 +38,8 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
 
     return (
         <form
-            onSubmit={(event) => {
-                void form.handleSubmit(handleSubmission)(event);
+            onSubmit={() => {
+                void form.handleSubmit(handleSubmission)();
             }}
         >
             <label>{getContent('username')}</label>
@@ -70,9 +70,7 @@ export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
                 <CustomButton
                     isDisabled={!form.formState.isValid || loginService.isPending}
                     variant="primary"
-                    onClick={(event) => {
-                        void form.handleSubmit(handleSubmission)(event);
-                    }}
+                    type="submit"
                     layout="full-width"
                 >
                     {getContent('submit')}

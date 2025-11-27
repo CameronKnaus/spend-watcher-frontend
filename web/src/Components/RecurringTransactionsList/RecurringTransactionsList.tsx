@@ -30,7 +30,9 @@ export default function RecurringTransactionsList({
         return <h1>Loading...</h1>;
     }
 
-    const oldestTransactionDate = recurringTransactionsList[recurringTransactionsList.length - 1].date;
+    const oldestTransactionDate =
+        recurringTransactionsList[recurringTransactionsList.length - 1]?.date ??
+        (format(new Date(), monthYearDbDateFormat) as MonthYearDbDate);
     // Starting with the current date, we will iterate backwards until we reach the oldest transaction date
     let currentDate = new Date();
     const applicableMonths: MonthYearDbDate[] = [];

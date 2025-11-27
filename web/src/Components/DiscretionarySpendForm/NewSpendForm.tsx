@@ -88,12 +88,7 @@ export default function NewSpendForm({ onCancel, onSubmit }: NewSpendFormPropTyp
                     className={styles.tripNotice}
                 />
             )}
-            <form
-                className={styles.transactionForm}
-                onSubmit={(event) => {
-                    void form.handleSubmit(handleSubmission)(event);
-                }}
-            >
+            <form className={styles.transactionForm} onSubmit={form.handleSubmit(handleSubmission)}>
                 {/* Amount spent */}
                 <label>{getContent('amountLabel')}</label>
                 <MoneyInput
@@ -160,8 +155,8 @@ export default function NewSpendForm({ onCancel, onSubmit }: NewSpendFormPropTyp
                 <CustomButton
                     isDisabled={!form.formState.isValid}
                     variant="primary"
-                    onClick={(event) => {
-                        void form.handleSubmit(handleSubmission)(event);
+                    onClick={() => {
+                        void form.handleSubmit(handleSubmission)();
                     }}
                     layout="full-width"
                 >

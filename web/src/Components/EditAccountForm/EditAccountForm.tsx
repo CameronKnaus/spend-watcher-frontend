@@ -60,12 +60,7 @@ export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: E
     const formIsValidForSubmission = form.formState.isValid && !editAccountService.isPending && form.formState.isDirty;
     return (
         <>
-            <form
-                className={styles.form}
-                onSubmit={(event) => {
-                    void form.handleSubmit(handleSubmission)(event);
-                }}
-            >
+            <form className={styles.form} onSubmit={form.handleSubmit(handleSubmission)}>
                 <label>{getContent('accountNameLabel')}</label>
                 <input
                     className={styles.textInput}
@@ -108,8 +103,8 @@ export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: E
                 <CustomButton
                     isDisabled={!formIsValidForSubmission}
                     variant="primary"
-                    onClick={(event) => {
-                        void form.handleSubmit(handleSubmission)(event);
+                    onClick={() => {
+                        void form.handleSubmit(handleSubmission)();
                     }}
                     layout="full-width"
                 >
