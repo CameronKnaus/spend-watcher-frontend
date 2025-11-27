@@ -10,9 +10,7 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-    v1AddRecurringSpendSchema,
-} from 'Types/Services/spending.model';
+import { v1AddRecurringSpendSchema } from 'Types/Services/spending.model';
 import type {
     AddRecurringSpendRequestParams,
     EditRecurringSpendRequestParams,
@@ -126,7 +124,9 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
                         type="checkbox"
                         aria-label={`${getContent('variableExpenseLabel')}. ${getContent('variableExpenseDescription')}`}
                         {...form.register('isVariableRecurring')}
-                        onClick={(e) => { e.stopPropagation(); }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
                     />
                     <label aria-hidden>{getContent('variableExpenseLabel')}</label>
                     <span className={styles.varyingDescription}>{getContent('variableExpenseDescription')}</span>

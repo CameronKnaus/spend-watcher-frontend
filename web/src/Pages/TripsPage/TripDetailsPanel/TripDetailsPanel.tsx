@@ -97,7 +97,9 @@ export default function TripDetailsPanel({ trip, isOpen, dateLabel, onClose }: T
                 <TripForm
                     onSubmit={returnToBasePage}
                     onCancel={returnToBasePage}
-                    onDelete={() => { setPanelState(TripPanelState.deleteTrip); }}
+                    onDelete={() => {
+                        setPanelState(TripPanelState.deleteTrip);
+                    }}
                     tripToEdit={trip}
                 />
             )}

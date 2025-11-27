@@ -26,7 +26,13 @@ export default function RecurringTransactionCard({
     const getContent = useContent('recurringSpending');
 
     return (
-        <button className={clsx(styles.card, className)} {...attributes} onClick={() => { onClick(transaction); }}>
+        <button
+            className={clsx(styles.card, className)}
+            {...attributes}
+            onClick={() => {
+                onClick(transaction);
+            }}
+        >
             <SpendingCategoryIcon isInactive={isInactive} category={transaction.category} size={42} />
             <div className={styles.transactionDetails}>
                 <div className={styles.dataRow}>

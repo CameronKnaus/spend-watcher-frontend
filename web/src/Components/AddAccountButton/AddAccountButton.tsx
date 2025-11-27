@@ -20,7 +20,12 @@ export default function AddAccountButton() {
             >
                 {getContent('addAccount')}
             </CustomButton>
-            <AddAccountPanel isOpen={panelOpen} onPanelClose={() => { setPanelOpen(false); }} />
+            <AddAccountPanel
+                isOpen={panelOpen}
+                onPanelClose={() => {
+                    setPanelOpen(false);
+                }}
+            />
         </>
     );
 }

@@ -6,13 +6,8 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-    editAccountUpdateRequestParamSchema,
-} from 'Types/Services/accounts.model';
-import type {
-    Account,
-    EditAccountUpdateV1RequestParams,
-} from 'Types/Services/accounts.model';
+import { editAccountUpdateRequestParamSchema } from 'Types/Services/accounts.model';
+import type { Account, EditAccountUpdateV1RequestParams } from 'Types/Services/accounts.model';
 
 interface EditAccountUpdateRowPropTypes {
     accountId: Account['id'];

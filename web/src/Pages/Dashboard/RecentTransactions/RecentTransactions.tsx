@@ -98,7 +98,9 @@ export default function RecentTransactions() {
                                                     key={transactionId}
                                                     transactionId={transaction.transactionId}
                                                     category={transaction.category}
-                                                    onClick={() => { setTransactionToEdit(transaction); }}
+                                                    onClick={() => {
+                                                        setTransactionToEdit(transaction);
+                                                    }}
                                                     amountSpent={transaction.amountSpent}
                                                     note={transaction.note}
                                                 />
@@ -113,7 +115,9 @@ export default function RecentTransactions() {
             <DiscretionarySpendPanel
                 isOpen={Boolean(transactionToEdit)}
                 transactionToEdit={transactionToEdit}
-                onPanelClose={() => { setTransactionToEdit(undefined); }}
+                onPanelClose={() => {
+                    setTransactionToEdit(undefined);
+                }}
             />
         </>
     );

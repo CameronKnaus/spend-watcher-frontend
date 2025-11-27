@@ -36,7 +36,9 @@ export default function TransactionRow({
             secondaryDataPoint={note}
             secondaryLabel={secondaryNote}
             className={className}
-            onClick={() => { onClick(transactionId); }}
+            onClick={() => {
+                onClick(transactionId);
+            }}
             {...attributes}
         />
     );

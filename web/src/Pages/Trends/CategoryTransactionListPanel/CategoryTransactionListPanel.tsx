@@ -42,8 +42,12 @@ export default function CategoryTransactionListPanel({
             {transactionToEdit ? (
                 <EditSpendForm
                     transactionToEdit={transactionToEdit}
-                    onCancel={() => { setTransactionToEdit(undefined); }}
-                    onSubmit={() => { setTransactionToEdit(undefined); }}
+                    onCancel={() => {
+                        setTransactionToEdit(undefined);
+                    }}
+                    onSubmit={() => {
+                        setTransactionToEdit(undefined);
+                    }}
                 />
             ) : (
                 <>
@@ -75,7 +79,9 @@ export default function CategoryTransactionListPanel({
                                         primaryDataPoint={<Currency amount={-transaction.amountSpent} isGainLoss />}
                                         secondaryDataPoint={transaction.note}
                                         secondaryLabel={formatToMonthDayYear(transaction.spentDate)}
-                                        onClick={() => { setTransactionToEdit(transaction); }}
+                                        onClick={() => {
+                                            setTransactionToEdit(transaction);
+                                        }}
                                     />
                                 );
                             })}

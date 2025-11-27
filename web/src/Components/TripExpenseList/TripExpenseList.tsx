@@ -65,7 +65,9 @@ export default function TripExpenseList({ tripId, setTransactionToEdit }: TripEx
                     <TransactionRow
                         transactionId={transaction.transactionId}
                         category={transaction.category}
-                        onClick={() => { setTransactionToEdit(transaction); }}
+                        onClick={() => {
+                            setTransactionToEdit(transaction);
+                        }}
                         amountSpent={transaction.amountSpent}
                         note={transaction.note}
                         secondaryNote={formatToMonthDay(transaction.spentDate)}

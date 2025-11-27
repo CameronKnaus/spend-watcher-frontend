@@ -5,7 +5,7 @@ const msMapper = {
     day: 8.64e7,
     hour: 36e5,
     minute: 60000,
-    second: 1000
+    second: 1000,
 };
 
 export default msMapper;

@@ -20,7 +20,12 @@ export default function LogSpendButton() {
             >
                 {getTransactionContent('logExpense')}
             </CustomButton>
-            <DiscretionarySpendPanel onPanelClose={() => { setLogExpensePanelOpen(false); }} isOpen={logExpensePanelOpen} />
+            <DiscretionarySpendPanel
+                onPanelClose={() => {
+                    setLogExpensePanelOpen(false);
+                }}
+                isOpen={logExpensePanelOpen}
+            />
         </>
     );
 }

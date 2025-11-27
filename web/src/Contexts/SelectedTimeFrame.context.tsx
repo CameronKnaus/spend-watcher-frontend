@@ -185,9 +185,5 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
         setToCurrentMonth,
     };
 
-    return (
-        <SelectedTimeFrameContext value={selectedTimeFrameAPI}>
-            {children}
-        </SelectedTimeFrameContext>
-    );
+    return <SelectedTimeFrameContext value={selectedTimeFrameAPI}>{children}</SelectedTimeFrameContext>;
 }

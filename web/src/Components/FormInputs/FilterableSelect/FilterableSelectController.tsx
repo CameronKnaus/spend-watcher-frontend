@@ -22,9 +22,7 @@ export default function FilterableSelectController<TOptionName extends string, K
         <Controller
             control={control}
             name={name}
-            render={({ field }) => (
-                <FilterableSelect {...field} {...filterSelectProps} />
-            )}
+            render={({ field }) => <FilterableSelect {...field} {...filterSelectProps} />}
         />
     );
 }

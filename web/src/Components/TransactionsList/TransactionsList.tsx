@@ -67,7 +67,9 @@ export default function TransactionsList() {
             <DiscretionarySpendPanel
                 isOpen={Boolean(transactionToEdit)}
                 transactionToEdit={transactionToEdit}
-                onPanelClose={() => { setTransactionToEdit(undefined); }}
+                onPanelClose={() => {
+                    setTransactionToEdit(undefined);
+                }}
             />
         </>
     );

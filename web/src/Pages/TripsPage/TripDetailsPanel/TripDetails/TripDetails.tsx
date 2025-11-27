@@ -45,7 +45,9 @@ export default function TripDetails({ trip, dateLabel, setPanelState, onClose }:
                 <CustomButton
                     layout="full-width"
                     variant="primary"
-                    onClick={() => { setPanelState(TripPanelState.editTripDetails); }}
+                    onClick={() => {
+                        setPanelState(TripPanelState.editTripDetails);
+                    }}
                 >
                     {getContent('editTripDetails')}
                 </CustomButton>

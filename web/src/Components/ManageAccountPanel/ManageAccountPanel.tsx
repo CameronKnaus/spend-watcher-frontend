@@ -101,7 +101,9 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
                     <EditAccountForm
                         accountToEdit={account}
                         onSubmit={onClose}
-                        onCancel={() => { setSelectedTab(PanelTabs.BASE); }}
+                        onCancel={() => {
+                            setSelectedTab(PanelTabs.BASE);
+                        }}
                     />
                 );
             case PanelTabs.SET_INACTIVE:
@@ -110,7 +112,9 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
                         warningTitle={getContent('setAccountInactiveTitle', [account.name])}
                         warningDescription={getContent('setAccountInactiveDescription')}
                         proceedText={getContent('stopTrackingButton')}
-                        onCancel={() => { setSelectedTab(PanelTabs.BASE); }}
+                        onCancel={() => {
+                            setSelectedTab(PanelTabs.BASE);
+                        }}
                         onProceed={async () => {
                             await activeStatusMutation.mutateAsync({
                                 accountId: account.id,
@@ -127,7 +131,9 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
                         warningDescription={getContent('deleteAccountDescription')}
                         proceedText={getContent('deleteAccountButton')}
                         finalWarningText={getContent('deleteAccountFinalWarning')}
-                        onCancel={() => { setSelectedTab(PanelTabs.BASE); }}
+                        onCancel={() => {
+                            setSelectedTab(PanelTabs.BASE);
+                        }}
                         onProceed={async () => {
                             await deleteAccountMutation.mutate({
                                 accountId: account.id,
@@ -137,7 +143,14 @@ export default function ManageAccountPanel({ account, onPanelClose }: ManageAcco
                     />
                 );
             case PanelTabs.HISTORY:
-                return <AccountUpdateHistory accountId={account.id} onBack={() => { setSelectedTab(PanelTabs.BASE); }} />;
+                return (
+                    <AccountUpdateHistory
+                        accountId={account.id}
+                        onBack={() => {
+                            setSelectedTab(PanelTabs.BASE);
+                        }}
+                    />
+                );
             default:
                 return null;
         }

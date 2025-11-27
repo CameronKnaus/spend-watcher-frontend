@@ -9,14 +9,8 @@ import PercentageInput from 'Components/FormInputs/PercentageInput/PercentageInp
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useForm } from 'react-hook-form';
-import {
-    AccountCategory,
-    editAccountDetailsRequestParamsSchema,
-} from 'Types/Services/accounts.model';
-import type {
-    Account,
-    EditAccountDetailsRequestParams,
-} from 'Types/Services/accounts.model';
+import { AccountCategory, editAccountDetailsRequestParamsSchema } from 'Types/Services/accounts.model';
+import type { Account, EditAccountDetailsRequestParams } from 'Types/Services/accounts.model';
 import styles from './EditAccountForm.module.css';
 
 interface EditAccountFormPropTypes {
@@ -96,7 +90,9 @@ export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: E
                         className={styles.checkBox}
                         type="checkbox"
                         {...form.register('isFixedRate')}
-                        onClick={(e) => { e.stopPropagation(); }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
                     />
                 </div>
             </form>

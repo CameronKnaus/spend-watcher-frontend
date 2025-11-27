@@ -18,7 +18,8 @@
 }
 
 .skeletonOverride {
-    background: linear-gradient(
+    background:
+        linear-gradient(
             90deg,
             var(--theme-color-primary-500),
             var(--theme-color-primary-600) 50%,

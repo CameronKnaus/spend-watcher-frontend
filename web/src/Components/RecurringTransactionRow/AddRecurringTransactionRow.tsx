@@ -67,7 +67,9 @@ export default function AddRecurringTransactionRow({
                 variant="detail"
                 layout="full-width"
                 className={styles.addNewRow}
-                onClick={() => { setIsActive(true); }}
+                onClick={() => {
+                    setIsActive(true);
+                }}
             >
                 {getContent('addNewRow', [formattedDate])}
             </CustomButton>

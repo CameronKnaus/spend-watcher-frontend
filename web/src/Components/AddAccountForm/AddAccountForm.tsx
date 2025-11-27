@@ -95,7 +95,9 @@ export default function AddAccountForm({ onSubmit, onCancel }: AddAccountFormPro
                         className={styles.checkBox}
                         type="checkbox"
                         {...form.register('isFixedRate')}
-                        onClick={(e) => { e.stopPropagation(); }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
                     />
                 </div>
             </form>

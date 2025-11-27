@@ -10,10 +10,21 @@ export default function AddTripButton() {
 
     return (
         <>
-            <CustomButton variant="primary" className={styles.addTripButton} onClick={() => { setPanelOpen(true); }}>
+            <CustomButton
+                variant="primary"
+                className={styles.addTripButton}
+                onClick={() => {
+                    setPanelOpen(true);
+                }}
+            >
                 {getContent('addTrip')}
             </CustomButton>
-            <TripFormPanel isOpen={panelOpen} onPanelClose={() => { setPanelOpen(false); }} />
+            <TripFormPanel
+                isOpen={panelOpen}
+                onPanelClose={() => {
+                    setPanelOpen(false);
+                }}
+            />
         </>
     );
 }

@@ -42,7 +42,9 @@ function FilterableSelectComponent<T extends string>(
 
         document.addEventListener('click', toggleOpen);
 
-        return () => { document.removeEventListener('click', toggleOpen); };
+        return () => {
+            document.removeEventListener('click', toggleOpen);
+        };
     }, [ref]);
 
     function filter(option: FilterableSelectOptionType<T>) {

@@ -13,13 +13,8 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import useTripsList from 'Hooks/useTripsList/useTripsList';
 import { useForm } from 'react-hook-form';
-import {
-    v1DiscretionaryAddSchema,
-} from 'Types/Services/spending.model';
-import type {
-    DiscretionarySpendTransaction,
-    DiscretionaryTransactionId,
-} from 'Types/Services/spending.model';
+import { v1DiscretionaryAddSchema } from 'Types/Services/spending.model';
+import type { DiscretionarySpendTransaction, DiscretionaryTransactionId } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './DiscretionarySpendForm.module.css';
 

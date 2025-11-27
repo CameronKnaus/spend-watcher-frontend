@@ -131,7 +131,9 @@ export default function TopDiscretionaryCategories() {
                                     amount={-details.discretionaryTotals.amount}
                                     percentage={details.discretionaryTotals.percentageOfTotalAmount}
                                     category={details.category}
-                                    onClick={() => { setSelectedCategoryForTransactions(details.category); }}
+                                    onClick={() => {
+                                        setSelectedCategoryForTransactions(details.category);
+                                    }}
                                 />
                             ),
                     )}
@@ -167,7 +169,9 @@ export default function TopDiscretionaryCategories() {
             <CategoryTransactionListPanel
                 category={selectedCategoryForTransactions}
                 transactionDictionary={spendingData.transactionDictionary}
-                onPanelClose={() => { setSelectedCategoryForTransactions(undefined); }}
+                onPanelClose={() => {
+                    setSelectedCategoryForTransactions(undefined);
+                }}
             />
         </>
     );

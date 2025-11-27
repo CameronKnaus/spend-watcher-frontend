@@ -43,7 +43,9 @@ export default function AccountsList() {
                                   secondaryDataPoint={getContent('asOf', [
                                       formatMonthYearDBDateAsReadable(account.lastUpdated),
                                   ])}
-                                  onClick={() => { setAccountToEdit(account); }}
+                                  onClick={() => {
+                                      setAccountToEdit(account);
+                                  }}
                                   callToActionText={
                                       account.requiresNewUpdate
                                           ? getContent('accountRequiresUpdateCTA', [getCurrentMonthLabel()])
@@ -53,7 +55,12 @@ export default function AccountsList() {
                           ))}
                 </div>
             </ModuleContainer>
-            <ManageAccountPanel account={accountToEdit} onPanelClose={() => { setAccountToEdit(null); }} />
+            <ManageAccountPanel
+                account={accountToEdit}
+                onPanelClose={() => {
+                    setAccountToEdit(null);
+                }}
+            />
         </>
     );
 }

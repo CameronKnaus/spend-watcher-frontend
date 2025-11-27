@@ -6,13 +6,8 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-    v1EditRecurringTransactionSchema,
-} from 'Types/Services/spending.model';
-import type {
-    EditRecurringTransactionRequestParams,
-    RecurringTransactionId,
-} from 'Types/Services/spending.model';
+import { v1EditRecurringTransactionSchema } from 'Types/Services/spending.model';
+import type { EditRecurringTransactionRequestParams, RecurringTransactionId } from 'Types/Services/spending.model';
 
 interface EditableRecurringTransactionRowPropTypes {
     transactionId: RecurringTransactionId;

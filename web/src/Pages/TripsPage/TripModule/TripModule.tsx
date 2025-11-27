@@ -63,7 +63,9 @@ export default function TripModule({ trip, tripCostTotals }: TripModulePropTypes
                 <div className={styles.buttonRow}>
                     <CustomButton
                         variant="detail"
-                        onClick={() => { setDetailPanelOpen(true); }}
+                        onClick={() => {
+                            setDetailPanelOpen(true);
+                        }}
                         className={styles.actionButton}
                     >
                         {getContent('details')}
@@ -75,7 +77,9 @@ export default function TripModule({ trip, tripCostTotals }: TripModulePropTypes
                 trip={trip}
                 dateLabel={dateLabel}
                 isOpen={detailPanelOpen}
-                onClose={() => { setDetailPanelOpen(false); }}
+                onClose={() => {
+                    setDetailPanelOpen(false);
+                }}
             />
         </>
     );

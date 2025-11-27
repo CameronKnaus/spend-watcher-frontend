@@ -10,13 +10,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { monthYearDbDateFormat } from 'Types/dateTypes';
 import type { MonthYearDbDate } from 'Types/dateTypes';
-import {
-    addAccountUpdateRequestParamSchema,
-} from 'Types/Services/accounts.model';
-import type {
-    Account,
-    AddAccountUpdateV1RequestParams,
-} from 'Types/Services/accounts.model';
+import { addAccountUpdateRequestParamSchema } from 'Types/Services/accounts.model';
+import type { Account, AddAccountUpdateV1RequestParams } from 'Types/Services/accounts.model';
 import styles from './AddAccountUpdateRow.module.css';
 
 interface AddAccountUpdateRowPropTypes {
@@ -62,7 +57,9 @@ export default function AddAccountUpdateRow({ accountId, date }: AddAccountUpdat
                 variant="detail"
                 layout="full-width"
                 className={styles.addNewRow}
-                onClick={() => { setIsActive(true); }}
+                onClick={() => {
+                    setIsActive(true);
+                }}
             >
                 {getContent('addNewRow', [formattedDate])}
             </CustomButton>
