@@ -17,12 +17,12 @@ import { useForm } from 'react-hook-form';
 import { v1DiscretionaryAddSchema } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './DiscretionarySpendForm.module.css';
-import { SpendFormAttributes } from './EditSpendForm';
+import type { SpendFormAttributes } from './EditSpendForm';
 
-type NewSpendFormPropTypes = {
+interface NewSpendFormPropTypes {
     onCancel: () => void;
     onSubmit: () => void;
-};
+}
 
 export default function NewSpendForm({ onCancel, onSubmit }: NewSpendFormPropTypes) {
     const getContent = useContent('transactions');

@@ -5,13 +5,14 @@ import AddRecurringTransactionRow from 'Components/RecurringTransactionRow/AddRe
 import { format, parse, subMonths } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useRecurringTransactionsList from 'Hooks/useRecurringTransactionsList/useRecurringTransactionsList';
-import { MonthYearDbDate, monthYearDbDateFormat } from 'Types/dateTypes';
-import { RecurringSpendTransaction } from 'Types/Services/spending.model';
+import { monthYearDbDateFormat } from 'Types/dateTypes';
+import type { MonthYearDbDate } from 'Types/dateTypes';
+import type { RecurringSpendTransaction } from 'Types/Services/spending.model';
 
-type RecurringTransactionsListPropTypes = {
+interface RecurringTransactionsListPropTypes {
     recurringSpendTransaction: RecurringSpendTransaction;
     onBack: () => void;
-};
+}
 
 const formatDate = (date: string) => format(parse(date, monthYearDbDateFormat, new Date()), 'MMMM yyyy');
 

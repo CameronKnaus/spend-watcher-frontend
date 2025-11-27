@@ -8,18 +8,21 @@ import { format, parse } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { MonthYearDbDate, monthYearDbDateFormat } from 'Types/dateTypes';
+import { monthYearDbDateFormat } from 'Types/dateTypes';
+import type { MonthYearDbDate } from 'Types/dateTypes';
 import {
-    Account,
     addAccountUpdateRequestParamSchema,
+} from 'Types/Services/accounts.model';
+import type {
+    Account,
     AddAccountUpdateV1RequestParams,
 } from 'Types/Services/accounts.model';
 import styles from './AddAccountUpdateRow.module.css';
 
-type AddAccountUpdateRowPropTypes = {
+interface AddAccountUpdateRowPropTypes {
     accountId: Account['id'];
     date: MonthYearDbDate;
-};
+}
 
 export default function AddAccountUpdateRow({ accountId, date }: AddAccountUpdateRowPropTypes) {
     const getContent = useContent('accounts');
@@ -59,7 +62,7 @@ export default function AddAccountUpdateRow({ accountId, date }: AddAccountUpdat
                 variant="detail"
                 layout="full-width"
                 className={styles.addNewRow}
-                onClick={() => setIsActive(true)}
+                onClick={() => { setIsActive(true); }}
             >
                 {getContent('addNewRow', [formattedDate])}
             </CustomButton>

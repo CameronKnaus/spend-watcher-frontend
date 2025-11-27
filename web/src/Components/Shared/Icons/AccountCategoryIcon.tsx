@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 import { AccountCategory } from 'Types/accountTypes';
 import accountCategoryIconMapper from './accountCategoryIconMapper';
 import styles from './CategoryIcon.module.css';

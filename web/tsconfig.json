@@ -4,7 +4,6 @@
         "allowJs": true /* TODO: This probably needs to be removed */,
         "allowSyntheticDefaultImports": true,
         "baseUrl": "./src" /* Specify the base directory to resolve non-relative module names. */,
-        "erasableSyntaxOnly": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,
@@ -22,13 +21,13 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "paths": {
-            "@components/*": ["src/Components/*"],
-            "@constants/*": ["src/Constants/*"],
-            "@content/*": ["src/Content/*"],
-            "@hooks/*": ["src/Hooks/*"],
-            "@pages/*": ["src/Pages/*"],
-            "@type/*": ["src/Types/*"],
-            "@utils/*": ["src/Util/*"]
+            "Components/*": ["Components/*"],
+            "Constants/*": ["Constants/*"],
+            "Content/*": ["Content/*"],
+            "Hooks/*": ["Hooks/*"],
+            "Pages/*": ["Pages/*"],
+            "Type/*": ["Types/*"],
+            "Utils/*": ["Util/*"]
         },
         "plugins": [
             {
@@ -43,5 +42,6 @@
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
         "useDefineForClassFields": true
     },
-    "include": ["./custom.d.ts", "./src"]
+    "include": ["custom.d.ts", "src", "vite.config.ts"],
+    "exclude": ["dist", "node_modules"]
 }

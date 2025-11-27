@@ -11,19 +11,21 @@ import useContent from 'Hooks/useContent';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+    v1AddRecurringSpendSchema,
+} from 'Types/Services/spending.model';
+import type {
     AddRecurringSpendRequestParams,
     EditRecurringSpendRequestParams,
     RecurringSpendTransaction,
-    v1AddRecurringSpendSchema,
 } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './RecurringExpenseForm.module.css';
 
-type RecurringExpenseFormPropTypes = {
+interface RecurringExpenseFormPropTypes {
     onSubmit: () => void;
     onCancel: () => void;
     expenseToEdit?: RecurringSpendTransaction;
-};
+}
 
 export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit }: RecurringExpenseFormPropTypes) {
     const getContent = useContent('recurringSpending');
@@ -124,7 +126,7 @@ export default function RecurringExpenseForm({ onCancel, onSubmit, expenseToEdit
                         type="checkbox"
                         aria-label={`${getContent('variableExpenseLabel')}. ${getContent('variableExpenseDescription')}`}
                         {...form.register('isVariableRecurring')}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => { e.stopPropagation(); }}
                     />
                     <label aria-hidden>{getContent('variableExpenseLabel')}</label>
                     <span className={styles.varyingDescription}>{getContent('variableExpenseDescription')}</span>

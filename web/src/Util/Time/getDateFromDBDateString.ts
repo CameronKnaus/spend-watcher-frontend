@@ -1,4 +1,4 @@
-import { DbDate } from 'Types/dateTypes';
+import type { DbDate } from 'Types/dateTypes';
 
 // When parsing a 'yyyy-MM-dd' date string, the day may be off by one due to time zone differences.
 // This utility will parse the date string and return a Date object with the correct date, regardless of time zone.

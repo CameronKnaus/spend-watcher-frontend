@@ -1,4 +1,4 @@
-import { RecurringTransactionId } from 'Types/Services/spending.model';
+import type { RecurringTransactionId } from 'Types/Services/spending.model';
 import { z as zod } from 'zod';
 
 const zodValidateRecurringTransactionId = zod.custom<RecurringTransactionId>(

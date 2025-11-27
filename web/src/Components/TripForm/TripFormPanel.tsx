@@ -2,10 +2,10 @@ import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import useContent from 'Hooks/useContent';
 import TripForm from './TripForm';
 
-type TripFormPanelPropTypes = {
+interface TripFormPanelPropTypes {
     isOpen: boolean;
     onPanelClose: () => void;
-};
+}
 
 export default function TripFormPanel({ isOpen, onPanelClose }: TripFormPanelPropTypes) {
     const getContent = useContent('trips');

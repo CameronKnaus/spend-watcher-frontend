@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
-import { TripsListV1Response } from 'Types/Services/trips.model';
+import type { TripsListV1Response } from 'Types/Services/trips.model';
 
 export default function useTripsList() {
     const { isFetching, isLoading, data, isError } = useQuery<TripsListV1Response>({

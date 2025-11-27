@@ -1,5 +1,6 @@
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import FilterableSelect, { FilterableSelectPropTypes } from './FilterableSelect';
+import { Controller } from 'react-hook-form';
+import type { Control, FieldValues, Path } from 'react-hook-form';
+import FilterableSelect, { type FilterableSelectPropTypes } from './FilterableSelect';
 
 type CompWithoutEssentialAttributes<TOptionName> = Omit<
     FilterableSelectPropTypes<TOptionName>,
@@ -21,7 +22,9 @@ export default function FilterableSelectController<TOptionName extends string, K
         <Controller
             control={control}
             name={name}
-            render={({ field }) => <FilterableSelect {...field} {...filterSelectProps} />}
+            render={({ field }) => (
+                <FilterableSelect {...field} {...filterSelectProps} />
+            )}
         />
     );
 }

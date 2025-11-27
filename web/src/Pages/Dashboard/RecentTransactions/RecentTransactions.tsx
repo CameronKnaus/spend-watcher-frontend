@@ -6,8 +6,7 @@ import { format, isToday, isYesterday, parseISO } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
 import { useMemo, useState } from 'react';
-import { DbDate } from 'Types/dateTypes';
-import { DiscretionarySpendTransaction, TransactionsByDate } from 'Types/Services/spending.model';
+import type { DiscretionarySpendTransaction, TransactionsByDate } from 'Types/Services/spending.model';
 import { isDiscretionaryTransactionId } from 'Util/SpendTransactionUtils/narrowIdType';
 import styles from './RecentTransactions.module.css';
 
@@ -48,7 +47,7 @@ export default function RecentTransactions() {
             }
 
             transactionCount = newCount;
-            applicableTransactions[date as DbDate] = dateSpendSummary;
+            applicableTransactions[date] = dateSpendSummary;
 
             index++;
         }
@@ -99,7 +98,7 @@ export default function RecentTransactions() {
                                                     key={transactionId}
                                                     transactionId={transaction.transactionId}
                                                     category={transaction.category}
-                                                    onClick={() => setTransactionToEdit(transaction)}
+                                                    onClick={() => { setTransactionToEdit(transaction); }}
                                                     amountSpent={transaction.amountSpent}
                                                     note={transaction.note}
                                                 />
@@ -114,7 +113,7 @@ export default function RecentTransactions() {
             <DiscretionarySpendPanel
                 isOpen={Boolean(transactionToEdit)}
                 transactionToEdit={transactionToEdit}
-                onPanelClose={() => setTransactionToEdit(undefined)}
+                onPanelClose={() => { setTransactionToEdit(undefined); }}
             />
         </>
     );

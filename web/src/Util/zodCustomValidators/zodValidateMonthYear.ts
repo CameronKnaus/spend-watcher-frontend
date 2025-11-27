@@ -1,4 +1,4 @@
-import { MonthYearDbDate } from 'Types/dateTypes';
+import { type MonthYearDbDate } from 'Types/dateTypes';
 import { z as zod } from 'zod';
 
 // Validates a string is 'YYYY-MM' format

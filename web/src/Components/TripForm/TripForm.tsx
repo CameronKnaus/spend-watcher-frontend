@@ -11,22 +11,23 @@ import useContent from 'Hooks/useContent';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { dbDateFormat } from 'Types/dateTypes';
-import { AddTripRequestParams, Trip, v1AddTripSchema } from 'Types/Services/trips.model';
+import { v1AddTripSchema } from 'Types/Services/trips.model';
+import type { AddTripRequestParams, Trip } from 'Types/Services/trips.model';
 import styles from './TripForm.module.css';
 
-type NewTripForm = {
+interface NewTripForm {
     onSubmit: () => void;
     onCancel: () => void;
     onDelete?: never;
     tripToEdit?: never;
-};
+}
 
-type EditTripForm = {
+interface EditTripForm {
     onSubmit: () => void;
     onCancel: () => void;
     onDelete: () => void;
     tripToEdit: Trip;
-};
+}
 
 type TripFormPropTypes = NewTripForm | EditTripForm;
 

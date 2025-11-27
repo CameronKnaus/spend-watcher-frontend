@@ -1,13 +1,14 @@
 import useContent from 'Hooks/useContent';
 import syntheticChangeEvent from 'Util/Events/syntheticChangeEvent';
-import { ComponentProps, forwardRef, ReactNode, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
+import type { ComponentProps, ForwardedRef, ReactNode } from 'react';
 import styles from './FilterableSelect.module.css';
 
-export type FilterableSelectOptionType<T> = {
+export interface FilterableSelectOptionType<T> {
     value: T;
     optionName: string;
     customRender?: (optionName: string, value: T) => ReactNode;
-};
+}
 
 export type FilterableSelectPropTypes<T> = {
     opens?: 'up' | 'down';
@@ -18,7 +19,7 @@ export type FilterableSelectPropTypes<T> = {
 
 function FilterableSelectComponent<T extends string>(
     { opens = 'down', clearLabel, noSelectionText = '', optionsList, ...props }: FilterableSelectPropTypes<T>,
-    ref: React.ForwardedRef<HTMLInputElement>,
+    ref: ForwardedRef<HTMLInputElement>,
 ) {
     const [selectedValue, setSelectedValue] = useState<FilterableSelectOptionType<T> | undefined>();
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -41,7 +42,7 @@ function FilterableSelectComponent<T extends string>(
 
         document.addEventListener('click', toggleOpen);
 
-        return () => document.removeEventListener('click', toggleOpen);
+        return () => { document.removeEventListener('click', toggleOpen); };
     }, [ref]);
 
     function filter(option: FilterableSelectOptionType<T>) {
@@ -117,5 +118,9 @@ function FilterableSelectComponent<T extends string>(
     );
 }
 
-const FilterableSelect = forwardRef(FilterableSelectComponent);
+// TODO: forwardRef no longer needed - remove
+const FilterableSelect = forwardRef(FilterableSelectComponent) as <T extends string>(
+    props: FilterableSelectPropTypes<T> & { ref?: ForwardedRef<HTMLInputElement> },
+) => ReturnType<typeof FilterableSelectComponent>;
+
 export default FilterableSelect;

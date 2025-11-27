@@ -1,4 +1,4 @@
-import { DbDate } from 'Types/dateTypes';
+import type { DbDate } from 'Types/dateTypes';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import zodValidateDbDateFormat from 'Util/zodCustomValidators/zodValidateDbDateFormat';
 import zodValidateDiscretionaryId from 'Util/zodCustomValidators/zodValidateDiscretionaryId';
@@ -7,16 +7,16 @@ import zodValidateRecurringTransactionId from 'Util/zodCustomValidators/zodValid
 import { z as zod } from 'zod';
 
 // SPEND RELATED TYPES BEGIN --------------------------------------------
-export type RecurringTransactionId = `${'Recurring-'}${number}`;
-export type DiscretionaryTransactionId = `${'Discretionary-'}${number}`;
+export type RecurringTransactionId = `Recurring-${number}`;
+export type DiscretionaryTransactionId = `Discretionary-${number}`;
 export type TransactionId = RecurringTransactionId | DiscretionaryTransactionId;
 
-export type TransactionTotal = {
+export interface TransactionTotal {
     // Total dollar amount
     amount: number;
     // Total number of transactions
     count: number;
-};
+}
 
 export type TransactionTotalWithPercentage = TransactionTotal & {
     // Percentage of the total dollar amount
@@ -25,17 +25,15 @@ export type TransactionTotalWithPercentage = TransactionTotal & {
     percentageOfTotalCount: number;
 };
 
-export type TotalsByCategory = {
-    [category in SpendingCategory]?: SummaryTotals;
-};
+export type TotalsByCategory = Partial<Record<SpendingCategory, SummaryTotals>>;
 
 // Summary data for a given list of transactions (includedTransactions)
-export type SpendGroupSummary = {
+export interface SpendGroupSummary {
     total: TransactionTotal;
     recurringTotals: TransactionTotal;
     discretionaryTotals: TransactionTotal;
     includedTransactions: TransactionId[];
-};
+}
 
 export type SummaryTotals = Omit<SpendGroupSummary, 'includedTransactions'>;
 
@@ -52,11 +50,11 @@ export type TransactionDictionary = {
 };
 
 // Shared attributes between all spend transactions
-export type BaseSpendTransaction = {
+export interface BaseSpendTransaction {
     category: SpendingCategory;
     amountSpent: number; // transaction_amount from recurring
     spentDate: DbDate;
-};
+}
 
 // Discretionary spend transaction specific attributes
 export type DiscretionarySpendTransaction = {
@@ -90,14 +88,14 @@ export const v1DetailsSchema = zod.object({
 
 export type SpendingDetailsRequestParams = zod.infer<typeof v1DetailsSchema>;
 
-export type CategoryDetails = {
+export interface CategoryDetails {
     category: SpendingCategory;
     combinedTotals: TransactionTotalWithPercentage;
     discretionaryTotals: TransactionTotalWithPercentage;
     recurringTotals: TransactionTotalWithPercentage;
-};
+}
 
-export type SpendCategoryOverview = {
+export interface SpendCategoryOverview {
     categoriesWithTransactionsCount: number;
     categoriesWithDiscretionaryTransactionsCount: number;
     categoriesWithRecurringTransactionsCount: number;
@@ -108,9 +106,9 @@ export type SpendCategoryOverview = {
     remainingDiscretionaryTotals: TransactionTotalWithPercentage;
     topFourRecurringTotals: TransactionTotalWithPercentage;
     remainingRecurringTotals: TransactionTotalWithPercentage;
-};
+}
 
-export type SpendingDetailsV1Response = {
+export interface SpendingDetailsV1Response {
     spendCategoryOverview: SpendCategoryOverview;
     transactionDictionary: TransactionDictionary;
     spendTypeRatio: {
@@ -121,7 +119,7 @@ export type SpendingDetailsV1Response = {
     discretionaryTransactionIdList: DiscretionaryTransactionId[];
     recurringTransactionIdList: RecurringTransactionId[];
     transactionsByDate: TransactionsByDate;
-};
+}
 // END SPENDING DETAILS API --------------------------------------------
 
 // LOG DISCRETIONARY API --- /api/spending/v1/discretionary/add
@@ -154,14 +152,14 @@ export type DiscretionaryDeleteRequestParams = zod.infer<typeof v1DiscretionaryD
 // EMD DELETE DISCRETIONARY API --------------------------------------------
 
 // RECURRING SUMMARY API --- /api/spending/v1/recurring/summary
-export type RecurringSummaryV1Response = {
+export interface RecurringSummaryV1Response {
     recurringSpendsRequireUpdates: boolean;
     spendsRequiringUpdatesCount: number;
     activeRecurringTransactions: RecurringSpendTransaction[];
     inactiveRecurringTransactions: RecurringSpendTransaction[];
     averageEstimatedMonthlyTotal: number;
     actualMonthlyTotal: number;
-};
+}
 // END RECURRING SUMMARY API --------------------------------------------
 
 // RECURRING ADD API --- /api/spending/v1/recurring/add
@@ -212,13 +210,13 @@ export const v1RecurringTransactionsListSchema = zod.object({
 
 export type RecurringTransactionsListRequestParams = zod.infer<typeof v1RecurringTransactionsListSchema>;
 
-export type RecurringTransactionsListV1Response = {
+export interface RecurringTransactionsListV1Response {
     transactions: {
         transactionId: RecurringTransactionId;
         date: DbDate;
         amountSpent: number;
     }[];
-};
+}
 
 // END RECURRING TRANSACTIONS LIST API --------------------------------------------
 
@@ -247,11 +245,11 @@ export type AddRecurringTransactionRequestParams = zod.infer<typeof v1AddRecurri
 
 // SPENDING HISTORY START API --------------------------------------------
 
-export type SpendingHistoryStartV1Response = {
+export interface SpendingHistoryStartV1Response {
     earliestTransactionDate: DbDate;
     earliestRecurringTransactionDate: DbDate;
     earliestDiscretionaryTransactionDate: DbDate;
-};
+}
 
 // END SPENDING HISTORY START API --------------------------------------------
 
@@ -264,16 +262,16 @@ export const v1TransactionsSchema = zod.object({
 
 export type TransactionsRequestParams = zod.infer<typeof v1TransactionsSchema>;
 
-export type Transaction = {
+export interface Transaction {
     transactionId: number;
     category: SpendingCategory;
     amount: number;
     date: DbDate;
     isRecurring: boolean;
-};
+}
 
-export type TransactionsV1Response = {
+export interface TransactionsV1Response {
     transactions: Transaction[];
-};
+}
 
 // END TRANSACTIONS API --------------------------------------------

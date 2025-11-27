@@ -7,17 +7,19 @@ import useContent from 'Hooks/useContent';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
-    Account,
     editAccountUpdateRequestParamSchema,
+} from 'Types/Services/accounts.model';
+import type {
+    Account,
     EditAccountUpdateV1RequestParams,
 } from 'Types/Services/accounts.model';
 
-type EditAccountUpdateRowPropTypes = {
+interface EditAccountUpdateRowPropTypes {
     accountId: Account['id'];
     updateId: number;
     dateLabel: string;
     currentAmount: number;
-};
+}
 
 export default function EditAccountUpdateRow({
     accountId,

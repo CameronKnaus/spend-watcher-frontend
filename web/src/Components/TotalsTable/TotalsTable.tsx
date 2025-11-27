@@ -57,7 +57,7 @@ export default function TotalsTable() {
                                 <td className={styles.categoryColumn} align="left">
                                     <button
                                         className={styles.categoryLayout}
-                                        onClick={() => setSelectedCategoryForTransactions(categoryDetails.category)}
+                                        onClick={() => { setSelectedCategoryForTransactions(categoryDetails.category); }}
                                     >
                                         <SpendingCategoryIcon
                                             size={24}
@@ -122,7 +122,7 @@ export default function TotalsTable() {
             <CategoryTransactionListPanel
                 category={selectedCategoryForTransactions}
                 transactionDictionary={spendingData.transactionDictionary}
-                onPanelClose={() => setSelectedCategoryForTransactions(undefined)}
+                onPanelClose={() => { setSelectedCategoryForTransactions(undefined); }}
             />
         </>
     );

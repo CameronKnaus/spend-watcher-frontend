@@ -1,6 +1,8 @@
-import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
+import { DatePicker } from '@mui/x-date-pickers';
+import type { DatePickerProps } from '@mui/x-date-pickers';
 import { format } from 'date-fns';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
+import type { Control, FieldValues, Path } from 'react-hook-form';
 import { dbDateFormat } from 'Types/dateTypes';
 import getDateFromDBDateString from 'Util/Time/getDateFromDBDateString';
 

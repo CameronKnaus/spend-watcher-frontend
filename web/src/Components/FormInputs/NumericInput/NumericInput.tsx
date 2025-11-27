@@ -1,5 +1,6 @@
-import { ComponentProps } from 'react';
-import { Control, Controller, FieldValues, Path, UseFormTrigger } from 'react-hook-form';
+import type { ComponentProps } from 'react';
+import { Controller } from 'react-hook-form';
+import type { Control, FieldValues, Path, UseFormTrigger } from 'react-hook-form';
 import { NumericFormat } from 'react-number-format';
 
 type NumericFormatWithoutEssentialAttributes = Omit<ComponentProps<typeof NumericFormat>, 'onChange' | 'value'>;

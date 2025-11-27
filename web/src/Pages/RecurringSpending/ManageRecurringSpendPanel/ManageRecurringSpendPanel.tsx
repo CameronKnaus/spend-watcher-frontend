@@ -13,17 +13,17 @@ import useContent from 'Hooks/useContent';
 import { useEffect, useState } from 'react';
 import { FaEdit, FaHistory, FaTrashAlt } from 'react-icons/fa';
 import { MdUpdate, MdUpdateDisabled } from 'react-icons/md';
-import {
+import type {
     DeleteRecurringSpendRequestParams,
     RecurringSpendTransaction,
     SetActiveRecurringSpendRequestParams,
 } from 'Types/Services/spending.model';
 import styles from './ManageRecurringSpendPanel.module.css';
 
-type ManageRecurringSpendPanelPropTypes = {
+interface ManageRecurringSpendPanelPropTypes {
     recurringSpendTransaction?: RecurringSpendTransaction;
     closePanel: () => void;
-};
+}
 
 enum ManageRecurringSpendPanels {
     base = 'base',
@@ -118,23 +118,23 @@ export default function ManageRecurringSpendPanel({
                     <>
                         <h3 className={styles.header}>{getContent('chooseOption')}</h3>
                         <PanelOptionButtonContainer>
-                            <PanelOptionButton onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.edit)}>
+                            <PanelOptionButton onClick={() => { setCurrentPanelContents(ManageRecurringSpendPanels.edit); }}>
                                 <FaEdit size={20} />
                                 {getContent('edit')}
                             </PanelOptionButton>
                             <PanelOptionButton
-                                onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.history)}
+                                onClick={() => { setCurrentPanelContents(ManageRecurringSpendPanels.history); }}
                             >
                                 <FaHistory size={20} />
                                 {getContent('transactionHistory')}
                             </PanelOptionButton>
                             <PanelOptionButton
                                 onClick={() =>
-                                    setCurrentPanelContents(
+                                    { setCurrentPanelContents(
                                         recurringSpendTransaction?.isActive
                                             ? ManageRecurringSpendPanels.setInactive
                                             : ManageRecurringSpendPanels.setActive,
-                                    )
+                                    ); }
                                 }
                             >
                                 {recurringSpendTransaction?.isActive ? (
@@ -145,7 +145,7 @@ export default function ManageRecurringSpendPanel({
                                 {getContent(recurringSpendTransaction?.isActive ? 'markInactive' : 'markActive')}
                             </PanelOptionButton>
                             <PanelOptionButton
-                                onClick={() => setCurrentPanelContents(ManageRecurringSpendPanels.delete)}
+                                onClick={() => { setCurrentPanelContents(ManageRecurringSpendPanels.delete); }}
                             >
                                 <FaTrashAlt size={20} />
                                 {getContent('permanentlyDelete')}
@@ -161,7 +161,7 @@ export default function ManageRecurringSpendPanel({
                 {recurringSpendTransaction && currentPanelContents === ManageRecurringSpendPanels.history && (
                     <RecurringTransactionsList
                         recurringSpendTransaction={recurringSpendTransaction}
-                        onBack={() => setCurrentPanelContents(ManageRecurringSpendPanels.base)}
+                        onBack={() => { setCurrentPanelContents(ManageRecurringSpendPanels.base); }}
                     />
                 )}
                 {currentPanelContents === ManageRecurringSpendPanels.edit && (

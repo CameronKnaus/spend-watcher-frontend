@@ -3,14 +3,14 @@ import LoadingInteractiveRow from 'Components/InteractiveRow/LoadingInteractiveR
 import TransactionRow from 'Components/TransactionRow';
 import useContent from 'Hooks/useContent';
 import useTripLinkedExpenses from 'Hooks/useTripLinkedExpenses/useTripLinkedExpenses';
-import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
+import type { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
 import { formatToMonthDay } from 'Util/Formatters/dateFormatters/dateFormatters';
 import styles from './TripExpenseList.module.css';
 
-type TripExpenseListPropTypes = {
+interface TripExpenseListPropTypes {
     tripId: string;
     setTransactionToEdit: (transaction: DiscretionarySpendTransaction) => void;
-};
+}
 
 export default function TripExpenseList({ tripId, setTransactionToEdit }: TripExpenseListPropTypes) {
     const getContent = useContent('trips');
@@ -65,7 +65,7 @@ export default function TripExpenseList({ tripId, setTransactionToEdit }: TripEx
                     <TransactionRow
                         transactionId={transaction.transactionId}
                         category={transaction.category}
-                        onClick={() => setTransactionToEdit(transaction)}
+                        onClick={() => { setTransactionToEdit(transaction); }}
                         amountSpent={transaction.amountSpent}
                         note={transaction.note}
                         secondaryNote={formatToMonthDay(transaction.spentDate)}

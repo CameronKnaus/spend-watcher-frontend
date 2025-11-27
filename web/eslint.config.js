@@ -21,10 +21,11 @@ export default defineConfig([
       reactDom.configs.recommended,
     ],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
+      parser: tseslint.parser,
       globals: globals.browser,
       parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        project: ['./tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -33,7 +34,10 @@ export default defineConfig([
       "react/react-in-jsx-scope": "off",
       "@typescript-eslint/no-explicit-any": "warn",
       "no-console": "warn",
-      "@typescript-eslint/no-unused-vars": "warn"
+      "@typescript-eslint/no-unused-vars": "warn",
+      // TODO: Revisit these overrides
+      "react-refresh/only-export-components": "off",
+      "@typescript-eslint/restrict-template-expressions": "off"
     }
   },
 ])

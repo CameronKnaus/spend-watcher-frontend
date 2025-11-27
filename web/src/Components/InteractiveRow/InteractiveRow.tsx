@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ComponentProps, ReactNode } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import styles from './InteractiveRow.module.css';
 

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
-import { RecurringSpendTransaction, RecurringTransactionsListV1Response } from 'Types/Services/spending.model';
+import type { RecurringSpendTransaction, RecurringTransactionsListV1Response } from 'Types/Services/spending.model';
 
 export default function useRecurringTransactionsList(recurringSpendId: RecurringSpendTransaction['recurringSpendId']) {
     const { data, isLoading } = useQuery<RecurringTransactionsListV1Response>({

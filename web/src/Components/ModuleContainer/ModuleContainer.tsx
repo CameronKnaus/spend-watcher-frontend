@@ -1,10 +1,10 @@
 import { clsx } from 'clsx';
 import SkeletonLoader from 'Components/Shared/SkeletonLoader';
-import { ComponentProps, ReactNode } from 'react';
-import { UseMeasureRef } from 'react-use/lib/useMeasure';
+import type { ComponentProps, ReactNode } from 'react';
+import type { UseMeasureRef } from 'react-use/lib/useMeasure';
 import styles from './ModuleContainer.module.css';
 
-type ModuleContainerPropTypes = {
+interface ModuleContainerPropTypes {
     forwardRef?: UseMeasureRef<HTMLDivElement>;
     heading?: ReactNode;
     // For shadow effect
@@ -12,7 +12,7 @@ type ModuleContainerPropTypes = {
     isLoading?: boolean; // Show default staggered skeleton loader animations
     children?: ReactNode;
     padding?: string;
-};
+}
 
 // TODO: This component has too many responsibilities.  It should be made into a simple "Tile" extension of a div
 export default function ModuleContainer({

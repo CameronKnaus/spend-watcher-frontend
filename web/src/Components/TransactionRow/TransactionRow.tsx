@@ -2,11 +2,11 @@ import Currency from 'Components/Currency/Currency';
 import InteractiveRow from 'Components/InteractiveRow/InteractiveRow';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import useContent from 'Hooks/useContent';
-import { ComponentProps } from 'react';
-import { DiscretionaryTransactionId } from 'Types/Services/spending.model';
-import { SpendingCategory } from 'Types/SpendingCategory';
+import type { ComponentProps } from 'react';
+import type { DiscretionaryTransactionId } from 'Types/Services/spending.model';
+import type { SpendingCategory } from 'Types/SpendingCategory';
 
-type TransactionRowPropTypes = {
+interface TransactionRowPropTypes {
     transactionId: DiscretionaryTransactionId;
     category: SpendingCategory;
     amountSpent: number;
@@ -14,7 +14,7 @@ type TransactionRowPropTypes = {
     secondaryNote?: string;
     className?: string;
     onClick: (transactionId: DiscretionaryTransactionId) => void;
-};
+}
 
 export default function TransactionRow({
     transactionId,
@@ -36,7 +36,7 @@ export default function TransactionRow({
             secondaryDataPoint={note}
             secondaryLabel={secondaryNote}
             className={className}
-            onClick={() => onClick(transactionId)}
+            onClick={() => { onClick(transactionId); }}
             {...attributes}
         />
     );

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
-import { TripLinkedExpensesV1Response } from 'Types/Services/trips.model';
+import type { TripLinkedExpensesV1Response } from 'Types/Services/trips.model';
 
 export default function useTripLinkedExpenses(tripId?: string) {
     const { isLoading, isFetching, data, isError } = useQuery<TripLinkedExpensesV1Response>({

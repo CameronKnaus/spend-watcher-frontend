@@ -3,7 +3,7 @@ import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useSelectedTimeFrame from 'Hooks/useSelectedTimeFrame/useSelectedTimeFrame';
 import useSessionStatus from 'Hooks/useSessionStatus/useSessionStatus';
-import { TransactionsV1Response } from 'Types/Services/spending.model';
+import type { TransactionsV1Response } from 'Types/Services/spending.model';
 
 // TODO: Replace useSpendingDetailsService with this?
 export default function useTransactions() {

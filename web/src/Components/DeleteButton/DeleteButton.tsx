@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import LoadingSpinner from 'Components/LoadingSpinner/LoadingSpinner';
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import styles from './DeleteButton.module.css';
 

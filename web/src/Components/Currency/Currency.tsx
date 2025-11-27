@@ -1,13 +1,13 @@
 import formatCurrency from 'Util/Formatters/formatCurrency/formatCurrency';
-import { ComponentProps, ReactNode } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 
-type CurrencyPropTypes = {
+interface CurrencyPropTypes {
     amount?: number;
     isGainLoss?: boolean;
     defaultValue?: ReactNode;
     className?: string;
     style?: React.CSSProperties;
-};
+}
 
 function getColor(value: number) {
     if (value > 0) {

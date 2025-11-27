@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import CustomButton from 'Components/CustomButton/CustomButton';
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 import styles from './PanelOptionButton.module.css';
 
 type PanelOptionButtonPropTypes = {

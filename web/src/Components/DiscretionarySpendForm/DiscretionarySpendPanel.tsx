@@ -1,14 +1,14 @@
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import useContent from 'Hooks/useContent';
-import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
+import type { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
 import EditSpendForm from './EditSpendForm';
 import NewSpendForm from './NewSpendForm';
 
-type DiscretionarySpendPanelPropTypes = {
+interface DiscretionarySpendPanelPropTypes {
     isOpen: boolean;
     onPanelClose: () => void;
     transactionToEdit?: DiscretionarySpendTransaction;
-};
+}
 
 export default function DiscretionarySpendPanel({
     isOpen,

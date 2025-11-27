@@ -1,8 +1,8 @@
 import { clsx } from 'clsx';
 import { spendCategoryIconMapper } from 'Components/Shared/Icons/spendCategoryIconMapper';
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 import { MdRefresh } from 'react-icons/md';
-import { SpendingCategory } from 'Types/SpendingCategory';
+import type { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './CategoryIcon.module.css';
 
 type SpendingCategoryIconPropTypes = {

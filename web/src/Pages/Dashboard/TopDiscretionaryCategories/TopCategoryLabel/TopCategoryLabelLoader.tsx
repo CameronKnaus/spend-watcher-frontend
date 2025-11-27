@@ -1,9 +1,9 @@
 import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 import styles from './TopCategoryLabel.module.css';
 
-type TopCategoryLabelPropTypes = {
+interface TopCategoryLabelPropTypes {
     isVerticalList?: boolean;
-};
+}
 
 export default function TopCategoryLabelLoader({ isVerticalList }: TopCategoryLabelPropTypes) {
     const iconSize = 20;

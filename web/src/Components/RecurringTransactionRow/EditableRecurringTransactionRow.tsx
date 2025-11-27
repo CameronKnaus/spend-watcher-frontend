@@ -7,16 +7,18 @@ import useContent from 'Hooks/useContent';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
-    EditRecurringTransactionRequestParams,
-    RecurringTransactionId,
     v1EditRecurringTransactionSchema,
 } from 'Types/Services/spending.model';
+import type {
+    EditRecurringTransactionRequestParams,
+    RecurringTransactionId,
+} from 'Types/Services/spending.model';
 
-type EditableRecurringTransactionRowPropTypes = {
+interface EditableRecurringTransactionRowPropTypes {
     transactionId: RecurringTransactionId;
     label: string;
     amountSpent: number;
-};
+}
 
 export default function EditableRecurringTransactionRow({
     transactionId,

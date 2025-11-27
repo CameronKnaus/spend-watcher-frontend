@@ -1,4 +1,4 @@
-type BaseDimensions = {
+interface BaseDimensions {
     width: number;
     height: number;
     margin: {
@@ -7,7 +7,7 @@ type BaseDimensions = {
         bottom: number;
         left: number;
     };
-};
+}
 
 export type CanvasDimensions = BaseDimensions & {
     boundedWidth: number;

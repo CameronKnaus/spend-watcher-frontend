@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import styles from './LoadingSpinner.module.css';
 
-type LoadingSpinnerPropTypes = {
+interface LoadingSpinnerPropTypes {
     size?: number;
     variant?: 'light' | 'red';
-};
+}
 
 export default function LoadingSpinner({ size = 25, variant = 'light' }: LoadingSpinnerPropTypes) {
     const variantClassMapper = {

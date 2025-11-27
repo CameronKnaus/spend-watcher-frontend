@@ -1,5 +1,5 @@
-import { AccountCategory } from 'Types/accountTypes';
-import { ReactElement } from 'react';
+import type { AccountCategory } from 'Types/accountTypes';
+import type { ReactElement } from 'react';
 import { FaLandmark, FaMoneyBillWave, FaPiggyBank } from 'react-icons/fa';
 import { MdTrendingUp } from 'react-icons/md';
 

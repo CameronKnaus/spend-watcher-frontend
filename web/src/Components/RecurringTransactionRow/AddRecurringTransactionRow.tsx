@@ -8,16 +8,18 @@ import { format, parse } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { MonthYearDbDate, monthYearDbDateFormat } from 'Types/dateTypes';
-import { AddRecurringTransactionRequestParams, v1AddRecurringTransactionSchema } from 'Types/Services/spending.model';
+import { monthYearDbDateFormat } from 'Types/dateTypes';
+import type { MonthYearDbDate } from 'Types/dateTypes';
+import { v1AddRecurringTransactionSchema } from 'Types/Services/spending.model';
+import type { AddRecurringTransactionRequestParams } from 'Types/Services/spending.model';
 import formatCurrency from 'Util/Formatters/formatCurrency/formatCurrency';
 import styles from './RecurringTransactionRow.module.css';
 
-type AddRecurringTransactionRowPropTypes = {
+interface AddRecurringTransactionRowPropTypes {
     expectedMonthlyAmount: number;
     recurringSpendId: string;
     date: MonthYearDbDate;
-};
+}
 
 export default function AddRecurringTransactionRow({
     date,
@@ -65,7 +67,7 @@ export default function AddRecurringTransactionRow({
                 variant="detail"
                 layout="full-width"
                 className={styles.addNewRow}
-                onClick={() => setIsActive(true)}
+                onClick={() => { setIsActive(true); }}
             >
                 {getContent('addNewRow', [formattedDate])}
             </CustomButton>

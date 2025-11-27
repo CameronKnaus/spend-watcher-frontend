@@ -1,4 +1,4 @@
-import { DiscretionaryTransactionId } from 'Types/Services/spending.model';
+import type { DiscretionaryTransactionId } from 'Types/Services/spending.model';
 import { z as zod } from 'zod';
 
 const zodValidateDiscretionaryId = zod.custom<DiscretionaryTransactionId>(

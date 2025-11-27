@@ -2,11 +2,11 @@ import CustomButton from 'Components/CustomButton/CustomButton';
 import MoneyInput from 'Components/FormInputs/MoneyInput/MoneyInput';
 import SkeletonLoader from 'Components/Shared/SkeletonLoader';
 import useContent from 'Hooks/useContent';
-import { FieldValues, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
+import type { FieldValues, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { FaPencilAlt } from 'react-icons/fa';
 import styles from './EditableAmountRow.module.css';
 
-type EditableAmountRowPropTypes<T extends FieldValues> = {
+interface EditableAmountRowPropTypes<T extends FieldValues> {
     form: UseFormReturn<T>;
     label: string;
     amountLabel: string;
@@ -15,7 +15,7 @@ type EditableAmountRowPropTypes<T extends FieldValues> = {
     amountFormFieldName: Path<T>;
     amountPlaceholder?: string;
     onSubmission: SubmitHandler<T>;
-};
+}
 
 export default function EditableAmountRow<T extends FieldValues>({
     form,

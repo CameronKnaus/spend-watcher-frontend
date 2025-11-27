@@ -1,5 +1,5 @@
-import { SpendingCategory } from 'Types/SpendingCategory';
-import { ReactNode } from 'react';
+import type { SpendingCategory } from 'Types/SpendingCategory';
+import type { ReactNode } from 'react';
 import {
     FaCannabis,
     FaCar,

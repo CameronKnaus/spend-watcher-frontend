@@ -9,7 +9,7 @@ import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useRecurringSummaryService from 'Hooks/useRecurringSummaryService';
 import { useState } from 'react';
-import { RecurringSpendTransaction } from 'Types/Services/spending.model';
+import type { RecurringSpendTransaction } from 'Types/Services/spending.model';
 import ManageRecurringSpendPanel from './ManageRecurringSpendPanel/ManageRecurringSpendPanel';
 import styles from './RecurringSpending.module.css';
 import RecurringTransactionCard from './RecurringTransactionCard/RecurringTransactionCard';
@@ -38,7 +38,7 @@ export default function RecurringSpending() {
                         <CustomButton
                             variant="tertiary"
                             layout="full-width"
-                            onClick={() => setNewSpendFormOpen(true)}
+                            onClick={() => { setNewSpendFormOpen(true); }}
                             className={styles.createNewExpenseButton}
                         >
                             {getContent('createNew')}
@@ -58,7 +58,7 @@ export default function RecurringSpending() {
                                     <div key={transaction.transactionId} className={styles.cardContainer}>
                                         <RecurringTransactionCard
                                             transaction={transaction}
-                                            onClick={(transaction) => setRecurringSpendToEdit(transaction)}
+                                            onClick={(transaction) => { setRecurringSpendToEdit(transaction); }}
                                         />
                                     </div>
                                 ))}
@@ -73,7 +73,7 @@ export default function RecurringSpending() {
                                             <RecurringTransactionCard
                                                 isInactive
                                                 transaction={transaction}
-                                                onClick={(transaction) => setRecurringSpendToEdit(transaction)}
+                                                onClick={(transaction) => { setRecurringSpendToEdit(transaction); }}
                                             />
                                         </div>
                                     ))}
@@ -87,16 +87,16 @@ export default function RecurringSpending() {
                 isOpen={newSpendFormOpen}
                 title={getContent('newRecurringExpenseTitle')}
                 tagColor="var(--token-color-semantic-expense)"
-                handlePanelWillClose={() => setNewSpendFormOpen(false)}
+                handlePanelWillClose={() => { setNewSpendFormOpen(false); }}
             >
                 <RecurringExpenseForm
-                    onCancel={() => setNewSpendFormOpen(false)}
-                    onSubmit={() => setNewSpendFormOpen(false)}
+                    onCancel={() => { setNewSpendFormOpen(false); }}
+                    onSubmit={() => { setNewSpendFormOpen(false); }}
                 />
             </SlideUpPanel>
             <ManageRecurringSpendPanel
                 recurringSpendTransaction={recurringSpendToEdit}
-                closePanel={() => setRecurringSpendToEdit(undefined)}
+                closePanel={() => { setRecurringSpendToEdit(undefined); }}
             />
         </>
     );

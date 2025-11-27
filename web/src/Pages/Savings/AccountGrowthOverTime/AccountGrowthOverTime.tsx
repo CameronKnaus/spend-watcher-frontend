@@ -1,22 +1,22 @@
 import NumberFlow from '@number-flow/react';
 import HoverHitBox from 'Components/charts/components/HoverHitBox';
-import { DataPoint } from 'Components/charts/types/dataPointTypes';
+import type { DataPoint } from 'Components/charts/types/dataPointTypes';
 import useCanvasDimensions from 'Components/charts/use/useCanvasDimensions/useCanvasDimensions';
 import * as d3 from 'd3';
 import { format } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
-import { UseMeasureRect } from 'react-use/lib/useMeasure';
-import { AccountGrowthOverTimeV1Response } from 'Types/Services/accounts.model';
+import type { UseMeasureRect } from 'react-use/lib/useMeasure';
+import type { AccountGrowthOverTimeV1Response } from 'Types/Services/accounts.model';
 import { useIsMobile } from 'Util/IsMobileContext';
 import styles from './AccountGrowthOverTime.module.css';
 import AxisBottom from './AxisBottom/AxisBottom';
 import AxisLeft from './AxisLeft/AxisLeft';
 
-type AccountGrowthOverTimePropTypes = {
+interface AccountGrowthOverTimePropTypes {
     dataset: AccountGrowthOverTimeV1Response;
     containerMeasurement: UseMeasureRect;
-};
+}
 
 export default function AccountGrowthOverTime({ dataset, containerMeasurement }: AccountGrowthOverTimePropTypes) {
     const totalsByDate = d3.rollup(
@@ -69,8 +69,8 @@ export default function AccountGrowthOverTime({ dataset, containerMeasurement }:
     // LINE GENERATOR
     const lineGenerator = d3
         .line<DataPoint>()
-        .x((d) => xScale(xAccessor(d)) as number)
-        .y((d) => yScale(yAccessor(d)) as number);
+        .x((d) => xScale(xAccessor(d)))
+        .y((d) => yScale(yAccessor(d)));
 
     const linePath = lineGenerator(totalsArray)!;
 

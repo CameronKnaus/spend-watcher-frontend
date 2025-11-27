@@ -1,4 +1,4 @@
-import { DiscretionaryTransactionId, RecurringTransactionId, TransactionId } from 'Types/Services/spending.model';
+import type { DiscretionaryTransactionId, RecurringTransactionId, TransactionId } from 'Types/Services/spending.model';
 
 // Define a type predicate to check if the ID is a RecurringTransactionId
 export function isRecurringTransactionId(transactionId: TransactionId): transactionId is RecurringTransactionId {
@@ -17,5 +17,5 @@ export function narrowIdType(transactionId: TransactionId): DiscretionaryTransac
         return transactionId;
     }
 
-    return transactionId as DiscretionaryTransactionId;
+    return transactionId;
 }

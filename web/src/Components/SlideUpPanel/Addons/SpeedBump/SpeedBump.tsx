@@ -3,14 +3,14 @@ import CustomButton from 'Components/CustomButton/CustomButton';
 import useContent from 'Hooks/useContent';
 import styles from './SpeedBump.module.css';
 
-type SpeedBumpPropTypes = {
+interface SpeedBumpPropTypes {
     proceedText: string;
     warningTitle: string;
     warningDescription: string;
     finalWarningText?: string;
     onProceed: () => void;
     onCancel: () => void;
-};
+}
 
 export default function SpeedBump({
     onCancel,

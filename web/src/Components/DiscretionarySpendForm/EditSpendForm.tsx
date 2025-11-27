@@ -14,20 +14,22 @@ import useContent from 'Hooks/useContent';
 import useTripsList from 'Hooks/useTripsList/useTripsList';
 import { useForm } from 'react-hook-form';
 import {
+    v1DiscretionaryAddSchema,
+} from 'Types/Services/spending.model';
+import type {
     DiscretionarySpendTransaction,
     DiscretionaryTransactionId,
-    v1DiscretionaryAddSchema,
 } from 'Types/Services/spending.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './DiscretionarySpendForm.module.css';
 
 export type SpendFormAttributes = Omit<DiscretionarySpendTransaction, 'transactionId' | 'isRecurring'>;
 
-type EditSpendFormPropTypes = {
+interface EditSpendFormPropTypes {
     transactionToEdit: DiscretionarySpendTransaction;
     onCancel: () => void;
     onSubmit: () => void;
-};
+}
 
 export default function EditSpendForm({ transactionToEdit, onCancel, onSubmit }: EditSpendFormPropTypes) {
     const getContent = useContent('transactions');
@@ -47,7 +49,7 @@ export default function EditSpendForm({ transactionToEdit, onCancel, onSubmit }:
     }
 
     const editTransactionService = useMutation({
-        mutationKey: ['edit-discretionary', transactionToEdit!.transactionId],
+        mutationKey: ['edit-discretionary', transactionToEdit.transactionId],
         mutationFn: (params: SpendFormAttributes) =>
             axios.post(SERVICE_ROUTES.postEditDiscretionarySpending, {
                 ...params,

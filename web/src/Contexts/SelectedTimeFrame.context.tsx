@@ -11,8 +11,8 @@ import {
     subMonths,
     subYears,
 } from 'date-fns';
-import { createContext, ReactNode, useState } from 'react';
-import { DbDate, dbDateFormat } from 'Types/dateTypes';
+import { createContext, type ReactNode, useState } from 'react';
+import { type DbDate, dbDateFormat } from 'Types/dateTypes';
 import { parseDbDate } from 'Util/Formatters/dateFormatters/dateFormatters';
 
 export enum DateRangeType {
@@ -22,7 +22,7 @@ export enum DateRangeType {
     CUSTOM = 'CUSTOM',
 }
 
-export type SelectedTimeFrameContextAPI = {
+export interface SelectedTimeFrameContextAPI {
     startDate: DbDate;
     endDate: DbDate;
     dateRangeType: DateRangeType;
@@ -38,7 +38,7 @@ export type SelectedTimeFrameContextAPI = {
     isPresentMonth: boolean;
     updateDateRangeType: (type: DateRangeType) => void;
     setToCurrentMonth: () => void;
-};
+}
 
 export const SelectedTimeFrameContext = createContext<SelectedTimeFrameContextAPI | null>(null);
 
@@ -186,6 +186,8 @@ export default function SelectedTimeFrameProvider({ children }: { children: Reac
     };
 
     return (
-        <SelectedTimeFrameContext.Provider value={selectedTimeFrameAPI}>{children}</SelectedTimeFrameContext.Provider>
+        <SelectedTimeFrameContext value={selectedTimeFrameAPI}>
+            {children}
+        </SelectedTimeFrameContext>
     );
 }

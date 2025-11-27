@@ -1,25 +1,25 @@
-import { DbDate } from 'Types/dateTypes';
+import type { DbDate } from 'Types/dateTypes';
 import zodValidateDbDateFormat from 'Util/zodCustomValidators/zodValidateDbDateFormat';
 import { z as zod } from 'zod';
-import { DiscretionarySpendTransaction } from './spending.model';
+import type { DiscretionarySpendTransaction } from './spending.model';
 
-export type Trip = {
+export interface Trip {
     tripId: string; // uuid
     tripName: string;
     startDate: DbDate;
     endDate: DbDate;
-};
+}
 
 // TRIPS LIST API --- /api/trips/v1/list
 
-export type TripCostTotals = {
+export interface TripCostTotals {
     totalSpent: number;
     totalDiscretionarySpent: number;
     totalAirfareSpent: number;
     totalLodgingSpent: number;
-};
+}
 
-export type TripsListV1Response = {
+export interface TripsListV1Response {
     activeTrip?: {
         tripId: Trip['tripId'];
         tripName: Trip['tripName'];
@@ -28,7 +28,7 @@ export type TripsListV1Response = {
         trip: Trip;
         costTotals: TripCostTotals;
     }[];
-};
+}
 
 // END TRIPS LIST API
 
@@ -39,9 +39,9 @@ export const v1TripExpensesSchema = zod.object({
 
 export type TripExpensesRequestParams = zod.infer<typeof v1TripExpensesSchema>;
 
-export type TripLinkedExpensesV1Response = {
+export interface TripLinkedExpensesV1Response {
     expenseList: DiscretionarySpendTransaction[];
-};
+}
 
 // END TRIP EXPENSES API
 

@@ -1,10 +1,10 @@
 import Currency from 'Components/Currency/Currency';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
-import { CSSProperties } from 'react';
-import { SpendingCategory } from 'Types/SpendingCategory';
+import type { CSSProperties } from 'react';
+import type { SpendingCategory } from 'Types/SpendingCategory';
 import styles from './TopCategoryLabel.module.css';
 
-type TopCategoryLabelPropTypes = {
+interface TopCategoryLabelPropTypes {
     label: string;
     isVerticalList: boolean;
     category: SpendingCategory;
@@ -12,7 +12,7 @@ type TopCategoryLabelPropTypes = {
     percentage: number;
     customIconStyles?: CSSProperties;
     onClick?: () => void;
-};
+}
 
 export default function TopCategoryLabel({
     label,

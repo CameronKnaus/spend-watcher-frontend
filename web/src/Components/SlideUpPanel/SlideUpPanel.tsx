@@ -1,15 +1,15 @@
 import { animated, useTransition } from '@react-spring/web';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import FocusLock from 'react-focus-lock';
 import styles from './SlideUpPanel.module.css';
 
-type SlideUpPanelPropTypes = {
+interface SlideUpPanelPropTypes {
     title: string;
     tagColor: string;
     isOpen: boolean;
     children: ReactNode;
     handlePanelWillClose: () => void;
-};
+}
 
 export default function SlideUpPanel({
     title,

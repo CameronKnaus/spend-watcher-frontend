@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 import styles from './PageContainer.module.css';
 
 type PageContainerPropTypes = {

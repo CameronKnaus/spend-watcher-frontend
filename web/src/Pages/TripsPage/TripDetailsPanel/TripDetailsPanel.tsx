@@ -6,15 +6,15 @@ import TripForm from 'Components/TripForm/TripForm';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
-import { Trip } from 'Types/Services/trips.model';
+import type { Trip } from 'Types/Services/trips.model';
 import TripDetails from './TripDetails/TripDetails';
 
-type TripDetailsPanelPropTypes = {
+interface TripDetailsPanelPropTypes {
     trip: Trip;
     dateLabel: string;
     isOpen: boolean;
     onClose: () => void;
-};
+}
 
 export enum TripPanelState {
     base = 'base',
@@ -97,7 +97,7 @@ export default function TripDetailsPanel({ trip, isOpen, dateLabel, onClose }: T
                 <TripForm
                     onSubmit={returnToBasePage}
                     onCancel={returnToBasePage}
-                    onDelete={() => setPanelState(TripPanelState.deleteTrip)}
+                    onDelete={() => { setPanelState(TripPanelState.deleteTrip); }}
                     tripToEdit={trip}
                 />
             )}

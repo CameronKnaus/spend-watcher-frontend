@@ -3,17 +3,18 @@ import CustomButton from 'Components/CustomButton/CustomButton';
 import { format, parse } from 'date-fns';
 import useAccountHistory from 'Hooks/useAccountHistory/useAccountHistory';
 import useContent from 'Hooks/useContent';
-import { MonthYearDbDate, monthYearDbDateFormat } from 'Types/dateTypes';
-import { Account } from 'Types/Services/accounts.model';
+import { monthYearDbDateFormat } from 'Types/dateTypes';
+import type { MonthYearDbDate } from 'Types/dateTypes';
+import type { Account } from 'Types/Services/accounts.model';
 import AddAccountUpdateRow from './AddAccountUpdateRow/AddAccountUpdateRow';
 import EditAccountUpdateRow from './EditAccountUpdateRow/EditAccountUpdateRow';
 
 const formatDate = (date: string) => format(parse(date, monthYearDbDateFormat, new Date()), 'MMMM yyyy');
 
-type AccountUpdateHistoryPropTypes = {
+interface AccountUpdateHistoryPropTypes {
     accountId: Account['id'];
     onBack: () => void;
-};
+}
 
 export default function AccountUpdateHistory({ accountId, onBack }: AccountUpdateHistoryPropTypes) {
     const getContent = useContent('accounts');

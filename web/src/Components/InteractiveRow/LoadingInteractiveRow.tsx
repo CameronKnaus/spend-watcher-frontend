@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import InteractiveRow from 'Components/InteractiveRow/InteractiveRow';
 import SkeletonLoader from 'Components/Shared/SkeletonLoader';
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 import styles from './InteractiveRow.module.css';
 
 export default function LoadingInteractiveRow({ className, ...props }: ComponentProps<'button'>) {

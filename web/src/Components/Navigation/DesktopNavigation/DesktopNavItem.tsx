@@ -1,9 +1,9 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styles from './DesktopNavigation.module.css';
-import { animated, SpringValues } from '@react-spring/web';
+import { animated, type SpringValues } from '@react-spring/web';
 import useNavSelectionSpring from '../useNavSelectionSpring';
 
-type DesktopNavItemPropTypes = {
+interface DesktopNavItemPropTypes {
     to: string;
     icon: React.ReactNode;
     text: string;
@@ -12,7 +12,7 @@ type DesktopNavItemPropTypes = {
     }>;
     openMenu: () => void;
     onBlur: () => void;
-};
+}
 
 export default function DesktopNavItem({ to, icon, text, textSprings, openMenu, onBlur }: DesktopNavItemPropTypes) {
     const isCurrentRoute = useLocation().pathname === to;

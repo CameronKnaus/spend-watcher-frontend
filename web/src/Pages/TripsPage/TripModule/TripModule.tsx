@@ -3,17 +3,17 @@ import { spendCategoryColorMapper, spendCategoryIconMapper } from 'Components/Sh
 import useContent from 'Hooks/useContent';
 import { useState } from 'react';
 import { FaInfoCircle, FaMoneyBillWave } from 'react-icons/fa';
-import { Trip, TripCostTotals } from 'Types/Services/trips.model';
+import type { Trip, TripCostTotals } from 'Types/Services/trips.model';
 import { SpendingCategory } from 'Types/SpendingCategory';
 import { formatToMonthDay, formatToMonthDayYear } from 'Util/Formatters/dateFormatters/dateFormatters';
 import TripDetailsPanel from '../TripDetailsPanel/TripDetailsPanel';
 import { TripModuleDataPoint } from '../TripModuleDataPoint/TripModuleDataPoint';
 import styles from './TripModule.module.css';
 
-type TripModulePropTypes = {
+interface TripModulePropTypes {
     trip: Trip;
     tripCostTotals: TripCostTotals;
-};
+}
 
 export default function TripModule({ trip, tripCostTotals }: TripModulePropTypes) {
     const [detailPanelOpen, setDetailPanelOpen] = useState(false);
@@ -63,7 +63,7 @@ export default function TripModule({ trip, tripCostTotals }: TripModulePropTypes
                 <div className={styles.buttonRow}>
                     <CustomButton
                         variant="detail"
-                        onClick={() => setDetailPanelOpen(true)}
+                        onClick={() => { setDetailPanelOpen(true); }}
                         className={styles.actionButton}
                     >
                         {getContent('details')}
@@ -75,7 +75,7 @@ export default function TripModule({ trip, tripCostTotals }: TripModulePropTypes
                 trip={trip}
                 dateLabel={dateLabel}
                 isOpen={detailPanelOpen}
-                onClose={() => setDetailPanelOpen(false)}
+                onClose={() => { setDetailPanelOpen(false); }}
             />
         </>
     );

@@ -2,18 +2,18 @@ import clsx from 'clsx';
 import Currency from 'Components/Currency/Currency';
 import SpendingCategoryIcon from 'Components/Shared/Icons/SpendingCategoryIcon';
 import useContent from 'Hooks/useContent';
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
-import { RecurringSpendTransaction } from 'Types/Services/spending.model';
+import type { RecurringSpendTransaction } from 'Types/Services/spending.model';
 import formatCurrency from 'Util/Formatters/formatCurrency/formatCurrency';
 import styles from './RecurringTransactionCard.module.css';
 
-type RecurringTransactionCardPropTypes = {
+interface RecurringTransactionCardPropTypes {
     transaction: RecurringSpendTransaction;
     className?: string;
     isInactive?: boolean;
     onClick: (transaction: RecurringSpendTransaction) => void;
-};
+}
 
 export default function RecurringTransactionCard({
     transaction,
@@ -26,7 +26,7 @@ export default function RecurringTransactionCard({
     const getContent = useContent('recurringSpending');
 
     return (
-        <button className={clsx(styles.card, className)} {...attributes} onClick={() => onClick(transaction)}>
+        <button className={clsx(styles.card, className)} {...attributes} onClick={() => { onClick(transaction); }}>
             <SpendingCategoryIcon isInactive={isInactive} category={transaction.category} size={42} />
             <div className={styles.transactionDetails}>
                 <div className={styles.dataRow}>

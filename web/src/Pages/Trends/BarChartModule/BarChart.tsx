@@ -2,13 +2,13 @@ import useCanvasDimensions from 'Components/charts/use/useCanvasDimensions/useCa
 import { spendCategoryIconMapper } from 'Components/Shared/Icons/spendCategoryIconMapper';
 import * as d3 from 'd3';
 import AxisLeft from 'Pages/Savings/AccountGrowthOverTime/AxisLeft/AxisLeft';
-import { UseMeasureRect } from 'react-use/lib/useMeasure';
-import { Transaction, TransactionsV1Response } from 'Types/Services/spending.model';
+import type { UseMeasureRect } from 'react-use/lib/useMeasure';
+import type { Transaction, TransactionsV1Response } from 'Types/Services/spending.model';
 
-type BarChartPropTypes = {
+interface BarChartPropTypes {
     transactionResponse: TransactionsV1Response;
     containerMeasurement: UseMeasureRect;
-};
+}
 
 export default function BarChart({ transactionResponse, containerMeasurement }: BarChartPropTypes) {
     const dimensions = useCanvasDimensions({
@@ -40,7 +40,7 @@ export default function BarChart({ transactionResponse, containerMeasurement }: 
 
     const yScale = d3
         .scaleLinear()
-        .domain([0, d3.max(transactionResponse.transactions, metricAccessor) as number])
+        .domain([0, d3.max(transactionResponse.transactions, metricAccessor)!])
         .range([dimensions.boundedHeight, 0]);
 
     return (

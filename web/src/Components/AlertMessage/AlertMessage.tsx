@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 import styles from './AlertMessage.module.css';
 

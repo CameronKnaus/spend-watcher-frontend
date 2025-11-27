@@ -5,13 +5,13 @@ import CustomButton from 'Components/CustomButton/CustomButton';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useForm } from 'react-hook-form';
-import { LoginRequestParams, loginRequestParamsSchema } from 'Types/Services/auth.model';
+import { type LoginRequestParams, loginRequestParamsSchema } from 'Types/Services/auth.model';
 import styles from '../AuthScreen.module.css';
 axios.defaults.withCredentials = true;
 
-type LoginFormPropTypes = {
+interface LoginFormPropTypes {
     switchToRegister: () => void;
-};
+}
 
 export default function LoginForm({ switchToRegister }: LoginFormPropTypes) {
     const queryClient = useQueryClient();

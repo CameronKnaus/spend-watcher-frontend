@@ -10,13 +10,14 @@ import PercentageInput from 'Components/FormInputs/PercentageInput/PercentageInp
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useForm } from 'react-hook-form';
-import { AccountCategory, AddAccountRequestParams, addAccountRequestParamSchema } from 'Types/Services/accounts.model';
+import { AccountCategory, addAccountRequestParamSchema } from 'Types/Services/accounts.model';
+import type { AddAccountRequestParams } from 'Types/Services/accounts.model';
 import styles from './AddAccountForm.module.css';
 
-type AddAccountFormPropTypes = {
+interface AddAccountFormPropTypes {
     onSubmit: () => void;
     onCancel: () => void;
-};
+}
 
 export default function AddAccountForm({ onSubmit, onCancel }: AddAccountFormPropTypes) {
     const queryClient = useQueryClient();
@@ -94,7 +95,7 @@ export default function AddAccountForm({ onSubmit, onCancel }: AddAccountFormPro
                         className={styles.checkBox}
                         type="checkbox"
                         {...form.register('isFixedRate')}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => { e.stopPropagation(); }}
                     />
                 </div>
             </form>

@@ -3,11 +3,11 @@ import styles from './MobileNavigation.module.css';
 import { animated } from '@react-spring/web';
 import useNavSelectionSpring from '../useNavSelectionSpring';
 
-type MobileNavItemPropTypes = {
+interface MobileNavItemPropTypes {
     to: string;
     icon: React.ReactNode;
     text: string;
-};
+}
 
 export default function MobileNavItem({ to, icon, text }: MobileNavItemPropTypes) {
     const isCurrentRoute = useLocation().pathname === to;

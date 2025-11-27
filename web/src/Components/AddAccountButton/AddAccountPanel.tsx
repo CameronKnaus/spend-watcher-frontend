@@ -2,10 +2,10 @@ import AccountForm from 'Components/AddAccountForm/AddAccountForm';
 import SlideUpPanel from 'Components/SlideUpPanel/SlideUpPanel';
 import useContent from 'Hooks/useContent';
 
-type AddAccountPanelPropTypes = {
+interface AddAccountPanelPropTypes {
     isOpen: boolean;
     onPanelClose: () => void;
-};
+}
 
 export default function AddAccountPanel({ isOpen, onPanelClose }: AddAccountPanelPropTypes) {
     const getContent = useContent('accounts');

@@ -7,7 +7,7 @@ import { format, parseISO } from 'date-fns';
 import useContent from 'Hooks/useContent';
 import useSpendingDetailsService from 'Hooks/useSpendingService';
 import { useState } from 'react';
-import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
+import type { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
 import { isDiscretionaryTransactionId } from 'Util/SpendTransactionUtils/narrowIdType';
 import styles from './TransactionsList.module.css';
 
@@ -67,7 +67,7 @@ export default function TransactionsList() {
             <DiscretionarySpendPanel
                 isOpen={Boolean(transactionToEdit)}
                 transactionToEdit={transactionToEdit}
-                onPanelClose={() => setTransactionToEdit(undefined)}
+                onPanelClose={() => { setTransactionToEdit(undefined); }}
             />
         </>
     );

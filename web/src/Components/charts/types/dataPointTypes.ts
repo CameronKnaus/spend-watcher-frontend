@@ -1,6 +1,6 @@
-import { DbDate } from 'Types/dateTypes';
+import type { DbDate } from 'Types/dateTypes';
 
-export type DataPoint = {
+export interface DataPoint {
     date: DbDate;
     amount: number;
-};
+}

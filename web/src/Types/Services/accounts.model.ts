@@ -1,4 +1,4 @@
-import { DbDate, MonthYearDbDate } from 'Types/dateTypes';
+import type { DbDate, MonthYearDbDate } from 'Types/dateTypes';
 import zodValidateMonthYear from 'Util/zodCustomValidators/zodValidateMonthYear';
 import { z as zod } from 'zod';
 
@@ -74,13 +74,13 @@ export const editAccountDetailsRequestParamsSchema = addAccountRequestParamSchem
 export type EditAccountDetailsRequestParams = zod.infer<typeof editAccountDetailsRequestParamsSchema>;
 
 // ACCOUNTS SUMMARY SERVICES
-export type AccountsSummaryV1Response = {
+export interface AccountsSummaryV1Response {
     totalEquity: number;
     totalAccountsCount: number;
     accountsCountByCategory: Record<AccountCategory, number>;
     accountTotalsByType: Record<AccountCategory, number>;
     accountsList: AccountWithStatus[];
-};
+}
 
 // ACCOUNTS SET ACTIVE SERVICE /v1/set-active
 export const setActiveAccountRequestParamSchema = zod.object({
@@ -104,14 +104,14 @@ export const accountsHistoryRequestParamSchema = zod.object({
 
 export type AccountsHistoryV1RequestParams = zod.infer<typeof accountsHistoryRequestParamSchema>;
 
-export type AccountHistoryV1Response = {
+export interface AccountHistoryV1Response {
     accountId: string;
     updateHistory: {
         date: MonthYearDbDate;
         amount: number;
         updateId: number;
     }[];
-};
+}
 
 // ACCOUNTS ADD NEW UPDATE SERVICE /v1/update/add
 export const addAccountUpdateRequestParamSchema = zod.object({
@@ -132,11 +132,11 @@ export const editAccountUpdateRequestParamSchema = zod.object({
 export type EditAccountUpdateV1RequestParams = zod.infer<typeof editAccountUpdateRequestParamSchema>;
 
 // ACCOUNTS GROWTH OVER TIME SERVICE v1/account/growth-over-time
-export type AccountValueDataPoint = {
+export interface AccountValueDataPoint {
     accountId: string; // uuid string
     accountName: string;
     date: DbDate;
     amount: number;
-};
+}
 
 export type AccountGrowthOverTimeV1Response = AccountValueDataPoint[];

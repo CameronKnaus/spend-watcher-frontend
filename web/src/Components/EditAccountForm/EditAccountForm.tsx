@@ -10,18 +10,20 @@ import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useContent from 'Hooks/useContent';
 import { useForm } from 'react-hook-form';
 import {
-    Account,
     AccountCategory,
-    EditAccountDetailsRequestParams,
     editAccountDetailsRequestParamsSchema,
+} from 'Types/Services/accounts.model';
+import type {
+    Account,
+    EditAccountDetailsRequestParams,
 } from 'Types/Services/accounts.model';
 import styles from './EditAccountForm.module.css';
 
-type EditAccountFormPropTypes = {
+interface EditAccountFormPropTypes {
     accountToEdit: Account;
     onSubmit: () => void;
     onCancel: () => void;
-};
+}
 
 export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: EditAccountFormPropTypes) {
     const queryClient = useQueryClient();
@@ -94,7 +96,7 @@ export default function EditAccountForm({ onSubmit, onCancel, accountToEdit }: E
                         className={styles.checkBox}
                         type="checkbox"
                         {...form.register('isFixedRate')}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => { e.stopPropagation(); }}
                     />
                 </div>
             </form>

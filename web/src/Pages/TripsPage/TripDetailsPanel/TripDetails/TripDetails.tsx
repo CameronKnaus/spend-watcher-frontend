@@ -3,18 +3,18 @@ import CustomButton from 'Components/CustomButton/CustomButton';
 import EditSpendForm from 'Components/DiscretionarySpendForm/EditSpendForm';
 import TripExpenseList from 'Components/TripExpenseList/TripExpenseList';
 import useContent from 'Hooks/useContent';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
-import { Trip } from 'Types/Services/trips.model';
+import { type Dispatch, type SetStateAction, useState } from 'react';
+import type { DiscretionarySpendTransaction } from 'Types/Services/spending.model';
+import type { Trip } from 'Types/Services/trips.model';
 import { TripPanelState } from '../TripDetailsPanel';
 import styles from './TripDetails.module.css';
 
-type TripDetailsPropTypes = {
+interface TripDetailsPropTypes {
     trip: Trip;
     dateLabel: string;
     setPanelState: Dispatch<SetStateAction<TripPanelState>>;
     onClose: () => void;
-};
+}
 
 export default function TripDetails({ trip, dateLabel, setPanelState, onClose }: TripDetailsPropTypes) {
     const [transactionToEdit, setTransactionToEdit] = useState<DiscretionarySpendTransaction>();
@@ -45,7 +45,7 @@ export default function TripDetails({ trip, dateLabel, setPanelState, onClose }:
                 <CustomButton
                     layout="full-width"
                     variant="primary"
-                    onClick={() => setPanelState(TripPanelState.editTripDetails)}
+                    onClick={() => { setPanelState(TripPanelState.editTripDetails); }}
                 >
                     {getContent('editTripDetails')}
                 </CustomButton>

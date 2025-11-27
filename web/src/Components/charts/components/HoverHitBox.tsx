@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { CanvasDimensions } from '../use/useCanvasDimensions/useCanvasDimensions';
+import type { CanvasDimensions } from '../use/useCanvasDimensions/useCanvasDimensions';
 
-type HoverHitBoxPropTypes = {
+interface HoverHitBoxPropTypes {
     dimensions: CanvasDimensions;
     handlePointerMove: (event: React.PointerEvent<SVGRectElement>) => void;
-};
+}
 
 // Handles hovering over the chart.  **Must be used inside the bounding box of a chart
 export default function HoverHitBox({ dimensions, handlePointerMove }: HoverHitBoxPropTypes) {

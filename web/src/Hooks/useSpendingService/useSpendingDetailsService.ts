@@ -3,7 +3,7 @@ import axios from 'axios';
 import SERVICE_ROUTES from 'Constants/ServiceRoutes';
 import useSelectedTimeFrame from 'Hooks/useSelectedTimeFrame/useSelectedTimeFrame';
 import useSessionStatus from 'Hooks/useSessionStatus/useSessionStatus';
-import { SpendingDetailsV1Response } from 'Types/Services/spending.model';
+import type { SpendingDetailsV1Response } from 'Types/Services/spending.model';
 
 export default function useSpendingDetailsService() {
     const { isAuthenticated } = useSessionStatus();
