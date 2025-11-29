@@ -5,12 +5,14 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import reactDom from 'eslint-plugin-react-dom';
 import reactX from 'eslint-plugin-react-x';
 import tseslint from 'typescript-eslint';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 const baseConfig = [
     {
         ignores: ['dist', 'eslint.config.js'],
     },
     js.configs.recommended,
+    eslintConfigPrettier,
     ...tseslint.configs.strictTypeChecked,
     ...tseslint.configs.stylisticTypeChecked,
     {

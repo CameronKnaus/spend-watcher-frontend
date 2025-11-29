@@ -35,3 +35,5 @@ dist-ssr
 # production
 /build
 
+.pnpm-store
+
