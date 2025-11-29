@@ -1,6 +1,4 @@
-import type { DbDate } from 'Types/dateTypes';
-
 export interface DataPoint {
-    date: DbDate;
+    date: string; // YYYY-MM-DD
     amount: number;
 }

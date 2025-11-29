@@ -1,11 +1,7 @@
-type Year = `${number}${number}${number}${number}`;
-type Month = `0${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}` | '10' | '11' | '12';
-type Day = `0${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}` | `${1 | 2}${number}` | '30' | '31';
-
-// For use with Database interactions
-// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-export type DbDate = `${Year}-${Month}-${Day}` | string; // TODO: This type doesn't work very well
+// This is just tech debt at this point.  Represents YYYY-MM-DD string.
+export type DbDate = string;
 export const dbDateFormat = 'yyyy-MM-dd';
 
-export type MonthYearDbDate = `${Year}-${Month}`;
+// This is also tech debt.  Huge mistake.  Remapped to string and represents a YYYY-MM string.
+export type MonthYearDbDate = string;
 export const monthYearDbDateFormat = 'yyyy-MM';

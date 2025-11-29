@@ -78,6 +78,8 @@ function FilterableSelectComponent<T extends string>({
                 type="text"
                 autoComplete="off"
                 {...props}
+                // Unfortunate casualty of my past self.
+                // eslint-disable-next-line
                 value={currentSelectedValue()}
                 placeholder={noSelectionText}
                 onChange={(event) => {

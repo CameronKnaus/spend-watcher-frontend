@@ -6,8 +6,10 @@ export type ContentGroupKey = keyof ContentStructure;
 
 const CONTENT_MISSING = 'MISSING_CONTENT';
 
-// TODO: Refactor, this doesn't need to be a hook
 // If a default Group key is given, then the consumer needs only to provide the content key or injections
+
+// Though it may not need to be a hook today, in the future it will be easier to swap out with something async.
+// eslint-disable-next-line react-x/no-unnecessary-use-prefix
 export default function useContent<T extends ContentGroupKey>(contentGroup: T) {
     function getContent(key: keyof ContentStructure[T], injections?: (string | number)[]): string {
         /* injections is an optional array to fill content keys with variable text

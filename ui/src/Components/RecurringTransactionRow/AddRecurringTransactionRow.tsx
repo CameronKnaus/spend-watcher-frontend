@@ -47,7 +47,7 @@ export default function AddRecurringTransactionRow({
         },
     });
 
-    const form = useForm<AddRecurringTransactionRequestParams>({
+    const form = useForm({
         resolver: zodResolver(
             v1AddRecurringTransactionSchema.partial({
                 amountSpent: true, // Make amountSpent optional as this will be handled manually
@@ -89,6 +89,7 @@ export default function AddRecurringTransactionRow({
 
     return (
         <EditableAmountRow
+            // @ts-expect-error Unfortunate tragedy occurred here in the name of learning
             form={form}
             label={formattedDate}
             onSubmission={handleSubmission}

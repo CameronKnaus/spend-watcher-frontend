@@ -39,7 +39,7 @@ export default function EditableRecurringTransactionRow({
     });
 
     const getContent = useContent('recurringTransactionsList');
-    const form = useForm<EditRecurringTransactionRequestParams>({
+    const form = useForm({
         resolver: zodResolver(v1EditRecurringTransactionSchema.partial({ amountSpent: true })),
         defaultValues: {
             transactionId,
@@ -60,11 +60,12 @@ export default function EditableRecurringTransactionRow({
 
     const formAmountSpentValue = form.watch('amountSpent');
     const isDirty = formAmountSpentValue !== amountSpent;
-    const isValidInput = formAmountSpentValue > 0;
+    const isValidInput = (formAmountSpentValue ?? 0) > 0;
     const isLoading = recurringTransactionMutation.isPending;
 
     return (
         <EditableAmountRow
+            // @ts-expect-error Unfortunate tragedy occurred here in the name of learning
             form={form}
             label={label}
             onSubmission={handleSubmission}

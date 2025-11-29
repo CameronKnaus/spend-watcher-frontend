@@ -32,13 +32,13 @@ export default function RecurringTransactionsList({
 
     const oldestTransactionDate =
         recurringTransactionsList[recurringTransactionsList.length - 1]?.date ??
-        (format(new Date(), monthYearDbDateFormat) as MonthYearDbDate);
+        format(new Date(), monthYearDbDateFormat);
     // Starting with the current date, we will iterate backwards until we reach the oldest transaction date
     let currentDate = new Date();
     const applicableMonths: MonthYearDbDate[] = [];
     let lastTransactionDateReached = false;
     while (!lastTransactionDateReached) {
-        const formattedCurrentDate = format(currentDate, monthYearDbDateFormat) as MonthYearDbDate;
+        const formattedCurrentDate = format(currentDate, monthYearDbDateFormat);
         applicableMonths.push(formattedCurrentDate);
 
         if (formattedCurrentDate === oldestTransactionDate) {
@@ -85,7 +85,7 @@ export default function RecurringTransactionsList({
             {/* Add button for the month prior to the oldest month logged */}
             <AddRecurringTransactionRow
                 key={currentDate.toISOString()}
-                date={format(currentDate, 'yyyy-MM') as MonthYearDbDate}
+                date={format(currentDate, 'yyyy-MM')}
                 expectedMonthlyAmount={recurringSpendTransaction.expectedMonthlyAmount}
                 recurringSpendId={recurringSpendTransaction.recurringSpendId}
             />

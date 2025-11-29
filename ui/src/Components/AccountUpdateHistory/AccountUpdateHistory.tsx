@@ -27,13 +27,13 @@ export default function AccountUpdateHistory({ accountId, onBack }: AccountUpdat
 
     const { updateHistory } = accountHistory;
     const oldestAccountUpdateDate =
-        updateHistory[updateHistory.length - 1]?.date ?? (format(new Date(), monthYearDbDateFormat) as MonthYearDbDate);
+        updateHistory[updateHistory.length - 1]?.date ?? format(new Date(), monthYearDbDateFormat);
     // Starting with the current date, iterate backwards until we reach the oldest account update date
     const currentDate = new Date();
     const applicableMonths: MonthYearDbDate[] = [];
     let lastUpdateDateReached = false;
     while (!lastUpdateDateReached) {
-        const formattedCurrentDate = format(currentDate, monthYearDbDateFormat) as MonthYearDbDate;
+        const formattedCurrentDate = format(currentDate, monthYearDbDateFormat);
         applicableMonths.push(formattedCurrentDate);
 
         if (formattedCurrentDate === oldestAccountUpdateDate) {
@@ -70,7 +70,7 @@ export default function AccountUpdateHistory({ accountId, onBack }: AccountUpdat
             <AddAccountUpdateRow
                 key={currentDate.toISOString()}
                 accountId={accountId}
-                date={format(currentDate, 'yyyy-MM') as MonthYearDbDate}
+                date={format(currentDate, 'yyyy-MM')}
             />
             <BottomSheet>
                 <CustomButton variant="secondary" onClick={onBack} layout="full-width">
