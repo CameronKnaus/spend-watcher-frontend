@@ -11,11 +11,6 @@ node_modules
 dist
 dist-ssr
 *.local
-# TODO: Maybe not needed?
-# .env.local
-# .env.development.local
-# .env.test.local
-# .env.production.local
 
 # Editor directories and files
 .VSCodeCounter
